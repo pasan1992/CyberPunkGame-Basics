@@ -10,6 +10,7 @@ public class PlayerAgent : MonoBehaviour,AgentController
 
     public LayerMask enemyHitLayerMask;
     public LayerMask floorHitLayerMask;
+    public float health;
 
     #region Initialize
     private void Awake()
@@ -21,6 +22,7 @@ public class PlayerAgent : MonoBehaviour,AgentController
     private void Start()
     {
         createTargetPlane();
+        m_movingAgent.setHealth(health);
     }
 
     private void createTargetPlane()

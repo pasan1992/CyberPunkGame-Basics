@@ -15,41 +15,54 @@ public class AIAgent : MonoBehaviour, AgentController
 
     public bool enableFire;
     public Weapon.WEAPONTYPE selectedWeaponType;
-
+    public float health;
+    public string enemyTag;
     // temp
-    private MovingAgent player;
+    private MovingAgent enemy;
     private float moveCounter;
-    private float shootingCounter =-1.5f;
+    private float shootingCounter =2f;
     private Vector3 moveDirection;
     private int shotCount = 3;
     private bool inScreenLimit = false;
     private bool triggerPulled;
 
+
+    private float tempFloat;
     #region Initalize
     public void Awake()
     {
         m_movingAgent = this.GetComponent<MovingAgent>();
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
 
-        GameObject[] playerTaggedObjects = GameObject.FindGameObjectsWithTag("Player");
+        GameObject[] playerTaggedObjects = GameObject.FindGameObjectsWithTag(enemyTag);
 
         foreach (GameObject obj in playerTaggedObjects)
         {
-            player = obj.GetComponent<MovingAgent>();
-
-            if (player != null)
+            if(obj !=this.gameObject)
             {
-                break;
+                enemy = obj.GetComponent<MovingAgent>();
+
+                if (enemy != null)
+                {
+                    break;
+                }
             }
+
         }
+        tempFloat = Random.value * 5 + 2;
+    }
+
+    public void Start()
+    {
+        m_movingAgent.setHealth(health);
     }
     #endregion
-   
+
     #region Updates
 
     private void updateMove()
     {
-        m_navMeshAgent.SetDestination(player.transform.position);
+        m_navMeshAgent.SetDestination(enemy.transform.position + new Vector3(tempFloat, 0, tempFloat));
         // m_navMeshAgent.updatePosition = false;
         m_navMeshAgent.updateRotation = false;
 
@@ -116,7 +129,7 @@ public class AIAgent : MonoBehaviour, AgentController
             moveCounter = 0;
         }
 
-        Vector3 targetPostion = player.transform.position;
+        Vector3 targetPostion = enemy.transform.position;
         targetPostion.y = 1.5f;
         m_movingAgent.setTargetPoint(targetPostion);
 
@@ -140,6 +153,7 @@ public class AIAgent : MonoBehaviour, AgentController
                     m_movingAgent.pullTrigger();
                     triggerPulled = true;
                     shootingCounter = 0;
+
                 }
             }
             else
@@ -149,6 +163,7 @@ public class AIAgent : MonoBehaviour, AgentController
                     m_movingAgent.releaseTrigger();
                     triggerPulled = false;
                     shootingCounter = 0;
+                    tempFloat = Random.value * 10 + 1;
                 }
             }
 
@@ -201,7 +216,7 @@ public class AIAgent : MonoBehaviour, AgentController
 
     private bool playerisNear()
     {
-        return Vector3.Distance(m_movingAgent.transform.position,player.transform.position) < 5;
+        return Vector3.Distance(m_movingAgent.transform.position,enemy.transform.position) < 5;
     }
 
     public void setInScreenLimit(bool enabled)

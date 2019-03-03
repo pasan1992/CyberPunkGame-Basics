@@ -206,6 +206,11 @@ public class MovingAgent : MonoBehaviour
     {
         return m_equipmentSystem.isInEquipingAction();
     }
+
+    public void setHealth(float health)
+    {
+        m_damageSystem.setHealth(health);
+    }
     #endregion
 
     #region Events Handlers

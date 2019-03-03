@@ -54,8 +54,11 @@ public class AgentMovmentSystem
 
                 Vector3 translateDirection = new Vector3(movmentDirection.x, 0,movmentDirection.z);
                // translateDirection = this.m_characterTransform.TransformDirection(translateDirection);
-                m_characterController.Move(translateDirection.normalized / 15);
 
+                if(m_characterController.enabled)
+                {
+                    m_characterController.Move(translateDirection.normalized / 15);
+                }
                 break;
 
             case MovingAgent.CharacterMainStates.Armed_not_Aimed:
@@ -84,7 +87,11 @@ public class AgentMovmentSystem
 
                 //Vector3 newDirection = new Vector3(movmentDirection.z, 0, -movmentDirection.x);
                 Vector3 newDirection = m_characterTransform.TransformDirection(Vector3.forward);
-                m_characterController.Move(newDirection* movmentDirection.magnitude / divider);
+                if(m_characterController.enabled)
+                {
+                    m_characterController.Move(newDirection * movmentDirection.magnitude / divider);
+                }
+
                 break;
         }
     }
