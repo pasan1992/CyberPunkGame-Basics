@@ -185,7 +185,12 @@ public class EquipmentSystem
     private void aimCurrentEquipment(bool aimed)
     {
         m_animationSystem.aimEquipment(aimed);
-        getCurrentWeapon().setAimed(aimed);
+        
+        if(getCurrentWeapon())
+        {
+            getCurrentWeapon().setAimed(aimed);
+        }
+
     }
 
     public MovingAgent.CharacterMainStates togglePrimary()
@@ -210,6 +215,12 @@ public class EquipmentSystem
                     m_rifleProp.setVisible(false);
                     m_pistolProp.setVisible(true);
                     m_animationSystem.fastEquipCurrentEquipment();
+
+                    if(m_currentState.Equals(MovingAgent.CharacterMainStates.Aimed))
+                    {
+                        m_currentWeapon.setAimed(true);
+                    }
+
                     return m_currentState;
                 }
             }
@@ -249,6 +260,12 @@ public class EquipmentSystem
                     m_pistolProp.setVisible(false);
                     m_pistol.gameObject.SetActive(true);
                     m_animationSystem.fastEquipCurrentEquipment();
+
+                    if (m_currentState.Equals(MovingAgent.CharacterMainStates.Aimed))
+                    {
+                        m_currentWeapon.setAimed(true);
+                    }
+
                     return m_currentState;
                 }
             }

@@ -114,6 +114,11 @@ public class AgentAnimationSystem
     {
         m_animator.SetFloat("currentWeapon", value);
     }
+
+    public void triggerDodge()
+    {
+        m_animator.SetTrigger("dodge");
+    }
     #endregion
 
     #region gettersAndSetters

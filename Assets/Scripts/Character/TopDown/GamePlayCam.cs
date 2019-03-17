@@ -26,8 +26,9 @@ public class GamePlayCam : MonoBehaviour
             offset = cameraTurnAngle * offset;
         }
 
-
-        this.transform.position = Vector3.Lerp(this.transform.position,  target.transform.position - offset,Time.deltaTime*6);
+       // Vector3 newPostion = target.transform.position - offset;
+       // newPostion = new Vector3(newPostion.x, this.transform.position.y, target.transform.position.z);
+        this.transform.position = Vector3.Lerp(this.transform.position, target.transform.position - offset, Time.deltaTime*6);
         this.transform.LookAt(target.transform);
     }
 }

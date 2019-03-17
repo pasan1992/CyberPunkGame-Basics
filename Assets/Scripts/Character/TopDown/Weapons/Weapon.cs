@@ -34,7 +34,7 @@ public class Weapon : MonoBehaviour
 
     public void Awake()
     {
-        //m_line = this.GetComponent<LineRenderer>();
+        m_line = this.GetComponent<LineRenderer>();
         m_rigidbody = this.GetComponent<Rigidbody>();
         m_collider = this.GetComponent<BoxCollider>();
     }
@@ -42,29 +42,37 @@ public class Weapon : MonoBehaviour
     #region updates
     public virtual void updateWeapon()
     {
-        if (isAimed && enableLine)
+        if(m_line != null && enableLine)
         {
-            Vector3 direction = target.transform.position - targetPoint.transform.position;
-            //m_line.SetPosition(0, targetPoint.transform.position);
-
-
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            // Raycast to find a ragdoll collider
-            RaycastHit hit = new RaycastHit();
-
-            if (Physics.Raycast(targetPoint.transform.position, direction.normalized, out hit, 1000, hitLayerMask))
+            if (isAimed)
             {
-                //m_line.SetPosition(1, hit.point);
+                Vector3 direction = target.transform.position - targetPoint.transform.position;
+                m_line.SetPosition(0, targetPoint.transform.position);
+
+
+                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+                // Raycast to find a ragdoll collider
+                RaycastHit hit = new RaycastHit();
+
+                if (Physics.Raycast(targetPoint.transform.position, direction.normalized, out hit, 1000, hitLayerMask))
+                {
+                    m_line.SetPosition(1, hit.point);
+                }
+                else
+                {
+                    // m_line.SetPosition(1, targetPoint.transform.position + direction * 50);
+                    m_line.SetPosition(1, target.transform.position);
+                }
+
+                Debug.DrawRay(targetPoint.transform.position, direction.normalized, Color.red);
             }
             else
             {
-               // m_line.SetPosition(1, targetPoint.transform.position + direction * 50);
+                m_line.SetPosition(0, Vector3.zero);
+                m_line.SetPosition(1, Vector3.zero);
             }
-
-            Debug.DrawRay(targetPoint.transform.position, direction.normalized, Color.red);
-
- 
         }
+
 
         gunFireingPoint = targetPoint.transform.position - targetPoint.transform.forward * 0.1f;
 

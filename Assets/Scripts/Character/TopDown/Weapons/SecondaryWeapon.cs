@@ -41,6 +41,7 @@ public class SecondaryWeapon : Weapon
             if ( (1 / fireRate) <= timeFromLastFire)
             {
                 waitToFire = false;
+                timeFromLastFire = 0;
             }
         }
     }

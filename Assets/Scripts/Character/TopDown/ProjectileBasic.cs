@@ -54,18 +54,16 @@ public class ProjectileBasic : MonoBehaviour
 
     private void hitOnEnemy(Collider other)
     {
-        MovingAgent movingAgnet = other.transform.GetComponentInParent<MovingAgent>();
+        ICyberAgent movingAgnet = other.transform.GetComponentInParent<ICyberAgent>();
 
         if (movingAgnet != null && !hit)
         {
-            if (!shooterName.Equals(movingAgnet.name))
+            if (!shooterName.Equals(movingAgnet.getNamge()))
             {
                 hit = true;
-                movingAgnet.getDamageSystem().reactOnHit(other, (this.transform.forward) * 5f, other.transform.position);
-
-                DamageSystem damageSystem = movingAgnet.getDamageSystem();
-                damageSystem.DamageByAmount(1);
-
+                movingAgnet.reactOnHit(other, (this.transform.forward) * 5f, other.transform.position);
+                movingAgnet.damageAgent(1);
+            
                 speed = 0;
                 Destroy(this.gameObject);
 
@@ -75,7 +73,7 @@ public class ProjectileBasic : MonoBehaviour
                     hitParticle.transform.position = this.transform.position;
                 }
              
-                if (!damageSystem.IsFunctional())
+                if (!movingAgnet.IsFunctional())
                 {
                     movingAgnet.DestroyCharacter();
                     Rigidbody rb = other.transform.GetComponent<Rigidbody>();

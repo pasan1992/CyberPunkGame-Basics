@@ -8,8 +8,10 @@ public class SwipeComponent : MonoBehaviour
 	private bool isDraggin;
 	private Vector2 startTouch,swipeDelta;
 	public delegate void OnTapOnObject(Transform tabObject);
+    public delegate void OnTapPosition(Vector3 positon);
 	public LayerMask touchLayer;
-	OnTapOnObject  getTapObject; 
+	OnTapOnObject  onTapObject;
+    OnTapPosition onTapPosition;
 
 	private void Update()
 	{
@@ -128,14 +130,16 @@ public class SwipeComponent : MonoBehaviour
 		 	Ray ray = Camera.main.ScreenPointToRay(startTouch);
 			if(Physics.Raycast(ray,out hit,100.0f,touchLayer))
 			{
-				getTapObject(hit.transform);
+				onTapObject(hit.transform);
+                onTapPosition(hit.point);
 			}		
 		}
 	}
 
-	public void setGetTapObjectFunction(OnTapOnObject getTapObject)
+	public void setGetTapObjectFunction(OnTapOnObject TapObject,OnTapPosition tapPosition)
 	{
-		this.getTapObject += getTapObject;
-	}
+		this.onTapObject += TapObject;
+        this.onTapPosition += tapPosition;
+    }
 
 }

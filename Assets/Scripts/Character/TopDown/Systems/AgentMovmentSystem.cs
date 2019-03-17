@@ -8,22 +8,21 @@ public class AgentMovmentSystem
     protected MovingAgent.CharacterMainStates m_characterState;
     protected Transform m_characterTransform;
     protected AgentAnimationSystem m_animationSystem;
-    protected CharacterController m_characterController;
+    //protected CharacterController m_characterController;
+    protected bool m_enableTranslateMovment = true;
 
-    public AgentMovmentSystem(Transform transfrom, MovingAgent.CharacterMainStates characterState, GameObject target,AgentAnimationSystem animationSystem, CharacterController characterController)
+    public AgentMovmentSystem(Transform transfrom, MovingAgent.CharacterMainStates characterState, GameObject target,AgentAnimationSystem animationSystem)
     {
         m_characterTransform = transfrom;
         m_characterState = characterState;
         m_target = target;
         m_animationSystem = animationSystem;
-        m_characterController = characterController;
+        //m_characterController = characterController;
     }
 
     #region Update
     public void UpdateMovmentSystem(MovingAgent.CharacterMainStates characterState,Vector3 movmentDirection)
     {
-        //movmentDirection = getDirectionRelativeToCamera(movmentDirection);
-
         m_characterState = characterState;
         switch (m_characterState)
         {
@@ -45,20 +44,24 @@ public class AgentMovmentSystem
                     m_characterTransform.LookAt(getTurnPoint(), Vector3.up);
                 }
 
-                // Move Character
-                Vector3 moveDiection = this.m_characterTransform.InverseTransformDirection(movmentDirection);
-                m_animationSystem.setMovment(moveDiection.z, moveDiection.x);
+                // Move Character animator
+                Vector3 selfTransfrommoveDiection = this.m_characterTransform.InverseTransformDirection(movmentDirection);
+                m_animationSystem.setMovment(selfTransfrommoveDiection.z, selfTransfrommoveDiection.x);
 
-               // Vector3 translateDirection = new Vector3(moveDiection.z, 0, -moveDiection.x);
-                // this.m_characterTransform.Translate(translateDirection.normalized / 15);
-
-                Vector3 translateDirection = new Vector3(movmentDirection.x, 0,movmentDirection.z);
-               // translateDirection = this.m_characterTransform.TransformDirection(translateDirection);
-
-                if(m_characterController.enabled)
+                if(m_enableTranslateMovment)
                 {
-                    m_characterController.Move(translateDirection.normalized / 15);
+                    // Move character transfrom
+                    Vector3 translateDirection = new Vector3(selfTransfrommoveDiection.x, 0, selfTransfrommoveDiection.z);
+                    this.m_characterTransform.Translate(translateDirection.normalized / 15);
                 }
+
+
+                //Vector3 translateDirection = new Vector3(movmentDirection.x, 0, movmentDirection.z);
+
+                //if (m_characterController.enabled)
+                //{
+                //    m_characterController.Move(translateDirection.normalized / 15);
+                //}
                 break;
 
             case MovingAgent.CharacterMainStates.Armed_not_Aimed:
@@ -83,14 +86,17 @@ public class AgentMovmentSystem
                     divider = 15;
                 }
 
-                //this.m_characterTransform.Translate(Vector3.forward * movmentDirection.magnitude / divider);
-
-                //Vector3 newDirection = new Vector3(movmentDirection.z, 0, -movmentDirection.x);
-                Vector3 newDirection = m_characterTransform.TransformDirection(Vector3.forward);
-                if(m_characterController.enabled)
+                if(m_enableTranslateMovment)
                 {
-                    m_characterController.Move(newDirection * movmentDirection.magnitude / divider);
+                    this.m_characterTransform.Translate(Vector3.forward * movmentDirection.magnitude / divider);
                 }
+
+
+                //Vector3 newDirection = m_characterTransform.TransformDirection(Vector3.forward);
+                //if(m_characterController.enabled)
+                //{
+                //    m_characterController.Move(newDirection * movmentDirection.magnitude / divider);
+                //}
 
                 break;
         }
@@ -130,6 +136,10 @@ public class AgentMovmentSystem
     //    return forward * direction.x - right * direction.z;
     //}
 
+    public void enableTranslateMovment(bool enable)
+    {
+        m_enableTranslateMovment = enable;
+    }
     #endregion
 
 }
