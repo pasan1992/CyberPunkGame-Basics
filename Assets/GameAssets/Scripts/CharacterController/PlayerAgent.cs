@@ -75,7 +75,7 @@ public class PlayerAgent : MonoBehaviour,AgentController
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            m_movingAgent.dodgeAttack();
+            m_movingAgent.dodgeAttack(getDirectionRelativeToCamera( new Vector3(Input.GetAxis("Vertical"), 0, -Input.GetAxis("Horizontal"))));
         }
 
         if(Input.GetKey(KeyCode.LeftShift))

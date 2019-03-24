@@ -807,6 +807,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AutoMovingAgent_v2 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 689295171652787206, guid: 686b40a5e671c1944856f84f2ec67cbb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6144393412093649264, guid: 686b40a5e671c1944856f84f2ec67cbb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1187,6 +1192,11 @@ PrefabInstance:
     - target: {fileID: 650309632310660398, guid: 686b40a5e671c1944856f84f2ec67cbb,
         type: 3}
       propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2373714946997688005, guid: 686b40a5e671c1944856f84f2ec67cbb,
+        type: 3}
+      propertyPath: enableFire
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1628,6 +1638,16 @@ PrefabInstance:
         type: 3}
       propertyPath: enemyTag
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 2373714946997688005, guid: 686b40a5e671c1944856f84f2ec67cbb,
+        type: 3}
+      propertyPath: enableFire
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2373714946997688005, guid: 686b40a5e671c1944856f84f2ec67cbb,
+        type: 3}
+      propertyPath: selectedWeaponType
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3008070075972106023, guid: 686b40a5e671c1944856f84f2ec67cbb,
         type: 3}

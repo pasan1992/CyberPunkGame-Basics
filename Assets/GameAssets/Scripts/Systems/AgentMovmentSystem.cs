@@ -52,7 +52,7 @@ public class AgentMovmentSystem
                 {
                     // Move character transfrom
                     Vector3 translateDirection = new Vector3(selfTransfrommoveDiection.x, 0, selfTransfrommoveDiection.z);
-                    this.m_characterTransform.Translate(translateDirection.normalized / 15);
+                    this.m_characterTransform.Translate(translateDirection.normalized / 50);
                 }
 
 
@@ -142,4 +142,14 @@ public class AgentMovmentSystem
     }
     #endregion
 
+    #region commands
+
+    public void dodge(Vector3 dodgeDirection)
+    {
+        //dodgeDirection = this.m_characterTransform.InverseTransformDirection(dodgeDirection);
+        Vector3 convertedDodgeDirection = new Vector3(dodgeDirection.x, 0, dodgeDirection.z);
+        m_characterTransform.LookAt(m_characterTransform.position + convertedDodgeDirection, Vector3.up);
+    }
+
+    #endregion
 }

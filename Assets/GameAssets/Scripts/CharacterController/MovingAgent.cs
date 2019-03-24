@@ -141,7 +141,7 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     // Aim Current Weapon -
     public virtual void AimWeapon()
     {
-        if (m_characterState.Equals(CharacterMainStates.Armed_not_Aimed) && !isEquipingWeapon())
+        if (m_characterState.Equals(CharacterMainStates.Armed_not_Aimed) && !isEquipingWeapon() && !m_characterState.Equals(CharacterMainStates.Dodge))
         {
             m_characterState = CharacterMainStates.Aimed;
             m_equipmentSystem.getCurrentWeapon().setAimed(true);
@@ -193,15 +193,26 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         m_damageSystem.reactOnHit(collider, force, point);
     }
 
-    public bool IsFunctional()
+    public void dodgeAttack(Vector3 dodgeDirection)
     {
-      return   m_damageSystem.IsFunctional();
+        if (!m_characterState.Equals(CharacterMainStates.Dodge))
+        {
+            m_characterState = CharacterMainStates.Dodge;
+            m_animationSystem.triggerDodge();
+            m_movmentSystem.dodge(dodgeDirection);
+            //m_equipmentSystem.aimCurrentEquipment(false);
+            m_equipmentSystem.releaseTrigger();
+        }
     }
-
 
     #endregion
 
     #region getters and setters
+
+    public bool IsFunctional()
+    {
+        return m_damageSystem.IsFunctional();
+    }
 
     public string getNamge()
     {
@@ -221,15 +232,6 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     public bool isEquipingWeapon()
     {
         return m_equipmentSystem.isInEquipingAction();
-    }
-
-    public void dodgeAttack()
-    {
-        if(!m_characterState.Equals(CharacterMainStates.Dodge) && (m_characterState.Equals(CharacterMainStates.Idle) || m_characterState.Equals(CharacterMainStates.Armed_not_Aimed)))
-        {
-            m_characterState = CharacterMainStates.Dodge;
-            m_animationSystem.triggerDodge();
-        }
     }
 
     public void setHealth(float health)

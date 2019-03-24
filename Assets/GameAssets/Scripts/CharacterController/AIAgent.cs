@@ -151,7 +151,7 @@ public class AIAgent : MonoBehaviour, AgentController
 
             if(!triggerPulled)
             {
-                if (shootingCounter > 1)
+                if (shootingCounter > 0.5f)
                 {
                     m_movingAgent.pullTrigger();
                     triggerPulled = true;
@@ -161,7 +161,7 @@ public class AIAgent : MonoBehaviour, AgentController
             }
             else
             {
-                if (shootingCounter > 1)
+                if (shootingCounter > 0.5f)
                 {
                     m_movingAgent.releaseTrigger();
                     triggerPulled = false;
