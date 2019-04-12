@@ -70,7 +70,7 @@ public class PlayerAgent : MonoBehaviour,AgentController
 
         if (Input.GetKeyDown(KeyCode.C))
         {
-            m_movingAgent.toggleCrouched();
+            m_movingAgent.toggleHide();
         }
 
         if(Input.GetKeyDown(KeyCode.Space))

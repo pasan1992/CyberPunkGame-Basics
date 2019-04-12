@@ -15,13 +15,13 @@ public class EquipmentSystem
     protected GameObject m_target;
     protected Recoil m_recoil;
     protected string m_owner;
-    protected AutoMovingAgent.CharacterMainStates m_currentState;
+    protected MovingAgent.CharacterMainStates m_currentState;
     protected AgentAnimationSystem m_animationSystem;
 
     private bool m_inEquipingAction = false;
     #endregion
 
-    public EquipmentSystem(Weapon[] weapons, WeaponProp[] props, string owner, AutoMovingAgent.CharacterMainStates state,GameObject target,Recoil recoil,AgentAnimationSystem animSystem)
+    public EquipmentSystem(Weapon[] weapons, WeaponProp[] props, string owner, MovingAgent.CharacterMainStates state,GameObject target,Recoil recoil,AgentAnimationSystem animSystem)
     {
         m_owner = owner;
         m_currentState = state;

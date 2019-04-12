@@ -83,6 +83,10 @@ public class FlyingAgent : MonoBehaviour,ICyberAgent
         return this.name;
     }
 
+    Vector3 getCurrentPosition()
+    {
+        return this.transform.position;
+    }
     #endregion
 
     #region commands
@@ -131,6 +135,45 @@ public class FlyingAgent : MonoBehaviour,ICyberAgent
         return health > 0;
     }
 
+    Vector3 ICyberAgent.getCurrentPosition()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void togglepSecondaryWeapon()
+    {
+
+    }
+
+    public void togglePrimaryWeapon()
+    {
+
+    }
+
+    public void toggleHide()
+    {
+
+    }
+
+    public bool isEquiped()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void pullTrigger()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void releaseTrigger()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void weaponFireForAI()
+    {
+        throw new System.NotImplementedException();
+    }
     #endregion
 
 }

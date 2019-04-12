@@ -30,6 +30,7 @@ public class AIAgent : MonoBehaviour, AgentController
     // temp values, need to remove later
     private float tempFloat;
     private float tempFloat2;
+
     #region Initalize
     public void Awake()
     {
@@ -122,9 +123,6 @@ public class AIAgent : MonoBehaviour, AgentController
             }
         }
 
-
-
-
         if (moveCounter > 0.2f)
         {
             moveDirection = Random.insideUnitSphere;
@@ -181,9 +179,31 @@ public class AIAgent : MonoBehaviour, AgentController
 
 
     }
+    
+    private void updateShootingAction()
+    {
+
+    }
+
     #endregion
 
     #region commands
+
+    private void selectWeapon()
+    {
+        if (!m_movingAgent.isEquiped())
+        {
+            switch (selectedWeaponType)
+            {
+                case Weapon.WEAPONTYPE.primary:
+                    m_movingAgent.togglePrimaryWeapon();
+                    break;
+                case Weapon.WEAPONTYPE.secondary:
+                    m_movingAgent.togglepSecondaryWeapon();
+                    break;
+            }
+        }
+    }
 
     #endregion
 

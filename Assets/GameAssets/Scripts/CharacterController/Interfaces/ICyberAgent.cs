@@ -11,7 +11,15 @@ public interface ICyberAgent
     void setTargetPoint(Vector3 position);
     void damageAgent(float amount);
     void reactOnHit(Collider collider, Vector3 force, Vector3 point);
+    void togglepSecondaryWeapon();
+    void togglePrimaryWeapon();
     bool IsFunctional();
     string getNamge();
     void DestroyCharacter();
+    Vector3 getCurrentPosition();
+    void toggleHide();
+    bool isEquiped();
+    void pullTrigger();
+    void releaseTrigger();
+    void weaponFireForAI();
 }

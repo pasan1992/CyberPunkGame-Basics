@@ -173,7 +173,7 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         m_animationSystem.disableAnimationSystem();
     }
 
-    public void toggleCrouched()
+    public void toggleHide()
     {
         m_animationSystem.toggleCrouched();
     }
@@ -242,6 +242,11 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     public void enableTranslateMovment(bool enable)
     {
         m_movmentSystem.enableTranslateMovment(enable);
+    }
+
+    public Vector3 getCurrentPosition()
+    {
+        return this.transform.position;
     }
     #endregion
 
