@@ -10,8 +10,9 @@ TagManager:
   - Character 2
   - ShowCursor
   - WeaponProp
-  - Wall
   - Floor
+  - Cover
+  - Wall
   layers:
   - Default
   - TransparentFX
@@ -27,8 +28,8 @@ TagManager:
   - Projectile
   - Character
   - Floor
-  - Obsticles
-  - 
+  - HalfCoverObsticles
+  - FullCOverObsticles
   - 
   - 
   - 

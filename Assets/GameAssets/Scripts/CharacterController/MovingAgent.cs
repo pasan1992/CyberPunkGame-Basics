@@ -338,5 +338,10 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         yield return new WaitForSeconds(0.5f);
         releaseTrigger();
     }
+
+    public string getName()
+    {
+        return this.name;
+    }
     #endregion
 }

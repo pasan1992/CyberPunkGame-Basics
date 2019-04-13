@@ -38,11 +38,11 @@ public class ProjectileBasic : MonoBehaviour
         string tag = other.tag;
         switch (tag)
         {
-            case "Enemy":
-            
+            case "Enemy":         
                 hitOnEnemy(other);
                 break;
-            case"Wall":
+            case "Wall":
+            case "Cover":
                 hitOnWall(other);
                 break;
             case "Player":

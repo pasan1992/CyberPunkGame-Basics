@@ -28,7 +28,10 @@ public class AutoAgent : MonoBehaviour, AgentController
     #region update
     void Update()
     {
-        m_currentState.updateStage();
+        if(m_movingAgent.IsFunctional())
+        {
+            m_currentState.updateStage();
+        }
     }
     #endregion
 }

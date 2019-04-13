@@ -16,7 +16,7 @@ public class CombatStage : BasicMovmentStage
     private bool isWeaponEquiped = false;
 
     // Parameters
-    float fireRangeDistance = 100;
+    float fireRangeDistance = 1000;
     bool coverAndShoot = false;
 
     #region initalize
@@ -57,7 +57,7 @@ public class CombatStage : BasicMovmentStage
         {
             case CombatSubStages.InCover:
 
-                if(!currentCoverPoint.isSafeFromTarget())
+                if(!currentCoverPoint.isSafeFromTarget() || !currentCoverPoint.canFireToTarget(fireRangeDistance))
                 {
                     currentCombatSubStage = CombatSubStages.LookingForCover;
                 }
@@ -66,6 +66,7 @@ public class CombatStage : BasicMovmentStage
                 {
                     
                     selfAgent.AimWeapon();
+                    selfAgent.weaponFireForAI();
                     coverAndShoot = false;
                 }
                 else
@@ -78,6 +79,11 @@ public class CombatStage : BasicMovmentStage
 
                 break;
             case CombatSubStages.LookingForCover:
+
+                if(currentCoverPoint)
+                {
+                    currentCoverPoint.stPointOccupentsName("");
+                }
 
                 currentCoverPoint = closestCombatLocationAvaialbe();
                 agent.SetDestination(currentCoverPoint.getPosition());
@@ -136,7 +142,7 @@ public class CombatStage : BasicMovmentStage
                     }
 
                    // Find the ideal closest cover point.
-                   if(point.canFireToTarget())
+                   if(point.canFireToTarget(fireRangeDistance))
                     {
                         if (minimumDistanceToIdealCoverPoint > point.distanceTo(selfAgent.getCurrentPosition()))
                         {
@@ -151,10 +157,13 @@ public class CombatStage : BasicMovmentStage
 
         if(tempIDealCoverPoint !=null)
         {
+            Debug.Log("Ideal cover poin");
+            tempIDealCoverPoint.stPointOccupentsName(selfAgent.getName());
             return tempIDealCoverPoint;
         }
         else
         {
+            tempSafeCOverPoint.stPointOccupentsName(selfAgent.getName());
             return tempSafeCOverPoint;
         }
     }
@@ -164,11 +173,10 @@ public class CombatStage : BasicMovmentStage
         if(currentCombatSubStage.Equals(CombatSubStages.InCover))
         {
             selfAgent.AimWeapon();
-            yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.5f);
             selfAgent.pullTrigger();
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(0.5f);
             selfAgent.releaseTrigger();
-            yield return new WaitForSeconds(0.2f);
             selfAgent.StopAiming();
         }
         else
@@ -202,7 +210,7 @@ public class CombatStage : BasicMovmentStage
 
     private bool isCoverPointUsable(CoverPoint point)
     {
-        return point.isSafeFromTarget() && point.canFireToTarget();
+        return point.isSafeFromTarget() && point.canFireToTarget(fireRangeDistance);
     }
     #endregion
 

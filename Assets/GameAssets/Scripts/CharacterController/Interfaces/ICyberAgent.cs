@@ -22,4 +22,5 @@ public interface ICyberAgent
     void pullTrigger();
     void releaseTrigger();
     void weaponFireForAI();
+    string getName();
 }

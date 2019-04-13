@@ -174,6 +174,11 @@ public class FlyingAgent : MonoBehaviour,ICyberAgent
     {
         throw new System.NotImplementedException();
     }
+
+    public string getName()
+    {
+        return this.name;
+    }
     #endregion
 
 }
