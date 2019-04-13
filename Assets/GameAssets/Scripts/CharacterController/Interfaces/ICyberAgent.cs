@@ -23,4 +23,6 @@ public interface ICyberAgent
     void releaseTrigger();
     void weaponFireForAI();
     string getName();
+    void WeaponFireForAICover();
+    void setWeponFireCapability(bool enadled);
 }

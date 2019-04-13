@@ -10,4 +10,8 @@ public interface ICharacterBehaviorState
     void setTargets(ICyberAgent target);
 
     void setStepIntervalSize(float timeInSeconds);
+
+    void setWeaponFireCapability(bool enabled);
+
+    void stopStageBehavior();
 }

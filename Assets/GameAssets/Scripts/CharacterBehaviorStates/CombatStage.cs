@@ -12,12 +12,11 @@ public class CombatStage : BasicMovmentStage
     public enum CombatSubStages { LookingForCover,MovingToCover, InCover }
     private CombatSubStages currentCombatSubStage = CombatSubStages.LookingForCover;
 
-    private bool isCrouched = false;
-    private bool isWeaponEquiped = false;
+    public enum CoverShootingSubStages { Cover,Peek,Shoot};
+    private CoverShootingSubStages currentCoverShootingSubStage;
 
     // Parameters
-    float fireRangeDistance = 1000;
-    bool coverAndShoot = false;
+    float fireRangeDistance = 12;
 
     #region initalize
     public CombatStage(ICyberAgent selfAgent,ICyberAgent target,NavMeshAgent navMeshAgent):base(selfAgent,navMeshAgent)
@@ -26,7 +25,7 @@ public class CombatStage : BasicMovmentStage
         coverPoints = GameObject.FindObjectsOfType<CoverPoint>();
         selfAgent.toggleHide();
         selfAgent.AimWeapon();
-        selfAgent.togglePrimaryWeapon();
+        selfAgent.togglepSecondaryWeapon();
     }
     #endregion
 
@@ -46,37 +45,35 @@ public class CombatStage : BasicMovmentStage
         updateSubStages();
     }
 
-    private void updateWeaponFire()
-    {
-
-    }
-
     private void updateSubStages()
     {
         switch (currentCombatSubStage)
         {
             case CombatSubStages.InCover:
 
-                if(!currentCoverPoint.isSafeFromTarget() || !currentCoverPoint.canFireToTarget(fireRangeDistance))
+                if(currentCoverPoint.isSafeFromTarget() && currentCoverPoint.canFireToTarget(fireRangeDistance))
                 {
-                    currentCombatSubStage = CombatSubStages.LookingForCover;
-                }
-
-                if(coverAndShoot)
-                {
-                    
-                    selfAgent.AimWeapon();
-                    selfAgent.weaponFireForAI();
-                    coverAndShoot = false;
+                    switch(currentCoverShootingSubStage)
+                    {
+                        case CoverShootingSubStages.Cover:
+                            selfAgent.AimWeapon();
+                            currentCoverShootingSubStage = CoverShootingSubStages.Peek;
+                            break;
+                        case CoverShootingSubStages.Peek:
+                            selfAgent.weaponFireForAI();
+                            currentCoverShootingSubStage = CoverShootingSubStages.Shoot;
+                            break;
+                        case CoverShootingSubStages.Shoot:
+                            currentCoverShootingSubStage = CoverShootingSubStages.Cover;
+                            selfAgent.StopAiming();
+                            break;
+                    }
                 }
                 else
                 {
-                    selfAgent.StopAiming();
-                    selfAgent.weaponFireForAI();
-                    coverAndShoot = true;
+                    currentCombatSubStage = CombatSubStages.LookingForCover;
+                    setStepIntervalSize(1);
                 }
-
-
                 break;
             case CombatSubStages.LookingForCover:
 
@@ -98,7 +95,11 @@ public class CombatStage : BasicMovmentStage
 
                 if(!agent.pathPending && agent.remainingDistance >1)
                 {
-                    selfAgent.weaponFireForAI();
+                    if(Vector3.Distance(selfAgent.getCurrentPosition(),target.getCurrentPosition())< fireRangeDistance)
+                    {
+                        selfAgent.weaponFireForAI();
+                    }
+
                 }
                 else
                 {
@@ -107,6 +108,8 @@ public class CombatStage : BasicMovmentStage
                     // Get down on cover
                     selfAgent.toggleHide();
                     selfAgent.StopAiming();
+                    setStepIntervalSize(0.5f);
+
                 }
                 break;
         }
@@ -157,7 +160,6 @@ public class CombatStage : BasicMovmentStage
 
         if(tempIDealCoverPoint !=null)
         {
-            Debug.Log("Ideal cover poin");
             tempIDealCoverPoint.stPointOccupentsName(selfAgent.getName());
             return tempIDealCoverPoint;
         }
@@ -193,6 +195,11 @@ public class CombatStage : BasicMovmentStage
 
     #region Getters and Setters
 
+    public override void setWeaponFireCapability(bool enabled)
+    {
+        selfAgent.setWeponFireCapability(enabled);
+    }
+
     public override void setNavMeshAgent(NavMeshAgent navMeshAgent)
     {
         throw new System.NotImplementedException();
@@ -211,6 +218,11 @@ public class CombatStage : BasicMovmentStage
     private bool isCoverPointUsable(CoverPoint point)
     {
         return point.isSafeFromTarget() && point.canFireToTarget(fireRangeDistance);
+    }
+
+    public override void stopStageBehavior()
+    {
+        agent.isStopped = true;
     }
     #endregion
 

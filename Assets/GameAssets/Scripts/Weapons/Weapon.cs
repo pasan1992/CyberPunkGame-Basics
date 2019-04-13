@@ -34,6 +34,7 @@ public abstract class Weapon : MonoBehaviour
 
 
     protected bool triggerPulled = false;
+    protected bool weaponSafty = false;
 
 
     public void Awake()
@@ -123,6 +124,11 @@ public abstract class Weapon : MonoBehaviour
         return WEAPONTYPE.primary;
     }
 
+    public void setWeaponSafty(bool enabled)
+    {
+        weaponSafty = enabled;
+    }
+
     #endregion
 
     #region commands
@@ -130,15 +136,19 @@ public abstract class Weapon : MonoBehaviour
     protected IEnumerator waitAndRecoil()
     {
         yield return new WaitForSeconds(0.1f);
-        m_onWeaponFire(weaponRecoil);
-
-        if(gunMuzzle !=null)
+        if(this.enabled)
         {
-            gunMuzzle.Play();
-            gunFireLight.Play();
-            //m_audioScource.PlayOneShot(m_soundManager.getLaserFireAudioClip());
-            playWeaponFireSound();
+            m_onWeaponFire(weaponRecoil);
+
+            if (gunMuzzle != null)
+            {
+                gunMuzzle.Play();
+                gunFireLight.Play();
+                //m_audioScource.PlayOneShot(m_soundManager.getLaserFireAudioClip());
+                playWeaponFireSound();
+            }
         }
+
 
     }
 
@@ -150,7 +160,12 @@ public abstract class Weapon : MonoBehaviour
         Tempprojectile.transform.forward = (m_target.transform.position - targetPoint.transform.position).normalized;
         Tempprojectile.GetComponent<ProjectileBasic>().speed = 1f;
         Tempprojectile.GetComponent<ProjectileBasic>().setShooterName(m_ownerName);
-        StartCoroutine(waitAndRecoil());
+
+        if(this.isActiveAndEnabled)
+        {
+            StartCoroutine(waitAndRecoil());
+        }
+
     }
 
     //public void continouseFire()
@@ -175,7 +190,11 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void pullTrigger()
     {
-        triggerPulled = true;
+        if(!weaponSafty)
+        {
+            triggerPulled = true;
+        }
+
     }
 
     public virtual void releaseTrigger()

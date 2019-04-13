@@ -21,7 +21,7 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     private Vector3 m_movmentVector;
    
     // Attributes
-    public CharacterMainStates m_characterState = CharacterMainStates.Idle;
+    private CharacterMainStates m_characterState = CharacterMainStates.Idle;
     protected GameObject m_target;
     bool m_characterEnabled = true;
     #endregion
@@ -138,6 +138,11 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         StartCoroutine(fireWeapon());
     }
 
+    public virtual void WeaponFireForAICover()
+    {
+        StartCoroutine(fireWeaponCover());
+    }
+
     // Aim Current Weapon -
     public virtual void AimWeapon()
     {
@@ -248,6 +253,14 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     {
         return this.transform.position;
     }
+
+    public virtual void setWeponFireCapability(bool enadled)
+    {
+        if(m_equipmentSystem.getCurrentWeapon() !=null)
+        {
+            m_equipmentSystem.getCurrentWeapon().setWeaponSafty(!enadled);
+        }
+    }
     #endregion
 
     #region Events Handlers
@@ -337,6 +350,18 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         pullTrigger();
         yield return new WaitForSeconds(0.5f);
         releaseTrigger();
+    }
+
+    IEnumerator fireWeaponCover()
+    {
+        AimWeapon();
+        yield return new WaitForSeconds(2f);
+        AimWeapon();
+        pullTrigger();
+        yield return new WaitForSeconds(1f);
+        releaseTrigger();
+        yield return new WaitForSeconds(1f);
+        StopAiming();
     }
 
     public string getName()

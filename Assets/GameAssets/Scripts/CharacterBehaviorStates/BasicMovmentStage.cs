@@ -8,7 +8,7 @@ public abstract class BasicMovmentStage : ICharacterBehaviorState
     protected NavMeshAgent agent;
     protected ICyberAgent selfAgent;
 
-    protected float stepIntervalInSeconds = 1;
+    protected float stepIntervalInSeconds = 0.5f;
     protected float timeFromLastStep;
     protected bool enableRun;
 
@@ -53,4 +53,6 @@ public abstract class BasicMovmentStage : ICharacterBehaviorState
     }
 
     protected abstract void stepUpdate();
+    public abstract void setWeaponFireCapability(bool enabled);
+    public abstract void stopStageBehavior();
 }

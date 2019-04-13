@@ -32,6 +32,24 @@ public class AutoAgent : MonoBehaviour, AgentController
         {
             m_currentState.updateStage();
         }
+        else
+        {
+            m_currentState.stopStageBehavior();
+        }
     }
+    #endregion
+
+    #region events
+
+    void OnBecameVisible()
+    {
+        m_currentState.setWeaponFireCapability(true);
+    }
+
+    void OnBecameInvisible()
+    {
+        m_currentState.setWeaponFireCapability(false);
+    }
+
     #endregion
 }

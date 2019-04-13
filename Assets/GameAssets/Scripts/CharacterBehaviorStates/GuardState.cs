@@ -20,6 +20,16 @@ public class GuardState :ICharacterBehaviorState
         throw new System.NotImplementedException();
     }
 
+    public void setWeaponFireCapability(bool enabled)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void stopStageBehavior()
+    {
+        throw new System.NotImplementedException();
+    }
+
     public void updateStage()
     {
         throw new System.NotImplementedException();

@@ -94,11 +94,6 @@ public class AgentAnimationSystem
         m_animator.SetBool("crouched", crouched);
     }
 
-    public bool isCrouched()
-    {
-       return m_animator.GetBool("crouched");
-    }
-
     public bool isProperlyAimed()
     {
         return ( m_aimIK.solver.GetIKPositionWeight() > 0.3f);
@@ -126,5 +121,11 @@ public class AgentAnimationSystem
     {
         return m_animator;
     }
+
+    public bool isCrouched()
+    {
+        return m_animator.GetBool("crouched");
+    }
+
     #endregion
 }

@@ -8,7 +8,10 @@ public class PrimaryWeapon : Weapon
 
     public override void pullTrigger()
     {
-        base.pullTrigger();
+        if(!weaponSafty)
+        {
+            base.pullTrigger();
+        }
     }
 
     public override void releaseTrigger()
@@ -48,7 +51,12 @@ public class PrimaryWeapon : Weapon
         {
             burstFireInterval = 0;
             fireWeapon();
-            StartCoroutine(waitAndRecoil());
+
+            if(this.isActiveAndEnabled)
+            {
+                StartCoroutine(waitAndRecoil());
+            }
+
         }
     }
     #endregion

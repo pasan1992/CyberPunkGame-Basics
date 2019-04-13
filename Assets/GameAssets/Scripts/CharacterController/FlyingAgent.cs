@@ -179,6 +179,16 @@ public class FlyingAgent : MonoBehaviour,ICyberAgent
     {
         return this.name;
     }
+
+    public void WeaponFireForAICover()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void setWeponFireCapability(bool enadled)
+    {
+        throw new System.NotImplementedException();
+    }
     #endregion
 
 }

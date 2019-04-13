@@ -8,12 +8,16 @@ public class SecondaryWeapon : Weapon
 
     public override void pullTrigger()
     {
-        base.pullTrigger();
-        if(!waitToFire)
+        if(!weaponSafty)
         {
-            fireWeapon();
-            waitToFire = true;
+            base.pullTrigger();
+            if (!waitToFire)
+            {
+                fireWeapon();
+                waitToFire = true;
+            }
         }
+
     }
 
     public override void releaseTrigger()
