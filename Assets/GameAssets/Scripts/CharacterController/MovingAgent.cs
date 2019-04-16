@@ -368,5 +368,11 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     {
         return this.name;
     }
+
+    public Transform getTransfrom()
+    {
+        return this.transform;
+    }
+
     #endregion
 }

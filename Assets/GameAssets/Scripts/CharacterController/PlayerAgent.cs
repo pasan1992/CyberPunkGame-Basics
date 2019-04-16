@@ -31,7 +31,7 @@ public class PlayerAgent : MonoBehaviour,AgentController
         GameObject plane = GameObject.CreatePrimitive(PrimitiveType.Plane);
         plane.transform.parent = this.transform;
         plane.transform.localPosition = new Vector3(0, 1.24f, 0);
-        plane.transform.localScale = new Vector3(4, 4, 4);
+        plane.transform.localScale = new Vector3(7, 7, 7);
         plane.layer = 10; // Target layer 
         plane.GetComponent<MeshFilter>().mesh = null;
         plane.name = "TargetPlane";
@@ -84,7 +84,8 @@ public class PlayerAgent : MonoBehaviour,AgentController
         }
         else
         {
-            m_movingAgent.moveCharacter(getDirectionRelativeToCamera(new Vector3(Input.GetAxis("Vertical"), 0, -Input.GetAxis("Horizontal"))));
+            
+            m_movingAgent.moveCharacter(getDirectionRelativeToCamera((new Vector3(Input.GetAxis("Vertical"), 0, -Input.GetAxis("Horizontal"))).normalized));
         }
 
 

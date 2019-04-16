@@ -189,6 +189,16 @@ public class FlyingAgent : MonoBehaviour,ICyberAgent
     {
         throw new System.NotImplementedException();
     }
+
+    public void setHealth(float value)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public Transform getTransfrom()
+    {
+        throw new System.NotImplementedException();
+    }
     #endregion
 
 }

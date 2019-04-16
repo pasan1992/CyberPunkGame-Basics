@@ -13,6 +13,7 @@ TagManager:
   - Floor
   - Cover
   - Wall
+  - Head
   layers:
   - Default
   - TransparentFX

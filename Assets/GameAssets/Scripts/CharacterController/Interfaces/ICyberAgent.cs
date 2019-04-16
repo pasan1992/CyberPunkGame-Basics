@@ -25,4 +25,6 @@ public interface ICyberAgent
     string getName();
     void WeaponFireForAICover();
     void setWeponFireCapability(bool enadled);
+    void setHealth(float value);
+    Transform getTransfrom();
 }

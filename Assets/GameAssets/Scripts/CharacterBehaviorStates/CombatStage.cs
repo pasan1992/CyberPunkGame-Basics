@@ -5,7 +5,9 @@ using UnityEngine.AI;
 
 public class CombatStage : BasicMovmentStage
 {
-    private ICyberAgent target;
+    private ICyberAgent opponent;
+    private Collider[] targetLocations;
+    private Transform targetLocation;
     private CoverPoint[] coverPoints;
     private CoverPoint currentCoverPoint;
 
@@ -16,16 +18,18 @@ public class CombatStage : BasicMovmentStage
     private CoverShootingSubStages currentCoverShootingSubStage;
 
     // Parameters
-    float fireRangeDistance = 12;
+    float fireRangeDistance = 17;
 
     #region initalize
     public CombatStage(ICyberAgent selfAgent,ICyberAgent target,NavMeshAgent navMeshAgent):base(selfAgent,navMeshAgent)
     {
-        this.target = target;
+        this.opponent = target;
         coverPoints = GameObject.FindObjectsOfType<CoverPoint>();
         selfAgent.toggleHide();
         selfAgent.AimWeapon();
         selfAgent.togglepSecondaryWeapon();
+        targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
+        findTargetLocationToFire();
     }
     #endregion
 
@@ -36,7 +40,16 @@ public class CombatStage : BasicMovmentStage
     {
         // This is needed for calling step update.
         base.updateStage();
-        selfAgent.setTargetPoint(target.getCurrentPosition() + new Vector3(0,1.25f,0));
+
+        if(currentCombatSubStage.Equals(CombatSubStages.InCover))
+        {
+            selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 1f, 0));
+        }
+        else
+        {
+            selfAgent.setTargetPoint(targetLocation.position);
+        }
+
     }
 
     // Update function that get called for every 1 second.
@@ -47,6 +60,8 @@ public class CombatStage : BasicMovmentStage
 
     private void updateSubStages()
     {
+        findTargetLocationToFire();
+
         switch (currentCombatSubStage)
         {
             case CombatSubStages.InCover:
@@ -95,7 +110,7 @@ public class CombatStage : BasicMovmentStage
 
                 if(!agent.pathPending && agent.remainingDistance >1)
                 {
-                    if(Vector3.Distance(selfAgent.getCurrentPosition(),target.getCurrentPosition())< fireRangeDistance)
+                    if(Vector3.Distance(selfAgent.getCurrentPosition(),opponent.getCurrentPosition())< fireRangeDistance)
                     {
                         selfAgent.weaponFireForAI();
                     }
@@ -108,7 +123,7 @@ public class CombatStage : BasicMovmentStage
                     // Get down on cover
                     selfAgent.toggleHide();
                     selfAgent.StopAiming();
-                    setStepIntervalSize(0.5f);
+                    setStepIntervalSize(0.2f);
 
                 }
                 break;
@@ -133,7 +148,7 @@ public class CombatStage : BasicMovmentStage
         {
             if (!point.isOccupied())
             {
-                point.setTargetToCover(target);
+                point.setTargetToCover(opponent);
                 if(point.isSafeFromTarget())
                 {
 
@@ -170,27 +185,11 @@ public class CombatStage : BasicMovmentStage
         }
     }
     
-    private IEnumerator weaponFire()
+    private void findTargetLocationToFire()
     {
-        if(currentCombatSubStage.Equals(CombatSubStages.InCover))
-        {
-            selfAgent.AimWeapon();
-            yield return new WaitForSeconds(0.5f);
-            selfAgent.pullTrigger();
-            yield return new WaitForSeconds(0.5f);
-            selfAgent.releaseTrigger();
-            selfAgent.StopAiming();
-        }
-        else
-        {
-            yield return new WaitForSeconds(0.4f);
-            selfAgent.pullTrigger();
-            yield return new WaitForSeconds(0.2f);
-            selfAgent.releaseTrigger();
-            yield return new WaitForSeconds(0.2f);
-        }
+        int randomIndex = Random.Range(0, targetLocations.Length - 1);
+        targetLocation = targetLocations[randomIndex].transform;
     }
-
     #endregion
 
     #region Getters and Setters
@@ -207,7 +206,7 @@ public class CombatStage : BasicMovmentStage
 
     public override void setTargets(ICyberAgent target)
     {
-        this.target = target;
+        this.opponent = target;
     }
 
     public override void setStepIntervalSize(float timeInSeconds)

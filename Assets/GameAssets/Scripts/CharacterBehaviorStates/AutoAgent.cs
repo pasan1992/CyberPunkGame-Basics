@@ -10,6 +10,7 @@ public class AutoAgent : MonoBehaviour, AgentController
     protected ICyberAgent m_movingAgent;
     protected ICharacterBehaviorState m_currentState;
     protected NavMeshAgent m_navMeshAgent;
+    public float health;
 
     public void setMovableAgent(ICyberAgent agent)
     {
@@ -22,6 +23,8 @@ public class AutoAgent : MonoBehaviour, AgentController
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
         m_movingAgent = this.GetComponent<ICyberAgent>();
         m_currentState = new CombatStage(m_movingAgent, target,m_navMeshAgent);
+        m_movingAgent.setHealth(health);
+        m_movingAgent.setWeponFireCapability(false);
     }
     #endregion
 
@@ -43,6 +46,7 @@ public class AutoAgent : MonoBehaviour, AgentController
 
     void OnBecameVisible()
     {
+        Debug.Log("Visible");
         m_currentState.setWeaponFireCapability(true);
     }
 

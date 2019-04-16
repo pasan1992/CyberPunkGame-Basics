@@ -26,21 +26,17 @@ public class CoverPoint : MonoBehaviour, IPoints
             string[] layerMaskNames = { "FullCOverObsticles", "Enemy" };
             if (Physics.Raycast(transform.position+ new Vector3(0,2f,0), target.getCurrentPosition() - this.transform.position - new Vector3(0, 2f, 0), out hit, maximumFiringDistance, LayerMask.GetMask(layerMaskNames)))
             {
-                Debug.Log(hit.transform.name);
-                Debug.Log(hit.transform.root.name);
                 if(hit.transform.root.name == target.getName())
                 {
                     return true;
                 }
                 else
                 {
-                    Debug.Log("Cannot Fire");
                     return false;
                 }
             }
             else
             {
-                Debug.Log("Cannot find any");
                 return false;
             }
         }
