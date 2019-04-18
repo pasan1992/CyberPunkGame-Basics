@@ -11,7 +11,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/Old-NotUpdated/Testing/Gameplay/TopDownMovment.unity
     guid: 0b5c3d864c6a62e499b7f89b8e717210
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Mobile/Mobile.unity
     guid: 8394f1f02bcbcaf4f8b279bb8f7e3f93
+  - enabled: 1
+    path: Assets/Scenes/PC/GameplayDemoScene.unity
+    guid: 52ba55fb6c5c3104e8c0b0410d7b68bb
   m_configObjects: {}

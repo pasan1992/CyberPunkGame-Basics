@@ -265,5 +265,10 @@ public class AIAgent : MonoBehaviour, AgentController
         setInScreenLimit(false);
     }
 
+    public float getSkill()
+    {
+        throw new System.NotImplementedException();
+    }
+
     #endregion
 }

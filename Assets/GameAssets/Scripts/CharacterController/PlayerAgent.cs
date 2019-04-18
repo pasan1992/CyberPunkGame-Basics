@@ -181,5 +181,10 @@ public class PlayerAgent : MonoBehaviour,AgentController
 
         return forward * direction.x - right * direction.z;
     }
+
+    public float getSkill()
+    {
+        throw new System.NotImplementedException();
+    }
     #endregion
 }

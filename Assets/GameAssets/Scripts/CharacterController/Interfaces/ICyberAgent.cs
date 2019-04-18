@@ -27,4 +27,5 @@ public interface ICyberAgent
     void setWeponFireCapability(bool enadled);
     void setHealth(float value);
     Transform getTransfrom();
+    void dodgeAttack(Vector3 dodgeDirection);
 }

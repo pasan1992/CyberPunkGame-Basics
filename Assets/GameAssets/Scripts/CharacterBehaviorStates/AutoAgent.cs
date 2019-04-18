@@ -11,18 +11,14 @@ public class AutoAgent : MonoBehaviour, AgentController
     protected ICharacterBehaviorState m_currentState;
     protected NavMeshAgent m_navMeshAgent;
     public float health;
-
-    public void setMovableAgent(ICyberAgent agent)
-    {
-        throw new System.NotImplementedException();
-    }
+    public float skillLevel;
 
     #region initaialize
     void Start()
     {
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
         m_movingAgent = this.GetComponent<ICyberAgent>();
-        m_currentState = new CombatStage(m_movingAgent, target,m_navMeshAgent);
+        m_currentState = new CombatStage(m_movingAgent, target,m_navMeshAgent,this);
         m_movingAgent.setHealth(health);
         m_movingAgent.setWeponFireCapability(false);
     }
@@ -53,6 +49,20 @@ public class AutoAgent : MonoBehaviour, AgentController
     void OnBecameInvisible()
     {
         m_currentState.setWeaponFireCapability(false);
+    }
+
+    #endregion
+
+    #region getters and setters
+
+    public float getSkill()
+    {
+        return skillLevel;
+    }
+
+    public void setMovableAgent(ICyberAgent agent)
+    {
+        m_movingAgent = agent;
     }
 
     #endregion

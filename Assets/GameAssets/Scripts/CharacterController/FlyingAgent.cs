@@ -199,6 +199,11 @@ public class FlyingAgent : MonoBehaviour,ICyberAgent
     {
         throw new System.NotImplementedException();
     }
+
+    public void dodgeAttack(Vector3 dodgeDirection)
+    {
+        throw new System.NotImplementedException();
+    }
     #endregion
 
 }

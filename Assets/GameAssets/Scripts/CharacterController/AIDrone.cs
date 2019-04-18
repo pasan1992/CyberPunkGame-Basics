@@ -74,6 +74,11 @@ public class AIDrone : MonoBehaviour, AgentController
     {
     }
 
+    public float getSkill()
+    {
+        throw new System.NotImplementedException();
+    }
+
     #endregion
 
     #region events

@@ -10,6 +10,8 @@ public class CombatStage : BasicMovmentStage
     private Transform targetLocation;
     private CoverPoint[] coverPoints;
     private CoverPoint currentCoverPoint;
+    private Vector3 randomOffset = Vector3.zero;
+    private AgentController autoAgent;
 
     public enum CombatSubStages { LookingForCover,MovingToCover, InCover }
     private CombatSubStages currentCombatSubStage = CombatSubStages.LookingForCover;
@@ -21,13 +23,14 @@ public class CombatStage : BasicMovmentStage
     float fireRangeDistance = 17;
 
     #region initalize
-    public CombatStage(ICyberAgent selfAgent,ICyberAgent target,NavMeshAgent navMeshAgent):base(selfAgent,navMeshAgent)
+    public CombatStage(ICyberAgent selfAgent,ICyberAgent target,NavMeshAgent navMeshAgent, AgentController autoAgent) :base(selfAgent,navMeshAgent)
     {
         this.opponent = target;
         coverPoints = GameObject.FindObjectsOfType<CoverPoint>();
         selfAgent.toggleHide();
         selfAgent.AimWeapon();
         selfAgent.togglepSecondaryWeapon();
+        this.autoAgent = autoAgent;
         targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
         findTargetLocationToFire();
     }
@@ -43,11 +46,11 @@ public class CombatStage : BasicMovmentStage
 
         if(currentCombatSubStage.Equals(CombatSubStages.InCover))
         {
-            selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 1f, 0));
+            selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 1.1f, 0)+ randomOffset);
         }
         else
         {
-            selfAgent.setTargetPoint(targetLocation.position);
+            selfAgent.setTargetPoint(targetLocation.position + randomOffset);
         }
 
     }
@@ -110,10 +113,23 @@ public class CombatStage : BasicMovmentStage
 
                 if(!agent.pathPending && agent.remainingDistance >1)
                 {
-                    if(Vector3.Distance(selfAgent.getCurrentPosition(),opponent.getCurrentPosition())< fireRangeDistance)
+
+                    if(agent.remainingDistance > 3 && Vector3.Distance(selfAgent.getCurrentPosition(),opponent.getCurrentPosition()) > fireRangeDistance)
                     {
-                        selfAgent.weaponFireForAI();
+                        enableRun = true;
+                        selfAgent.StopAiming();
                     }
+                    else
+                    {
+                        if (Vector3.Distance(selfAgent.getCurrentPosition(), opponent.getCurrentPosition()) < fireRangeDistance)
+                        {
+                            selfAgent.AimWeapon();
+                            enableRun = false;
+                            selfAgent.weaponFireForAI();
+                        }
+                    }
+
+
 
                 }
                 else
@@ -123,7 +139,7 @@ public class CombatStage : BasicMovmentStage
                     // Get down on cover
                     selfAgent.toggleHide();
                     selfAgent.StopAiming();
-                    setStepIntervalSize(0.2f);
+                    setStepIntervalSize(0.8f);
 
                 }
                 break;
@@ -189,6 +205,16 @@ public class CombatStage : BasicMovmentStage
     {
         int randomIndex = Random.Range(0, targetLocations.Length - 1);
         targetLocation = targetLocations[randomIndex].transform;
+
+        if(Random.value > autoAgent.getSkill())
+        {
+            randomOffset = Random.insideUnitSphere * 2;
+        }
+        else
+        {
+            randomOffset = Vector3.zero;
+        }
+
     }
     #endregion
 
