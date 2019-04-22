@@ -42,7 +42,7 @@ public class AutoAgent : MonoBehaviour, AgentController
 
     void OnBecameVisible()
     {
-        Debug.Log("Visible");
+        //Debug.Log("Visible");
         m_currentState.setWeaponFireCapability(true);
     }
 

@@ -14,7 +14,6 @@ public interface ICyberAgent
     void togglepSecondaryWeapon();
     void togglePrimaryWeapon();
     bool IsFunctional();
-    string getNamge();
     void DestroyCharacter();
     Vector3 getCurrentPosition();
     void toggleHide();
@@ -28,4 +27,6 @@ public interface ICyberAgent
     void setHealth(float value);
     Transform getTransfrom();
     void dodgeAttack(Vector3 dodgeDirection);
+    void lookAtTarget();
+    Vector3 getTopPosition();
 }

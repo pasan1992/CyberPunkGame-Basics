@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using RootMotion.FinalIK;
 
-public class EquipmentSystem
+public class HumanoidEquipmentModule
 {
     #region protectedParameters
     protected Weapon m_currentWeapon;
@@ -16,12 +16,12 @@ public class EquipmentSystem
     protected Recoil m_recoil;
     protected string m_owner;
     protected MovingAgent.CharacterMainStates m_currentState;
-    protected AgentAnimationSystem m_animationSystem;
+    protected HumanoidAnimationModule m_animationSystem;
 
     private bool m_inEquipingAction = false;
     #endregion
 
-    public EquipmentSystem(Weapon[] weapons, WeaponProp[] props, string owner, MovingAgent.CharacterMainStates state,GameObject target,Recoil recoil,AgentAnimationSystem animSystem)
+    public HumanoidEquipmentModule(Weapon[] weapons, WeaponProp[] props, string owner, MovingAgent.CharacterMainStates state,GameObject target,Recoil recoil, HumanoidAnimationModule animSystem)
     {
         m_owner = owner;
         m_currentState = state;
@@ -86,12 +86,14 @@ public class EquipmentSystem
         {
             case Weapon.WEAPONTYPE.primary:
                 // Select rifle as currentWeapon
+              //  Debug.Log("Primary Equip finished");
                 m_rifleProp.setVisible(false);
                 m_currentWeapon = m_rifle;
                 break;
 
             case Weapon.WEAPONTYPE.secondary:
                 // Select pistol as currentWeapon
+               // Debug.Log("Secondary Equip finished");
                 m_pistolProp.setVisible(false);
                 m_currentWeapon = m_pistol;
                 break;
@@ -114,10 +116,12 @@ public class EquipmentSystem
         {
             case Weapon.WEAPONTYPE.primary:
                 m_rifleProp.setVisible(true);
+               // Debug.Log("Primary Unequip Finished");
                 break;
 
             case Weapon.WEAPONTYPE.secondary:
                 m_pistolProp.setVisible(true);
+                //Debug.Log("Secondary Unequip Finished");
                 break;
         }
     }
@@ -195,8 +199,10 @@ public class EquipmentSystem
 
     public MovingAgent.CharacterMainStates togglePrimary()
     {
+        
         if (!m_inEquipingAction)
         {
+            //Debug.Log("Toggle Primary Start");
             m_animationSystem.setCurretnWeapon(1);
 
             if (m_currentWeapon != null)
@@ -240,8 +246,10 @@ public class EquipmentSystem
 
     public MovingAgent.CharacterMainStates toggleSecondary()
     {
+        
         if (!m_inEquipingAction)
         {
+            //Debug.Log("Toggle Secondary Start");
             m_animationSystem.setCurretnWeapon(0);
 
             if (m_currentWeapon != null)

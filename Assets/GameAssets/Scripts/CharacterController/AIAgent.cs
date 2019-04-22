@@ -52,8 +52,8 @@ public class AIAgent : MonoBehaviour, AgentController
             }
 
         }
-        tempFloat = Random.value * 10 + Random.value * 2;
-        tempFloat2 = Random.value * 4 + Random.value * 4;
+        tempFloat = Random.value * 2 + Random.value * 2;
+        tempFloat2 = Random.value * 2 + Random.value * 2;
     }
 
     public void Start()

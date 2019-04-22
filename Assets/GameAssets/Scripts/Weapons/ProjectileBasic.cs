@@ -36,6 +36,7 @@ public class ProjectileBasic : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         string tag = other.tag;
+        //Debug.Log(other.name);
         switch (tag)
         {
             case "Enemy":         
@@ -58,8 +59,10 @@ public class ProjectileBasic : MonoBehaviour
 
         if (movingAgnet != null && !hit)
         {
-            if (!shooterName.Equals(movingAgnet.getNamge()))
+            if (!shooterName.Equals(movingAgnet.getName()))
             {
+                //Debug.Log(other.name);
+
                 hit = true;
                 movingAgnet.reactOnHit(other, (this.transform.forward) * 5f, other.transform.position);
                 movingAgnet.damageAgent(1);

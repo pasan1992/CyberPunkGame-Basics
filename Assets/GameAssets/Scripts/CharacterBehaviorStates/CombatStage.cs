@@ -21,6 +21,8 @@ public class CombatStage : BasicMovmentStage
 
     // Parameters
     float fireRangeDistance = 17;
+    int shotsFromCover = 3;
+    int currentShotsFromCover = 0;
 
     #region initalize
     public CombatStage(ICyberAgent selfAgent,ICyberAgent target,NavMeshAgent navMeshAgent, AgentController autoAgent) :base(selfAgent,navMeshAgent)
@@ -69,35 +71,65 @@ public class CombatStage : BasicMovmentStage
         {
             case CombatSubStages.InCover:
 
-                if(currentCoverPoint.isSafeFromTarget() && currentCoverPoint.canFireToTarget(fireRangeDistance))
+                //Debug.Log("In Cover");
+
+                selfAgent.lookAtTarget();
+
+                if (currentCoverPoint.isSafeFromTarget() && currentCoverPoint.canFireToTarget(fireRangeDistance))
                 {
                     switch(currentCoverShootingSubStage)
                     {
                         case CoverShootingSubStages.Cover:
+
                             selfAgent.AimWeapon();
                             currentCoverShootingSubStage = CoverShootingSubStages.Peek;
+
+                            shotsFromCover = (int)(Random.value * 5);
+                            //Debug.Log(shotsFromCover);
+
                             break;
                         case CoverShootingSubStages.Peek:
+
                             selfAgent.weaponFireForAI();
                             currentCoverShootingSubStage = CoverShootingSubStages.Shoot;
+                            setStepIntervalSize(0.3f);
+
                             break;
                         case CoverShootingSubStages.Shoot:
-                            currentCoverShootingSubStage = CoverShootingSubStages.Cover;
-                            selfAgent.StopAiming();
+
+
+                            currentShotsFromCover++;
+                            
+                            if(currentShotsFromCover > shotsFromCover)
+                            {
+                                currentCoverShootingSubStage = CoverShootingSubStages.Cover;
+                                currentShotsFromCover = 0;
+                                selfAgent.StopAiming();
+                                setStepIntervalSize(0.8f);
+                            }
+                            else
+                            {
+                                currentCoverShootingSubStage = CoverShootingSubStages.Peek;
+                            }
+                            
+
+
                             break;
                     }
                 }
                 else
                 {
+                    //Debug.Log("Cover is not safe or cannot fire to target");
                     currentCombatSubStage = CombatSubStages.LookingForCover;
                     setStepIntervalSize(1);
                 }
                 break;
             case CombatSubStages.LookingForCover:
-
-                if(currentCoverPoint)
+                //Debug.Log("Looking for cover");
+                if (currentCoverPoint)
                 {
                     currentCoverPoint.stPointOccupentsName("");
+                    currentCoverPoint.setOccupent(null);
                 }
 
                 currentCoverPoint = closestCombatLocationAvaialbe();
@@ -110,8 +142,8 @@ public class CombatStage : BasicMovmentStage
                 break;
 
             case CombatSubStages.MovingToCover:
-
-                if(!agent.pathPending && agent.remainingDistance >1)
+                //Debug.Log("Moving to cover");
+                if (!agent.pathPending && agent.remainingDistance >1)
                 {
 
                     if(agent.remainingDistance > 3 && Vector3.Distance(selfAgent.getCurrentPosition(),opponent.getCurrentPosition()) > fireRangeDistance)
@@ -134,12 +166,14 @@ public class CombatStage : BasicMovmentStage
                 }
                 else
                 {
+                    selfAgent.lookAtTarget();
                     currentCombatSubStage = CombatSubStages.InCover;
 
                     // Get down on cover
                     selfAgent.toggleHide();
                     selfAgent.StopAiming();
                     setStepIntervalSize(0.8f);
+                    agent.velocity = Vector3.zero;
 
                 }
                 break;
@@ -192,11 +226,13 @@ public class CombatStage : BasicMovmentStage
         if(tempIDealCoverPoint !=null)
         {
             tempIDealCoverPoint.stPointOccupentsName(selfAgent.getName());
+            tempIDealCoverPoint.setOccupent(selfAgent);
             return tempIDealCoverPoint;
         }
         else
         {
             tempSafeCOverPoint.stPointOccupentsName(selfAgent.getName());
+            tempSafeCOverPoint.setOccupent(selfAgent);
             return tempSafeCOverPoint;
         }
     }

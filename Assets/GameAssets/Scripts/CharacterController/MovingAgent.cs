@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using RootMotion.FinalIK;
+using UnityEngine.AI;
 
 public class MovingAgent : MonoBehaviour,ICyberAgent
 {
@@ -13,17 +14,20 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
    // public bool isPlayer = false;
 
     // Attribute - Systems
-    protected EquipmentSystem m_equipmentSystem;
-    protected AgentAnimationSystem m_animationSystem;
-    protected AgentMovmentSystem m_movmentSystem;
-    protected DamageSystem m_damageSystem;
+    protected HumanoidEquipmentModule m_equipmentSystem;
+    protected HumanoidAnimationModule m_animationModule;
+    protected HumanoidMovmentModule m_movmentModule;
+    protected HumanoidDamageModule m_damageSystem;
     //protected AgentController m_agentController;
     private Vector3 m_movmentVector;
+
+    private NavMeshAgent tempNavMeshAgent;
    
     // Attributes
     private CharacterMainStates m_characterState = CharacterMainStates.Idle;
     protected GameObject m_target;
     bool m_characterEnabled = true;
+    protected Transform headTransfrom;
     #endregion
 
     #region initalize
@@ -35,18 +39,18 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         // Create Animation system.
         AimIK m_aimIK = this.GetComponent<AimIK>();
         m_aimIK.solver.target = m_target.transform;
-        m_animationSystem = new AgentAnimationSystem(this.GetComponent<Animator>(), this.GetComponent<AimIK>(), 10);
+        m_animationModule = new HumanoidAnimationModule(this.GetComponent<Animator>(), this.GetComponent<AimIK>(), 10);
 
         // Create equipment system.
         Weapon[] m_currentWeapons = this.GetComponentsInChildren<Weapon>();
         WeaponProp[] m_currentWeaponProps = this.GetComponentsInChildren<WeaponProp>();
-        m_equipmentSystem = new EquipmentSystem(m_currentWeapons, m_currentWeaponProps, this.transform.name, m_characterState, m_target,GetComponent<Recoil>(),m_animationSystem);
+        m_equipmentSystem = new HumanoidEquipmentModule(m_currentWeapons, m_currentWeaponProps, this.transform.name, m_characterState, m_target,GetComponent<Recoil>(),m_animationModule);
 
 
         // Create movment system.
-        m_movmentSystem = new AgentMovmentSystem(this.transform,m_characterState,m_target,m_animationSystem);
+        m_movmentModule = new HumanoidMovmentModule(this.transform,m_characterState,m_target,m_animationModule);
 
-        m_damageSystem = new DamageSystem(5, this.GetComponent<RagdollUtility>(), this.GetComponentInChildren<HitReaction>());
+        m_damageSystem = new HumanoidDamageModule(5, this.GetComponent<RagdollUtility>(), this.GetComponentInChildren<HitReaction>());
         
         //if(isPlayer)
         //{
@@ -65,6 +69,16 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         {
             wp.SetGunTargetLineStatus(true);
         }
+
+        tempNavMeshAgent = this.GetComponent<NavMeshAgent>();
+
+        foreach(Rigidbody rb in this.GetComponentsInChildren<Rigidbody>())
+        {
+            if(rb.tag =="Head")
+            {
+                headTransfrom = rb.transform;
+            }
+        }
     }
     #endregion
 
@@ -75,8 +89,8 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         if (m_characterEnabled)
         {
             // Update Systems.
-            m_animationSystem.UpdateAnimationState(m_characterState);
-            m_movmentSystem.UpdateMovmentSystem(m_characterState, m_movmentVector);
+            m_animationModule.UpdateAnimationState(m_characterState);
+            m_movmentModule.UpdateMovment((int)m_characterState, m_movmentVector);
             m_equipmentSystem.UpdateSystem(m_characterState);
 
             //if (m_characterEnabled && m_agentController != null)
@@ -175,12 +189,12 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         m_equipmentSystem.DropCurrentWeapon();
         m_characterEnabled = false;
         m_damageSystem.destroyCharacter();
-        m_animationSystem.disableAnimationSystem();
+        m_animationModule.disableAnimationSystem();
     }
 
     public void toggleHide()
     {
-        m_animationSystem.toggleCrouched();
+        m_animationModule.toggleCrouched();
     }
 
     public void togglePrimaryWeapon()
@@ -203,10 +217,11 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         if (!m_characterState.Equals(CharacterMainStates.Dodge))
         {
             m_characterState = CharacterMainStates.Dodge;
-            m_animationSystem.triggerDodge();
-            m_movmentSystem.dodge(dodgeDirection);
+            m_animationModule.triggerDodge();
+            m_movmentModule.dodge(dodgeDirection);
             //m_equipmentSystem.aimCurrentEquipment(false);
             m_equipmentSystem.releaseTrigger();
+            //tempNavMeshAgent.enabled = false;
         }
     }
 
@@ -219,14 +234,9 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         return m_damageSystem.IsFunctional();
     }
 
-    public string getNamge()
-    {
-        return this.name;
-    }
-
     public bool isEquiped()
     {
-        return m_animationSystem.isEquiped() && (m_characterState.Equals(CharacterMainStates.Armed_not_Aimed) || m_characterState.Equals(CharacterMainStates.Aimed));
+        return m_animationModule.isEquiped() && (m_characterState.Equals(CharacterMainStates.Armed_not_Aimed) || m_characterState.Equals(CharacterMainStates.Aimed));
     }
 
     public void setTargetPoint(Vector3 position)
@@ -246,12 +256,17 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
 
     public void enableTranslateMovment(bool enable)
     {
-        m_movmentSystem.enableTranslateMovment(enable);
+        m_movmentModule.enableTranslateMovment(enable);
     }
 
     public Vector3 getCurrentPosition()
     {
         return this.transform.position;
+    }
+
+    public Vector3 getTopPosition()
+    {
+        return headTransfrom.position;
     }
 
     public virtual void setWeponFireCapability(bool enadled)
@@ -260,6 +275,11 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         {
             m_equipmentSystem.getCurrentWeapon().setWeaponSafty(!enadled);
         }
+    }
+
+    public void lookAtTarget()
+    {
+        m_movmentModule.lookAtTarget();
     }
     #endregion
 
@@ -301,8 +321,7 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
 
     public void DodgeEnd()
     {
-
-        if(m_animationSystem.isEquiped())
+        if(m_animationModule.isEquiped())
         {
             m_characterState = CharacterMainStates.Armed_not_Aimed;
         }
@@ -311,6 +330,7 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
             Debug.Log("idle");
             m_characterState = CharacterMainStates.Idle;
         }
+        //tempNavMeshAgent.enabled = true;
     }
     #endregion
 

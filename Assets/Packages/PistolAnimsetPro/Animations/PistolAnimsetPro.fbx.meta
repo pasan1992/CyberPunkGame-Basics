@@ -14434,7 +14434,7 @@ ModelImporter:
       name: Pistol_UnEquip
       takeName: Pistol_UnEquip
       firstFrame: 0
-      lastFrame: 40
+      lastFrame: 19
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

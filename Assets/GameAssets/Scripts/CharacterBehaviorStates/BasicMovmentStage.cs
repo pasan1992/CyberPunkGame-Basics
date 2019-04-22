@@ -30,13 +30,10 @@ public abstract class BasicMovmentStage : ICharacterBehaviorState
         if (!agent.pathPending)
         {
             Vector3 velocity = agent.desiredVelocity;
+
             if (!enableRun)
             {
                 velocity = velocity.normalized;
-            }
-            else
-            {
-                velocity = velocity;
             }
 
             velocity = new Vector3(velocity.x, 0, velocity.z);

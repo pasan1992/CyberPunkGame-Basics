@@ -1,16 +1,14 @@
 ﻿using UnityEngine;
 using RootMotion.FinalIK;
 
-public class AgentAnimationSystem
+public class HumanoidAnimationModule : AnimationModule
 {
     // Start is called before the first frame update
-    protected Animator m_animator;
     protected AimIK m_aimIK;
     protected float m_aimSpeed = 10;
 
-    public AgentAnimationSystem(Animator animator, AimIK m_aimIK,float AimSpeed)
+    public HumanoidAnimationModule(Animator animator, AimIK m_aimIK,float AimSpeed):base(animator)
     {
-        m_animator = animator;
         this.m_aimIK = m_aimIK;
         m_aimSpeed = AimSpeed;
     }
@@ -76,7 +74,7 @@ public class AgentAnimationSystem
         return m_animator.GetBool("equip");
     }
 
-    public void setMovment(float forward,float side)
+    public override void setMovment(float forward,float side)
     {
         m_animator.SetFloat("forward", forward);
         m_animator.SetFloat("side", side);
@@ -99,7 +97,7 @@ public class AgentAnimationSystem
         return ( m_aimIK.solver.GetIKPositionWeight() > 0.3f);
     }
 
-    public void disableAnimationSystem()
+    public override void disableAnimationSystem()
     {
         m_animator.enabled = false;
         m_aimIK.enabled = false;

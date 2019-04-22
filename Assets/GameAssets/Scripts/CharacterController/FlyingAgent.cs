@@ -9,13 +9,16 @@ public class FlyingAgent : MonoBehaviour,ICyberAgent
     public float speed;
     public float health = 5;
 
-    public enum FLYINGSTATE { AIMED,IDLE}
-    public FLYINGSTATE m_currentFlyingState = FLYINGSTATE.IDLE;
+    public MovmentModule.BASIC_MOVMENT_STATE m_currentFlyingState = MovmentModule.BASIC_MOVMENT_STATE.DIRECTIONAL_MOVMENT;
 
     private Vector3 m_movmentDirection;
     private GameObject m_target;
     private bool m_enableTransfromMovment;
 
+    // Modules
+    private AnimationModule m_animationModule;
+    private MovmentModule m_movmentModule;
+    private DamageModule m_damageModule;
 
 
     #region initalize
@@ -23,6 +26,9 @@ public class FlyingAgent : MonoBehaviour,ICyberAgent
     {
         m_target = new GameObject();
         m_target.transform.position = Vector3.zero;
+        m_animationModule = new AnimationModule(this.GetComponentInChildren<Animator>());
+        m_movmentModule = new MovmentModule(m_target, this.transform);
+        m_damageModule = new DamageModule(health);
     }
     #endregion
 
@@ -32,68 +38,79 @@ public class FlyingAgent : MonoBehaviour,ICyberAgent
     // Update is called once per frame
     void Update()
     {
-        updateMovment();
+        m_movmentModule.UpdateMovment((int)m_currentFlyingState, m_movmentDirection);
     }
 
-    protected void updateMovment()
-    {
-        switch (m_currentFlyingState)
-        {
-            case FLYINGSTATE.AIMED:
+    //protected void updateMovment()
+    //{
+    //    switch (m_currentFlyingState)
+    //    {
+    //        case FLYINGSTATE.AIMED:
 
-                if(m_target != null)
-                {
-                    this.transform.LookAt(m_target.transform.position);
-                }
+    //            if(m_target != null)
+    //            {
+    //                this.transform.LookAt(m_target.transform.position);
+    //            }
 
-                if(m_enableTransfromMovment)
-                {
-                    Vector3 selfTransfromMovementDirection = this.transform.InverseTransformDirection(m_movmentDirection);
-                    this.transform.Translate(selfTransfromMovementDirection);
-                }
+    //            if(m_enableTransfromMovment)
+    //            {
+    //                Vector3 selfTransfromMovementDirection = this.transform.InverseTransformDirection(m_movmentDirection);
+    //                this.transform.Translate(selfTransfromMovementDirection);
+    //            }
 
-                break;
-            case FLYINGSTATE.IDLE:
+    //            break;
+    //        case FLYINGSTATE.IDLE:
 
-                if (m_movmentDirection.magnitude > 0)
-                {
-                    Vector3 moveDirection = new Vector3(m_movmentDirection.x, 0, m_movmentDirection.z);
-                    this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(moveDirection, Vector3.up), 5f * Time.deltaTime);
-                }
+    //            if (m_movmentDirection.magnitude > 0)
+    //            {
+    //                Vector3 moveDirection = new Vector3(m_movmentDirection.x, 0, m_movmentDirection.z);
+    //                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(moveDirection, Vector3.up), 5f * Time.deltaTime);
+    //            }
 
-                if (m_enableTransfromMovment)
-                {
-                    this.transform.Translate(Vector3.forward * m_movmentDirection.magnitude);
-                }
-                break;
-        }
-    }
+    //            if (m_enableTransfromMovment)
+    //            {
+    //                this.transform.Translate(Vector3.forward * m_movmentDirection.magnitude);
+    //            }
+    //            break;
+    //    }
+    //}
 
     #endregion
 
     #region getters and setters
+
+    public void setHealth(float value)
+    {
+        m_damageModule.setHealth(value);
+    }
 
     public void setTargetPoint(Vector3 position)
     {
         m_target.transform.position = position;
     }
 
-    public string getNamge()
+    public Vector3 getCurrentPosition()
+    {
+        return this.transform.position;
+    }
+
+    public bool IsFunctional()
+    {
+        return m_damageModule.IsFunctional();
+    }
+
+    public string getName()
     {
         return this.name;
     }
 
-    Vector3 getCurrentPosition()
-    {
-        return this.transform.position;
-    }
     #endregion
 
     #region commands
 
     public void DestroyCharacter()
     {
-
+        m_damageModule.destroyCharacter();
     }
 
     public void enableTranslateMovment(bool enable)
@@ -103,56 +120,52 @@ public class FlyingAgent : MonoBehaviour,ICyberAgent
 
     public void damageAgent(float amount)
     {
-        health -= amount;
-        if(health <0)
-        {
-            health = 0;
-        }
+        m_damageModule.DamageByAmount(amount);
     }
 
     public void moveCharacter(Vector3 movmentDirection)
     {
         m_movmentDirection = movmentDirection;
+        m_animationModule.setMovment(movmentDirection.x,movmentDirection.z);
     }
 
     public void AimWeapon()
     {
-       m_currentFlyingState = FLYINGSTATE.AIMED; 
+        m_currentFlyingState = MovmentModule.BASIC_MOVMENT_STATE.AIMED_MOVMENT;
     }
 
     public void StopAiming()
     {
-        m_currentFlyingState = FLYINGSTATE.IDLE;
+        m_currentFlyingState = MovmentModule.BASIC_MOVMENT_STATE.DIRECTIONAL_MOVMENT;
     }
+    #endregion
 
-    public void reactOnHit(Collider collider, Vector3 force, Vector3 point)
-    {
+    #region un-implemented functions 
 
-    }
-
-    public bool IsFunctional()
-    {
-        return health > 0;
-    }
-
-    Vector3 ICyberAgent.getCurrentPosition()
+    public void WeaponFireForAICover()
     {
         throw new System.NotImplementedException();
     }
 
-    public void togglepSecondaryWeapon()
+    public void setWeponFireCapability(bool enadled)
     {
-
+        throw new System.NotImplementedException();
     }
 
-    public void togglePrimaryWeapon()
-    {
 
+    public Transform getTransfrom()
+    {
+        throw new System.NotImplementedException();
     }
 
-    public void toggleHide()
+    public void dodgeAttack(Vector3 dodgeDirection)
     {
+        throw new System.NotImplementedException();
+    }
 
+    public void lookAtTarget()
+    {
+        throw new System.NotImplementedException();
     }
 
     public bool isEquiped()
@@ -175,34 +188,29 @@ public class FlyingAgent : MonoBehaviour,ICyberAgent
         throw new System.NotImplementedException();
     }
 
-    public string getName()
+    public void reactOnHit(Collider collider, Vector3 force, Vector3 point)
     {
-        return this.name;
+
     }
 
-    public void WeaponFireForAICover()
+    public void togglepSecondaryWeapon()
     {
-        throw new System.NotImplementedException();
+
     }
 
-    public void setWeponFireCapability(bool enadled)
+    public void togglePrimaryWeapon()
     {
-        throw new System.NotImplementedException();
+
     }
 
-    public void setHealth(float value)
+    public void toggleHide()
     {
-        throw new System.NotImplementedException();
+
     }
 
-    public Transform getTransfrom()
+    public Vector3 getTopPosition()
     {
-        throw new System.NotImplementedException();
-    }
-
-    public void dodgeAttack(Vector3 dodgeDirection)
-    {
-        throw new System.NotImplementedException();
+        return Vector3.zero;
     }
     #endregion
 

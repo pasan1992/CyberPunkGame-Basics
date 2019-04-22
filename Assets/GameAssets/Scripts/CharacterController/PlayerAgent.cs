@@ -12,6 +12,10 @@ public class PlayerAgent : MonoBehaviour,AgentController
     public LayerMask floorHitLayerMask;
     public float health;
 
+    private float speedModifyVale;
+    private float verticleSpeed;
+    private float horizontalSpeed;
+
     #region Initialize
     private void Awake()
     {
@@ -23,6 +27,7 @@ public class PlayerAgent : MonoBehaviour,AgentController
     {
         createTargetPlane();
         m_movingAgent.setHealth(health);
+        m_movingAgent.enableTranslateMovment(true);
     }
 
     private void createTargetPlane()
@@ -49,6 +54,10 @@ public class PlayerAgent : MonoBehaviour,AgentController
 
     private void controllerUpdate()
     {
+
+        verticleSpeed = Mathf.Lerp(verticleSpeed, Input.GetAxis("Vertical"),1);
+        horizontalSpeed = Mathf.Lerp(horizontalSpeed, Input.GetAxis("Horizontal"), 1f);
+
         // Setting Character Aiming.
         if (Input.GetMouseButton(1) && !m_movingAgent.isEquipingWeapon())
         {
@@ -75,17 +84,18 @@ public class PlayerAgent : MonoBehaviour,AgentController
 
         if(Input.GetKeyDown(KeyCode.Space))
         {
-            m_movingAgent.dodgeAttack(getDirectionRelativeToCamera( new Vector3(Input.GetAxis("Vertical"), 0, -Input.GetAxis("Horizontal"))));
+            m_movingAgent.dodgeAttack(getDirectionRelativeToCamera( new Vector3(verticleSpeed, 0, -horizontalSpeed)));
         }
 
         if(Input.GetKey(KeyCode.LeftShift))
         {
-            m_movingAgent.moveCharacter(getDirectionRelativeToCamera(new Vector3(Input.GetAxis("Vertical") * 2, 0, -Input.GetAxis("Horizontal") * 2)));
+            speedModifyVale = Mathf.Lerp(speedModifyVale, 2, 0.1f);
+            m_movingAgent.moveCharacter(getDirectionRelativeToCamera(new Vector3(verticleSpeed * speedModifyVale, 0, -horizontalSpeed * speedModifyVale)));
         }
         else
         {
-            
-            m_movingAgent.moveCharacter(getDirectionRelativeToCamera((new Vector3(Input.GetAxis("Vertical"), 0, -Input.GetAxis("Horizontal"))).normalized));
+            speedModifyVale = Mathf.Lerp(speedModifyVale, 1f, 0.1f);
+            m_movingAgent.moveCharacter(getDirectionRelativeToCamera((new Vector3(verticleSpeed, 0, -horizontalSpeed)).normalized*speedModifyVale));
         }
 
 

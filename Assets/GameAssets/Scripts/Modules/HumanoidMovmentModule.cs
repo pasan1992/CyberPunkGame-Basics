@@ -1,29 +1,23 @@
 ﻿using UnityEngine;
 
-public class AgentMovmentSystem
+public class HumanoidMovmentModule : MovmentModule
 {
     // Start is called before the first frame update
-
-    protected GameObject m_target;
     protected MovingAgent.CharacterMainStates m_characterState;
-    protected Transform m_characterTransform;
-    protected AgentAnimationSystem m_animationSystem;
-    //protected CharacterController m_characterController;
+    protected HumanoidAnimationModule m_animationSystem;
     protected bool m_enableTranslateMovment = true;
 
-    public AgentMovmentSystem(Transform transfrom, MovingAgent.CharacterMainStates characterState, GameObject target,AgentAnimationSystem animationSystem)
+    public HumanoidMovmentModule(Transform transfrom, MovingAgent.CharacterMainStates characterState, GameObject target, HumanoidAnimationModule animationSystem):base(target, transfrom)
     {
-        m_characterTransform = transfrom;
         m_characterState = characterState;
-        m_target = target;
         m_animationSystem = animationSystem;
-        //m_characterController = characterController;
     }
 
     #region Update
-    public void UpdateMovmentSystem(MovingAgent.CharacterMainStates characterState,Vector3 movmentDirection)
+    public override void UpdateMovment(int characterState, Vector3 movmentDirection)
     {
-        m_characterState = characterState;
+        m_characterState = (MovingAgent.CharacterMainStates)characterState;
+
         switch (m_characterState)
         {
             case MovingAgent.CharacterMainStates.Aimed:
@@ -119,23 +113,6 @@ public class AgentMovmentSystem
         return position;
     }
 
-    //private Vector3 getDirectionRelativeToCamera(Vector3 direction)
-    //{
-    //    var camera = Camera.main;
-
-    //    //camera forward and right vectors:
-    //    var forward = camera.transform.forward;
-    //    var right = camera.transform.right;
-
-    //    //project forward and right vectors on the horizontal plane (y = 0)
-    //    forward.y = 0f;
-    //    right.y = 0f;
-    //    forward.Normalize();
-    //    right.Normalize();
-
-    //    return forward * direction.x - right * direction.z;
-    //}
-
     public void enableTranslateMovment(bool enable)
     {
         m_enableTranslateMovment = enable;
@@ -149,6 +126,11 @@ public class AgentMovmentSystem
         //dodgeDirection = this.m_characterTransform.InverseTransformDirection(dodgeDirection);
         Vector3 convertedDodgeDirection = new Vector3(dodgeDirection.x, 0, dodgeDirection.z);
         m_characterTransform.LookAt(m_characterTransform.position + convertedDodgeDirection, Vector3.up);
+    }
+
+    public void lookAtTarget()
+    {
+        m_characterTransform.LookAt(getTurnPoint(), Vector3.up);
     }
 
     #endregion
