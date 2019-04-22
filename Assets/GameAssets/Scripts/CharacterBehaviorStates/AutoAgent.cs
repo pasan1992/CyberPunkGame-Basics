@@ -65,5 +65,10 @@ public class AutoAgent : MonoBehaviour, AgentController
         m_movingAgent = agent;
     }
 
+    public ICyberAgent getICyberAgent()
+    {
+        return m_movingAgent;
+    }
+
     #endregion
 }

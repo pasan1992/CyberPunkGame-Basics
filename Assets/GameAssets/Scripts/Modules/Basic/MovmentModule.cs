@@ -23,7 +23,7 @@ public class MovmentModule
             case BASIC_MOVMENT_STATE.AIMED_MOVMENT:
                 if (m_target != null)
                 {
-                    m_characterTransform.LookAt(m_target.transform.position);
+                    m_characterTransform.LookAt(m_target.transform.position,Vector3.up);
                 }
                 break;
             case BASIC_MOVMENT_STATE.DIRECTIONAL_MOVMENT:

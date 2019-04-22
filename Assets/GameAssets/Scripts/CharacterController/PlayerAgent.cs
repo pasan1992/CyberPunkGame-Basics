@@ -196,5 +196,10 @@ public class PlayerAgent : MonoBehaviour,AgentController
     {
         throw new System.NotImplementedException();
     }
+
+    public ICyberAgent getICyberAgent()
+    {
+        return m_movingAgent;
+    }
     #endregion
 }

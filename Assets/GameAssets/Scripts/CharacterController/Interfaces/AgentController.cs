@@ -6,4 +6,5 @@ public interface AgentController
         
     void setMovableAgent(ICyberAgent agent);
     float getSkill();
+    ICyberAgent getICyberAgent();
 }

@@ -14,7 +14,7 @@ public interface ICyberAgent
     void togglepSecondaryWeapon();
     void togglePrimaryWeapon();
     bool IsFunctional();
-    void DestroyCharacter();
+    //void DestroyCharacter();
     Vector3 getCurrentPosition();
     void toggleHide();
     bool isEquiped();

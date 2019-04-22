@@ -8,18 +8,18 @@ public class AIDrone : MonoBehaviour, AgentController
     // Start is called before the first frame update
     public string enemyTag;
 
-    private FlyingAgent m_agent;
+    private FlyingAgent m_selfAgent;
     private NavMeshAgent m_navMeshAgent;
-    private MovingAgent enemy;
+    private ICyberAgent m_enemy;
 
     private float tempFloat;
 
     #region initalize
     void Awake()
     {
-        m_agent = this.GetComponent<FlyingAgent>();
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
         m_navMeshAgent.updateRotation = false;
+        m_selfAgent = new FlyingAgent(this.GetComponentInChildren<Animator>(), this.gameObject, this.GetComponentInChildren<Rigidbody>(), onDestroyDrone);
 
         // Finding Player
         GameObject[] playerTaggedObjects = GameObject.FindGameObjectsWithTag(enemyTag);
@@ -28,9 +28,9 @@ public class AIDrone : MonoBehaviour, AgentController
         {
             if (obj != this.gameObject)
             {
-                enemy = obj.GetComponent<MovingAgent>();
+                m_enemy = obj.GetComponent<MovingAgent>();
 
-                if (enemy != null)
+                if (m_enemy != null)
                 {
                     break;
                 }
@@ -38,7 +38,7 @@ public class AIDrone : MonoBehaviour, AgentController
 
         }
 
-        m_agent.AimWeapon();
+        m_selfAgent.AimWeapon();
 
         tempFloat = Random.value * 10;
 
@@ -50,17 +50,26 @@ public class AIDrone : MonoBehaviour, AgentController
     // Update is called once per frame
     void Update()
     {
-       m_navMeshAgent.SetDestination(enemy.transform.position + new Vector3(tempFloat, 0, tempFloat));
+        if(m_selfAgent.IsFunctional())
+        {
+            droneUpdate();
+        }
+    }
+
+    private void droneUpdate()
+    {
+        m_navMeshAgent.SetDestination(m_enemy.getTransfrom().transform.position + new Vector3(tempFloat, 0, tempFloat));
         m_navMeshAgent.updateRotation = false;
 
         if (!m_navMeshAgent.pathPending)
         {
             Vector3 velocity = m_navMeshAgent.desiredVelocity;
             velocity = new Vector3(velocity.x, 0, velocity.z);
-            m_agent.moveCharacter(velocity);
+            m_selfAgent.moveCharacter(velocity);
         }
 
-        m_agent.setTargetPoint(enemy.transform.position);
+        m_selfAgent.setTargetPoint(m_enemy.getTransfrom().position);
+        m_selfAgent.updateAgent();
     }
 
     #endregion
@@ -79,9 +88,21 @@ public class AIDrone : MonoBehaviour, AgentController
         throw new System.NotImplementedException();
     }
 
+    public ICyberAgent getICyberAgent()
+    {
+        return m_selfAgent;
+    }
+
     #endregion
 
     #region events
+
+    void onDestroyDrone()
+    {
+        m_navMeshAgent.isStopped = true;
+        m_navMeshAgent.enabled = false;
+    }
+
     #endregion
 
 }

@@ -157,7 +157,8 @@ public abstract class Weapon : MonoBehaviour
     protected virtual void fireWeapon()
     {
         GameObject Tempprojectile = GameObject.Instantiate(projectile, m_gunFireingPoint, this.transform.rotation);
-        Tempprojectile.transform.forward = (m_target.transform.position - targetPoint.transform.position).normalized;
+        Tempprojectile.transform.forward = (m_target.transform.position - m_gunFireingPoint).normalized;
+        //Tempprojectile.transform.forward = targetPoint.transform.forward;
         Tempprojectile.GetComponent<ProjectileBasic>().speed = 1f;
         Tempprojectile.GetComponent<ProjectileBasic>().setShooterName(m_ownerName);
 

@@ -17,7 +17,7 @@ public class ProjectileBasic : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         this.transform.Translate(Vector3.forward * speed);
         DistanceTravelled += Time.deltaTime * speed;
@@ -55,7 +55,7 @@ public class ProjectileBasic : MonoBehaviour
 
     private void hitOnEnemy(Collider other)
     {
-        ICyberAgent movingAgnet = other.transform.GetComponentInParent<ICyberAgent>();
+        ICyberAgent movingAgnet = other.transform.GetComponentInParent<AgentController>().getICyberAgent();
 
         if (movingAgnet != null && !hit)
         {
@@ -78,13 +78,12 @@ public class ProjectileBasic : MonoBehaviour
              
                 if (!movingAgnet.IsFunctional())
                 {
-                    movingAgnet.DestroyCharacter();
                     Rigidbody rb = other.transform.GetComponent<Rigidbody>();
 
                     if (rb != null)
                     {
                         rb.isKinematic = false;
-                        rb.AddForce((this.transform.forward) * 200, ForceMode.Impulse);
+                        //rb.AddForce((this.transform.forward) * 200, ForceMode.Impulse);
                     }
                 }
             }

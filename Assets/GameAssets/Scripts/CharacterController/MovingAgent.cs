@@ -50,7 +50,7 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         // Create movment system.
         m_movmentModule = new HumanoidMovmentModule(this.transform,m_characterState,m_target,m_animationModule);
 
-        m_damageSystem = new HumanoidDamageModule(5, this.GetComponent<RagdollUtility>(), this.GetComponentInChildren<HitReaction>());
+        m_damageSystem = new HumanoidDamageModule(5, this.GetComponent<RagdollUtility>(), this.GetComponentInChildren<HitReaction>(), DestroyCharacter);
         
         //if(isPlayer)
         //{
@@ -132,6 +132,11 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     public void damageAgent(float amount)
     {
         m_damageSystem.DamageByAmount(amount);
+
+        //if(m_damageSystem.getHealth() == 0)
+        //{
+        //    DestroyCharacter();
+        //}
     }
 
     public virtual void pullTrigger()

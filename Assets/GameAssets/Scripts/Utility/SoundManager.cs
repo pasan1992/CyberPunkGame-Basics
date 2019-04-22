@@ -10,7 +10,7 @@ public class SoundManager : MonoBehaviour
 
     void Awake()
     {
-        m_laserPistol = Resources.Load<AudioClip>("Sounds/Rifle");
+        m_laserPistol = Resources.Load<AudioClip>("Sounds/LaserPistol");
         m_laserRifal = Resources.Load<AudioClip>("Sounds/Pistol");
     }
 

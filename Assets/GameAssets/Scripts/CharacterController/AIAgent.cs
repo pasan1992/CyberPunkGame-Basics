@@ -270,5 +270,10 @@ public class AIAgent : MonoBehaviour, AgentController
         throw new System.NotImplementedException();
     }
 
+    public ICyberAgent getICyberAgent()
+    {
+        throw new System.NotImplementedException();
+    }
+
     #endregion
 }
