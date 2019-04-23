@@ -59,7 +59,7 @@ public class AIDrone : MonoBehaviour, AgentController
     private void droneUpdate()
     {
         m_navMeshAgent.SetDestination(m_enemy.getTransfrom().transform.position + new Vector3(tempFloat, 0, tempFloat));
-        m_navMeshAgent.updateRotation = false;
+        m_navMeshAgent.updateRotation = true;
 
         if (!m_navMeshAgent.pathPending)
         {

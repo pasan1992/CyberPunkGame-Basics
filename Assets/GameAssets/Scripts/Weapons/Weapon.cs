@@ -31,6 +31,7 @@ public abstract class Weapon : MonoBehaviour
 
     protected AudioSource m_audioScource;
     protected SoundManager m_soundManager;
+    protected ProjectilePool m_projectilePool;
 
 
     protected bool triggerPulled = false;
@@ -44,6 +45,7 @@ public abstract class Weapon : MonoBehaviour
         m_collider = this.GetComponent<BoxCollider>();
         m_audioScource = this.GetComponent<AudioSource>();
         m_soundManager = GameObject.FindObjectOfType<SoundManager>();
+        m_projectilePool = GameObject.FindObjectOfType<ProjectilePool>();
     }
 
     #region updates
@@ -156,9 +158,17 @@ public abstract class Weapon : MonoBehaviour
 
     protected virtual void fireWeapon()
     {
-        GameObject Tempprojectile = GameObject.Instantiate(projectile, m_gunFireingPoint, this.transform.rotation);
+       // GameObject Tempprojectile = GameObject.Instantiate(projectile, m_gunFireingPoint, this.transform.rotation);
+
+
+
+
+        GameObject Tempprojectile = m_projectilePool.getBasicProjectie();
+        Tempprojectile.transform.position = m_gunFireingPoint;
+        Tempprojectile.transform.rotation = this.transform.rotation;
+        Tempprojectile.SetActive(true);
+
         Tempprojectile.transform.forward = (m_target.transform.position - m_gunFireingPoint).normalized;
-        //Tempprojectile.transform.forward = targetPoint.transform.forward;
         Tempprojectile.GetComponent<ProjectileBasic>().speed = 1f;
         Tempprojectile.GetComponent<ProjectileBasic>().setShooterName(m_ownerName);
 

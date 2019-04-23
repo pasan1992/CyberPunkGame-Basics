@@ -126,19 +126,28 @@ public class CombatStage : BasicMovmentStage
                 break;
             case CombatSubStages.LookingForCover:
                 //Debug.Log("Looking for cover");
-                if (currentCoverPoint)
+
+
+                CoverPoint tempCurrentCoverPoint = closestCombatLocationAvaialbe();
+
+                if(tempCurrentCoverPoint != null)
                 {
-                    currentCoverPoint.stPointOccupentsName("");
-                    currentCoverPoint.setOccupent(null);
+
+                    if (currentCoverPoint)
+                    {
+                        currentCoverPoint.stPointOccupentsName("");
+                        currentCoverPoint.setOccupent(null);
+                    }
+
+                    currentCoverPoint = tempCurrentCoverPoint;
+                    agent.SetDestination(currentCoverPoint.getPosition());
+                    currentCombatSubStage = CombatSubStages.MovingToCover;
+
+                    // Get up and move
+                    selfAgent.toggleHide();
+                    selfAgent.AimWeapon();
                 }
 
-                currentCoverPoint = closestCombatLocationAvaialbe();
-                agent.SetDestination(currentCoverPoint.getPosition());
-                currentCombatSubStage = CombatSubStages.MovingToCover;
-
-                // Get up and move
-                selfAgent.toggleHide();
-                selfAgent.AimWeapon();
                 break;
 
             case CombatSubStages.MovingToCover:
@@ -191,7 +200,7 @@ public class CombatStage : BasicMovmentStage
         float minimumDistanceToSafeCoverPoint = 999;
 
         CoverPoint tempIDealCoverPoint = null;
-        CoverPoint tempSafeCOverPoint = null;
+        CoverPoint tempSafeCoverPoint = null;
 
 
         foreach (CoverPoint point in coverPoints)
@@ -206,7 +215,7 @@ public class CombatStage : BasicMovmentStage
                    if(minimumDistanceToSafeCoverPoint > point.distanceTo(selfAgent.getCurrentPosition()))
                     {
                         minimumDistanceToSafeCoverPoint = point.distanceTo(selfAgent.getCurrentPosition());
-                        tempSafeCOverPoint = point;
+                        tempSafeCoverPoint = point;
                     }
 
                    // Find the ideal closest cover point.
@@ -229,12 +238,14 @@ public class CombatStage : BasicMovmentStage
             tempIDealCoverPoint.setOccupent(selfAgent);
             return tempIDealCoverPoint;
         }
-        else
+        else if(tempSafeCoverPoint != null)
         {
-            tempSafeCOverPoint.stPointOccupentsName(selfAgent.getName());
-            tempSafeCOverPoint.setOccupent(selfAgent);
-            return tempSafeCOverPoint;
+            tempSafeCoverPoint.stPointOccupentsName(selfAgent.getName());
+            tempSafeCoverPoint.setOccupent(selfAgent);
+            return tempSafeCoverPoint;
         }
+
+        return null;
     }
     
     private void findTargetLocationToFire()

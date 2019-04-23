@@ -15,18 +15,17 @@ public class DamageModule
 
     public virtual void destroyCharacter()
     {
-        m_onDestroy();
     }
     #endregion
 
     #region getters and setters
 
-    public virtual float getHealth()
+    public float getHealth()
     {
         return m_health;
     }
 
-    public virtual void setHealth(float health)
+    public void setHealth(float health)
     {
         m_health = health;
 
@@ -34,17 +33,19 @@ public class DamageModule
         {
             m_health = 0;
             destroyCharacter();
+            m_onDestroy();
         }
         
     }
 
-    public virtual void DamageByAmount(float amount)
+    public void DamageByAmount(float amount)
     {
         m_health -= amount;
         if (m_health < 0)
         {
             m_health = 0;
             destroyCharacter();
+            m_onDestroy();
         }
     }
 

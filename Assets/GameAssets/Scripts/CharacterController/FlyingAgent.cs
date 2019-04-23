@@ -26,14 +26,16 @@ public class FlyingAgent :ICyberAgent
     {
         m_target = new GameObject();
         m_target.transform.position = Vector3.zero;
+        m_selfGameObject = selfGameObject;
+
+        // Initalize explosion particle system.
 
         m_animationModule = new AnimationModule(animator);
         m_movmentModule = new MovmentModule(m_target, selfGameObject.transform);
         m_damageModule = new DroneDamageModule(health, DestroyCharacter);
-        m_selfGameObject = selfGameObject;
+        
         m_droneRigitBody = rigidbody;
         m_onDestroyCallback += onDestroyCallback;
-
     }
     #endregion
 
@@ -119,13 +121,15 @@ public class FlyingAgent :ICyberAgent
     private void DestroyCharacter()
     {
         //m_damageModule.destroyDrone(m_movmentDirection);
+        m_animationModule.disableAnimationSystem();
         m_droneRigitBody.isKinematic = false;
         m_droneRigitBody.useGravity = true;
         m_droneRigitBody.WakeUp();
         m_droneRigitBody.AddForce(m_movmentDirection, ForceMode.Impulse);
-        m_droneRigitBody.AddTorque(Random.insideUnitSphere * 200, ForceMode.Impulse);
+        m_droneRigitBody.AddTorque(Vector3.forward*200, ForceMode.Impulse);
         m_droneRigitBody.transform.parent = null;
         m_onDestroyCallback();
+        m_damageModule.ExplosionEffect(m_selfGameObject.transform.position);
     }
 
     public void enableTranslateMovment(bool enable)

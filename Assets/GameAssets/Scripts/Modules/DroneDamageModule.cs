@@ -2,17 +2,24 @@
 
 public class DroneDamageModule : DamageModule
 {
+    ParticleSystem m_particleSystem;
+
     public DroneDamageModule(float health,OnDestoryDeligate onDestroyCallback):base(health, onDestroyCallback)
     {
     }
 
-    //public void destroyDrone(Vector3 movmentDirection)
-    //{
-    //    m_droneRigitBody.isKinematic = false;
-    //    m_droneRigitBody.useGravity = true;
-    //    m_droneRigitBody.WakeUp();
-    //    m_droneRigitBody.AddForce(movmentDirection, ForceMode.Impulse);
-    //    m_droneRigitBody.AddTorque(Random.insideUnitSphere * 200, ForceMode.Impulse);
-    //    m_droneRigitBody.transform.parent = null;
-    //}
+    public void ExplosionEffect( Vector3 explodePosition)
+    {
+       GameObject explosion =  ProjectilePool.getInstance().getBasicExplosion();
+       explosion.SetActive(true);
+       explosion.transform.position = explodePosition;
+       m_particleSystem = explosion.GetComponent<ParticleSystem>();
+       m_particleSystem.Play();
+    }
+
+    private void disableParticleSystem()
+    {
+        m_particleSystem.Stop();
+        m_particleSystem.gameObject.SetActive(false);
+    }
 }

@@ -5,18 +5,13 @@ public class ProjectileBasic : MonoBehaviour
 {
     // Start is called before the first frame update
     public float speed = 0;
-    private float moveDirection;
-    private Transform target;
     public float DistanceTravelled = 0;
     private string shooterName ="test";
     private bool hit = false;
     public GameObject particleObject;
-    void Start()
-    {
 
-    }
+    #region updates
 
-    // Update is called once per frame
     void FixedUpdate()
     {
         this.transform.Translate(Vector3.forward * speed);
@@ -24,14 +19,13 @@ public class ProjectileBasic : MonoBehaviour
 
         if (DistanceTravelled > 1)
         {
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
-    }
-
-    public void setTarget(Transform target)
-    {
 
     }
+    #endregion
+
+    #region event handlers
 
     private void OnTriggerEnter(Collider other)
     {
@@ -39,7 +33,7 @@ public class ProjectileBasic : MonoBehaviour
         //Debug.Log(other.name);
         switch (tag)
         {
-            case "Enemy":         
+            case "Enemy":
                 hitOnEnemy(other);
                 break;
             case "Wall":
@@ -55,10 +49,11 @@ public class ProjectileBasic : MonoBehaviour
 
     private void hitOnEnemy(Collider other)
     {
-        ICyberAgent movingAgnet = other.transform.GetComponentInParent<AgentController>().getICyberAgent();
+        AgentController agentController = other.transform.GetComponentInParent<AgentController>();
 
-        if (movingAgnet != null && !hit)
+        if (agentController != null && !hit)
         {
+            ICyberAgent movingAgnet = agentController.getICyberAgent();
             if (!shooterName.Equals(movingAgnet.getName()))
             {
                 //Debug.Log(other.name);
@@ -68,7 +63,8 @@ public class ProjectileBasic : MonoBehaviour
                 movingAgnet.damageAgent(1);
             
                 speed = 0;
-                Destroy(this.gameObject);
+                //Destroy(this.gameObject);
+                this.gameObject.SetActive(false);
 
                 if(particleObject)
                 {
@@ -83,7 +79,7 @@ public class ProjectileBasic : MonoBehaviour
                     if (rb != null)
                     {
                         rb.isKinematic = false;
-                        //rb.AddForce((this.transform.forward) * 200, ForceMode.Impulse);
+                        ///rb.AddForce((this.transform.forward) * 200, ForceMode.Impulse);
                     }
                 }
             }
@@ -99,11 +95,33 @@ public class ProjectileBasic : MonoBehaviour
             GameObject hitParticle = GameObject.Instantiate(particleObject);
             hitParticle.transform.position = this.transform.position;
         }
-        Destroy(this.gameObject);
+        // Destroy(this.gameObject);
+        this.gameObject.SetActive(false);
     }
 
+    public void OnEnable()
+    {
+        //Invoke("hideBullet", 2.0f);
+        resetProjectile();
+    }
+
+    public void OnDisable()
+    {
+        //CancelInvoke();
+    }
+    #endregion
+
+
+    #region getters and setters
     public void setShooterName(string name)
     {
         this.shooterName = name;
     }
+
+    private void resetProjectile()
+    {
+        DistanceTravelled = 0;
+        hit = false;
+    }
+    #endregion
 }

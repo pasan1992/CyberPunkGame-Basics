@@ -21,6 +21,7 @@ public class AutoAgent : MonoBehaviour, AgentController
         m_currentState = new CombatStage(m_movingAgent, target,m_navMeshAgent,this);
         m_movingAgent.setHealth(health);
         m_movingAgent.setWeponFireCapability(false);
+        ((MovingAgent)m_movingAgent).setOndestroyCallback(OnAgentDestroy);
     }
     #endregion
 
@@ -30,10 +31,6 @@ public class AutoAgent : MonoBehaviour, AgentController
         if(m_movingAgent.IsFunctional())
         {
             m_currentState.updateStage();
-        }
-        else
-        {
-            m_currentState.stopStageBehavior();
         }
     }
     #endregion
@@ -49,6 +46,11 @@ public class AutoAgent : MonoBehaviour, AgentController
     void OnBecameInvisible()
     {
         m_currentState.setWeaponFireCapability(false);
+    }
+
+    void OnAgentDestroy()
+    {
+        m_navMeshAgent.enabled = false;
     }
 
     #endregion

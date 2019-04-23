@@ -9,6 +9,7 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     #region parameters
     // Public - Editor Values
     public enum CharacterMainStates { Aimed, Armed_not_Aimed,Dodge, Idle }
+    private DamageModule.OnDestoryDeligate m_onDestoryCallback;
     //public LayerMask floorHitLayerMask;
    // public LayerMask enemyHitLayerMask;
    // public bool isPlayer = false;
@@ -193,8 +194,12 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     {
         m_equipmentSystem.DropCurrentWeapon();
         m_characterEnabled = false;
-        m_damageSystem.destroyCharacter();
         m_animationModule.disableAnimationSystem();
+
+        if (m_onDestoryCallback != null)
+        {   
+            m_onDestoryCallback();
+        }
     }
 
     public void toggleHide()
@@ -233,6 +238,11 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     #endregion
 
     #region getters and setters
+
+    public void setOndestroyCallback(DamageModule.OnDestoryDeligate onDestoryCallback)
+    {
+        m_onDestoryCallback = onDestoryCallback;
+    }
 
     public bool IsFunctional()
     {
