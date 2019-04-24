@@ -20,7 +20,7 @@ public class CombatStage : BasicMovmentStage
     private CoverShootingSubStages currentCoverShootingSubStage;
 
     // Parameters
-    float fireRangeDistance = 17;
+    float fireRangeDistance = 14;
     int shotsFromCover = 3;
     int currentShotsFromCover = 0;
 
@@ -31,7 +31,7 @@ public class CombatStage : BasicMovmentStage
         coverPoints = GameObject.FindObjectsOfType<CoverPoint>();
         selfAgent.toggleHide();
         selfAgent.AimWeapon();
-        selfAgent.togglepSecondaryWeapon();
+        selfAgent.togglePrimaryWeapon();
         this.autoAgent = autoAgent;
         targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
         findTargetLocationToFire();
@@ -250,8 +250,20 @@ public class CombatStage : BasicMovmentStage
     
     private void findTargetLocationToFire()
     {
-        int randomIndex = Random.Range(0, targetLocations.Length - 1);
-        targetLocation = targetLocations[randomIndex].transform;
+
+        MovingAgent humanoidOpponent = opponent as MovingAgent;
+
+        if(humanoidOpponent != null && humanoidOpponent.isCrouched())
+        {
+            targetLocation = humanoidOpponent.getHeadTransfrom();
+        }
+        else
+        {
+            int randomIndex = Random.Range(0, targetLocations.Length - 1);
+            targetLocation = targetLocations[randomIndex].transform;
+        }
+
+
 
         if(Random.value > autoAgent.getSkill())
         {

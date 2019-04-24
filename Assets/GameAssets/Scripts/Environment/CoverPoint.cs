@@ -34,28 +34,37 @@ public class CoverPoint : MonoBehaviour, IPoints
         else
         {
             RaycastHit hit;
-            string[] layerMaskNames = { "FullCOverObsticles", "Enemy" };
+            //string[] layerMaskNames = { "FullCOverObsticles", "Enemy" };           
 
-           // Vector3 tempDirection = target.getCurrentPosition() - this.transform.position - new Vector3(0, 1.5f, 0);
-            
+            //if (Physics.Raycast(transform.position+ new Vector3(0,2f,0), target.getTopPosition() - this.transform.position - new Vector3(0, 2f, 0), out hit, maximumFiringDistance, LayerMask.GetMask(layerMaskNames)))
+            //{
+            //    if(hit.transform.root.name == target.getName())
+            //    {
+            //        //Debug.Log("Can fire target" + hit.transform.name);
+            //        return true;
+            //    }
+            //    else
+            //    {
+            //        //Debug.Log("cannot fire target, hit wall or self");
+            //        return false;
+            //    }
+            //}
+            //else
+            //{
+            //    //Debug.Log("Nothing to hit");
+            //    return false;
+            //}
 
-            if (Physics.Raycast(transform.position+ new Vector3(0,2f,0), target.getTopPosition() - this.transform.position - new Vector3(0, 2f, 0), out hit, maximumFiringDistance, LayerMask.GetMask(layerMaskNames)))
+            string[] layerMaskNames = { "FullCOverObsticles"};
+
+            if (Physics.Raycast(transform.position + new Vector3(0, 2f, 0), target.getTopPosition() - this.transform.position - new Vector3(0, 2f, 0), out hit, maximumFiringDistance, LayerMask.GetMask(layerMaskNames)))
             {
-                if(hit.transform.root.name == target.getName())
-                {
-                    //Debug.Log("Can fire target" + hit.transform.name);
-                    return true;
-                }
-                else
-                {
-                    //Debug.Log("cannot fire target, hit wall or self");
-                    return false;
-                }
+                return false;
             }
             else
             {
                 //Debug.Log("Nothing to hit");
-                return false;
+                return true;
             }
         }
     }
@@ -64,7 +73,7 @@ public class CoverPoint : MonoBehaviour, IPoints
     {
         RaycastHit hit;
         string[] layerMaskNames = { "HalfCoverObsticles", "Enmey" };
-        if (Physics.Raycast(transform.position, target.getCurrentPosition() - this.transform.position, out hit,5, LayerMask.GetMask(layerMaskNames)))
+        if (Physics.Raycast(transform.position, target.getCurrentPosition() - this.transform.position, out hit,2, LayerMask.GetMask(layerMaskNames)))
         {
             if(hit.transform.tag =="Cover" || hit.transform.tag == "Wall")
             {

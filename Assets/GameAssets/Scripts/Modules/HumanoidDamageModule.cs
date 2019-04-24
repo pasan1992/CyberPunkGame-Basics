@@ -8,12 +8,31 @@ public class HumanoidDamageModule : DamageModule
     protected RagdollUtility m_ragdoll;
     protected HitReaction m_hitReaction;
     protected HumanoidAnimationModule m_animationSystem;
+    protected Transform m_headTransfrom;
 
-    public HumanoidDamageModule(float health,RagdollUtility ragdoll, HitReaction hitReaction,OnDestoryDeligate onDestroyCallback):base(health,onDestroyCallback)
+    public HumanoidDamageModule(float health,RagdollUtility ragdoll, HitReaction hitReaction,HumanoidAnimationModule animationModule,Transform headTransfrom,OnDestoryDeligate onDestroyCallback):base(health,onDestroyCallback)
     {
         m_ragdoll = ragdoll;
         m_hitReaction = hitReaction;
+        m_headTransfrom = headTransfrom;
+        m_animationSystem = animationModule;
     }
+
+    #region update
+
+    public void update()
+    {
+        if(m_animationSystem.isCrouched() && !m_animationSystem.isProperlyAimed())
+        {
+            toggleHeadTransfromCollider(false);
+        }
+        else
+        {
+            toggleHeadTransfromCollider(true);
+        }
+    }
+
+    #endregion
 
     #region Commands
 
@@ -29,6 +48,17 @@ public class HumanoidDamageModule : DamageModule
     public void reactOnHit(Collider collider, Vector3 force, Vector3 point)
     {
         m_hitReaction.Hit(collider, force, point);
+    }
+
+    public Transform getHeadTransfrom()
+    {
+        return m_headTransfrom;
+    }
+
+    public void toggleHeadTransfromCollider(bool enable)
+    {
+        Collider collider = m_headTransfrom.GetComponent<Collider>();
+        collider.enabled = enable;
     }
     #endregion
 }

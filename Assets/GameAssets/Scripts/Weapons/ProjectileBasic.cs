@@ -34,14 +34,13 @@ public class ProjectileBasic : MonoBehaviour
         switch (tag)
         {
             case "Enemy":
+            case "Player":
+            case "Head":
                 hitOnEnemy(other);
                 break;
             case "Wall":
             case "Cover":
                 hitOnWall(other);
-                break;
-            case "Player":
-                hitOnEnemy(other);
                 break;
         }
 
@@ -79,7 +78,7 @@ public class ProjectileBasic : MonoBehaviour
                     if (rb != null)
                     {
                         rb.isKinematic = false;
-                        ///rb.AddForce((this.transform.forward) * 200, ForceMode.Impulse);
+                        rb.AddForce((this.transform.forward) * 200, ForceMode.Impulse);
                     }
                 }
             }
@@ -89,14 +88,18 @@ public class ProjectileBasic : MonoBehaviour
 
     private void hitOnWall(Collider wall)
     {
-        speed = 0;
-        if (particleObject)
+        if(DistanceTravelled > 0.03)
         {
-            GameObject hitParticle = GameObject.Instantiate(particleObject);
-            hitParticle.transform.position = this.transform.position;
+            speed = 0;
+            if (particleObject)
+            {
+                GameObject hitParticle = GameObject.Instantiate(particleObject);
+                hitParticle.transform.position = this.transform.position;
+            }
+            // Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
         }
-        // Destroy(this.gameObject);
-        this.gameObject.SetActive(false);
+
     }
 
     public void OnEnable()
