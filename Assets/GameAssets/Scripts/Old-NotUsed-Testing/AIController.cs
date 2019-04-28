@@ -4,15 +4,11 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(MovingAgent))]
-public class AIAgent : MonoBehaviour, AgentController
+public class AIController : AgentController
 {
     private bool m_enabled;
     protected MovingAgent m_movingAgent;
     protected NavMeshAgent m_navMeshAgent;
-
-    //public LayerMask enemyHitLayerMask;
-    //public LayerMask floorHitLayerMask;
-
     public bool enableFire;
     public Weapon.WEAPONTYPE selectedWeaponType;
     public float health;
@@ -36,7 +32,6 @@ public class AIAgent : MonoBehaviour, AgentController
     {
         m_movingAgent = this.GetComponent<MovingAgent>();
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
-
         GameObject[] playerTaggedObjects = GameObject.FindGameObjectsWithTag(enemyTag);
 
         foreach (GameObject obj in playerTaggedObjects)
@@ -115,11 +110,11 @@ public class AIAgent : MonoBehaviour, AgentController
         {
             if (!m_movingAgent.isEquipingWeapon())
             {
-                m_movingAgent.AimWeapon();
+                m_movingAgent.aimWeapon();
             }
             else
             {
-                m_movingAgent.StopAiming();
+                m_movingAgent.stopAiming();
             }
         }
 
@@ -232,7 +227,7 @@ public class AIAgent : MonoBehaviour, AgentController
         return Vector3.zero;
     }
 
-    public void setMovableAgent(ICyberAgent agent)
+    public override void setMovableAgent(ICyberAgent agent)
     {
         m_movingAgent = (MovingAgent)agent;
     }
@@ -265,12 +260,12 @@ public class AIAgent : MonoBehaviour, AgentController
         setInScreenLimit(false);
     }
 
-    public float getSkill()
+    public override float getSkill()
     {
         throw new System.NotImplementedException();
     }
 
-    public ICyberAgent getICyberAgent()
+    public override ICyberAgent getICyberAgent()
     {
         throw new System.NotImplementedException();
     }

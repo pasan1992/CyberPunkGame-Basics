@@ -23,9 +23,9 @@ public abstract class Weapon : MonoBehaviour
     private LineRenderer m_line;
     private Rigidbody m_rigidbody;
     private BoxCollider m_collider;
-    private bool m_enableLine;
+    private bool m_enableLine = true;
     private WeaponFireDeligaet m_onWeaponFire;
-    private string m_ownerName;
+    private AgentController.AgentFaction m_ownersFaction;
     private GameObject m_target;
     private Vector3 m_gunFireingPoint;
 
@@ -95,9 +95,9 @@ public abstract class Weapon : MonoBehaviour
         this.m_target = target;
     }
 
-    public void setOwner(string owner)
+    public void setOwnerFaction(AgentController.AgentFaction owner)
     {
-        m_ownerName = owner;
+        m_ownersFaction = owner;
     }
 
     public void SetGunTargetLineStatus(bool status)
@@ -170,7 +170,7 @@ public abstract class Weapon : MonoBehaviour
 
         Tempprojectile.transform.forward = (m_target.transform.position - m_gunFireingPoint).normalized;
         Tempprojectile.GetComponent<ProjectileBasic>().speed = 1f;
-        Tempprojectile.GetComponent<ProjectileBasic>().setShooterName(m_ownerName);
+        Tempprojectile.GetComponent<ProjectileBasic>().setFiredFrom(m_ownersFaction);
 
         if(this.isActiveAndEnabled)
         {

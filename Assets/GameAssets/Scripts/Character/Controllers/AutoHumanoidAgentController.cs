@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(ICyberAgent))]
-public class AutoAgent : MonoBehaviour, AgentController
+public class AutoHumanoidAgentController :  AgentController
 {
     public MovingAgent target;
     protected ICyberAgent m_movingAgent;
@@ -22,6 +22,7 @@ public class AutoAgent : MonoBehaviour, AgentController
         m_movingAgent.setHealth(health);
         m_movingAgent.setWeponFireCapability(false);
         ((MovingAgent)m_movingAgent).setOndestroyCallback(OnAgentDestroy);
+        m_movingAgent.setFaction(m_agentFaction);
     }
     #endregion
 
@@ -57,20 +58,19 @@ public class AutoAgent : MonoBehaviour, AgentController
 
     #region getters and setters
 
-    public float getSkill()
+    public override float getSkill()
     {
         return skillLevel;
     }
 
-    public void setMovableAgent(ICyberAgent agent)
+    public override void setMovableAgent(ICyberAgent agent)
     {
         m_movingAgent = agent;
     }
 
-    public ICyberAgent getICyberAgent()
+    public override ICyberAgent getICyberAgent()
     {
         return m_movingAgent;
     }
-
     #endregion
 }

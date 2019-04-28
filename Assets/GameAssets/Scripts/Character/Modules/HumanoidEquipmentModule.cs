@@ -14,16 +14,15 @@ public class HumanoidEquipmentModule
     protected WeaponProp m_pistolProp;
     protected GameObject m_target;
     protected Recoil m_recoil;
-    protected string m_owner;
     protected MovingAgent.CharacterMainStates m_currentState;
     protected HumanoidAnimationModule m_animationSystem;
+    protected AgentController.AgentFaction m_ownersFaction;
 
     private bool m_inEquipingAction = false;
     #endregion
 
-    public HumanoidEquipmentModule(Weapon[] weapons, WeaponProp[] props, string owner, MovingAgent.CharacterMainStates state,GameObject target,Recoil recoil, HumanoidAnimationModule animSystem)
+    public HumanoidEquipmentModule(Weapon[] weapons, WeaponProp[] props, MovingAgent.CharacterMainStates state, GameObject target, Recoil recoil, HumanoidAnimationModule animSystem)
     {
-        m_owner = owner;
         m_currentState = state;
         m_target = target;
         m_recoil = recoil;
@@ -35,7 +34,7 @@ public class HumanoidEquipmentModule
     #region updates
     public void UpdateSystem(MovingAgent.CharacterMainStates state)
     {
-        if(m_currentWeapon !=null)
+        if (m_currentWeapon != null)
         {
             m_currentWeapon.updateWeapon();
         }
@@ -58,7 +57,7 @@ public class HumanoidEquipmentModule
                 // Set Gun Aimed;
                 if (!m_currentState.Equals(MovingAgent.CharacterMainStates.Armed_not_Aimed))
                 {
-                    
+
                     aimCurrentEquipment(false);
                 }
                 break;
@@ -86,14 +85,14 @@ public class HumanoidEquipmentModule
         {
             case Weapon.WEAPONTYPE.primary:
                 // Select rifle as currentWeapon
-              //  Debug.Log("Primary Equip finished");
+                //  Debug.Log("Primary Equip finished");
                 m_rifleProp.setVisible(false);
                 m_currentWeapon = m_rifle;
                 break;
 
             case Weapon.WEAPONTYPE.secondary:
                 // Select pistol as currentWeapon
-               // Debug.Log("Secondary Equip finished");
+                // Debug.Log("Secondary Equip finished");
                 m_pistolProp.setVisible(false);
                 m_currentWeapon = m_pistol;
                 break;
@@ -116,7 +115,7 @@ public class HumanoidEquipmentModule
         {
             case Weapon.WEAPONTYPE.primary:
                 m_rifleProp.setVisible(true);
-               // Debug.Log("Primary Unequip Finished");
+                // Debug.Log("Primary Unequip Finished");
                 break;
 
             case Weapon.WEAPONTYPE.secondary:
@@ -136,7 +135,7 @@ public class HumanoidEquipmentModule
 
     public void pullTrigger()
     {
-        if(m_currentWeapon)
+        if (m_currentWeapon)
         {
             m_currentWeapon.pullTrigger();
         }
@@ -144,31 +143,15 @@ public class HumanoidEquipmentModule
 
     public void releaseTrigger()
     {
-        if(m_currentWeapon)
+        if (m_currentWeapon)
         {
             m_currentWeapon.releaseTrigger();
         }
     }
 
-    //public void FireCurrentWeapon()
-    //{
-    //    if (m_currentWeapon && !m_currentWeapon.automatic)
-    //    {
-    //        m_currentWeapon.fireWeapon();
-    //    }
-    //}
-
-    //public void continouseFire()
-    //{
-    //    if (m_currentWeapon && m_currentWeapon.automatic)
-    //    {
-    //        m_currentWeapon.continouseFire();
-    //    }
-    //}
-
     public void DropCurrentWeapon()
     {
-        if(m_currentWeapon)
+        if (m_currentWeapon)
         {
             m_currentWeapon.dropWeapon();
         }
@@ -189,8 +172,8 @@ public class HumanoidEquipmentModule
     private void aimCurrentEquipment(bool aimed)
     {
         m_animationSystem.aimEquipment(aimed);
-        
-        if(getCurrentWeapon())
+
+        if (getCurrentWeapon())
         {
             getCurrentWeapon().setAimed(aimed);
         }
@@ -199,7 +182,7 @@ public class HumanoidEquipmentModule
 
     public MovingAgent.CharacterMainStates togglePrimary()
     {
-        
+
         if (!m_inEquipingAction)
         {
             //Debug.Log("Toggle Primary Start");
@@ -222,7 +205,7 @@ public class HumanoidEquipmentModule
                     m_pistolProp.setVisible(true);
                     m_animationSystem.fastEquipCurrentEquipment();
 
-                    if(m_currentState.Equals(MovingAgent.CharacterMainStates.Aimed))
+                    if (m_currentState.Equals(MovingAgent.CharacterMainStates.Aimed))
                     {
                         m_currentWeapon.setAimed(true);
                     }
@@ -246,7 +229,7 @@ public class HumanoidEquipmentModule
 
     public MovingAgent.CharacterMainStates toggleSecondary()
     {
-        
+
         if (!m_inEquipingAction)
         {
             //Debug.Log("Toggle Secondary Start");
@@ -302,7 +285,7 @@ public class HumanoidEquipmentModule
     {
         this.m_currentWeapon = currentWeapon;
         m_currentWeapon.setGunTarget(m_target);
-        m_currentWeapon.setOwner(m_owner);
+        m_currentWeapon.setOwnerFaction(m_ownersFaction);
     }
 
     public void setCurretnWeaponProp(WeaponProp weaponProp)
@@ -310,27 +293,10 @@ public class HumanoidEquipmentModule
         this.m_pistolProp = weaponProp;
     }
 
-    public void setOwner(string owner)
-    {
-        m_owner = owner;
-    }
-
     public Weapon getCurrentWeapon()
     {
         return m_currentWeapon;
     }
-
-    //public WeaponProp getCurrentWeaponProp()
-    //{
-    //    if(m_currentWeapon.getWeaponType() == Weapon.WEAPONTYPE.primary)
-    //    {
-    //        return m_rifleProp;
-    //    }
-    //    else
-    //    {
-    //        return m_pistolProp;
-    //    }
-    //}
 
     public void setWeaponTarget(GameObject target)
     {
@@ -347,26 +313,11 @@ public class HumanoidEquipmentModule
         return m_animationSystem.isEquiped();
     }
 
-    //private void setCurrentWeapon(Weapon.WEAPONTYPE type)
-    //{
-    //    switch (type)
-    //    {
-    //        case Weapon.WEAPONTYPE.primary:
-    //            m_currentWeapon = m_rifle;
-
-    //            break;
-    //        case Weapon.WEAPONTYPE.secondary:
-    //            m_currentWeapon = m_pistol;
-
-    //            break;
-    //    }
-    //}
-
     private void getAllWeapons(Weapon[] weapons, WeaponProp[] props)
     {
         foreach (Weapon wep in weapons)
         {
-            wep.setOwner(m_owner);
+            wep.setOwnerFaction(m_ownersFaction);
             wep.setAimed(false);
             wep.setGunTarget(m_target);
             wep.gameObject.SetActive(false);
@@ -406,6 +357,13 @@ public class HumanoidEquipmentModule
     public bool isInEquipingAction()
     {
         return m_inEquipingAction;
+    }
+
+    public void setOwnerFaction(AgentController.AgentFaction agentGroup)
+    {
+        this.m_ownersFaction = agentGroup;
+        m_rifle.setOwnerFaction(agentGroup);
+        m_pistol.setOwnerFaction(agentGroup);
     }
 
     #endregion

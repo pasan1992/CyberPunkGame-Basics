@@ -18,6 +18,14 @@ public class HumanoidMovmentModule : MovmentModule
     {
         m_characterState = (MovingAgent.CharacterMainStates)characterState;
 
+        float crouchSpeedMultiplayer = 1;
+
+        if(this.isCrouched())
+        {
+            crouchSpeedMultiplayer = 0.5f;
+            movmentDirection = movmentDirection.normalized;
+        }
+
         switch (m_characterState)
         {
             case MovingAgent.CharacterMainStates.Aimed:
@@ -46,7 +54,7 @@ public class HumanoidMovmentModule : MovmentModule
                 {
                     // Move character transfrom
                     Vector3 translateDirection = new Vector3(selfTransfrommoveDiection.x, 0, selfTransfrommoveDiection.z);
-                    this.m_characterTransform.Translate(translateDirection.normalized / 50);
+                    this.m_characterTransform.Translate(translateDirection.normalized*crouchSpeedMultiplayer / 50);
                 }
 
 
@@ -82,22 +90,14 @@ public class HumanoidMovmentModule : MovmentModule
 
                 if(m_enableTranslateMovment)
                 {
-                    this.m_characterTransform.Translate(Vector3.forward * movmentDirection.magnitude / divider);
+                    this.m_characterTransform.Translate(Vector3.forward * movmentDirection.magnitude*crouchSpeedMultiplayer / divider);
                 }
-
-
-                //Vector3 newDirection = m_characterTransform.TransformDirection(Vector3.forward);
-                //if(m_characterController.enabled)
-                //{
-                //    m_characterController.Move(newDirection * movmentDirection.magnitude / divider);
-                //}
-
                 break;
         }
     }
     #endregion
 
-    #region getters&setters
+    #region getters & setters
     /*
      * Current Target direction from the player
      */
@@ -116,6 +116,11 @@ public class HumanoidMovmentModule : MovmentModule
     public void enableTranslateMovment(bool enable)
     {
         m_enableTranslateMovment = enable;
+    }
+
+    public bool isCrouched()
+    {
+        return m_animationSystem.isCrouched();
     }
     #endregion
 

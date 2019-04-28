@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(MovingAgent))]
-public class PlayerAgent : MonoBehaviour,AgentController
+public class PlayerController : AgentController
 {
     private bool m_enabled;
     protected MovingAgent m_movingAgent;
 
-    public LayerMask enemyHitLayerMask;
-    public LayerMask floorHitLayerMask;
+    private LayerMask enemyHitLayerMask;
+    private LayerMask floorHitLayerMask;
     public float health;
 
     private float speedModifyVale;
@@ -17,14 +17,13 @@ public class PlayerAgent : MonoBehaviour,AgentController
     private float horizontalSpeed;
 
     #region Initialize
-    private void Awake()
-    {
-        m_movingAgent = this.GetComponent<MovingAgent>();
-
-    }
-
     private void Start()
     {
+        m_movingAgent = this.GetComponent<MovingAgent>();
+        m_movingAgent.setFaction(m_agentFaction);
+        enemyHitLayerMask = LayerMask.GetMask("Enemy");
+        floorHitLayerMask = LayerMask.GetMask("Target");
+
         createTargetPlane();
         m_movingAgent.setHealth(health);
         m_movingAgent.enableTranslateMovment(true);
@@ -61,11 +60,11 @@ public class PlayerAgent : MonoBehaviour,AgentController
         // Setting Character Aiming.
         if (Input.GetMouseButton(1) && !m_movingAgent.isEquipingWeapon())
         {
-            m_movingAgent.AimWeapon();
+            m_movingAgent.aimWeapon();
         }
         else
         {
-            m_movingAgent.StopAiming();
+            m_movingAgent.stopAiming();
         }
 
         if (Input.GetKeyDown(KeyCode.Alpha1))
@@ -170,7 +169,7 @@ public class PlayerAgent : MonoBehaviour,AgentController
         return Vector3.zero;
     }
 
-    public void setMovableAgent(ICyberAgent agent)
+    public override void setMovableAgent(ICyberAgent agent)
     {
         m_movingAgent = (MovingAgent)agent;
     }
@@ -192,14 +191,15 @@ public class PlayerAgent : MonoBehaviour,AgentController
         return forward * direction.x - right * direction.z;
     }
 
-    public float getSkill()
+    public override float getSkill()
     {
         throw new System.NotImplementedException();
     }
 
-    public ICyberAgent getICyberAgent()
+    public override ICyberAgent getICyberAgent()
     {
         return m_movingAgent;
     }
+
     #endregion
 }

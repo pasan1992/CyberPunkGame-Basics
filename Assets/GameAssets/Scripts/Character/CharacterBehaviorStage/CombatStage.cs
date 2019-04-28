@@ -30,7 +30,7 @@ public class CombatStage : BasicMovmentStage
         this.opponent = target;
         coverPoints = GameObject.FindObjectsOfType<CoverPoint>();
         selfAgent.toggleHide();
-        selfAgent.AimWeapon();
+        selfAgent.aimWeapon();
         selfAgent.togglePrimaryWeapon();
         this.autoAgent = autoAgent;
         targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
@@ -61,6 +61,7 @@ public class CombatStage : BasicMovmentStage
     protected override void stepUpdate()
     {
         updateSubStages();
+        updateTarget();
     }
 
     private void updateSubStages()
@@ -81,7 +82,7 @@ public class CombatStage : BasicMovmentStage
                     {
                         case CoverShootingSubStages.Cover:
 
-                            selfAgent.AimWeapon();
+                            selfAgent.aimWeapon();
                             currentCoverShootingSubStage = CoverShootingSubStages.Peek;
 
                             shotsFromCover = (int)(Random.value * 5);
@@ -104,7 +105,7 @@ public class CombatStage : BasicMovmentStage
                             {
                                 currentCoverShootingSubStage = CoverShootingSubStages.Cover;
                                 currentShotsFromCover = 0;
-                                selfAgent.StopAiming();
+                                selfAgent.stopAiming();
                                 setStepIntervalSize(0.8f);
                             }
                             else
@@ -145,7 +146,7 @@ public class CombatStage : BasicMovmentStage
 
                     // Get up and move
                     selfAgent.toggleHide();
-                    selfAgent.AimWeapon();
+                    selfAgent.aimWeapon();
                 }
 
                 break;
@@ -158,13 +159,13 @@ public class CombatStage : BasicMovmentStage
                     if(agent.remainingDistance > 3 && Vector3.Distance(selfAgent.getCurrentPosition(),opponent.getCurrentPosition()) > fireRangeDistance)
                     {
                         enableRun = true;
-                        selfAgent.StopAiming();
+                        selfAgent.stopAiming();
                     }
                     else
                     {
                         if (Vector3.Distance(selfAgent.getCurrentPosition(), opponent.getCurrentPosition()) < fireRangeDistance)
                         {
-                            selfAgent.AimWeapon();
+                            selfAgent.aimWeapon();
                             enableRun = false;
                             selfAgent.weaponFireForAI();
                         }
@@ -180,7 +181,7 @@ public class CombatStage : BasicMovmentStage
 
                     // Get down on cover
                     selfAgent.toggleHide();
-                    selfAgent.StopAiming();
+                    selfAgent.stopAiming();
                     setStepIntervalSize(0.8f);
                     agent.velocity = Vector3.zero;
 
@@ -307,6 +308,32 @@ public class CombatStage : BasicMovmentStage
     public override void stopStageBehavior()
     {
         agent.isStopped = true;
+    }
+
+    public void updateTarget()
+    {
+        float minimumDistance = Vector3.Distance(selfAgent.getCurrentPosition(),opponent.getCurrentPosition());
+
+
+
+        if(opponent == null || !opponent.IsFunctional())
+        {
+            minimumDistance = 9999;
+            AgentController[] allAgents = GameObject.FindObjectsOfType<AgentController>();
+            foreach (AgentController agent in allAgents)
+            {
+                ICyberAgent cyberAgent = agent.getICyberAgent();
+                float distance = Vector3.Distance(selfAgent.getCurrentPosition(), cyberAgent.getCurrentPosition());
+                if (cyberAgent.IsFunctional() && cyberAgent.getFaction() != selfAgent.getFaction() && !cyberAgent.getFaction().Equals(AgentController.AgentFaction.Player))
+                {
+                    if(distance < minimumDistance)
+                    {
+                        minimumDistance = distance;
+                        opponent = cyberAgent;
+                    }               
+                }
+            }
+        }
     }
     #endregion
 

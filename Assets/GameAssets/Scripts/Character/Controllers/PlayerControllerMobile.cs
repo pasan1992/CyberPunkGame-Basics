@@ -7,7 +7,7 @@ using UnityEngine.AI;
 //[RequireComponent(typeof(NavMeshAgent))]
 [RequireComponent(typeof(SwipeComponent))]
 
-public class PlayerAgentMobile : MonoBehaviour
+public class PlayerControllerMobile : MonoBehaviour
 {
     // Start is called before the first frame update
     protected MovingAgent m_movingAgent;
@@ -80,12 +80,12 @@ public class PlayerAgentMobile : MonoBehaviour
             Vector3 targetPosition = this.transform.position + aimDirection.normalized * 2 + new Vector3(0, 1.24f, 0);
             target.transform.position = targetPosition;
 
-            m_movingAgent.AimWeapon();
+            m_movingAgent.aimWeapon();
             m_movingAgent.setTargetPoint(targetPosition);
         }
         else
         {
-            m_movingAgent.StopAiming();
+            m_movingAgent.stopAiming();
         }
 
         if(aimDirection.magnitude > 0.5)
@@ -98,7 +98,7 @@ public class PlayerAgentMobile : MonoBehaviour
     {
         if(m_target != null)
         {
-            m_movingAgent.AimWeapon();
+            m_movingAgent.aimWeapon();
             Debug.Log("target");
             m_movingAgent.setTargetPoint(m_target.position);
         }
@@ -127,7 +127,7 @@ public class PlayerAgentMobile : MonoBehaviour
         {
             Debug.Log(tapObject.tag + " and " + tapObject.name);
             m_target = tapObject;
-            m_movingAgent.AimWeapon();
+            m_movingAgent.aimWeapon();
             m_movingAgent.togglePrimaryWeapon();
         }
     }

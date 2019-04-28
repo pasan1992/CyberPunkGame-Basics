@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class AIDrone : MonoBehaviour, AgentController
+public class AutoDroneController :  AgentController
 {
     // Start is called before the first frame update
     public string enemyTag;
@@ -38,7 +38,7 @@ public class AIDrone : MonoBehaviour, AgentController
 
         }
 
-        m_selfAgent.AimWeapon();
+        m_selfAgent.aimWeapon();
 
         tempFloat = Random.value * 10;
 
@@ -79,16 +79,16 @@ public class AIDrone : MonoBehaviour, AgentController
 
     #region getters and setters
 
-    public void setMovableAgent(ICyberAgent agent)
+    public override void setMovableAgent(ICyberAgent agent)
     {
     }
 
-    public float getSkill()
+    public override float getSkill()
     {
         throw new System.NotImplementedException();
     }
 
-    public ICyberAgent getICyberAgent()
+    public override ICyberAgent getICyberAgent()
     {
         return m_selfAgent;
     }

@@ -7,84 +7,52 @@ using UnityEngine.AI;
 public class MovingAgent : MonoBehaviour,ICyberAgent
 {
     #region parameters
-    // Public - Editor Values
-    public enum CharacterMainStates { Aimed, Armed_not_Aimed,Dodge, Idle }
-    private DamageModule.OnDestoryDeligate m_onDestoryCallback;
-    //public LayerMask floorHitLayerMask;
-   // public LayerMask enemyHitLayerMask;
-   // public bool isPlayer = false;
 
-    // Attribute - Systems
+    // Callback
+    private DamageModule.OnDestoryDeligate m_onDestoryCallback;
+
+    // Main Modules
     protected HumanoidEquipmentModule m_equipmentModule;
     protected HumanoidAnimationModule m_animationModule;
     protected HumanoidMovmentModule m_movmentModule;
     protected HumanoidDamageModule m_damageModule;
-    //protected AgentController m_agentController;
-    private Vector3 m_movmentVector;
 
-    private NavMeshAgent tempNavMeshAgent;
-   
+
     // Attributes
+    public enum CharacterMainStates { Aimed, Armed_not_Aimed, Dodge, Idle }
     private CharacterMainStates m_characterState = CharacterMainStates.Idle;
     protected GameObject m_target;
-    bool m_characterEnabled = true;
+    private bool m_characterEnabled = true;
+    private AgentController.AgentFaction m_agentFaction;
+    private Vector3 m_movmentVector;
+
     #endregion
 
-    #region initalize
+    #region Initalize
     public virtual void Awake ()
     {
         m_target = new GameObject();
         m_movmentVector = new Vector3(0, 0, 0);
 
         // Create Animation system.
-        AimIK m_aimIK = this.GetComponent<AimIK>();
-        m_aimIK.solver.target = m_target.transform;
+        AimIK aimIK = this.GetComponent<AimIK>();
+        aimIK.solver.target = m_target.transform;
         m_animationModule = new HumanoidAnimationModule(this.GetComponent<Animator>(), this.GetComponent<AimIK>(), 10);
 
         // Create equipment system.
-        Weapon[] m_currentWeapons = this.GetComponentsInChildren<Weapon>();
-        WeaponProp[] m_currentWeaponProps = this.GetComponentsInChildren<WeaponProp>();
-        m_equipmentModule = new HumanoidEquipmentModule(m_currentWeapons, m_currentWeaponProps, this.transform.name, m_characterState, m_target,GetComponent<Recoil>(),m_animationModule);
-
+        Weapon[] currentWeapons = this.GetComponentsInChildren<Weapon>();
+        WeaponProp[] currentWeaponProps = this.GetComponentsInChildren<WeaponProp>();
+        m_equipmentModule = new HumanoidEquipmentModule(currentWeapons, currentWeaponProps, m_characterState, m_target,GetComponent<Recoil>(),m_animationModule);
 
         // Create movment system.
         m_movmentModule = new HumanoidMovmentModule(this.transform,m_characterState,m_target,m_animationModule);
 
-        Transform tempHeadTransfrom = null;
-
-        foreach (Rigidbody rb in this.GetComponentsInChildren<Rigidbody>())
-        {
-            if (rb.tag == "Head")
-            {
-                tempHeadTransfrom = rb.transform;
-            }
-        }
-
-        m_damageModule = new HumanoidDamageModule(5, this.GetComponent<RagdollUtility>(), this.GetComponentInChildren<HitReaction>(),m_animationModule, tempHeadTransfrom, DestroyCharacter);
-        
-        //if(isPlayer)
-        //{
-        //    m_agentController = new PlayerAgent(enemyHitLayerMask,floorHitLayerMask);
-        //    m_agentController.setMovableAgent(this);
-
-
-        //}
-        //else
-        //{
-        //    m_agentController = new AIAgent();
-        //    m_agentController.setMovableAgent(this);
-        //}
-
-        foreach (Weapon wp in m_currentWeapons)
-        {
-            wp.SetGunTargetLineStatus(true);
-        }
-
-        tempNavMeshAgent = this.GetComponent<NavMeshAgent>();
+        // Create Damage module
+        m_damageModule = new HumanoidDamageModule(5, this.GetComponent<RagdollUtility>(), this.GetComponentInChildren<HitReaction>(),m_animationModule, findHeadTransfrom(), destroyCharacter);
     }
     #endregion
 
-    #region updates
+    #region Updates
     // Update is called once per frame
     void FixedUpdate()
     {
@@ -95,51 +63,14 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
             m_movmentModule.UpdateMovment((int)m_characterState, m_movmentVector);
             m_equipmentModule.UpdateSystem(m_characterState);
             m_damageModule.update();
-
-            //if (m_characterEnabled && m_agentController != null)
-            //{
-            //    m_agentController.controllerUpdate();
-            //}
         }
     }
-
-    //private void Update()
-    //{
-    //    if (m_characterEnabled && m_agentController != null)
-    //    {
-    //        m_agentController.controllerUpdate();
-    //    }
-    //}
     #endregion
 
     #region Commands
-
-    // Fire Weapon Once
-    //public virtual void FireWeapon()
-    //{
-    //    if (m_equipmentSystem.isProperlyAimed() && m_characterState.Equals(CharacterMainStates.Aimed))
-    //    {
-    //        m_equipmentSystem.FireCurrentWeapon();
-    //    }
-    //}
-
-    //// Fire weapon continously.
-    //public virtual void continouseFire()
-    //{
-    //    if (m_equipmentSystem.isProperlyAimed() && m_characterState.Equals(CharacterMainStates.Aimed))
-    //    {
-    //        m_equipmentSystem.continouseFire();
-    //    }
-    //}
-
     public void damageAgent(float amount)
     {
         m_damageModule.DamageByAmount(amount);
-
-        //if(m_damageSystem.getHealth() == 0)
-        //{
-        //    DestroyCharacter();
-        //}
     }
 
     public virtual void pullTrigger()
@@ -160,13 +91,13 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         StartCoroutine(fireWeapon());
     }
 
-    public virtual void WeaponFireForAICover()
+    public virtual void weaponFireForAICover()
     {
         StartCoroutine(fireWeaponCover());
     }
 
     // Aim Current Weapon -
-    public virtual void AimWeapon()
+    public virtual void aimWeapon()
     {
         if (m_characterState.Equals(CharacterMainStates.Armed_not_Aimed) && !isEquipingWeapon() && !m_characterState.Equals(CharacterMainStates.Dodge))
         {
@@ -176,7 +107,7 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     }
 
     // Stop Aiming current Weapon.
-    public virtual void StopAiming()
+    public virtual void stopAiming()
     {
         if (m_characterState.Equals(CharacterMainStates.Aimed))
         {
@@ -192,7 +123,7 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     }
 
     // Destory Character
-    public void DestroyCharacter()
+    private void destroyCharacter()
     {
         m_equipmentModule.DropCurrentWeapon();
         m_characterEnabled = false;
@@ -207,18 +138,17 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     public void toggleHide()
     {
         m_animationModule.toggleCrouched();
-
-        // Disable moving agent head collider when crouched.
-        //m_damageSystem.toggleHeadTransfromCollider(!m_animationModule.isCrouched());
     }
 
     public void togglePrimaryWeapon()
     {
+        // !improtant. Returns the character state after the toggle.
         m_characterState = m_equipmentModule.togglePrimary();
     }
 
     public void togglepSecondaryWeapon()
     {
+        // !important Returns the character state after the toggle
         m_characterState = m_equipmentModule.toggleSecondary();
     }
 
@@ -234,9 +164,7 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
             m_characterState = CharacterMainStates.Dodge;
             m_animationModule.triggerDodge();
             m_movmentModule.dodge(dodgeDirection);
-            //m_equipmentSystem.aimCurrentEquipment(false);
             m_equipmentModule.releaseTrigger();
-            //tempNavMeshAgent.enabled = false;
         }
     }
 
@@ -247,7 +175,7 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
 
     #endregion
 
-    #region getters and setters
+    #region Getters and Setters
 
     public void setOndestroyCallback(DamageModule.OnDestoryDeligate onDestoryCallback)
     {
@@ -256,7 +184,7 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
 
     public bool IsFunctional()
     {
-        return m_damageModule.IsFunctional();
+        return m_damageModule.HealthAvailable();
     }
 
     public bool isEquiped()
@@ -307,11 +235,35 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         }
     }
 
-
-
     public bool isCrouched()
     {
-        return m_animationModule.isCrouched();
+        return m_movmentModule.isCrouched();
+    }
+
+    public AgentController.AgentFaction getFaction()
+    {
+        return m_agentFaction;
+    }
+
+    public void setFaction(AgentController.AgentFaction group)
+    {
+        m_agentFaction = group;
+        m_equipmentModule.setOwnerFaction(group);
+    }
+
+    public CharacterMainStates getCharacterMainStates()
+    {
+        return m_characterState;
+    }
+
+    public Transform getTransfrom()
+    {
+        return this.transform;
+    }
+
+    public string getName()
+    {
+        return this.name;
     }
 
     #endregion
@@ -332,25 +284,6 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     {
         return m_characterEnabled;
     }
-    //void OnBecameVisible()
-    //{
-    //    AIAgent agent = (AIAgent)m_agentController;
-
-    //    if (agent != null)
-    //    {
-    //        agent.setEnabledFirint(true);
-    //    }
-    //}
-
-    //void OnBecameInvisible()
-    //{
-    //    AIAgent agent = (AIAgent)m_agentController;
-
-    //    if (agent != null)
-    //    {
-    //        agent.setEnabledFirint(false);
-    //    }
-    //}
 
     public void DodgeEnd()
     {
@@ -363,11 +296,46 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
             Debug.Log("idle");
             m_characterState = CharacterMainStates.Idle;
         }
-        //tempNavMeshAgent.enabled = true;
     }
     #endregion
 
-    #region commented Code
+    #region Helper Functions
+
+    private IEnumerator fireWeapon()
+    {
+        pullTrigger();
+        yield return new WaitForSeconds(0.5f);
+        releaseTrigger();
+    }
+
+    private IEnumerator fireWeaponCover()
+    {
+        aimWeapon();
+        yield return new WaitForSeconds(2f);
+        aimWeapon();
+        pullTrigger();
+        yield return new WaitForSeconds(1f);
+        releaseTrigger();
+        yield return new WaitForSeconds(1f);
+        stopAiming();
+    }
+
+    private Transform findHeadTransfrom()
+    {
+        Transform headTransfrom = null;
+        foreach (Rigidbody rb in this.GetComponentsInChildren<Rigidbody>())
+        {
+            if (rb.tag == "Head")
+            {
+                headTransfrom = rb.transform;
+            }
+        }
+
+        return headTransfrom;
+    }
+    #endregion
+
+    #region Commented Code
 
     //public void unEquipCurentWeapon()
     //{
@@ -395,37 +363,5 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     //        }
     //    }
     //}
-    #endregion
-
-    #region helperFunctions
-    IEnumerator fireWeapon()
-    {
-        pullTrigger();
-        yield return new WaitForSeconds(0.5f);
-        releaseTrigger();
-    }
-
-    IEnumerator fireWeaponCover()
-    {
-        AimWeapon();
-        yield return new WaitForSeconds(2f);
-        AimWeapon();
-        pullTrigger();
-        yield return new WaitForSeconds(1f);
-        releaseTrigger();
-        yield return new WaitForSeconds(1f);
-        StopAiming();
-    }
-
-    public string getName()
-    {
-        return this.name;
-    }
-
-    public Transform getTransfrom()
-    {
-        return this.transform;
-    }
-
     #endregion
 }

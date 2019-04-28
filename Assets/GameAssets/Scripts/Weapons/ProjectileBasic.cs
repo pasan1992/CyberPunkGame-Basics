@@ -9,6 +9,7 @@ public class ProjectileBasic : MonoBehaviour
     private string shooterName ="test";
     private bool hit = false;
     public GameObject particleObject;
+    private AgentController.AgentFaction m_fireFrom;
 
     #region updates
 
@@ -53,7 +54,7 @@ public class ProjectileBasic : MonoBehaviour
         if (agentController != null && !hit)
         {
             ICyberAgent movingAgnet = agentController.getICyberAgent();
-            if (!shooterName.Equals(movingAgnet.getName()))
+            if (!m_fireFrom.Equals(movingAgnet.getFaction()))
             {
                 //Debug.Log(other.name);
 
@@ -120,6 +121,17 @@ public class ProjectileBasic : MonoBehaviour
     {
         this.shooterName = name;
     }
+
+    public void setFiredFrom(AgentController.AgentFaction group)
+    {
+        m_fireFrom = group;
+    }
+
+    public AgentController.AgentFaction getFireFrom()
+    {
+        return m_fireFrom;
+    }
+
 
     private void resetProjectile()
     {

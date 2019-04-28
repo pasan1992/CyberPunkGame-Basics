@@ -20,7 +20,10 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/PC/Level/WareHouse.unity
     guid: 420c0228d9ae6074481a8d4e38a61ecf
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PC/Level/WareHouseGameplay.unity
     guid: 452d83187e8ef9b41940ae5a3a9c6168
+  - enabled: 1
+    path: Assets/Scenes/PC/Test/CoverTesting.unity
+    guid: b65ba82536711644ba72a3c7f8cf1f22
   m_configObjects: {}

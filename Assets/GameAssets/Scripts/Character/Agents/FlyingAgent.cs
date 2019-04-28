@@ -19,6 +19,7 @@ public class FlyingAgent :ICyberAgent
     private Rigidbody m_droneRigitBody;
     public delegate void OnDestroyDeligate();
     private OnDestroyDeligate m_onDestroyCallback;
+    private AgentController.AgentFaction m_group;
 
     #region initalize
 
@@ -45,7 +46,7 @@ public class FlyingAgent :ICyberAgent
     // Update is called once per frame
     public void updateAgent()
     {
-        if(m_damageModule.IsFunctional())
+        if(m_damageModule.HealthAvailable())
         {
             m_movmentModule.UpdateMovment((int)m_currentFlyingState, m_movmentDirection);
         }
@@ -106,12 +107,22 @@ public class FlyingAgent :ICyberAgent
 
     public bool IsFunctional()
     {
-        return m_damageModule.IsFunctional();
+        return m_damageModule.HealthAvailable();
     }
 
     public string getName()
     {
         return m_selfGameObject.name;
+    }
+
+    public AgentController.AgentFaction getFaction()
+    {
+        return m_group;
+    }
+
+    public void setFaction(AgentController.AgentFaction group)
+    {
+        m_group = group;
     }
 
     #endregion
@@ -153,12 +164,12 @@ public class FlyingAgent :ICyberAgent
         m_animationModule.setMovment(movmentDirection.x,movmentDirection.z);
     }
 
-    public void AimWeapon()
+    public void aimWeapon()
     {
         m_currentFlyingState = MovmentModule.BASIC_MOVMENT_STATE.AIMED_MOVMENT;
     }
 
-    public void StopAiming()
+    public void stopAiming()
     {
         m_currentFlyingState = MovmentModule.BASIC_MOVMENT_STATE.DIRECTIONAL_MOVMENT;
     }
@@ -166,7 +177,7 @@ public class FlyingAgent :ICyberAgent
 
     #region un-implemented functions 
 
-    public void WeaponFireForAICover()
+    public void weaponFireForAICover()
     {
         throw new System.NotImplementedException();
     }

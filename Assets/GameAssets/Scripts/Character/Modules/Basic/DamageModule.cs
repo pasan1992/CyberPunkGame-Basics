@@ -29,7 +29,7 @@ public class DamageModule
     {
         m_health = health;
 
-        if (m_health < 0)
+        if (m_health <= 0)
         {
             m_health = 0;
             destroyCharacter();
@@ -41,7 +41,7 @@ public class DamageModule
     public void DamageByAmount(float amount)
     {
         m_health -= amount;
-        if (m_health < 0)
+        if (m_health <= 0)
         {
             m_health = 0;
             destroyCharacter();
@@ -49,7 +49,7 @@ public class DamageModule
         }
     }
 
-    public virtual bool IsFunctional()
+    public virtual bool HealthAvailable()
     {
         return m_health > 0;
     }
