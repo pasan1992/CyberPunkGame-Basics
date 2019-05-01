@@ -1,0 +1,63 @@
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+public class BasicExplosion : MonoBehaviour
+{
+    // Start is called before the first frame update
+
+    #region Initialize
+
+    Rigidbody[] explosionParticles;
+    ParticleSystem m_particleSystem;
+    void Awake()
+    {
+       explosionParticles =  this.GetComponentsInChildren<Rigidbody>();
+    }
+
+    private void resetAll()
+    {
+        foreach(Rigidbody rb in explosionParticles)
+        {
+            rb.transform.localPosition = Vector3.zero;
+            //rb.Sleep();
+            rb.gameObject.SetActive(false);
+            rb.transform.parent = this.transform;
+        }
+
+        if(m_particleSystem != null)
+        {
+            m_particleSystem.Stop();
+            m_particleSystem.gameObject.SetActive(false);
+        }
+        this.gameObject.SetActive(false);
+    }
+
+    #endregion
+
+    #region Commands
+
+    public void exploade()
+    {
+        foreach (Rigidbody rb in explosionParticles)
+        {
+            rb.gameObject.SetActive(true);
+            rb.gameObject.transform.parent = null;
+            rb.transform.transform.position = this.transform.position;
+            //rb.WakeUp();
+            rb.AddForce(Random.insideUnitSphere *(Random.value * 10+10), ForceMode.Impulse);
+            rb.AddForce(Vector3.up * 5, ForceMode.Impulse);
+        }
+
+        GameObject explosion = ProjectilePool.getInstance().getBasicFireExplosionParticle();
+        explosion.SetActive(true);
+        explosion.transform.position = this.transform.position;
+        m_particleSystem = explosion.GetComponent<ParticleSystem>();
+        m_particleSystem.Play();
+
+        Invoke("resetAll", 5);
+
+    }
+
+    #endregion
+}

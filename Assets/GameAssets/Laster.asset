@@ -32,7 +32,7 @@ MonoBehaviour:
     value: 1
   intensity:
     overrideState: 1
-    value: 33.5
+    value: 7.61
   threshold:
     overrideState: 1
     value: 1
@@ -41,7 +41,7 @@ MonoBehaviour:
     value: 0.106
   clamp:
     overrideState: 1
-    value: 65472
+    value: 65457
   diffusion:
     overrideState: 1
     value: 5.78

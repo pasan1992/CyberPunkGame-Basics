@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 
-public class FlyingAgent :ICyberAgent
+public class FlyingAgent : MonoBehaviour ,ICyberAgent
 {
     // Start is called before the first frame update
     public float health = 5;
 
-    public MovmentModule.BASIC_MOVMENT_STATE m_currentFlyingState = MovmentModule.BASIC_MOVMENT_STATE.DIRECTIONAL_MOVMENT;
+    private MovmentModule.BASIC_MOVMENT_STATE m_currentFlyingState = MovmentModule.BASIC_MOVMENT_STATE.DIRECTIONAL_MOVMENT;
 
     private Vector3 m_movmentDirection;
     private GameObject m_target;
@@ -15,7 +15,6 @@ public class FlyingAgent :ICyberAgent
     private MovmentModule m_movmentModule;
     private DroneDamageModule m_damageModule;
 
-    private GameObject m_selfGameObject;
     private Rigidbody m_droneRigitBody;
     public delegate void OnDestroyDeligate();
     private OnDestroyDeligate m_onDestroyCallback;
@@ -23,20 +22,17 @@ public class FlyingAgent :ICyberAgent
 
     #region initalize
 
-    public FlyingAgent(Animator animator,GameObject selfGameObject,Rigidbody rigidbody,OnDestroyDeligate onDestroyCallback)
+    public void Awake()
     {
         m_target = new GameObject();
         m_target.transform.position = Vector3.zero;
-        m_selfGameObject = selfGameObject;
 
-        // Initalize explosion particle system.
+        // Initialize self parameters
+        m_droneRigitBody = this.GetComponentInChildren<Rigidbody>();
 
-        m_animationModule = new AnimationModule(animator);
-        m_movmentModule = new MovmentModule(m_target, selfGameObject.transform);
+        m_animationModule = new AnimationModule(this.GetComponentInChildren<Animator>());
+        m_movmentModule = new MovmentModule(m_target, this.gameObject.transform);
         m_damageModule = new DroneDamageModule(health, DestroyCharacter);
-        
-        m_droneRigitBody = rigidbody;
-        m_onDestroyCallback += onDestroyCallback;
     }
     #endregion
 
@@ -102,7 +98,7 @@ public class FlyingAgent :ICyberAgent
 
     public Vector3 getCurrentPosition()
     {
-        return m_selfGameObject.transform.position;
+        return this.gameObject.transform.position;
     }
 
     public bool IsFunctional()
@@ -112,7 +108,7 @@ public class FlyingAgent :ICyberAgent
 
     public string getName()
     {
-        return m_selfGameObject.name;
+        return this.gameObject.name;
     }
 
     public AgentController.AgentFaction getFaction()
@@ -125,22 +121,27 @@ public class FlyingAgent :ICyberAgent
         m_group = group;
     }
 
+    public void setonDestoryCallback(OnDestroyDeligate callback)
+    {
+        m_onDestroyCallback = callback;
+    }
+
     #endregion
 
     #region commands
 
     private void DestroyCharacter()
     {
-        //m_damageModule.destroyDrone(m_movmentDirection);
-        m_animationModule.disableAnimationSystem();
-        m_droneRigitBody.isKinematic = false;
-        m_droneRigitBody.useGravity = true;
-        m_droneRigitBody.WakeUp();
-        m_droneRigitBody.AddForce(m_movmentDirection, ForceMode.Impulse);
-        m_droneRigitBody.AddTorque(Vector3.forward*200, ForceMode.Impulse);
-        m_droneRigitBody.transform.parent = null;
+        //m_animationModule.disableAnimationSystem();
+        //m_droneRigitBody.isKinematic = false;
+        //m_droneRigitBody.useGravity = true;
+        //m_droneRigitBody.WakeUp();
+        //m_droneRigitBody.AddForce(m_movmentDirection, ForceMode.Impulse);
+        //m_droneRigitBody.AddTorque(Vector3.forward*200, ForceMode.Impulse);
+        //m_droneRigitBody.transform.parent = null;
+
         m_onDestroyCallback();
-        m_damageModule.ExplosionEffect(m_selfGameObject.transform.position);
+        m_damageModule.ExplosionEffect(this.transform.position);
     }
 
     public void enableTranslateMovment(bool enable)

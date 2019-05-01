@@ -50,13 +50,13 @@ public class ProjectileBasic : MonoBehaviour
     private void hitOnEnemy(Collider other)
     {
         AgentController agentController = other.transform.GetComponentInParent<AgentController>();
-
+        //Debug.Log(other.name);
         if (agentController != null && !hit)
         {
             ICyberAgent movingAgnet = agentController.getICyberAgent();
             if (!m_fireFrom.Equals(movingAgnet.getFaction()))
             {
-                //Debug.Log(other.name);
+                Debug.Log(other.name);
 
                 hit = true;
                 movingAgnet.reactOnHit(other, (this.transform.forward) * 5f, other.transform.position);
@@ -79,7 +79,7 @@ public class ProjectileBasic : MonoBehaviour
                     if (rb != null)
                     {
                         rb.isKinematic = false;
-                        rb.AddForce((this.transform.forward) * 200, ForceMode.Impulse);
+                        rb.AddForce((this.transform.forward) * 5, ForceMode.Impulse);
                     }
                 }
             }

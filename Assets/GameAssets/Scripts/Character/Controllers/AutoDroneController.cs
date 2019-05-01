@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(FlyingAgent))]
 public class AutoDroneController :  AgentController
 {
     // Start is called before the first frame update
@@ -19,9 +20,18 @@ public class AutoDroneController :  AgentController
     {
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
         m_navMeshAgent.updateRotation = false;
-        m_selfAgent = new FlyingAgent(this.GetComponentInChildren<Animator>(), this.gameObject, this.GetComponentInChildren<Rigidbody>(), onDestroyDrone);
 
-        // Finding Player
+        m_selfAgent = this.GetComponent<FlyingAgent>();
+        m_selfAgent.setFaction(m_agentFaction);
+
+        //if(m_selfAgent == null)
+        //{
+        //    this.gameObject.AddComponent(typeof(FlyingAgent));
+        //}
+
+        m_selfAgent.setonDestoryCallback(onDestroyDrone);
+
+
         GameObject[] playerTaggedObjects = GameObject.FindGameObjectsWithTag(enemyTag);
 
         foreach (GameObject obj in playerTaggedObjects)
@@ -99,8 +109,10 @@ public class AutoDroneController :  AgentController
 
     void onDestroyDrone()
     {
+        Debug.Log("destory");
         m_navMeshAgent.isStopped = true;
         m_navMeshAgent.enabled = false;
+        this.gameObject.SetActive(false);
     }
 
     #endregion

@@ -5,14 +5,19 @@ using UnityEngine;
 public class ProjectilePool : MonoBehaviour
 {
     // Basic Projectile 
-    private GameObject basicProjectilePrefab;
     private List<GameObject> basicProjectiles;
     private int maxBulletCount = 50;
 
     // Basic Explosion
-    private GameObject basicExplosionPrefab;
-    public List<GameObject> basicExplosions;
-    private int maxExplosions = 10;
+    //private GameObject basicExplosionParticlePrefab;
+    //private GameObject basicDroneExplosionPrefab;
+
+    private List<GameObject> basicFireExplosionParticles;
+    private List<GameObject> basicDroneExplosion;
+
+
+    private int maxExplosions = 30;
+    private int donreExplosions = 30;
 
     private static ProjectilePool thisProjectilePool;
 
@@ -21,27 +26,40 @@ public class ProjectilePool : MonoBehaviour
     void Awake()
     {
         initalizeBasicProjectile();
-
-        initalizeBasicExplosion();
+        initalizeBasicExplosionParticle();
+        initalizeDroneExplosions();
     }
 
-    private void initalizeBasicExplosion()
+    private void initalizeDroneExplosions()
     {
-        basicExplosionPrefab = Resources.Load<GameObject>("ParticleEffects/Explosion_fire");
+        GameObject basicDroneExplosionPrefab = Resources.Load<GameObject>("Explosions/BasicDroneExplosion");
+        basicDroneExplosion = new List<GameObject>();
 
-        basicExplosions = new List<GameObject>();
+        for (int i = 0; i < donreExplosions; i++)
+        {
+            GameObject explosion = GameObject.Instantiate(basicDroneExplosionPrefab);
+            explosion.SetActive(false);
+            basicDroneExplosion.Add(explosion);
+        }
+    }
+
+    private void initalizeBasicExplosionParticle()
+    {
+        GameObject basicExplosionParticlePrefab = Resources.Load<GameObject>("ParticleEffects/Explosion_fire");
+
+        basicFireExplosionParticles = new List<GameObject>();
 
         for (int i = 0; i < maxExplosions; i++)
         {
-            GameObject explosion = GameObject.Instantiate(basicExplosionPrefab);
+            GameObject explosion = GameObject.Instantiate(basicExplosionParticlePrefab);
             explosion.SetActive(false);
-            basicExplosions.Add(explosion);
+            basicFireExplosionParticles.Add(explosion);
         }
     }
 
     private void initalizeBasicProjectile()
     {
-        basicProjectilePrefab = Resources.Load<GameObject>("Prefab/LaserBeamProjectile");
+        GameObject basicProjectilePrefab = Resources.Load<GameObject>("Prefab/LaserBeamProjectile");
         basicProjectiles = new List<GameObject>();
 
         for (int i = 0; i < maxBulletCount; i++)
@@ -68,9 +86,9 @@ public class ProjectilePool : MonoBehaviour
         return null;
     }
 
-    public GameObject getBasicExplosion()
+    public GameObject getBasicFireExplosionParticle()
     {
-        foreach (GameObject explosion in basicExplosions)
+        foreach (GameObject explosion in basicFireExplosionParticles)
         {
             if(!explosion.activeInHierarchy)
             {
@@ -80,6 +98,20 @@ public class ProjectilePool : MonoBehaviour
 
         return null;
     }
+
+    public GameObject getBasicDroneExplosion()
+    {
+        foreach (GameObject explosion in basicDroneExplosion)
+        {
+            if (!explosion.activeInHierarchy)
+            {
+                return explosion;
+            }
+        }
+
+        return null;
+    }
+
 
     public static ProjectilePool getInstance()
     {
