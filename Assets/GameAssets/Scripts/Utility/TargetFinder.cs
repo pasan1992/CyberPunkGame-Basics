@@ -4,47 +4,114 @@ using UnityEngine;
 
 public class TargetFinder : MonoBehaviour {
 
-    private List<Collider>  targets = new List<Collider>();
+    private List<ICyberAgent>  targets = new List<ICyberAgent>();
+    PlayerControllerMobile m_mobilePlayerController;
+    private bool changeOccured = true;
+    ICyberAgent m_currentTarget = null;
+    private string ownersName;
+
+    private void Awake()
+    {
+        m_mobilePlayerController = this.GetComponentInParent<PlayerControllerMobile>();
+        ownersName = m_mobilePlayerController.name;
+
+        MovingAgent[] agents = GameObject.FindObjectsOfType<MovingAgent>();
+
+        FlyingAgent[] flyingAgents = GameObject.FindObjectsOfType<FlyingAgent>();
+
+        foreach (MovingAgent agent in agents)
+        {
+            targets.Add(agent);
+        }
+
+        foreach (FlyingAgent agent in flyingAgents)
+        {
+            targets.Add(agent);
+        }
+    }
+
+    #region Event Handlers
 
     private void OnTriggerEnter(Collider other)
     {
+        
         if(other.transform.tag =="Enemy")
         {
-            targets.Add(other);
-        }
+            ICyberAgent agent = other.GetComponentInParent<ICyberAgent>();
+            if(agent.getName() != ownersName)
+            {
+                Debug.Log(agent.getName() + "entered");
+                targets.Add(agent);
+            }
 
+            changeOccured = true;
+        }
     }
 
     private void OnTriggerExit(Collider other)
     {
         if (other.transform.tag == "Enemy")
         {
-            targets.Remove(other);
+            targets.Remove(other.GetComponentInParent<ICyberAgent>());
+            changeOccured = true;
         }
     }
 
-    public Vector3 getCurrentTarget(Vector3 position)
+    public void OnEnable()
     {
-        Collider currentTarget =null;
-        float MinDistance  =999;
-
-        foreach( Collider target in targets)
+        if(m_mobilePlayerController == null)
         {
-            float distance = Vector3.Distance(position , target.transform.position);
-            if(distance < MinDistance)
-            {
-                MinDistance = distance;
-                currentTarget = target;
-            }
+            m_mobilePlayerController = this.GetComponentInParent<PlayerControllerMobile>();
         }
 
-        if(currentTarget !=null)
+        m_mobilePlayerController.setTargetFinder(this);
+        changeOccured = true;
+        ownersName = m_mobilePlayerController.name;
+    }
+    #endregion
+
+    public ICyberAgent getCurrentTarget(Vector3 position, Vector3 targetPositon)
+    {
+        if(changeOccured)
         {
-            return currentTarget.transform.position;
+            ICyberAgent currentTarget = null;
+            float minAngle = 999;
+
+            foreach (ICyberAgent target in targets)
+            {
+                //float distance = Vector3.Distance(position, target.getCurrentPosition());
+                float angle = Vector3.Angle(target.getCurrentPosition() - position, targetPositon - position);
+                if (angle < minAngle && target.IsFunctional() && target.getName() != ownersName)
+                {
+                    minAngle = angle;
+                    currentTarget = target;
+                }
+            }
+
+            if (currentTarget != null)
+            {
+                m_currentTarget = currentTarget;
+                return currentTarget;
+            }
+            else
+            {
+                m_currentTarget = null;
+                return null;
+            }
         }
         else
         {
-            return Vector3.zero;
+            if(m_currentTarget !=null && m_currentTarget.IsFunctional())
+            {
+                return m_currentTarget;
+            }
+            else
+            {
+                m_currentTarget = null;
+                return null;
+            }
+
         }
+
     }
 }

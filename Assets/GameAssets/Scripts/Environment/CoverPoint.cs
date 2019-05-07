@@ -3,25 +3,13 @@
 public class CoverPoint : MonoBehaviour, IPoints
 {
     ICyberAgent target;
-    bool occupided;
-    string occupentsName ="";
     ICyberAgent occupent;
 
+    #region Getters and Setters
     public void setTargetToCover(ICyberAgent target )
     {
         this.target = target;
     }
-
-    //public void Update()
-    //{
-    //    if(occupent !=null)
-    //    {
-    //        Vector3 tempDirection = target.getTopPosition() - this.transform.position - new Vector3(0, 2f, 0);
-    //        Debug.DrawLine(transform.position + new Vector3(0, 2f, 0), tempDirection * 30, Color.green);
-    //    }
-
-
-    //}
 
     public bool canFireToTarget(float maximumFiringDistance)
     {
@@ -34,27 +22,6 @@ public class CoverPoint : MonoBehaviour, IPoints
         else
         {
             RaycastHit hit;
-            //string[] layerMaskNames = { "FullCOverObsticles", "Enemy" };           
-
-            //if (Physics.Raycast(transform.position+ new Vector3(0,2f,0), target.getTopPosition() - this.transform.position - new Vector3(0, 2f, 0), out hit, maximumFiringDistance, LayerMask.GetMask(layerMaskNames)))
-            //{
-            //    if(hit.transform.root.name == target.getName())
-            //    {
-            //        //Debug.Log("Can fire target" + hit.transform.name);
-            //        return true;
-            //    }
-            //    else
-            //    {
-            //        //Debug.Log("cannot fire target, hit wall or self");
-            //        return false;
-            //    }
-            //}
-            //else
-            //{
-            //    //Debug.Log("Nothing to hit");
-            //    return false;
-            //}
-
             string[] layerMaskNames = { "FullCOverObsticles"};
 
             if (Physics.Raycast(transform.position + new Vector3(0, 2f, 0), target.getTopPosition() - this.transform.position - new Vector3(0, 2f, 0), out hit, maximumFiringDistance, LayerMask.GetMask(layerMaskNames)))
@@ -103,38 +70,31 @@ public class CoverPoint : MonoBehaviour, IPoints
 
     public bool isOccupied()
     {
-        return occupentsName !="";
-    }
-
-    void OnDrawGizmos()
-    {
-        // Gizmos.DrawIcon(transform.position, "cover.png", false);
-
-        if(occupent != null)
-        {
-            Gizmos.color = Color.red;
-        }
-        else
-        {
-            Gizmos.color = Color.blue;
-        }
-
-        Gizmos.DrawSphere(transform.position+ new Vector3(0,0.3f,0), 0.3f);
-
-        if(occupent !=null)
-        {
-            Gizmos.DrawLine(this.transform.position, occupent.getCurrentPosition());
-        }
-
-    }
-
-    public void stPointOccupentsName(string name)
-    {
-        this.occupentsName = name;
+        return occupent != null;
     }
 
     public void setOccupent(ICyberAgent agent)
     {
         this.occupent = agent;
     }
+    #endregion
+
+    #region editor
+    void OnDrawGizmos()
+    {
+        if(isOccupied())
+        {
+            Gizmos.color = Color.black;
+            Gizmos.DrawLine(this.transform.position, occupent.getCurrentPosition());
+        }
+        else
+        {
+            Gizmos.color = Color.gray;
+        }
+
+        Gizmos.DrawSphere(transform.position+ new Vector3(0,0.3f,0), 0.3f);
+        //Gizmos.DrawCube(transform.position + new Vector3(0, 0.3f, 0), new Vector3(0.6f, 0.6f, 0.6f));
+    }
+    #endregion
+
 }

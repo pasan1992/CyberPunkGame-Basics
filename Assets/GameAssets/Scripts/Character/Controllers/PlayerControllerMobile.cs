@@ -4,40 +4,41 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(MovingAgent))]
-//[RequireComponent(typeof(NavMeshAgent))]
-[RequireComponent(typeof(SwipeComponent))]
 
-public class PlayerControllerMobile : MonoBehaviour
+public class PlayerControllerMobile : AgentController
 {
     // Start is called before the first frame update
-    protected MovingAgent m_movingAgent;
-    //protected NavMeshAgent m_navMeshAgent;
-    protected SwipeComponent m_swipeComponent;
+    protected MovingAgent m_selfAgent;
+    public float health;
+    //protected SwipeComponent m_swipeComponent;
 
     protected Vector3 m_movePosition;
     protected bool m_enableMovment;
     protected Transform m_target = null;
 
-    public GameObject target;
+    public GameObject m_aimTarget;
+    private TargetFinder m_targetFinder;
+    private bool targetFound;
+    private Vector3 m_previousDirection;
+    private float distanceFromTarget;
 
     #region initalize
 
     protected void Awake()
     {
-        initalizeNavMesh();
+        initalizeSelfAgent();
+        //m_target = (new GameObject()).transform;      
     }
 
     protected void Start()
     {
-        m_swipeComponent.setGetTapObjectFunction(onTapObject, onTapPosition);
-        m_movingAgent.togglepSecondaryWeapon();
+        m_selfAgent.togglepSecondaryWeapon();
+        m_selfAgent.setHealth(health);
     }
 
-    protected void initalizeNavMesh()
+    protected void initalizeSelfAgent()
     {
-        //m_navMeshAgent = this.GetComponent<NavMeshAgent>();
-        m_movingAgent = this.GetComponent<MovingAgent>();
-        m_swipeComponent = this.GetComponent<SwipeComponent>();
+        m_selfAgent = this.GetComponent<MovingAgent>();
     }
 
     #endregion
@@ -48,24 +49,11 @@ public class PlayerControllerMobile : MonoBehaviour
     void Update()
     {
         moveUpdate();
-        UpdateShooting();
+        //UpdateShooting();
     }
 
     protected void moveUpdate()
     {
-        //if(m_enableMovment)
-        //{
-        //    m_navMeshAgent.SetDestination(m_movePosition);
-        //    m_navMeshAgent.updateRotation = false;
-
-        //    if (!m_navMeshAgent.pathPending)
-        //    {
-        //        Vector3 velocity = m_navMeshAgent.desiredVelocity.normalized;
-        //        velocity = new Vector3(velocity.x, 0, velocity.z);
-        //        m_movingAgent.moveCharacter(velocity);
-        //    }
-        //}
-
         float  inputHorizontal = SimpleInput.GetAxis("Horizontal");
         float inputVertical = SimpleInput.GetAxis("Vertical");
 
@@ -73,38 +61,81 @@ public class PlayerControllerMobile : MonoBehaviour
         float aimInputVertical = SimpleInput.GetAxis("VerticalAim");
 
         Vector3 aimDirection = getDirectionRelativeToCamera(new Vector3(aimInputVertical, 0, -aimInputHorizontal));
-        m_movingAgent.moveCharacter(getDirectionRelativeToCamera(new Vector3(inputVertical, 0, -inputHorizontal).normalized));
+
+        if(SimpleInput.GetButton("Run"))
+        {
+            if(m_selfAgent.isCrouched())
+            {
+                m_selfAgent.toggleHide();
+            }
+
+            m_selfAgent.moveCharacter(getDirectionRelativeToCamera((new Vector3(inputVertical, 0, -inputHorizontal).normalized)*1.8f));
+        }
+        else
+        {
+            m_selfAgent.moveCharacter(getDirectionRelativeToCamera(new Vector3(inputVertical, 0, -inputHorizontal).normalized));
+        }
+
 
         if(aimDirection.normalized.magnitude > 0)
         {
             Vector3 targetPosition = this.transform.position + aimDirection.normalized * 2 + new Vector3(0, 1.24f, 0);
-            target.transform.position = targetPosition;
+            m_aimTarget.transform.position = targetPosition;
 
-            m_movingAgent.aimWeapon();
-            m_movingAgent.setTargetPoint(targetPosition);
+            ICyberAgent targetAgent = m_targetFinder.getCurrentTarget(this.transform.position,targetPosition);
+
+            m_selfAgent.aimWeapon();
+            Debug.Log(targetAgent);
+            if (targetAgent == null || targetAgent.getName() == this.name)
+            {
+                m_selfAgent.setTargetPoint(targetPosition);
+                targetFound = false;
+            }
+            else
+            {
+                float angle = Vector3.Angle((targetPosition - this.transform.position), targetAgent.getTopPosition() - this.transform.position);
+                if(angle <50 & aimDirection != m_previousDirection)
+                {
+                    m_selfAgent.setTargetPoint(getTargetPositionFromAgent(targetAgent));
+                    targetFound = true;
+                    distanceFromTarget = Vector3.Distance(this.transform.position, targetAgent.getTransfrom().position);
+                }
+                else
+                {
+                    m_selfAgent.setTargetPoint(targetPosition);
+                    targetFound = false;
+                }
+            }
         }
         else
         {
-            m_movingAgent.stopAiming();
+            m_selfAgent.stopAiming();
         }
 
-        if(aimDirection.magnitude > 0.5)
+        if(aimDirection.magnitude > 0.5 && targetFound && distanceFromTarget < 15)
         {
-            m_movingAgent.pullTrigger();
+            m_previousDirection = aimDirection;
+            m_selfAgent.pullTrigger();
         }
+        else
+        {
+            m_selfAgent.releaseTrigger();
+        }
+
+        if (Input.GetKeyDown(KeyCode.C) || SimpleInput.GetButtonDown("Jump"))
+        {
+            m_selfAgent.toggleHide();
+        }
+
+
     }
 
     protected void UpdateShooting()
     {
         if(m_target != null)
         {
-            m_movingAgent.aimWeapon();
-            Debug.Log("target");
-            m_movingAgent.setTargetPoint(m_target.position);
-        }
-        else
-        {
-           //
+            m_selfAgent.aimWeapon();
+            m_selfAgent.setTargetPoint(m_target.position);
         }
     }
     #endregion
@@ -114,12 +145,6 @@ public class PlayerControllerMobile : MonoBehaviour
 
     #region eventHandlers
 
-    public void onTapPosition(Vector3 position)
-    {
-        //m_enableMovment = true;
-        //m_movePosition = position;
-    }
-
     public void onTapObject(Transform tapObject)
     {
 
@@ -127,8 +152,8 @@ public class PlayerControllerMobile : MonoBehaviour
         {
             Debug.Log(tapObject.tag + " and " + tapObject.name);
             m_target = tapObject;
-            m_movingAgent.aimWeapon();
-            m_movingAgent.togglePrimaryWeapon();
+            m_selfAgent.aimWeapon();
+            m_selfAgent.togglePrimaryWeapon();
         }
     }
 
@@ -151,6 +176,54 @@ public class PlayerControllerMobile : MonoBehaviour
         right.Normalize();
 
         return forward * direction.x - right * direction.z;
+    }
+
+    public override void setMovableAgent(ICyberAgent agent)
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override float getSkill()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override ICyberAgent getICyberAgent()
+    {
+        return m_selfAgent;
+    }
+
+    public void setTargetFinder(TargetFinder targetFinder)
+    {
+        m_targetFinder = targetFinder;
+    }
+
+    private Vector3 getTargetPositionFromAgent(ICyberAgent agent)
+    {
+        MovingAgent humanoidAgent = agent as MovingAgent;
+
+        if(humanoidAgent == null)
+        {
+            return agent.getTopPosition();
+        }
+        else
+        {
+            if(humanoidAgent.isCrouched())
+            {
+                if(humanoidAgent.isAimed())
+                {
+                    return agent.getTopPosition();
+                }
+                else
+                {
+                    return agent.getCurrentPosition() + new Vector3(0,0.6f,0);
+                }
+            }
+            else
+            {
+                return agent.getCurrentPosition() + new Vector3(0, 1.2f, 0);
+            }
+        }
     }
 
     #endregion

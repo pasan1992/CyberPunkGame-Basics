@@ -2,7 +2,7 @@
 
 public class DroneDamageModule : DamageModule
 {
-    public DroneDamageModule(float health,OnDestoryDeligate onDestroyCallback):base(health, onDestroyCallback)
+    public DroneDamageModule(float health,Outline outline,OnDestoryDeligate onDestroyCallback):base(health, onDestroyCallback,outline)
     {
         
     }

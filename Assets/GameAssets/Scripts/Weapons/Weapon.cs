@@ -23,7 +23,7 @@ public abstract class Weapon : MonoBehaviour
     private LineRenderer m_line;
     private Rigidbody m_rigidbody;
     private BoxCollider m_collider;
-    private bool m_enableLine = true;
+    public bool m_enableLine = true;
     private WeaponFireDeligaet m_onWeaponFire;
     private AgentController.AgentFaction m_ownersFaction;
     private GameObject m_target;

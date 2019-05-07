@@ -18,7 +18,8 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     private Rigidbody m_droneRigitBody;
     public delegate void OnDestroyDeligate();
     private OnDestroyDeligate m_onDestroyCallback;
-    private AgentController.AgentFaction m_group;
+    private AgentController.AgentFaction m_faction;
+    private float m_skill;
 
     #region initalize
 
@@ -32,7 +33,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
         m_animationModule = new AnimationModule(this.GetComponentInChildren<Animator>());
         m_movmentModule = new MovmentModule(m_target, this.gameObject.transform);
-        m_damageModule = new DroneDamageModule(health, DestroyCharacter);
+        m_damageModule = new DroneDamageModule(health, this.GetComponentInChildren<Outline>(), DestroyCharacter);
     }
     #endregion
 
@@ -40,48 +41,13 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     #region update
 
     // Update is called once per frame
-    public void updateAgent()
+    void Update()
     {
         if(m_damageModule.HealthAvailable())
         {
             m_movmentModule.UpdateMovment((int)m_currentFlyingState, m_movmentDirection);
         }
     }
-
-    //protected void updateMovment()
-    //{
-    //    switch (m_currentFlyingState)
-    //    {
-    //        case FLYINGSTATE.AIMED:
-
-    //            if(m_target != null)
-    //            {
-    //                this.transform.LookAt(m_target.transform.position);
-    //            }
-
-    //            if(m_enableTransfromMovment)
-    //            {
-    //                Vector3 selfTransfromMovementDirection = this.transform.InverseTransformDirection(m_movmentDirection);
-    //                this.transform.Translate(selfTransfromMovementDirection);
-    //            }
-
-    //            break;
-    //        case FLYINGSTATE.IDLE:
-
-    //            if (m_movmentDirection.magnitude > 0)
-    //            {
-    //                Vector3 moveDirection = new Vector3(m_movmentDirection.x, 0, m_movmentDirection.z);
-    //                this.transform.rotation = Quaternion.Lerp(this.transform.rotation, Quaternion.LookRotation(moveDirection, Vector3.up), 5f * Time.deltaTime);
-    //            }
-
-    //            if (m_enableTransfromMovment)
-    //            {
-    //                this.transform.Translate(Vector3.forward * m_movmentDirection.magnitude);
-    //            }
-    //            break;
-    //    }
-    //}
-
     #endregion
 
     #region getters and setters
@@ -113,12 +79,12 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public AgentController.AgentFaction getFaction()
     {
-        return m_group;
+        return m_faction;
     }
 
     public void setFaction(AgentController.AgentFaction group)
     {
-        m_group = group;
+        m_faction = group;
     }
 
     public void setonDestoryCallback(OnDestroyDeligate callback)
@@ -126,37 +92,44 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         m_onDestroyCallback = callback;
     }
 
+    public Vector3 getTopPosition()
+    {
+        return this.transform.position;
+    }
+
     #endregion
 
     #region commands
 
+    public void weaponFireForAI()
+    {
+        GameObject Tempprojectile = ProjectilePool.getInstance().getBasicProjectie();
+        Tempprojectile.transform.position = this.transform.position;
+        Tempprojectile.transform.rotation = this.transform.rotation;
+        Tempprojectile.SetActive(true);
+        Tempprojectile.transform.localScale = new Vector3(0.05f, 0.05f, 0.05f);
+
+
+        Tempprojectile.transform.forward = (m_target.transform.position - this.transform.position).normalized;
+        ProjectileBasic tempProjectile = Tempprojectile.GetComponent<ProjectileBasic>();
+        tempProjectile.speed = 1f;
+        tempProjectile.setFiredFrom(m_faction);
+        tempProjectile.resetToMicroBeam();
+    }
+
     private void DestroyCharacter()
     {
-        //m_animationModule.disableAnimationSystem();
-        //m_droneRigitBody.isKinematic = false;
-        //m_droneRigitBody.useGravity = true;
-        //m_droneRigitBody.WakeUp();
-        //m_droneRigitBody.AddForce(m_movmentDirection, ForceMode.Impulse);
-        //m_droneRigitBody.AddTorque(Vector3.forward*200, ForceMode.Impulse);
-        //m_droneRigitBody.transform.parent = null;
-
         m_onDestroyCallback();
         m_damageModule.ExplosionEffect(this.transform.position);
     }
 
     public void enableTranslateMovment(bool enable)
     {
-        //m_enableTransfromMovment = enable;
     }
 
     public void damageAgent(float amount)
     {
         m_damageModule.DamageByAmount(amount);
-
-        //if(m_damageModule.getHealth() == 0)
-        //{
-        //    m_damageModule.destroyDrone(m_movmentDirection);
-        //}
     }
 
     public void moveCharacter(Vector3 movmentDirection)
@@ -191,7 +164,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public Transform getTransfrom()
     {
-        throw new System.NotImplementedException();
+        return this.transform;
     }
 
     public void dodgeAttack(Vector3 dodgeDirection)
@@ -219,11 +192,6 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         throw new System.NotImplementedException();
     }
 
-    public void weaponFireForAI()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public void reactOnHit(Collider collider, Vector3 force, Vector3 point)
     {
 
@@ -244,9 +212,14 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     }
 
-    public Vector3 getTopPosition()
+    public void setSkill(float skill)
     {
-        return Vector3.zero;
+        m_skill = skill;
+    }
+
+    public float getSkill()
+    {
+        return m_skill;
     }
     #endregion
 

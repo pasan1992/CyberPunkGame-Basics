@@ -25,6 +25,7 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     private bool m_characterEnabled = true;
     private AgentController.AgentFaction m_agentFaction;
     private Vector3 m_movmentVector;
+    private float m_skill;
 
     #endregion
 
@@ -48,7 +49,7 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         m_movmentModule = new HumanoidMovmentModule(this.transform,m_characterState,m_target,m_animationModule);
 
         // Create Damage module
-        m_damageModule = new HumanoidDamageModule(5, this.GetComponent<RagdollUtility>(), this.GetComponentInChildren<HitReaction>(),m_animationModule, findHeadTransfrom(), destroyCharacter);
+        m_damageModule = new HumanoidDamageModule(5, this.GetComponent<RagdollUtility>(), this.GetComponentInChildren<HitReaction>(),m_animationModule, findHeadTransfrom(), destroyCharacter, this.GetComponentInChildren<Outline>());
     }
     #endregion
 
@@ -264,6 +265,21 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     public string getName()
     {
         return this.name;
+    }
+
+    public void setSkill(float skill)
+    {
+        m_skill = skill;
+    }
+
+    public float getSkill()
+    {
+        return m_skill;
+    }
+
+    public bool isAimed()
+    {
+        return m_equipmentModule.isProperlyAimed();
     }
 
     #endregion

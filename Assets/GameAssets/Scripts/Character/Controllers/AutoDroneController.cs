@@ -8,30 +8,28 @@ public class AutoDroneController :  AgentController
 {
     // Start is called before the first frame update
     public string enemyTag;
+    public float skill;
 
     private FlyingAgent m_selfAgent;
     private NavMeshAgent m_navMeshAgent;
     private ICyberAgent m_enemy;
+    private ICharacterBehaviorState m_behaviorState;
 
     private float tempFloat;
 
     #region initalize
     void Awake()
     {
-        m_navMeshAgent = this.GetComponent<NavMeshAgent>();
-        m_navMeshAgent.updateRotation = false;
+        initalizeNavMeshAgent();
+        initalizeICyberAgent();
+        initalizeTarget();
+        m_behaviorState = new DroneCombatStage(m_selfAgent, m_navMeshAgent, m_enemy);
 
-        m_selfAgent = this.GetComponent<FlyingAgent>();
-        m_selfAgent.setFaction(m_agentFaction);
+        tempFloat = Random.value * 10;
+    }
 
-        //if(m_selfAgent == null)
-        //{
-        //    this.gameObject.AddComponent(typeof(FlyingAgent));
-        //}
-
-        m_selfAgent.setonDestoryCallback(onDestroyDrone);
-
-
+    private void initalizeTarget()
+    {
         GameObject[] playerTaggedObjects = GameObject.FindGameObjectsWithTag(enemyTag);
 
         foreach (GameObject obj in playerTaggedObjects)
@@ -47,12 +45,23 @@ public class AutoDroneController :  AgentController
             }
 
         }
-
-        m_selfAgent.aimWeapon();
-
-        tempFloat = Random.value * 10;
-
     }
+
+    private void initalizeNavMeshAgent()
+    {
+        m_navMeshAgent = this.GetComponent<NavMeshAgent>();
+        m_navMeshAgent.updateRotation = false;
+    }
+
+    private void initalizeICyberAgent()
+    {
+        m_selfAgent = this.GetComponent<FlyingAgent>();
+        m_selfAgent.setFaction(m_agentFaction);
+        m_selfAgent.setonDestoryCallback(onDestroyDrone);
+        m_selfAgent.aimWeapon();
+        m_selfAgent.setSkill(skill);
+    }
+
     #endregion
 
     #region update
@@ -62,7 +71,7 @@ public class AutoDroneController :  AgentController
     {
         if(m_selfAgent.IsFunctional())
         {
-            droneUpdate();
+            m_behaviorState.updateStage();
         }
     }
 
@@ -79,7 +88,6 @@ public class AutoDroneController :  AgentController
         }
 
         m_selfAgent.setTargetPoint(m_enemy.getTransfrom().position);
-        m_selfAgent.updateAgent();
     }
 
     #endregion

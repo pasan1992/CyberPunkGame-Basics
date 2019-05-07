@@ -27,6 +27,7 @@ public class PlayerController : AgentController
         createTargetPlane();
         m_movingAgent.setHealth(health);
         m_movingAgent.enableTranslateMovment(true);
+        m_movingAgent.setSkill(1);
     }
 
     private void createTargetPlane()

@@ -5,56 +5,87 @@ using UnityEngine.AI;
 
 public abstract class BasicMovmentStage : ICharacterBehaviorState
 {
-    protected NavMeshAgent agent;
-    protected ICyberAgent selfAgent;
+    protected NavMeshAgent m_navMeshAgent;
+    protected ICyberAgent m_selfAgent;
 
-    protected float stepIntervalInSeconds = 0.5f;
-    protected float timeFromLastStep;
-    protected bool enableRun;
+    protected float m_stepIntervalInSeconds = 0.5f;
+    protected float m_timeFromLastStep;
+    protected bool m_enableRun;
 
-    public abstract void setNavMeshAgent(NavMeshAgent navMeshAgent);
-    public abstract void setStepIntervalSize(float timeInSeconds);
-    public abstract void setTargets(ICyberAgent target);
+    #region Initialize
 
     public BasicMovmentStage(ICyberAgent selfAgent,NavMeshAgent agent)
     {
-        this.selfAgent = selfAgent;
-        this.agent = agent;
-        agent.updateRotation = false;
+        this.m_selfAgent = selfAgent;
+        this.m_navMeshAgent = agent;
+        m_navMeshAgent.updateRotation = false;
     }
+
+    #endregion
+
+    #region Updates
 
     public virtual void updateStage()
     {
         #region update navmesh agent
-        // Move agent to coverPoint.
-        if (!agent.pathPending)
-        {
-            Vector3 velocity = agent.desiredVelocity;
 
-            if (!enableRun)
+        // Move agent to coverPoint.
+        if (!m_navMeshAgent.pathPending)
+        {
+            Vector3 velocity = m_navMeshAgent.desiredVelocity;
+
+            if (!m_enableRun)
             {
                 velocity = velocity.normalized;
             }
 
             velocity = new Vector3(velocity.x, 0, velocity.z);
-            selfAgent.moveCharacter(velocity);
+            m_selfAgent.moveCharacter(velocity);
         }
         #endregion
 
         #region Step update Logic
-        if (timeFromLastStep > stepIntervalInSeconds)
+        if (m_timeFromLastStep > m_stepIntervalInSeconds)
         {
-            timeFromLastStep = 0;
+            m_timeFromLastStep = 0;
             stepUpdate();
         }
         else
         {
-            timeFromLastStep += Time.deltaTime;
+            m_timeFromLastStep += Time.deltaTime;
         }
         #endregion
     }
 
     protected abstract void stepUpdate();
-    public abstract void setWeaponFireCapability(bool enabled);
-    public abstract void stopStageBehavior();
+
+    #endregion
+
+    #region Commands
+
+    public virtual void stopStageBehavior()
+    {
+        m_navMeshAgent.isStopped = true;
+    }
+    #endregion
+
+    #region Getters and Setters
+
+    public abstract void setTargets(ICyberAgent target);
+
+    public virtual void setWeaponFireCapability(bool enabled)
+    {
+        m_selfAgent.setWeponFireCapability(enabled);
+    }
+
+    public virtual void setNavMeshAgent(NavMeshAgent navMeshAgent)
+    {
+        m_navMeshAgent = navMeshAgent;
+    }
+
+    public virtual void setStepIntervalSize(float timeInSeconds)
+    {
+        m_stepIntervalInSeconds = timeInSeconds;
+    }
+    #endregion
 }

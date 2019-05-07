@@ -30,7 +30,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1500117151}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.4, y: -1.7766206, z: 4.13}
+  m_LocalPosition: {x: 0.23, y: -1.7766206, z: 4.13}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -4776,7 +4776,7 @@ TrailRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Time: 0.1
+  m_Time: 0.01
   m_Parameters:
     serializedVersion: 3
     widthMultiplier: 0.1
@@ -4785,7 +4785,7 @@ TrailRenderer:
       m_Curve:
       - serializedVersion: 3
         time: 0
-        value: 0.9722214
+        value: 0.29395908
         inSlope: 0
         outSlope: 0
         tangentMode: 0
@@ -4839,7 +4839,7 @@ TrailRenderer:
     textureMode: 0
     shadowBias: 0.5
     generateLightingData: 0
-  m_MinVertexDistance: 0.1
+  m_MinVertexDistance: 0.01
   m_Autodestruct: 0
   m_Emitting: 1
 --- !u!65 &2767850048994409313
@@ -4883,7 +4883,91 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 935a8a93efae78f41b9325f5540a93bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0.1
+  speed: 2
   DistanceTravelled: 0
+  laserBeamTrailCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.003722798
+      value: 0.7188494
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.17413437
+      value: 0.39478883
+      inSlope: -1.7690431
+      outSlope: -1.7690431
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.17911693
+      outWeight: 0.33156952
+    - serializedVersion: 3
+      time: 0.49582556
+      value: 0.095989734
+      inSlope: -0.24078304
+      outSlope: -0.24078304
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.20290633
+      outWeight: 0.63292766
+    - serializedVersion: 3
+      time: 0.9962585
+      value: -0.000037149526
+      inSlope: -0.0033458492
+      outSlope: -0.0033458492
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.30468884
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  microLaserBearmTrailCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0.00067104027
+      value: 0.38671136
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 136
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 0.34694162
+      value: 0.09405285
+      inSlope: -0.29960158
+      outSlope: -0.29960158
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.17911693
+      outWeight: 0.5440787
+    - serializedVersion: 3
+      time: 0.7351266
+      value: 0.023991149
+      inSlope: 0.0048756273
+      outSlope: 0.0048756273
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.20290633
+      outWeight: 0.2652869
+    - serializedVersion: 3
+      time: 0.9962585
+      value: -0.000037149526
+      inSlope: -0.0033458492
+      outSlope: -0.0033458492
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.30468884
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
   particleObject: {fileID: 3075130377662323937, guid: 2e5e41f02682c8747a58b138e8b5d82f,
     type: 3}

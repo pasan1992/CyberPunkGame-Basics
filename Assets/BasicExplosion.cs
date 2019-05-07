@@ -45,8 +45,8 @@ public class BasicExplosion : MonoBehaviour
             rb.gameObject.transform.parent = null;
             rb.transform.transform.position = this.transform.position;
             //rb.WakeUp();
-            rb.AddForce(Random.insideUnitSphere *(Random.value * 10+10), ForceMode.Impulse);
-            rb.AddForce(Vector3.up * 5, ForceMode.Impulse);
+            rb.AddForce(Random.insideUnitSphere *(Random.value * 5+5), ForceMode.Impulse);
+            rb.AddForce(Vector3.up * 2, ForceMode.Impulse);
         }
 
         GameObject explosion = ProjectilePool.getInstance().getBasicFireExplosionParticle();

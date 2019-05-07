@@ -6,12 +6,23 @@ public class ProjectileBasic : MonoBehaviour
     // Start is called before the first frame update
     public float speed = 0;
     public float DistanceTravelled = 0;
+    public AnimationCurve laserBeamTrailCurve;
+    public AnimationCurve microLaserBearmTrailCurve;
+
+
     private string shooterName ="test";
     private bool hit = false;
     public GameObject particleObject;
     private AgentController.AgentFaction m_fireFrom;
+    private TrailRenderer trail;
+
 
     #region updates
+
+    private void Awake()
+    {
+        trail = this.GetComponent<TrailRenderer>();
+    }
 
     void FixedUpdate()
     {
@@ -54,10 +65,8 @@ public class ProjectileBasic : MonoBehaviour
         if (agentController != null && !hit)
         {
             ICyberAgent movingAgnet = agentController.getICyberAgent();
-            if (!m_fireFrom.Equals(movingAgnet.getFaction()))
+            if (movingAgnet !=null && !m_fireFrom.Equals(movingAgnet.getFaction()))
             {
-                Debug.Log(other.name);
-
                 hit = true;
                 movingAgnet.reactOnHit(other, (this.transform.forward) * 5f, other.transform.position);
                 movingAgnet.damageAgent(1);
@@ -79,7 +88,7 @@ public class ProjectileBasic : MonoBehaviour
                     if (rb != null)
                     {
                         rb.isKinematic = false;
-                        rb.AddForce((this.transform.forward) * 5, ForceMode.Impulse);
+                        rb.AddForce((this.transform.forward) * 200, ForceMode.Impulse);
                     }
                 }
             }
@@ -133,10 +142,23 @@ public class ProjectileBasic : MonoBehaviour
     }
 
 
-    private void resetProjectile()
+    public void resetProjectile()
     {
         DistanceTravelled = 0;
         hit = false;
+        trail.time = 0.1f;
+        trail.minVertexDistance = 0.1f;
+        trail.widthCurve = laserBeamTrailCurve;
     }
+
+    public void resetToMicroBeam()
+    {
+        DistanceTravelled = 0;
+        hit = false;
+        trail.time = 0.02f;
+        trail.minVertexDistance = 0.02f;
+        trail.widthCurve = microLaserBearmTrailCurve;
+    }
+
     #endregion
 }

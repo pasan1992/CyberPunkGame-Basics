@@ -10,7 +10,7 @@ public class HumanoidDamageModule : DamageModule
     protected HumanoidAnimationModule m_animationSystem;
     protected Transform m_headTransfrom;
 
-    public HumanoidDamageModule(float health,RagdollUtility ragdoll, HitReaction hitReaction,HumanoidAnimationModule animationModule,Transform headTransfrom,OnDestoryDeligate onDestroyCallback):base(health,onDestroyCallback)
+    public HumanoidDamageModule(float health,RagdollUtility ragdoll, HitReaction hitReaction,HumanoidAnimationModule animationModule,Transform headTransfrom,OnDestoryDeligate onDestroyCallback,Outline outline):base(health,onDestroyCallback,outline)
     {
         m_ragdoll = ragdoll;
         m_hitReaction = hitReaction;

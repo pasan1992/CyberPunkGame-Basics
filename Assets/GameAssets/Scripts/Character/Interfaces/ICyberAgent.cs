@@ -31,4 +31,6 @@ public interface ICyberAgent
     Vector3 getTopPosition();
     AgentController.AgentFaction getFaction();
     void setFaction(AgentController.AgentFaction group);
+    void setSkill(float skill);
+    float getSkill();
 }

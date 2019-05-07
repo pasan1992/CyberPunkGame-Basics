@@ -18,11 +18,12 @@ public class AutoHumanoidAgentController :  AgentController
     {
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
         m_movingAgent = this.GetComponent<ICyberAgent>();
-        m_currentState = new CombatStage(m_movingAgent, target,m_navMeshAgent,this);
+        m_currentState = new CombatStage(m_movingAgent, target,m_navMeshAgent);
         m_movingAgent.setHealth(health);
         m_movingAgent.setWeponFireCapability(false);
         ((MovingAgent)m_movingAgent).setOndestroyCallback(OnAgentDestroy);
         m_movingAgent.setFaction(m_agentFaction);
+        m_movingAgent.setSkill(skillLevel);
     }
     #endregion
 

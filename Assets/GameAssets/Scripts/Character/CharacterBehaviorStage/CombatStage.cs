@@ -11,7 +11,6 @@ public class CombatStage : BasicMovmentStage
     private CoverPoint[] coverPoints;
     private CoverPoint currentCoverPoint;
     private Vector3 randomOffset = Vector3.zero;
-    private AgentController autoAgent;
 
     public enum CombatSubStages { LookingForCover,MovingToCover, InCover }
     private CombatSubStages currentCombatSubStage = CombatSubStages.LookingForCover;
@@ -25,14 +24,13 @@ public class CombatStage : BasicMovmentStage
     int currentShotsFromCover = 0;
 
     #region initalize
-    public CombatStage(ICyberAgent selfAgent,ICyberAgent target,NavMeshAgent navMeshAgent, AgentController autoAgent) :base(selfAgent,navMeshAgent)
+    public CombatStage(ICyberAgent selfAgent,ICyberAgent target,NavMeshAgent navMeshAgent) :base(selfAgent,navMeshAgent)
     {
         this.opponent = target;
         coverPoints = GameObject.FindObjectsOfType<CoverPoint>();
         selfAgent.toggleHide();
         selfAgent.aimWeapon();
-        selfAgent.togglePrimaryWeapon();
-        this.autoAgent = autoAgent;
+        selfAgent.togglepSecondaryWeapon();
         targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
         findTargetLocationToFire();
     }
@@ -48,11 +46,11 @@ public class CombatStage : BasicMovmentStage
 
         if(currentCombatSubStage.Equals(CombatSubStages.InCover))
         {
-            selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 1.1f, 0)+ randomOffset);
+            m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 1.1f, 0)+ randomOffset);
         }
         else
         {
-            selfAgent.setTargetPoint(targetLocation.position + randomOffset);
+            m_selfAgent.setTargetPoint(targetLocation.position + randomOffset);
         }
 
     }
@@ -74,7 +72,7 @@ public class CombatStage : BasicMovmentStage
 
                 //Debug.Log("In Cover");
 
-                selfAgent.lookAtTarget();
+                m_selfAgent.lookAtTarget();
 
                 if (currentCoverPoint.isSafeFromTarget() && currentCoverPoint.canFireToTarget(fireRangeDistance))
                 {
@@ -82,7 +80,7 @@ public class CombatStage : BasicMovmentStage
                     {
                         case CoverShootingSubStages.Cover:
 
-                            selfAgent.aimWeapon();
+                            m_selfAgent.aimWeapon();
                             currentCoverShootingSubStage = CoverShootingSubStages.Peek;
 
                             shotsFromCover = (int)(Random.value * 5);
@@ -91,7 +89,7 @@ public class CombatStage : BasicMovmentStage
                             break;
                         case CoverShootingSubStages.Peek:
 
-                            selfAgent.weaponFireForAI();
+                            m_selfAgent.weaponFireForAI();
                             currentCoverShootingSubStage = CoverShootingSubStages.Shoot;
                             setStepIntervalSize(0.3f);
 
@@ -105,7 +103,7 @@ public class CombatStage : BasicMovmentStage
                             {
                                 currentCoverShootingSubStage = CoverShootingSubStages.Cover;
                                 currentShotsFromCover = 0;
-                                selfAgent.stopAiming();
+                                m_selfAgent.stopAiming();
                                 setStepIntervalSize(0.8f);
                             }
                             else
@@ -136,38 +134,38 @@ public class CombatStage : BasicMovmentStage
 
                     if (currentCoverPoint)
                     {
-                        currentCoverPoint.stPointOccupentsName("");
+                        //currentCoverPoint.stPointOccupentsName("");
                         currentCoverPoint.setOccupent(null);
                     }
 
                     currentCoverPoint = tempCurrentCoverPoint;
-                    agent.SetDestination(currentCoverPoint.getPosition());
+                    m_navMeshAgent.SetDestination(currentCoverPoint.getPosition());
                     currentCombatSubStage = CombatSubStages.MovingToCover;
 
                     // Get up and move
-                    selfAgent.toggleHide();
-                    selfAgent.aimWeapon();
+                    m_selfAgent.toggleHide();
+                    m_selfAgent.aimWeapon();
                 }
 
                 break;
 
             case CombatSubStages.MovingToCover:
                 //Debug.Log("Moving to cover");
-                if (!agent.pathPending && agent.remainingDistance >1)
+                if (!m_navMeshAgent.pathPending && m_navMeshAgent.remainingDistance >1)
                 {
 
-                    if(agent.remainingDistance > 3 && Vector3.Distance(selfAgent.getCurrentPosition(),opponent.getCurrentPosition()) > fireRangeDistance)
+                    if(m_navMeshAgent.remainingDistance > 3 && Vector3.Distance(m_selfAgent.getCurrentPosition(),opponent.getCurrentPosition()) > fireRangeDistance)
                     {
-                        enableRun = true;
-                        selfAgent.stopAiming();
+                        m_enableRun = true;
+                        m_selfAgent.stopAiming();
                     }
                     else
                     {
-                        if (Vector3.Distance(selfAgent.getCurrentPosition(), opponent.getCurrentPosition()) < fireRangeDistance)
+                        if (Vector3.Distance(m_selfAgent.getCurrentPosition(), opponent.getCurrentPosition()) < fireRangeDistance)
                         {
-                            selfAgent.aimWeapon();
-                            enableRun = false;
-                            selfAgent.weaponFireForAI();
+                            m_selfAgent.aimWeapon();
+                            m_enableRun = false;
+                            m_selfAgent.weaponFireForAI();
                         }
                     }
 
@@ -176,21 +174,43 @@ public class CombatStage : BasicMovmentStage
                 }
                 else
                 {
-                    selfAgent.lookAtTarget();
+                    m_selfAgent.lookAtTarget();
                     currentCombatSubStage = CombatSubStages.InCover;
 
                     // Get down on cover
-                    selfAgent.toggleHide();
-                    selfAgent.stopAiming();
+                    m_selfAgent.toggleHide();
+                    m_selfAgent.stopAiming();
                     setStepIntervalSize(0.8f);
-                    agent.velocity = Vector3.zero;
+                    m_navMeshAgent.velocity = Vector3.zero;
 
                 }
                 break;
         }
     }
 
+    public void updateTarget()
+    {
+        float minimumDistance = Vector3.Distance(m_selfAgent.getCurrentPosition(), opponent.getCurrentPosition());
 
+        if (opponent == null || !opponent.IsFunctional())
+        {
+            minimumDistance = 9999;
+            AgentController[] allAgents = GameObject.FindObjectsOfType<AgentController>();
+            foreach (AgentController agent in allAgents)
+            {
+                ICyberAgent cyberAgent = agent.getICyberAgent();
+                float distance = Vector3.Distance(m_selfAgent.getCurrentPosition(), cyberAgent.getCurrentPosition());
+                if (cyberAgent.IsFunctional() && cyberAgent.getFaction() != m_selfAgent.getFaction() && !cyberAgent.getFaction().Equals(AgentController.AgentFaction.Player))
+                {
+                    if (distance < minimumDistance)
+                    {
+                        minimumDistance = distance;
+                        opponent = cyberAgent;
+                    }
+                }
+            }
+        }
+    }
     #endregion
 
     #region Utility
@@ -213,18 +233,18 @@ public class CombatStage : BasicMovmentStage
                 {
 
                     // Find the safe cover point.
-                   if(minimumDistanceToSafeCoverPoint > point.distanceTo(selfAgent.getCurrentPosition()))
+                   if(minimumDistanceToSafeCoverPoint > point.distanceTo(m_selfAgent.getCurrentPosition()))
                     {
-                        minimumDistanceToSafeCoverPoint = point.distanceTo(selfAgent.getCurrentPosition());
+                        minimumDistanceToSafeCoverPoint = point.distanceTo(m_selfAgent.getCurrentPosition());
                         tempSafeCoverPoint = point;
                     }
 
                    // Find the ideal closest cover point.
                    if(point.canFireToTarget(fireRangeDistance))
                     {
-                        if (minimumDistanceToIdealCoverPoint > point.distanceTo(selfAgent.getCurrentPosition()))
+                        if (minimumDistanceToIdealCoverPoint > point.distanceTo(m_selfAgent.getCurrentPosition()))
                         {
-                            minimumDistanceToIdealCoverPoint = point.distanceTo(selfAgent.getCurrentPosition());
+                            minimumDistanceToIdealCoverPoint = point.distanceTo(m_selfAgent.getCurrentPosition());
                             tempIDealCoverPoint = point;
                         }
                     }
@@ -235,14 +255,14 @@ public class CombatStage : BasicMovmentStage
 
         if(tempIDealCoverPoint !=null)
         {
-            tempIDealCoverPoint.stPointOccupentsName(selfAgent.getName());
-            tempIDealCoverPoint.setOccupent(selfAgent);
+            //tempIDealCoverPoint.stPointOccupentsName(selfAgent.getName());
+            tempIDealCoverPoint.setOccupent(m_selfAgent);
             return tempIDealCoverPoint;
         }
         else if(tempSafeCoverPoint != null)
         {
-            tempSafeCoverPoint.stPointOccupentsName(selfAgent.getName());
-            tempSafeCoverPoint.setOccupent(selfAgent);
+            //tempSafeCoverPoint.stPointOccupentsName(selfAgent.getName());
+            tempSafeCoverPoint.setOccupent(m_selfAgent);
             return tempSafeCoverPoint;
         }
 
@@ -266,9 +286,13 @@ public class CombatStage : BasicMovmentStage
 
 
 
-        if(Random.value > autoAgent.getSkill())
+        if(Random.value > m_selfAgent.getSkill())
         {
             randomOffset = Random.insideUnitSphere * 2;
+        }
+        else if(m_navMeshAgent.remainingDistance > 9)
+        {
+            randomOffset = Random.insideUnitSphere * 0.7f;
         }
         else
         {
@@ -282,12 +306,7 @@ public class CombatStage : BasicMovmentStage
 
     public override void setWeaponFireCapability(bool enabled)
     {
-        selfAgent.setWeponFireCapability(enabled);
-    }
-
-    public override void setNavMeshAgent(NavMeshAgent navMeshAgent)
-    {
-        throw new System.NotImplementedException();
+        m_selfAgent.setWeponFireCapability(enabled);
     }
 
     public override void setTargets(ICyberAgent target)
@@ -295,46 +314,11 @@ public class CombatStage : BasicMovmentStage
         this.opponent = target;
     }
 
-    public override void setStepIntervalSize(float timeInSeconds)
-    {
-        stepIntervalInSeconds = timeInSeconds;
-    }
-
     private bool isCoverPointUsable(CoverPoint point)
     {
         return point.isSafeFromTarget() && point.canFireToTarget(fireRangeDistance);
     }
 
-    public override void stopStageBehavior()
-    {
-        agent.isStopped = true;
-    }
-
-    public void updateTarget()
-    {
-        float minimumDistance = Vector3.Distance(selfAgent.getCurrentPosition(),opponent.getCurrentPosition());
-
-
-
-        if(opponent == null || !opponent.IsFunctional())
-        {
-            minimumDistance = 9999;
-            AgentController[] allAgents = GameObject.FindObjectsOfType<AgentController>();
-            foreach (AgentController agent in allAgents)
-            {
-                ICyberAgent cyberAgent = agent.getICyberAgent();
-                float distance = Vector3.Distance(selfAgent.getCurrentPosition(), cyberAgent.getCurrentPosition());
-                if (cyberAgent.IsFunctional() && cyberAgent.getFaction() != selfAgent.getFaction() && !cyberAgent.getFaction().Equals(AgentController.AgentFaction.Player))
-                {
-                    if(distance < minimumDistance)
-                    {
-                        minimumDistance = distance;
-                        opponent = cyberAgent;
-                    }               
-                }
-            }
-        }
-    }
     #endregion
 
 
