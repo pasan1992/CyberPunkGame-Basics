@@ -49,14 +49,21 @@ public class BasicExplosion : MonoBehaviour
             rb.AddForce(Vector3.up * 2, ForceMode.Impulse);
         }
 
-        GameObject explosion = ProjectilePool.getInstance().getBasicFireExplosionParticle();
-        explosion.SetActive(true);
-        explosion.transform.position = this.transform.position;
-        m_particleSystem = explosion.GetComponent<ParticleSystem>();
-        m_particleSystem.Play();
+        getExplosionParticleEffect();
 
         Invoke("resetAll", 5);
 
+    }
+
+    #endregion
+
+    #region getters and setters
+
+    protected virtual void getExplosionParticleEffect()
+    {
+        GameObject explosion = ProjectilePool.getInstance().getBasicFireExplosionParticle();
+        explosion.SetActive(true);
+        explosion.transform.position = this.transform.position;
     }
 
     #endregion

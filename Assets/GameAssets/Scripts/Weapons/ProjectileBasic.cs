@@ -12,9 +12,9 @@ public class ProjectileBasic : MonoBehaviour
 
     private string shooterName ="test";
     private bool hit = false;
-    public GameObject particleObject;
     private AgentController.AgentFaction m_fireFrom;
     private TrailRenderer trail;
+    private bool enabled = true;
 
 
     #region updates
@@ -26,14 +26,16 @@ public class ProjectileBasic : MonoBehaviour
 
     void FixedUpdate()
     {
-        this.transform.Translate(Vector3.forward * speed);
-        DistanceTravelled += Time.deltaTime * speed;
-
-        if (DistanceTravelled > 1)
+        if(enabled)
         {
-            this.gameObject.SetActive(false);
-        }
+            this.transform.Translate(Vector3.forward * speed);
+            DistanceTravelled += Time.deltaTime * speed;
 
+            if (DistanceTravelled > 1)
+            {
+                this.gameObject.SetActive(false);
+            }
+        }
     }
     #endregion
 
@@ -75,11 +77,16 @@ public class ProjectileBasic : MonoBehaviour
                 //Destroy(this.gameObject);
                 this.gameObject.SetActive(false);
 
-                if(particleObject)
-                {
-                    GameObject hitParticle = GameObject.Instantiate(particleObject);
-                    hitParticle.transform.position = this.transform.position;
-                }
+                //if(particleObject)
+                //{
+                //    //GameObject hitParticle = GameObject.Instantiate(particleObject);
+                //    //hitParticle.transform.position = this.transform.position;
+                //    //hitParticle.transform.LookAt(Vector3.up);
+                //}
+                GameObject basicHitParticle = ProjectilePool.getInstance().getBulletHitBasicParticle();
+                basicHitParticle.SetActive(true);
+                basicHitParticle.transform.position = this.transform.position;
+                basicHitParticle.transform.LookAt(Vector3.up);
              
                 if (!movingAgnet.IsFunctional())
                 {
@@ -101,11 +108,12 @@ public class ProjectileBasic : MonoBehaviour
         if(DistanceTravelled > 0.03)
         {
             speed = 0;
-            if (particleObject)
-            {
-                GameObject hitParticle = GameObject.Instantiate(particleObject);
-                hitParticle.transform.position = this.transform.position;
-            }
+
+            GameObject basicHitParticle = ProjectilePool.getInstance().getBulletHitBasicParticle();
+            basicHitParticle.SetActive(true);
+            basicHitParticle.transform.position = this.transform.position;
+            basicHitParticle.transform.LookAt(Vector3.up);
+
             // Destroy(this.gameObject);
             this.gameObject.SetActive(false);
         }
@@ -114,13 +122,14 @@ public class ProjectileBasic : MonoBehaviour
 
     public void OnEnable()
     {
-        //Invoke("hideBullet", 2.0f);
         resetProjectile();
     }
 
     public void OnDisable()
     {
         //CancelInvoke();
+        enabled = false;
+        speed = 0;
     }
     #endregion
 
@@ -149,6 +158,7 @@ public class ProjectileBasic : MonoBehaviour
         trail.time = 0.1f;
         trail.minVertexDistance = 0.1f;
         trail.widthCurve = laserBeamTrailCurve;
+        enabled = true;
     }
 
     public void resetToMicroBeam()

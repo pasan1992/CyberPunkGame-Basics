@@ -166,13 +166,15 @@ public abstract class Weapon : MonoBehaviour
         GameObject Tempprojectile = m_projectilePool.getBasicProjectie();
         Tempprojectile.transform.position = m_gunFireingPoint;
         Tempprojectile.transform.rotation = this.transform.rotation;
-        Tempprojectile.SetActive(true);
+        
 
         Tempprojectile.transform.forward = (m_target.transform.position - m_gunFireingPoint).normalized;
+
+        Tempprojectile.SetActive(true);
         Tempprojectile.GetComponent<ProjectileBasic>().speed = 1f;
         Tempprojectile.GetComponent<ProjectileBasic>().setFiredFrom(m_ownersFaction);
-
-        if(this.isActiveAndEnabled)
+        
+        if (this.isActiveAndEnabled)
         {
             StartCoroutine(waitAndRecoil());
         }

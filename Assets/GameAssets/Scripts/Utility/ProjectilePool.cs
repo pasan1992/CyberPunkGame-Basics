@@ -5,19 +5,16 @@ using UnityEngine;
 public class ProjectilePool : MonoBehaviour
 {
     // Basic Projectile 
-    private List<GameObject> basicProjectiles;
-    private int maxBulletCount = 50;
+    private List<GameObject> basicProjectilesList;
+    private int maxBulletCount = 20;
 
-    // Basic Explosion
-    //private GameObject basicExplosionParticlePrefab;
-    //private GameObject basicDroneExplosionPrefab;
-
-    private List<GameObject> basicFireExplosionParticles;
-    private List<GameObject> basicDroneExplosion;
+    private List<GameObject> basicFireExplosionParticlesList;
+    private List<GameObject> basicDroneExplosionList;
+    private List<GameObject> bulletHitBasicParticleList;
 
 
-    private int maxExplosions = 30;
-    private int donreExplosions = 30;
+    private int maxExplosions = 10;
+    private int donreExplosions = 10;
 
     private static ProjectilePool thisProjectilePool;
 
@@ -25,21 +22,37 @@ public class ProjectilePool : MonoBehaviour
 
     void Awake()
     {
+        initalizeBulletHitBasicParticleList();
         initalizeBasicProjectile();
         initalizeBasicExplosionParticle();
         initalizeDroneExplosions();
     }
 
+    private void initalizeBulletHitBasicParticleList()
+    {
+        GameObject bulletHitBasicParticlePrefab = Resources.Load<GameObject>("ParticleEffects/BulletHitBasicParticle");
+        bulletHitBasicParticleList = new List<GameObject>();
+
+        for (int i = 0; i < maxBulletCount; i++)
+        {
+            GameObject bulletHitParticle = GameObject.Instantiate(bulletHitBasicParticlePrefab);
+            bulletHitParticle.transform.parent = this.transform;
+            bulletHitParticle.SetActive(false);
+            bulletHitBasicParticleList.Add(bulletHitParticle);
+        }
+    }
+
     private void initalizeDroneExplosions()
     {
         GameObject basicDroneExplosionPrefab = Resources.Load<GameObject>("Explosions/BasicDroneExplosion");
-        basicDroneExplosion = new List<GameObject>();
+        basicDroneExplosionList = new List<GameObject>();
 
         for (int i = 0; i < donreExplosions; i++)
         {
             GameObject explosion = GameObject.Instantiate(basicDroneExplosionPrefab);
+            explosion.transform.parent = this.transform;
             explosion.SetActive(false);
-            basicDroneExplosion.Add(explosion);
+            basicDroneExplosionList.Add(explosion);
         }
     }
 
@@ -47,26 +60,28 @@ public class ProjectilePool : MonoBehaviour
     {
         GameObject basicExplosionParticlePrefab = Resources.Load<GameObject>("ParticleEffects/Explosion_fire");
 
-        basicFireExplosionParticles = new List<GameObject>();
+        basicFireExplosionParticlesList = new List<GameObject>();
 
         for (int i = 0; i < maxExplosions; i++)
         {
             GameObject explosion = GameObject.Instantiate(basicExplosionParticlePrefab);
+            explosion.transform.parent = this.transform;
             explosion.SetActive(false);
-            basicFireExplosionParticles.Add(explosion);
+            basicFireExplosionParticlesList.Add(explosion);
         }
     }
 
     private void initalizeBasicProjectile()
     {
         GameObject basicProjectilePrefab = Resources.Load<GameObject>("Prefab/LaserBeamProjectile");
-        basicProjectiles = new List<GameObject>();
+        basicProjectilesList = new List<GameObject>();
 
         for (int i = 0; i < maxBulletCount; i++)
         {
             GameObject projectile = GameObject.Instantiate(basicProjectilePrefab);
+            projectile.transform.parent = this.transform;
             projectile.SetActive(false);
-            basicProjectiles.Add(projectile);
+            basicProjectilesList.Add(projectile);
         }
     }
     #endregion
@@ -75,7 +90,7 @@ public class ProjectilePool : MonoBehaviour
     #region getters and setters
     public GameObject getBasicProjectie()
     {
-        foreach (GameObject projectile in basicProjectiles)
+        foreach (GameObject projectile in basicProjectilesList)
         {
             if(!projectile.activeInHierarchy)
             {
@@ -88,7 +103,7 @@ public class ProjectilePool : MonoBehaviour
 
     public GameObject getBasicFireExplosionParticle()
     {
-        foreach (GameObject explosion in basicFireExplosionParticles)
+        foreach (GameObject explosion in basicFireExplosionParticlesList)
         {
             if(!explosion.activeInHierarchy)
             {
@@ -101,11 +116,24 @@ public class ProjectilePool : MonoBehaviour
 
     public GameObject getBasicDroneExplosion()
     {
-        foreach (GameObject explosion in basicDroneExplosion)
+        foreach (GameObject explosion in basicDroneExplosionList)
         {
             if (!explosion.activeInHierarchy)
             {
                 return explosion;
+            }
+        }
+
+        return null;
+    }
+
+    public GameObject getBulletHitBasicParticle()
+    {
+        foreach (GameObject bulletHitParticle in bulletHitBasicParticleList)
+        {
+            if (!bulletHitParticle.activeInHierarchy)
+            {
+                return bulletHitParticle;
             }
         }
 
