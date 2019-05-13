@@ -28,6 +28,9 @@ public class PlayerController : AgentController
         m_movingAgent.setHealth(health);
         m_movingAgent.enableTranslateMovment(true);
         m_movingAgent.setSkill(1);
+        intializeAgentCallbacks(m_movingAgent);
+        //m_movingAgent.setOnDestoryCallback(OnAgentDestroy);
+        //m_movingAgent.setOnDisableCallback(onAgentDisable);
     }
 
     private void createTargetPlane()
@@ -200,6 +203,18 @@ public class PlayerController : AgentController
     public override ICyberAgent getICyberAgent()
     {
         return m_movingAgent;
+    }
+
+    public override void OnAgentDestroy()
+    {
+    }
+
+    public override void onAgentDisable()
+    {
+    }
+
+    public override void onAgentEnable()
+    {
     }
 
     #endregion

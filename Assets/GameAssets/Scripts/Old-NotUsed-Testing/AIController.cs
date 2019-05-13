@@ -55,6 +55,7 @@ public class AIController : AgentController
     {
         m_movingAgent.setHealth(health);
         m_movingAgent.enableTranslateMovment(false);
+        intializeAgentCallbacks(m_movingAgent);
     }
     #endregion
 
@@ -268,6 +269,20 @@ public class AIController : AgentController
     public override ICyberAgent getICyberAgent()
     {
         throw new System.NotImplementedException();
+    }
+
+    public override void OnAgentDestroy()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void onAgentDisable()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public override void onAgentEnable()
+    {
     }
 
     #endregion

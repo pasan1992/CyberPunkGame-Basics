@@ -21,7 +21,9 @@ public class AutoHumanoidAgentController :  AgentController
         m_currentState = new CombatStage(m_movingAgent, target,m_navMeshAgent);
         m_movingAgent.setHealth(health);
         m_movingAgent.setWeponFireCapability(false);
-        ((MovingAgent)m_movingAgent).setOndestroyCallback(OnAgentDestroy);
+        intializeAgentCallbacks(m_movingAgent);
+        //m_movingAgent.setOnDestoryCallback(OnAgentDestroy);
+        //m_movingAgent.setOnDisableCallback(onAgentDisable);
         m_movingAgent.setFaction(m_agentFaction);
         m_movingAgent.setSkill(skillLevel);
     }
@@ -30,7 +32,7 @@ public class AutoHumanoidAgentController :  AgentController
     #region update
     void Update()
     {
-        if(m_movingAgent.IsFunctional())
+        if(m_movingAgent.IsFunctional() && !m_movingAgent.isDisabled())
         {
             m_currentState.updateStage();
         }
@@ -50,9 +52,19 @@ public class AutoHumanoidAgentController :  AgentController
         m_currentState.setWeaponFireCapability(false);
     }
 
-    void OnAgentDestroy()
+    public override void OnAgentDestroy()
     {
         m_navMeshAgent.enabled = false;
+    }
+
+    public override void onAgentDisable()
+    {
+        m_navMeshAgent.enabled = false;
+    }
+
+    public override void onAgentEnable()
+    {
+        m_navMeshAgent.enabled = true;
     }
 
     #endregion

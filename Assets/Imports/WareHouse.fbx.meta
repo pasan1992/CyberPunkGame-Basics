@@ -1,0 +1,561 @@
+fileFormatVersion: 2
+guid: 4464fc99a8ba3c64eac9088586cde8d6
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Directional Light_Low
+    100002: Drone
+    100004: DroneModel
+    100006: Floor
+    100008: 'Floor '
+    100010: Floor  1
+    100012: Floor  2
+    100014: Floor_1
+    100016: FloorTile_4
+    100018: 'FloorTile_4 '
+    100020: FloorTile_4  1
+    100022: FloorTile_4  10
+    100024: FloorTile_4  11
+    100026: FloorTile_4  2
+    100028: FloorTile_4  3
+    100030: FloorTile_4  4
+    100032: FloorTile_4  5
+    100034: FloorTile_4  6
+    100036: FloorTile_4  7
+    100038: FloorTile_4  8
+    100040: FloorTile_4  9
+    100042: FloorTile_4_1
+    100044: FloorTile_4_2
+    100046: FloorTile_4_3
+    100048: Point Light
+    100050: Point Light_1
+    100052: Point Light_2
+    100054: Point Light_3
+    100056: Prop1
+    100058: Prop2
+    100060: Prop3
+    100062: Prop4
+    100064: Props
+    100066: SM_Bld_Industrial_01
+    100068: 'SM_Bld_Industrial_01 '
+    100070: SM_Bld_Industrial_01  1
+    100072: SM_Bld_Industrial_01  10
+    100074: SM_Bld_Industrial_01  11
+    100076: SM_Bld_Industrial_01  2
+    100078: SM_Bld_Industrial_01  3
+    100080: SM_Bld_Industrial_01  4
+    100082: SM_Bld_Industrial_01  5
+    100084: SM_Bld_Industrial_01  6
+    100086: SM_Bld_Industrial_01  7
+    100088: SM_Bld_Industrial_01  8
+    100090: SM_Bld_Industrial_01  9
+    100092: SM_Bld_Industrial_01_1
+    100094: SM_Bld_Industrial_01_2
+    100096: SM_Bld_Industrial_01_3
+    100098: SM_Env_Floor_01
+    100100: 'SM_Env_Floor_01 '
+    100102: SM_Env_Floor_01  1
+    100104: SM_Env_Floor_01  10
+    100106: SM_Env_Floor_01  11
+    100108: SM_Env_Floor_01  12
+    100110: SM_Env_Floor_01  13
+    100112: SM_Env_Floor_01  14
+    100114: SM_Env_Floor_01  15
+    100116: SM_Env_Floor_01  16
+    100118: SM_Env_Floor_01  17
+    100120: SM_Env_Floor_01  18
+    100122: SM_Env_Floor_01  19
+    100124: SM_Env_Floor_01  2
+    100126: SM_Env_Floor_01  20
+    100128: SM_Env_Floor_01  21
+    100130: SM_Env_Floor_01  22
+    100132: SM_Env_Floor_01  23
+    100134: SM_Env_Floor_01  24
+    100136: SM_Env_Floor_01  25
+    100138: SM_Env_Floor_01  26
+    100140: SM_Env_Floor_01  27
+    100142: SM_Env_Floor_01  28
+    100144: SM_Env_Floor_01  29
+    100146: SM_Env_Floor_01  3
+    100148: SM_Env_Floor_01  30
+    100150: SM_Env_Floor_01  31
+    100152: SM_Env_Floor_01  32
+    100154: SM_Env_Floor_01  33
+    100156: SM_Env_Floor_01  34
+    100158: SM_Env_Floor_01  35
+    100160: SM_Env_Floor_01  36
+    100162: SM_Env_Floor_01  37
+    100164: SM_Env_Floor_01  38
+    100166: SM_Env_Floor_01  39
+    100168: SM_Env_Floor_01  4
+    100170: SM_Env_Floor_01  40
+    100172: SM_Env_Floor_01  41
+    100174: SM_Env_Floor_01  42
+    100176: SM_Env_Floor_01  43
+    100178: SM_Env_Floor_01  44
+    100180: SM_Env_Floor_01  45
+    100182: SM_Env_Floor_01  46
+    100184: SM_Env_Floor_01  47
+    100186: SM_Env_Floor_01  5
+    100188: SM_Env_Floor_01  6
+    100190: SM_Env_Floor_01  7
+    100192: SM_Env_Floor_01  8
+    100194: SM_Env_Floor_01  9
+    100196: SM_Env_Floor_01_1
+    100198: SM_Env_Floor_01_10
+    100200: SM_Env_Floor_01_11
+    100202: SM_Env_Floor_01_12
+    100204: SM_Env_Floor_01_13
+    100206: SM_Env_Floor_01_14
+    100208: SM_Env_Floor_01_15
+    100210: SM_Env_Floor_01_2
+    100212: SM_Env_Floor_01_3
+    100214: SM_Env_Floor_01_4
+    100216: SM_Env_Floor_01_5
+    100218: SM_Env_Floor_01_6
+    100220: SM_Env_Floor_01_7
+    100222: SM_Env_Floor_01_8
+    100224: SM_Env_Floor_01_9
+    100226: SM_Env_Hedge_01
+    100228: SM_Env_Railing_01_Pillar
+    100230: SM_Prop_Barrier_line_01
+    100232: SM_Prop_Medical_Table_01
+    100234: SM_Prop_Office_Chair_01
+    100236: SM_Prop_Shelf_Wall_01
+    100238: SM_Prop_WallAttach_Electronics_05
+    100240: SM_Prop_WallAttach_Vent_01
+    100242: SM_Prop_WallAttach_Vent_04
+    100244: SM_Prop_WoodenPath_01
+    100246: 'SM_Prop_WoodenPath_01 '
+    100248: SM_Prop_WoodenPath_01  1
+    100250: SmokeProjectile
+    100252: transform1
+    100254: transform10
+    100256: transform11
+    100258: transform12
+    100260: transform13
+    100262: transform14
+    100264: transform15
+    100266: transform16
+    100268: transform17
+    100270: transform18
+    100272: transform19
+    100274: transform2
+    100276: transform20
+    100278: transform21
+    100280: transform22
+    100282: transform23
+    100284: transform24
+    100286: transform25
+    100288: transform26
+    100290: transform27
+    100292: transform28
+    100294: transform29
+    100296: transform3
+    100298: transform30
+    100300: transform31
+    100302: transform32
+    100304: transform33
+    100306: transform34
+    100308: transform35
+    100310: transform36
+    100312: transform37
+    100314: transform38
+    100316: transform39
+    100318: transform4
+    100320: transform40
+    100322: transform41
+    100324: transform42
+    100326: transform43
+    100328: transform44
+    100330: transform45
+    100332: transform46
+    100334: transform47
+    100336: transform48
+    100338: transform49
+    100340: transform5
+    100342: transform50
+    100344: transform51
+    100346: transform52
+    100348: transform53
+    100350: transform54
+    100352: transform55
+    100354: transform56
+    100356: transform57
+    100358: transform58
+    100360: transform59
+    100362: transform6
+    100364: transform60
+    100366: transform61
+    100368: transform62
+    100370: transform63
+    100372: transform64
+    100374: transform65
+    100376: transform66
+    100378: transform67
+    100380: transform68
+    100382: transform69
+    100384: transform7
+    100386: transform70
+    100388: transform71
+    100390: transform72
+    100392: transform73
+    100394: transform74
+    100396: transform75
+    100398: transform76
+    100400: transform77
+    100402: transform78
+    100404: transform79
+    100406: transform8
+    100408: transform80
+    100410: transform81
+    100412: transform82
+    100414: transform83
+    100416: transform84
+    100418: transform85
+    100420: transform86
+    100422: transform87
+    100424: transform88
+    100426: transform89
+    100428: transform9
+    100430: transform90
+    100432: transform91
+    100434: transform92
+    100436: Wall
+    100438: 'Wall '
+    100440: Wall  1
+    100442: Wall  2
+    100444: //RootNode
+    100446: WareHouse
+    400000: Directional Light_Low
+    400002: Drone
+    400004: DroneModel
+    400006: Floor
+    400008: 'Floor '
+    400010: Floor  1
+    400012: Floor  2
+    400014: Floor_1
+    400016: FloorTile_4
+    400018: 'FloorTile_4 '
+    400020: FloorTile_4  1
+    400022: FloorTile_4  10
+    400024: FloorTile_4  11
+    400026: FloorTile_4  2
+    400028: FloorTile_4  3
+    400030: FloorTile_4  4
+    400032: FloorTile_4  5
+    400034: FloorTile_4  6
+    400036: FloorTile_4  7
+    400038: FloorTile_4  8
+    400040: FloorTile_4  9
+    400042: FloorTile_4_1
+    400044: FloorTile_4_2
+    400046: FloorTile_4_3
+    400048: Point Light
+    400050: Point Light_1
+    400052: Point Light_2
+    400054: Point Light_3
+    400056: Prop1
+    400058: Prop2
+    400060: Prop3
+    400062: Prop4
+    400064: Props
+    400066: SM_Bld_Industrial_01
+    400068: 'SM_Bld_Industrial_01 '
+    400070: SM_Bld_Industrial_01  1
+    400072: SM_Bld_Industrial_01  10
+    400074: SM_Bld_Industrial_01  11
+    400076: SM_Bld_Industrial_01  2
+    400078: SM_Bld_Industrial_01  3
+    400080: SM_Bld_Industrial_01  4
+    400082: SM_Bld_Industrial_01  5
+    400084: SM_Bld_Industrial_01  6
+    400086: SM_Bld_Industrial_01  7
+    400088: SM_Bld_Industrial_01  8
+    400090: SM_Bld_Industrial_01  9
+    400092: SM_Bld_Industrial_01_1
+    400094: SM_Bld_Industrial_01_2
+    400096: SM_Bld_Industrial_01_3
+    400098: SM_Env_Floor_01
+    400100: 'SM_Env_Floor_01 '
+    400102: SM_Env_Floor_01  1
+    400104: SM_Env_Floor_01  10
+    400106: SM_Env_Floor_01  11
+    400108: SM_Env_Floor_01  12
+    400110: SM_Env_Floor_01  13
+    400112: SM_Env_Floor_01  14
+    400114: SM_Env_Floor_01  15
+    400116: SM_Env_Floor_01  16
+    400118: SM_Env_Floor_01  17
+    400120: SM_Env_Floor_01  18
+    400122: SM_Env_Floor_01  19
+    400124: SM_Env_Floor_01  2
+    400126: SM_Env_Floor_01  20
+    400128: SM_Env_Floor_01  21
+    400130: SM_Env_Floor_01  22
+    400132: SM_Env_Floor_01  23
+    400134: SM_Env_Floor_01  24
+    400136: SM_Env_Floor_01  25
+    400138: SM_Env_Floor_01  26
+    400140: SM_Env_Floor_01  27
+    400142: SM_Env_Floor_01  28
+    400144: SM_Env_Floor_01  29
+    400146: SM_Env_Floor_01  3
+    400148: SM_Env_Floor_01  30
+    400150: SM_Env_Floor_01  31
+    400152: SM_Env_Floor_01  32
+    400154: SM_Env_Floor_01  33
+    400156: SM_Env_Floor_01  34
+    400158: SM_Env_Floor_01  35
+    400160: SM_Env_Floor_01  36
+    400162: SM_Env_Floor_01  37
+    400164: SM_Env_Floor_01  38
+    400166: SM_Env_Floor_01  39
+    400168: SM_Env_Floor_01  4
+    400170: SM_Env_Floor_01  40
+    400172: SM_Env_Floor_01  41
+    400174: SM_Env_Floor_01  42
+    400176: SM_Env_Floor_01  43
+    400178: SM_Env_Floor_01  44
+    400180: SM_Env_Floor_01  45
+    400182: SM_Env_Floor_01  46
+    400184: SM_Env_Floor_01  47
+    400186: SM_Env_Floor_01  5
+    400188: SM_Env_Floor_01  6
+    400190: SM_Env_Floor_01  7
+    400192: SM_Env_Floor_01  8
+    400194: SM_Env_Floor_01  9
+    400196: SM_Env_Floor_01_1
+    400198: SM_Env_Floor_01_10
+    400200: SM_Env_Floor_01_11
+    400202: SM_Env_Floor_01_12
+    400204: SM_Env_Floor_01_13
+    400206: SM_Env_Floor_01_14
+    400208: SM_Env_Floor_01_15
+    400210: SM_Env_Floor_01_2
+    400212: SM_Env_Floor_01_3
+    400214: SM_Env_Floor_01_4
+    400216: SM_Env_Floor_01_5
+    400218: SM_Env_Floor_01_6
+    400220: SM_Env_Floor_01_7
+    400222: SM_Env_Floor_01_8
+    400224: SM_Env_Floor_01_9
+    400226: SM_Env_Hedge_01
+    400228: SM_Env_Railing_01_Pillar
+    400230: SM_Prop_Barrier_line_01
+    400232: SM_Prop_Medical_Table_01
+    400234: SM_Prop_Office_Chair_01
+    400236: SM_Prop_Shelf_Wall_01
+    400238: SM_Prop_WallAttach_Electronics_05
+    400240: SM_Prop_WallAttach_Vent_01
+    400242: SM_Prop_WallAttach_Vent_04
+    400244: SM_Prop_WoodenPath_01
+    400246: 'SM_Prop_WoodenPath_01 '
+    400248: SM_Prop_WoodenPath_01  1
+    400250: SmokeProjectile
+    400252: transform1
+    400254: transform10
+    400256: transform11
+    400258: transform12
+    400260: transform13
+    400262: transform14
+    400264: transform15
+    400266: transform16
+    400268: transform17
+    400270: transform18
+    400272: transform19
+    400274: transform2
+    400276: transform20
+    400278: transform21
+    400280: transform22
+    400282: transform23
+    400284: transform24
+    400286: transform25
+    400288: transform26
+    400290: transform27
+    400292: transform28
+    400294: transform29
+    400296: transform3
+    400298: transform30
+    400300: transform31
+    400302: transform32
+    400304: transform33
+    400306: transform34
+    400308: transform35
+    400310: transform36
+    400312: transform37
+    400314: transform38
+    400316: transform39
+    400318: transform4
+    400320: transform40
+    400322: transform41
+    400324: transform42
+    400326: transform43
+    400328: transform44
+    400330: transform45
+    400332: transform46
+    400334: transform47
+    400336: transform48
+    400338: transform49
+    400340: transform5
+    400342: transform50
+    400344: transform51
+    400346: transform52
+    400348: transform53
+    400350: transform54
+    400352: transform55
+    400354: transform56
+    400356: transform57
+    400358: transform58
+    400360: transform59
+    400362: transform6
+    400364: transform60
+    400366: transform61
+    400368: transform62
+    400370: transform63
+    400372: transform64
+    400374: transform65
+    400376: transform66
+    400378: transform67
+    400380: transform68
+    400382: transform69
+    400384: transform7
+    400386: transform70
+    400388: transform71
+    400390: transform72
+    400392: transform73
+    400394: transform74
+    400396: transform75
+    400398: transform76
+    400400: transform77
+    400402: transform78
+    400404: transform79
+    400406: transform8
+    400408: transform80
+    400410: transform81
+    400412: transform82
+    400414: transform83
+    400416: transform84
+    400418: transform85
+    400420: transform86
+    400422: transform87
+    400424: transform88
+    400426: transform89
+    400428: transform9
+    400430: transform90
+    400432: transform91
+    400434: transform92
+    400436: Wall
+    400438: 'Wall '
+    400440: Wall  1
+    400442: Wall  2
+    400444: //RootNode
+    400446: WareHouse
+    2100000: PolygonScifi_01_A1
+    2100002: Default-Material1
+    2300000: DroneModel
+    2300002: Prop1
+    2300004: Prop2
+    2300006: Prop3
+    2300008: Prop4
+    3300000: DroneModel
+    3300002: Prop1
+    3300004: Prop2
+    3300006: Prop3
+    3300008: Prop4
+    4300000: DroneModel
+    4300002: Prop1
+    4300004: Prop2
+    4300006: Prop3
+    4300008: Prop4
+    10800000: Directional Light_Low
+    10800002: Point Light
+    10800004: Point Light_1
+    10800006: Point Light_2
+    10800008: Point Light_3
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 1
+    hasPreviousCalculatedGlobalScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

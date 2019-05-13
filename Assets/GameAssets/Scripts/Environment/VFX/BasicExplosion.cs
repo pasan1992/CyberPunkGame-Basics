@@ -51,7 +51,7 @@ public class BasicExplosion : MonoBehaviour
 
         getExplosionParticleEffect();
 
-        Invoke("resetAll", 5);
+        Invoke("resetAll", 1f);
 
     }
 
@@ -61,7 +61,8 @@ public class BasicExplosion : MonoBehaviour
 
     protected virtual void getExplosionParticleEffect()
     {
-        GameObject explosion = ProjectilePool.getInstance().getBasicFireExplosionParticle();
+        //.getBasicFireExplosionParticle();
+        GameObject explosion = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.FireEXplosionParticle);
         explosion.SetActive(true);
         explosion.transform.position = this.transform.position;
     }

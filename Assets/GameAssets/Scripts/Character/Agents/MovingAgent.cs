@@ -9,7 +9,9 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     #region parameters
 
     // Callback
-    private DamageModule.OnDestoryDeligate m_onDestoryCallback;
+    private AgentController.agentBasicCallbackDeligate m_onDestoryCallback;
+    private AgentController.agentBasicCallbackDeligate m_onDisableCallback;
+    private AgentController.agentBasicCallbackDeligate m_onEnableCallback;
 
     // Main Modules
     protected HumanoidEquipmentModule m_equipmentModule;
@@ -26,6 +28,7 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     private AgentController.AgentFaction m_agentFaction;
     private Vector3 m_movmentVector;
     private float m_skill;
+    private bool m_isDisabled = false;
 
     #endregion
 
@@ -178,9 +181,19 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
 
     #region Getters and Setters
 
-    public void setOndestroyCallback(DamageModule.OnDestoryDeligate onDestoryCallback)
+    public void setOnDestoryCallback(AgentController.agentBasicCallbackDeligate onDestoryCallback)
     {
         m_onDestoryCallback = onDestoryCallback;
+    }
+
+    public void setOnDisableCallback(AgentController.agentBasicCallbackDeligate callback)
+    {
+        m_onDisableCallback = callback;
+    }
+
+    public void setOnEnableCallback(AgentController.agentBasicCallbackDeligate callback)
+    {
+        m_onEnableCallback = callback;
     }
 
     public bool IsFunctional()
@@ -280,6 +293,17 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     public bool isAimed()
     {
         return m_equipmentModule.isProperlyAimed();
+    }
+
+
+    public bool isDisabled()
+    {
+        return m_isDisabled;
+    }
+
+    public Color getHealthColor()
+    {
+        return m_damageModule.getHealthColor();
     }
 
     #endregion

@@ -62,5 +62,10 @@ public class DamageModule
         return m_health > 0;
     }
 
+    public Color getHealthColor()
+    {
+       return m_outLine.OutlineColor;
+    }
+
     #endregion
 }

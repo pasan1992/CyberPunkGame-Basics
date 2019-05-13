@@ -1,0 +1,321 @@
+fileFormatVersion: 2
+guid: b37a840a3e6088e4bada061f5626a7f2
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Ankle_L
+    100002: Ankle_R
+    100004: Ball_L
+    100006: Ball_R
+    100008: Character_Alien_Male_01
+    100010: Character_Alien_Male_02
+    100012: Character_Android_Female_01
+    100014: Character_Augmented_Male_01
+    100016: Character_Cop_01
+    100018: Character_Cyber_Female_01
+    100020: Character_Cyber_Male_01
+    100022: Character_CyberPunk_Male_01
+    100024: Character_CyborgNinja_01
+    100026: Character_Garbage_Male_01
+    100028: Character_Hacker_Female_01
+    100030: Character_Hologram_Female_01
+    100032: Character_Junky_Female_01
+    100034: Character_Junky_Male_01
+    100036: Character_Medical_Male_01
+    100038: Character_Monk_Male_01
+    100040: Character_Muscle_Male_01
+    100042: Character_Rich_Female_01
+    100044: Character_Rich_Male_01
+    100046: Character_Robot_01
+    100048: Character_Robot_02_headLess
+    100050: Character_Robot_03
+    100052: Character_Robot_05
+    100054: Character_Robot_06
+    100056: Character_Robot_NO_hand
+    100058: Clavicle_L
+    100060: Clavicle_R
+    100062: Elbow_L
+    100064: Elbow_R
+    100066: Eyebrows
+    100068: Eyes
+    100070: Finger_01
+    100072: Finger_01 1
+    100074: Finger_02
+    100076: Finger_02 1
+    100078: Finger_03
+    100080: Finger_03 1
+    100082: Finger_04
+    100084: Finger_04 1
+    100086: Hand_L
+    100088: Hand_R
+    100090: Head
+    100092: Hips
+    100094: IndexFinger_01
+    100096: IndexFinger_01 1
+    100098: IndexFinger_02
+    100100: IndexFinger_02 1
+    100102: IndexFinger_03
+    100104: IndexFinger_03 1
+    100106: IndexFinger_04
+    100108: IndexFinger_04 1
+    100110: LowerLeg_L
+    100112: LowerLeg_R
+    100114: Neck
+    100116: polySurface11
+    100118: polySurface19
+    100120: polySurface21
+    100122: polySurface25
+    100124: polySurface31
+    100126: polySurface38
+    100128: polySurface4
+    100130: //RootNode
+    100132: Root
+    100134: Shoulder_L
+    100136: Shoulder_R
+    100138: Spine_01
+    100140: Spine_02
+    100142: Spine_03
+    100144: Thumb_01
+    100146: Thumb_01 1
+    100148: Thumb_02
+    100150: Thumb_02 1
+    100152: Thumb_03
+    100154: Thumb_03 1
+    100156: Toes_L
+    100158: Toes_R
+    100160: transform1
+    100162: transform2
+    100164: transform3
+    100166: transform4
+    100168: transform5
+    100170: transform6
+    100172: transform7
+    100174: UpperLeg_L
+    100176: UpperLeg_R
+    400000: Ankle_L
+    400002: Ankle_R
+    400004: Ball_L
+    400006: Ball_R
+    400008: Character_Alien_Male_01
+    400010: Character_Alien_Male_02
+    400012: Character_Android_Female_01
+    400014: Character_Augmented_Male_01
+    400016: Character_Cop_01
+    400018: Character_Cyber_Female_01
+    400020: Character_Cyber_Male_01
+    400022: Character_CyberPunk_Male_01
+    400024: Character_CyborgNinja_01
+    400026: Character_Garbage_Male_01
+    400028: Character_Hacker_Female_01
+    400030: Character_Hologram_Female_01
+    400032: Character_Junky_Female_01
+    400034: Character_Junky_Male_01
+    400036: Character_Medical_Male_01
+    400038: Character_Monk_Male_01
+    400040: Character_Muscle_Male_01
+    400042: Character_Rich_Female_01
+    400044: Character_Rich_Male_01
+    400046: Character_Robot_01
+    400048: Character_Robot_02_headLess
+    400050: Character_Robot_03
+    400052: Character_Robot_05
+    400054: Character_Robot_06
+    400056: Character_Robot_NO_hand
+    400058: Clavicle_L
+    400060: Clavicle_R
+    400062: Elbow_L
+    400064: Elbow_R
+    400066: Eyebrows
+    400068: Eyes
+    400070: Finger_01
+    400072: Finger_01 1
+    400074: Finger_02
+    400076: Finger_02 1
+    400078: Finger_03
+    400080: Finger_03 1
+    400082: Finger_04
+    400084: Finger_04 1
+    400086: Hand_L
+    400088: Hand_R
+    400090: Head
+    400092: Hips
+    400094: IndexFinger_01
+    400096: IndexFinger_01 1
+    400098: IndexFinger_02
+    400100: IndexFinger_02 1
+    400102: IndexFinger_03
+    400104: IndexFinger_03 1
+    400106: IndexFinger_04
+    400108: IndexFinger_04 1
+    400110: LowerLeg_L
+    400112: LowerLeg_R
+    400114: Neck
+    400116: polySurface11
+    400118: polySurface19
+    400120: polySurface21
+    400122: polySurface25
+    400124: polySurface31
+    400126: polySurface38
+    400128: polySurface4
+    400130: //RootNode
+    400132: Root
+    400134: Shoulder_L
+    400136: Shoulder_R
+    400138: Spine_01
+    400140: Spine_02
+    400142: Spine_03
+    400144: Thumb_01
+    400146: Thumb_01 1
+    400148: Thumb_02
+    400150: Thumb_02 1
+    400152: Thumb_03
+    400154: Thumb_03 1
+    400156: Toes_L
+    400158: Toes_R
+    400160: transform1
+    400162: transform2
+    400164: transform3
+    400166: transform4
+    400168: transform5
+    400170: transform6
+    400172: transform7
+    400174: UpperLeg_L
+    400176: UpperLeg_R
+    2100000: Default-Material
+    4300000: Character_Alien_Male_01
+    4300002: Character_Alien_Male_02
+    4300004: Character_Android_Female_01
+    4300006: Character_Augmented_Male_01
+    4300008: Character_Cop_01
+    4300010: Character_Cyber_Female_01
+    4300012: Character_Cyber_Male_01
+    4300014: Character_CyberPunk_Male_01
+    4300016: Character_CyborgNinja_01
+    4300018: Character_Garbage_Male_01
+    4300020: Character_Hacker_Female_01
+    4300022: Character_Hologram_Female_01
+    4300024: Character_Junky_Female_01
+    4300026: Character_Junky_Male_01
+    4300028: Character_Medical_Male_01
+    4300030: Character_Monk_Male_01
+    4300032: Character_Muscle_Male_01
+    4300034: Character_Rich_Female_01
+    4300036: Character_Rich_Male_01
+    4300038: Character_Robot_01
+    4300040: polySurface4
+    4300042: polySurface19
+    4300044: polySurface11
+    4300046: polySurface38
+    4300048: polySurface21
+    9500000: //RootNode
+    13700000: Character_Alien_Male_01
+    13700002: Character_Alien_Male_02
+    13700004: Character_Android_Female_01
+    13700006: Character_Augmented_Male_01
+    13700008: Character_Cop_01
+    13700010: Character_Cyber_Female_01
+    13700012: Character_Cyber_Male_01
+    13700014: Character_CyberPunk_Male_01
+    13700016: Character_CyborgNinja_01
+    13700018: Character_Garbage_Male_01
+    13700020: Character_Hacker_Female_01
+    13700022: Character_Hologram_Female_01
+    13700024: Character_Junky_Female_01
+    13700026: Character_Junky_Male_01
+    13700028: Character_Medical_Male_01
+    13700030: Character_Monk_Male_01
+    13700032: Character_Muscle_Male_01
+    13700034: Character_Rich_Female_01
+    13700036: Character_Rich_Male_01
+    13700038: Character_Robot_01
+    13700040: polySurface11
+    13700042: polySurface19
+    13700044: polySurface21
+    13700046: polySurface38
+    13700048: polySurface4
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 3
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

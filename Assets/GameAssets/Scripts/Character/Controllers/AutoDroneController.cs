@@ -57,7 +57,9 @@ public class AutoDroneController :  AgentController
     {
         m_selfAgent = this.GetComponent<FlyingAgent>();
         m_selfAgent.setFaction(m_agentFaction);
-        m_selfAgent.setonDestoryCallback(onDestroyDrone);
+        intializeAgentCallbacks(m_selfAgent);
+        //m_selfAgent.setOnDestoryCallback(OnAgentDestroy);
+        //m_selfAgent.setOnDisableCallback(onAgentDisable);
         m_selfAgent.aimWeapon();
         m_selfAgent.setSkill(skill);
     }
@@ -69,7 +71,7 @@ public class AutoDroneController :  AgentController
     // Update is called once per frame
     void Update()
     {
-        if(m_selfAgent.IsFunctional())
+        if(m_selfAgent.IsFunctional() && !m_selfAgent.isDisabled())
         {
             m_behaviorState.updateStage();
         }
@@ -114,14 +116,28 @@ public class AutoDroneController :  AgentController
     #endregion
 
     #region events
-
-    void onDestroyDrone()
+    public override void OnAgentDestroy()
     {
-        Debug.Log("destory");
         m_navMeshAgent.isStopped = true;
         m_navMeshAgent.enabled = false;
         this.gameObject.SetActive(false);
     }
+
+    public override void onAgentDisable()
+    {
+        m_navMeshAgent.isStopped = true;
+        m_navMeshAgent.velocity = Vector3.zero;
+    }
+
+    public override void onAgentEnable()
+    {
+        //m_navMeshAgent.enabled = true;
+        this.transform.position = m_selfAgent.transform.position;
+        m_selfAgent.transform.parent = this.transform;
+        m_navMeshAgent.isStopped = false;
+    }
+
+
 
     #endregion
 

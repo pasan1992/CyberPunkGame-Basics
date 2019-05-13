@@ -27,6 +27,9 @@ public class PlayerControllerMobile : AgentController
     protected void initalizeSelfAgent()
     {
         m_selfAgent = this.GetComponent<MovingAgent>();
+        intializeAgentCallbacks(m_selfAgent);
+        //m_selfAgent.setOnDestoryCallback(OnAgentDestroy);
+        //m_selfAgent.setOnDisableCallback(onAgentDisable);
     }
 
     #endregion
@@ -96,6 +99,7 @@ public class PlayerControllerMobile : AgentController
         {
             m_selfAgent.stopAiming();
             m_selfAgent.releaseTrigger();
+            m_targetFinder.disableTargetIndicator();
         }
         #endregion
 
@@ -141,6 +145,18 @@ public class PlayerControllerMobile : AgentController
     public void setTargetFinder(TargetFinder targetFinder)
     {
         m_targetFinder = targetFinder;
+    }
+
+    public override void OnAgentDestroy()
+    {
+    }
+
+    public override void onAgentDisable()
+    {
+    }
+
+    public override void onAgentEnable()
+    {
     }
 
     #endregion

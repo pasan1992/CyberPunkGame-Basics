@@ -31,7 +31,7 @@ public class ProjectileBasic : MonoBehaviour
             this.transform.Translate(Vector3.forward * speed);
             DistanceTravelled += Time.deltaTime * speed;
 
-            if (DistanceTravelled > 1)
+            if (DistanceTravelled > 0.5f)
             {
                 this.gameObject.SetActive(false);
             }
@@ -83,7 +83,9 @@ public class ProjectileBasic : MonoBehaviour
                 //    //hitParticle.transform.position = this.transform.position;
                 //    //hitParticle.transform.LookAt(Vector3.up);
                 //}
-                GameObject basicHitParticle = ProjectilePool.getInstance().getBulletHitBasicParticle();
+
+                //.getBulletHitBasicParticle();
+                GameObject basicHitParticle = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.HitBasicParticle);
                 basicHitParticle.SetActive(true);
                 basicHitParticle.transform.position = this.transform.position;
                 basicHitParticle.transform.LookAt(Vector3.up);
@@ -97,6 +99,8 @@ public class ProjectileBasic : MonoBehaviour
                         rb.isKinematic = false;
                         rb.AddForce((this.transform.forward) * 200, ForceMode.Impulse);
                     }
+
+                    //ExplosionEffect(this.transform.position);
                 }
             }
 
@@ -109,7 +113,8 @@ public class ProjectileBasic : MonoBehaviour
         {
             speed = 0;
 
-            GameObject basicHitParticle = ProjectilePool.getInstance().getBulletHitBasicParticle();
+            //.getBulletHitBasicParticle();
+            GameObject basicHitParticle = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.HitBasicParticle);
             basicHitParticle.SetActive(true);
             basicHitParticle.transform.position = this.transform.position;
             basicHitParticle.transform.LookAt(Vector3.up);
@@ -165,10 +170,23 @@ public class ProjectileBasic : MonoBehaviour
     {
         DistanceTravelled = 0;
         hit = false;
-        trail.time = 0.02f;
-        trail.minVertexDistance = 0.02f;
+        trail.time = 0.05f;
+        trail.minVertexDistance = 0.05f;
         trail.widthCurve = microLaserBearmTrailCurve;
     }
+
+    #endregion
+
+    #region Commands
+
+    //public void ExplosionEffect(Vector3 position)
+    //{
+    //    //.getBasicDroneExplosion()
+    //    BasicExplosion droneExplosion = ProjectilePool.getInstance().getEffect(ProjectilePool.POOL_OBJECT_TYPE.DroneExplosion).GetComponent<BasicExplosion>();
+    //    droneExplosion.gameObject.SetActive(true);
+    //    droneExplosion.gameObject.transform.position = position;
+    //    droneExplosion.GetComponent<BasicExplosion>().exploade();
+    //}
 
     #endregion
 }

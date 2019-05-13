@@ -33,4 +33,9 @@ public interface ICyberAgent
     void setFaction(AgentController.AgentFaction group);
     void setSkill(float skill);
     float getSkill();
+    void setOnDestoryCallback(AgentController.agentBasicCallbackDeligate callback);
+    void setOnDisableCallback(AgentController.agentBasicCallbackDeligate callback);
+    void setOnEnableCallback(AgentController.agentBasicCallbackDeligate callback);
+    bool isDisabled();
+    Color getHealthColor();
 }

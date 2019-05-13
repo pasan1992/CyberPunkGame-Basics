@@ -49,7 +49,7 @@ NavMeshAgent:
   m_Acceleration: 4
   avoidancePriority: 10
   m_AngularSpeed: 120
-  m_StoppingDistance: 0
+  m_StoppingDistance: 5
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -71,7 +71,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_agentFaction: 1
   enemyTag: Player
-  skill: 0
+  skill: 0.3
 --- !u!114 &215469406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,7 +84,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 263da37e0fbf1dd479ca3343dbbc9072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 10
+  health: 1
 --- !u!1 &2775065028019427810
 GameObject:
   m_ObjectHideFlags: 0
@@ -465,6 +465,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!65 &633164363
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2776304536366399319}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.2455626, y: 0.49490562, z: 1.1664914}
+  m_Center: {x: 0, y: -0.042964906, z: 0.0000002860992}
 --- !u!65 &2775065029461936820
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -476,8 +489,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2455626, y: 4.0106525, z: 1.1664915}
-  m_Center: {x: 0, y: 0.35903412, z: 0.00000005721984}
+  m_Size: {x: 1.2455626, y: 6.3334885, z: 1.1664915}
+  m_Center: {x: 0, y: -1.0781883, z: 0.00000005721984}
 --- !u!95 &2775065029461936819
 Animator:
   serializedVersion: 3
@@ -4444,7 +4457,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4622954476587276, guid: 5d40c48a597edbe4b9db9adac55501ae, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1.1
       objectReference: {fileID: 0}
     - target: {fileID: 4622954476587276, guid: 5d40c48a597edbe4b9db9adac55501ae, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4496,15 +4509,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 5d40c48a597edbe4b9db9adac55501ae, type: 3}
---- !u!4 &2779686880496829347 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4622954476587276, guid: 5d40c48a597edbe4b9db9adac55501ae,
-    type: 3}
-  m_PrefabInstance: {fileID: 2775065029461936815}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2776304536366399319 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1241025764701688, guid: 5d40c48a597edbe4b9db9adac55501ae,
+    type: 3}
+  m_PrefabInstance: {fileID: 2775065029461936815}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2779686880496829347 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4622954476587276, guid: 5d40c48a597edbe4b9db9adac55501ae,
     type: 3}
   m_PrefabInstance: {fileID: 2775065029461936815}
   m_PrefabAsset: {fileID: 0}

@@ -158,12 +158,8 @@ public abstract class Weapon : MonoBehaviour
 
     protected virtual void fireWeapon()
     {
-       // GameObject Tempprojectile = GameObject.Instantiate(projectile, m_gunFireingPoint, this.transform.rotation);
-
-
-
-
-        GameObject Tempprojectile = m_projectilePool.getBasicProjectie();
+        // GameObject Tempprojectile = GameObject.Instantiate(projectile, m_gunFireingPoint, this.transform.rotation);
+        GameObject Tempprojectile = m_projectilePool.getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.BasicProjectile);
         Tempprojectile.transform.position = m_gunFireingPoint;
         Tempprojectile.transform.rotation = this.transform.rotation;
         

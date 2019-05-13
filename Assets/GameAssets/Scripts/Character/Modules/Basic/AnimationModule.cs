@@ -15,6 +15,11 @@ public class AnimationModule
         m_animator.enabled = false;
     }
 
+    public virtual void enableAnimationSystem()
+    {
+        m_animator.enabled = true;
+    }
+
     public virtual void setMovment(float forward, float side)
     {
         m_animator.SetFloat("forward", forward);

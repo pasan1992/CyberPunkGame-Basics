@@ -4,17 +4,23 @@ using UnityEngine;
 
 public class ProjectilePool : MonoBehaviour
 {
+    public enum POOL_OBJECT_TYPE { FireEXplosionParticle,DroneExplosion,HitBasicParticle,BasicProjectile,ElectricParticleEffect}
+
     // Basic Projectile 
     private List<GameObject> basicProjectilesList;
-    private int maxBulletCount = 20;
+    public int maxBulletCount = 20;
 
-    private List<GameObject> basicFireExplosionParticlesList;
+    // Explosions
     private List<GameObject> basicDroneExplosionList;
+
+    // Particle effects
+    private List<GameObject> basicFireExplosionParticlesList;
     private List<GameObject> bulletHitBasicParticleList;
+    private List<GameObject> electricParticleEffectList;
 
 
-    private int maxExplosions = 10;
-    private int donreExplosions = 10;
+    public int maxExplosions = 10;
+    public int donreExplosions = 10;
 
     private static ProjectilePool thisProjectilePool;
 
@@ -22,12 +28,70 @@ public class ProjectilePool : MonoBehaviour
 
     void Awake()
     {
-        initalizeBulletHitBasicParticleList();
-        initalizeBasicProjectile();
-        initalizeBasicExplosionParticle();
-        initalizeDroneExplosions();
+        //initalizeBulletHitBasicParticleList();
+        //initalizeBasicProjectile();
+        //initalizeBasicExplosionParticle();
+        //initalizeDroneExplosions();
+
+        foreach (POOL_OBJECT_TYPE type in System.Enum.GetValues(typeof(POOL_OBJECT_TYPE)))
+        {
+            Debug.Log("working");
+            initalziePool(type);
+        }
     }
 
+    private void initalziePool(POOL_OBJECT_TYPE typeofEffect)
+    {
+        string resourcePath = "";
+        List<GameObject> effectList = null;
+        int count =0;
+
+        switch (typeofEffect)
+        {
+            case POOL_OBJECT_TYPE.FireEXplosionParticle:
+                resourcePath = "ParticleEffects/Explosion_fire";
+                count = maxExplosions;
+                basicFireExplosionParticlesList = new List<GameObject>();
+                effectList = basicFireExplosionParticlesList;
+                break;
+            case POOL_OBJECT_TYPE.DroneExplosion:
+                resourcePath = "Explosions/BasicDroneExplosion";
+                count = donreExplosions;
+                basicDroneExplosionList = new List<GameObject>();
+                effectList = basicDroneExplosionList;
+                break;
+            case POOL_OBJECT_TYPE.HitBasicParticle:
+                count = maxExplosions;
+                resourcePath = "ParticleEffects/BulletHitBasicParticle";
+                bulletHitBasicParticleList = new List<GameObject>();
+                effectList = bulletHitBasicParticleList;
+                break;
+            case POOL_OBJECT_TYPE.BasicProjectile:
+                count = maxBulletCount;
+                resourcePath = "Prefab/LaserBeamProjectile";
+                basicProjectilesList = new List<GameObject>();
+                effectList = basicProjectilesList;
+                break;
+            case POOL_OBJECT_TYPE.ElectricParticleEffect:
+                count = maxExplosions;
+                resourcePath = "ParticleEffects/ElectricShock";
+                electricParticleEffectList = new List<GameObject>();
+                effectList = electricParticleEffectList;
+                break;
+        }
+
+        GameObject bulletHitBasicParticlePrefab = Resources.Load<GameObject>(resourcePath);
+        
+        for (int i = 0; i < count; i++)
+        {
+            GameObject bulletHitParticle = GameObject.Instantiate(bulletHitBasicParticlePrefab);
+            bulletHitParticle.transform.parent = this.transform;
+            bulletHitParticle.SetActive(false);
+            effectList.Add(bulletHitParticle);
+        }
+    }
+
+    #region Not Using
     private void initalizeBulletHitBasicParticleList()
     {
         GameObject bulletHitBasicParticlePrefab = Resources.Load<GameObject>("ParticleEffects/BulletHitBasicParticle");
@@ -86,13 +150,40 @@ public class ProjectilePool : MonoBehaviour
     }
     #endregion
 
+    #endregion
+
 
     #region getters and setters
-    public GameObject getBasicProjectie()
+
+    public GameObject getPoolObject(POOL_OBJECT_TYPE type)
     {
-        foreach (GameObject projectile in basicProjectilesList)
+        List<GameObject> effectList = null;
+
+        switch (type)
         {
-            if(!projectile.activeInHierarchy)
+            case POOL_OBJECT_TYPE.FireEXplosionParticle:
+                effectList = basicFireExplosionParticlesList;
+                break;
+            case POOL_OBJECT_TYPE.DroneExplosion:
+                effectList = basicDroneExplosionList;
+                break;
+            case POOL_OBJECT_TYPE.HitBasicParticle:
+                effectList = bulletHitBasicParticleList;
+                break;
+            case POOL_OBJECT_TYPE.BasicProjectile:
+                effectList = basicProjectilesList;
+                break;
+            case POOL_OBJECT_TYPE.ElectricParticleEffect:
+                effectList = electricParticleEffectList;
+                break;
+            default:
+                effectList = null;
+                break;
+        }
+
+        foreach (GameObject projectile in effectList)
+        {
+            if (!projectile.activeInHierarchy)
             {
                 return projectile;
             }
@@ -101,44 +192,57 @@ public class ProjectilePool : MonoBehaviour
         return null;
     }
 
-    public GameObject getBasicFireExplosionParticle()
-    {
-        foreach (GameObject explosion in basicFireExplosionParticlesList)
-        {
-            if(!explosion.activeInHierarchy)
-            {
-                return explosion;
-            }
-        }
+    //public GameObject getBasicProjectie()
+    //{
+    //    foreach (GameObject projectile in basicProjectilesList)
+    //    {
+    //        if(!projectile.activeInHierarchy)
+    //        {
+    //            return projectile;
+    //        }
+    //    }
 
-        return null;
-    }
+    //    return null;
+    //}
 
-    public GameObject getBasicDroneExplosion()
-    {
-        foreach (GameObject explosion in basicDroneExplosionList)
-        {
-            if (!explosion.activeInHierarchy)
-            {
-                return explosion;
-            }
-        }
+    //public GameObject getBasicFireExplosionParticle()
+    //{
+    //    foreach (GameObject explosion in basicFireExplosionParticlesList)
+    //    {
+    //        if(!explosion.activeInHierarchy)
+    //        {
+    //            return explosion;
+    //        }
+    //    }
 
-        return null;
-    }
+    //    return null;
+    //}
 
-    public GameObject getBulletHitBasicParticle()
-    {
-        foreach (GameObject bulletHitParticle in bulletHitBasicParticleList)
-        {
-            if (!bulletHitParticle.activeInHierarchy)
-            {
-                return bulletHitParticle;
-            }
-        }
+    //public GameObject getBasicDroneExplosion()
+    //{
+    //    foreach (GameObject explosion in basicDroneExplosionList)
+    //    {
+    //        if (!explosion.activeInHierarchy)
+    //        {
+    //            return explosion;
+    //        }
+    //    }
 
-        return null;
-    }
+    //    return null;
+    //}
+
+    //public GameObject getBulletHitBasicParticle()
+    //{
+    //    foreach (GameObject bulletHitParticle in bulletHitBasicParticleList)
+    //    {
+    //        if (!bulletHitParticle.activeInHierarchy)
+    //        {
+    //            return bulletHitParticle;
+    //        }
+    //    }
+
+    //    return null;
+    //}
 
 
     public static ProjectilePool getInstance()

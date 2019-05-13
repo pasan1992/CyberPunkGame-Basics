@@ -1,0 +1,388 @@
+fileFormatVersion: 2
+guid: 462c936cf2b64734eba20cf59acca84e
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Ankle_L
+    100002: Ankle_R
+    100004: Ball_L
+    100006: Ball_R
+    100008: beam
+    100010: beam_1
+    100012: Character_Alien_Male_01
+    100014: Character_Alien_Male_02
+    100016: Character_Android_Female_01
+    100018: Character_Augmented_Male_01
+    100020: Character_Cop_01
+    100022: Character_Cyber_Female_01
+    100024: Character_Cyber_Male_01
+    100026: Character_CyberPunk_Male_01
+    100028: Character_CyborgNinja_01
+    100030: Character_Garbage_Male_01
+    100032: Character_Hacker_Female_01
+    100034: Character_Hologram_Female_01
+    100036: Character_Junky_Female_01
+    100038: Character_Junky_Male_01
+    100040: Character_Medical_Male_01
+    100042: Character_Monk_Male_01
+    100044: Character_Muscle_Male_01
+    100046: Character_Rich_Female_01
+    100048: Character_Rich_Male_01
+    100050: Character_Robot_01
+    100052: Character_Robot_02
+    100054: Clavicle_L
+    100056: Clavicle_R
+    100058: //RootNode
+    100060: Elbow_L
+    100062: Elbow_R
+    100064: Eyebrows
+    100066: Eyes
+    100068: Finger_01
+    100070: Finger_01 1
+    100072: Finger_02
+    100074: Finger_02 1
+    100076: Finger_03
+    100078: Finger_03 1
+    100080: Finger_04
+    100082: Finger_04 1
+    100084: GunTarget
+    100086: Hand_L
+    100088: Hand_R
+    100090: Head
+    100092: Hips
+    100094: Hit Reaction
+    100096: IndexFinger_01
+    100098: IndexFinger_01 1
+    100100: IndexFinger_02
+    100102: IndexFinger_02 1
+    100104: IndexFinger_03
+    100106: IndexFinger_03 1
+    100108: IndexFinger_04
+    100110: IndexFinger_04 1
+    100112: LaserMuzzleFlash
+    100114: 'LaserMuzzleFlash '
+    100116: LeftHandPos
+    100118: LeftHandPos_1
+    100120: LowerLeg_L
+    100122: LowerLeg_R
+    100124: muzzle
+    100126: muzzle_1
+    100128: Neck
+    100130: Pistol
+    100132: PistolPlaceHolder
+    100134: PistolProp
+    100136: Rifle
+    100138: RiflePlaceHolder
+    100140: RifleProp
+    100142: Root
+    100144: Shoulder_L
+    100146: Shoulder_R
+    100148: SM_Wep_Pistol_Slide_01
+    100150: SM_Wep_Pistol_Slide_01_1
+    100152: SM_Wep_Pistol_Trigger_01
+    100154: SM_Wep_Pistol_Trigger_01_1
+    100156: SM_Wep_Rifle_Small_ChargeHandle_01
+    100158: SM_Wep_Rifle_Small_ChargeHandle_01_1
+    100160: SM_Wep_Rifle_Small_Mag_01
+    100162: SM_Wep_Rifle_Small_Mag_01_1
+    100164: SM_Wep_Rifle_Small_Slide_01
+    100166: SM_Wep_Rifle_Small_Slide_01_1
+    100168: SM_Wep_Rifle_Small_Trigger_01
+    100170: SM_Wep_Rifle_Small_Trigger_01_1
+    100172: Spine_01
+    100174: Spine_02
+    100176: Spine_03
+    100178: TargetPoint
+    100180: Thumb_01
+    100182: Thumb_01 1
+    100184: Thumb_02
+    100186: Thumb_02 1
+    100188: Thumb_03
+    100190: Thumb_03 1
+    100192: Toes_L
+    100194: Toes_R
+    100196: UpperLeg_L
+    100198: UpperLeg_R
+    100200: vfx_Muzzle_edited
+    100202: 'vfx_Muzzle_edited '
+    400000: Ankle_L
+    400002: Ankle_R
+    400004: Ball_L
+    400006: Ball_R
+    400008: beam
+    400010: beam_1
+    400012: Character_Alien_Male_01
+    400014: Character_Alien_Male_02
+    400016: Character_Android_Female_01
+    400018: Character_Augmented_Male_01
+    400020: Character_Cop_01
+    400022: Character_Cyber_Female_01
+    400024: Character_Cyber_Male_01
+    400026: Character_CyberPunk_Male_01
+    400028: Character_CyborgNinja_01
+    400030: Character_Garbage_Male_01
+    400032: Character_Hacker_Female_01
+    400034: Character_Hologram_Female_01
+    400036: Character_Junky_Female_01
+    400038: Character_Junky_Male_01
+    400040: Character_Medical_Male_01
+    400042: Character_Monk_Male_01
+    400044: Character_Muscle_Male_01
+    400046: Character_Rich_Female_01
+    400048: Character_Rich_Male_01
+    400050: Character_Robot_01
+    400052: Character_Robot_02
+    400054: Clavicle_L
+    400056: Clavicle_R
+    400058: //RootNode
+    400060: Elbow_L
+    400062: Elbow_R
+    400064: Eyebrows
+    400066: Eyes
+    400068: Finger_01
+    400070: Finger_01 1
+    400072: Finger_02
+    400074: Finger_02 1
+    400076: Finger_03
+    400078: Finger_03 1
+    400080: Finger_04
+    400082: Finger_04 1
+    400084: GunTarget
+    400086: Hand_L
+    400088: Hand_R
+    400090: Head
+    400092: Hips
+    400094: Hit Reaction
+    400096: IndexFinger_01
+    400098: IndexFinger_01 1
+    400100: IndexFinger_02
+    400102: IndexFinger_02 1
+    400104: IndexFinger_03
+    400106: IndexFinger_03 1
+    400108: IndexFinger_04
+    400110: IndexFinger_04 1
+    400112: LaserMuzzleFlash
+    400114: 'LaserMuzzleFlash '
+    400116: LeftHandPos
+    400118: LeftHandPos_1
+    400120: LowerLeg_L
+    400122: LowerLeg_R
+    400124: muzzle
+    400126: muzzle_1
+    400128: Neck
+    400130: Pistol
+    400132: PistolPlaceHolder
+    400134: PistolProp
+    400136: Rifle
+    400138: RiflePlaceHolder
+    400140: RifleProp
+    400142: Root
+    400144: Shoulder_L
+    400146: Shoulder_R
+    400148: SM_Wep_Pistol_Slide_01
+    400150: SM_Wep_Pistol_Slide_01_1
+    400152: SM_Wep_Pistol_Trigger_01
+    400154: SM_Wep_Pistol_Trigger_01_1
+    400156: SM_Wep_Rifle_Small_ChargeHandle_01
+    400158: SM_Wep_Rifle_Small_ChargeHandle_01_1
+    400160: SM_Wep_Rifle_Small_Mag_01
+    400162: SM_Wep_Rifle_Small_Mag_01_1
+    400164: SM_Wep_Rifle_Small_Slide_01
+    400166: SM_Wep_Rifle_Small_Slide_01_1
+    400168: SM_Wep_Rifle_Small_Trigger_01
+    400170: SM_Wep_Rifle_Small_Trigger_01_1
+    400172: Spine_01
+    400174: Spine_02
+    400176: Spine_03
+    400178: TargetPoint
+    400180: Thumb_01
+    400182: Thumb_01 1
+    400184: Thumb_02
+    400186: Thumb_02 1
+    400188: Thumb_03
+    400190: Thumb_03 1
+    400192: Toes_L
+    400194: Toes_R
+    400196: UpperLeg_L
+    400198: UpperLeg_R
+    400200: vfx_Muzzle_edited
+    400202: 'vfx_Muzzle_edited '
+    2100000: PolygonScifi_01_A
+    2100002: Default-Material1
+    2300000: Pistol
+    2300002: PistolProp
+    2300004: Rifle
+    2300006: RifleProp
+    2300008: SM_Wep_Pistol_Slide_01
+    2300010: SM_Wep_Pistol_Slide_01_1
+    2300012: SM_Wep_Pistol_Trigger_01
+    2300014: SM_Wep_Pistol_Trigger_01_1
+    2300016: SM_Wep_Rifle_Small_ChargeHandle_01
+    2300018: SM_Wep_Rifle_Small_ChargeHandle_01_1
+    2300020: SM_Wep_Rifle_Small_Mag_01
+    2300022: SM_Wep_Rifle_Small_Mag_01_1
+    2300024: SM_Wep_Rifle_Small_Slide_01
+    2300026: SM_Wep_Rifle_Small_Slide_01_1
+    2300028: SM_Wep_Rifle_Small_Trigger_01
+    2300030: SM_Wep_Rifle_Small_Trigger_01_1
+    3300000: Pistol
+    3300002: PistolProp
+    3300004: Rifle
+    3300006: RifleProp
+    3300008: SM_Wep_Pistol_Slide_01
+    3300010: SM_Wep_Pistol_Slide_01_1
+    3300012: SM_Wep_Pistol_Trigger_01
+    3300014: SM_Wep_Pistol_Trigger_01_1
+    3300016: SM_Wep_Rifle_Small_ChargeHandle_01
+    3300018: SM_Wep_Rifle_Small_ChargeHandle_01_1
+    3300020: SM_Wep_Rifle_Small_Mag_01
+    3300022: SM_Wep_Rifle_Small_Mag_01_1
+    3300024: SM_Wep_Rifle_Small_Slide_01
+    3300026: SM_Wep_Rifle_Small_Slide_01_1
+    3300028: SM_Wep_Rifle_Small_Trigger_01
+    3300030: SM_Wep_Rifle_Small_Trigger_01_1
+    4300000: Character_Alien_Male_01
+    4300002: Character_Alien_Male_02
+    4300004: Character_Android_Female_01
+    4300006: Character_Augmented_Male_01
+    4300008: Character_Cop_01
+    4300010: Character_Cyber_Female_01
+    4300012: Character_Cyber_Male_01
+    4300014: Character_CyberPunk_Male_01
+    4300016: Character_CyborgNinja_01
+    4300018: Character_Garbage_Male_01
+    4300020: Character_Hacker_Female_01
+    4300022: Character_Hologram_Female_01
+    4300024: Character_Junky_Female_01
+    4300026: Character_Junky_Male_01
+    4300028: Character_Medical_Male_01
+    4300030: Character_Monk_Male_01
+    4300032: Character_Muscle_Male_01
+    4300034: Character_Rich_Female_01
+    4300036: Character_Rich_Male_01
+    4300038: Character_Robot_01
+    4300040: PistolProp
+    4300042: SM_Wep_Pistol_Slide_01
+    4300044: SM_Wep_Pistol_Trigger_01
+    4300046: RifleProp
+    4300048: SM_Wep_Rifle_Small_ChargeHandle_01
+    4300050: SM_Wep_Rifle_Small_Mag_01
+    4300052: SM_Wep_Rifle_Small_Slide_01
+    4300054: SM_Wep_Rifle_Small_Trigger_01
+    4300056: Rifle
+    4300058: SM_Wep_Rifle_Small_ChargeHandle_01_1
+    4300060: SM_Wep_Rifle_Small_Mag_01_1
+    4300062: SM_Wep_Rifle_Small_Slide_01_1
+    4300064: SM_Wep_Rifle_Small_Trigger_01_1
+    4300066: Pistol
+    4300068: SM_Wep_Pistol_Slide_01_1
+    4300070: SM_Wep_Pistol_Trigger_01_1
+    4300072: Character_Robot_02
+    9500000: //RootNode
+    13700000: Character_Alien_Male_01
+    13700002: Character_Alien_Male_02
+    13700004: Character_Android_Female_01
+    13700006: Character_Augmented_Male_01
+    13700008: Character_Cop_01
+    13700010: Character_Cyber_Female_01
+    13700012: Character_Cyber_Male_01
+    13700014: Character_CyberPunk_Male_01
+    13700016: Character_CyborgNinja_01
+    13700018: Character_Garbage_Male_01
+    13700020: Character_Hacker_Female_01
+    13700022: Character_Hologram_Female_01
+    13700024: Character_Junky_Female_01
+    13700026: Character_Junky_Male_01
+    13700028: Character_Medical_Male_01
+    13700030: Character_Monk_Male_01
+    13700032: Character_Muscle_Male_01
+    13700034: Character_Rich_Female_01
+    13700036: Character_Rich_Male_01
+    13700038: Character_Robot_01
+    13700040: Character_Robot_02
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 3
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

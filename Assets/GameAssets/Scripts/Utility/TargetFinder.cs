@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class TargetFinder {
 
-    private float FIRE_DISTANCE = 15;
+    private float FIRE_DISTANCE = 13;
     private float FIRE_SENSITIVITY = 0.5f;
+    private float AUTO_FIRE_ANGLE = 50;
 
     private List<ICyberAgent>  m_targets = new List<ICyberAgent>();
     private string m_selfName;
@@ -13,7 +14,9 @@ public class TargetFinder {
     private ICyberAgent m_currentTarget;
     private float m_aimedDirectionMagnitue;
     private Vector3 m_aimedPosition;
+
     private GameObject m_targetIndicator;
+    private SpriteRenderer[] m_targetIndicatorColor;
 
     #region Initialize
     public TargetFinder(string ownersName,Vector3 selfPosition,GameObject targetIndicator)
@@ -21,6 +24,7 @@ public class TargetFinder {
         m_selfName = ownersName;
         m_selfPosition = selfPosition;
         m_targetIndicator = targetIndicator;
+        m_targetIndicatorColor = targetIndicator.GetComponentsInChildren<SpriteRenderer>();
 
         MovingAgent[] agents = GameObject.FindObjectsOfType<MovingAgent>();
 
@@ -46,13 +50,13 @@ public class TargetFinder {
         m_aimedDirectionMagnitue = aimDirection.magnitude;
         Vector3 currentAimedPosition = getAimedPositionFromDirection(aimDirection);
 
-        ICyberAgent tempAgent =  getNearestTargetAgent(currentAimedPosition);
+        m_currentTarget =  getNearestTargetAgent(currentAimedPosition);
 
         // Only Update the current target if the aim Position changed.
-        if (currentAimedPosition != m_aimedPosition)
-        {
-            m_currentTarget = tempAgent;
-        }
+        //if (currentAimedPosition != m_aimedPosition)
+        //{
+        //    m_currentTarget = tempAgent;
+        //}
 
         m_aimedPosition = currentAimedPosition;
     }
@@ -75,14 +79,20 @@ public class TargetFinder {
 
     public bool canFireAtTargetAgent()
     {     
-        if (m_aimedDirectionMagnitue > FIRE_SENSITIVITY && m_currentTarget != null)
+        //if (m_aimedDirectionMagnitue > FIRE_SENSITIVITY && m_currentTarget != null)
+        //{
+        //   float distanceFromTarget = Vector3.Distance(m_selfPosition, m_currentTarget.getTransfrom().position);
+        //   if(distanceFromTarget < FIRE_DISTANCE)
+        //   {
+        //        return true;
+        //   }
+        //   return false;
+        //}
+        //return false;
+
+        if(m_aimedDirectionMagnitue > FIRE_SENSITIVITY)
         {
-           float distanceFromTarget = Vector3.Distance(m_selfPosition, m_currentTarget.getTransfrom().position);
-           if(distanceFromTarget < FIRE_DISTANCE)
-           {
-                return true;
-           }
-           return false;
+            return true;
         }
         return false;
     }
@@ -93,11 +103,15 @@ public class TargetFinder {
     }
     #endregion
 
-
     #region Event Handlers
     #endregion
 
     #region Utility
+
+    public void disableTargetIndicator()
+    {
+        m_targetIndicator.transform.position = new Vector3(0, -20, 0);
+    }
 
     /**
      * Get the aimed position of the weapon.
@@ -119,12 +133,23 @@ public class TargetFinder {
         foreach (ICyberAgent target in m_targets)
         {
             float angle = Vector3.Angle(target.getCurrentPosition() - m_selfPosition, aimedPosition - m_selfPosition);
-
-            if (angle < minAngle && angle < 50 && target.IsFunctional() && target.getName() != m_selfName)
+            float distance = Vector3.Distance(target.getCurrentPosition(), m_selfPosition);
+            if (angle < minAngle && angle < AUTO_FIRE_ANGLE && target.IsFunctional() && target.getName() != m_selfName && distance < FIRE_DISTANCE)
             {
                 minAngle = angle;
                 tempAgent = target;
             }
+        }
+
+        if(tempAgent == null)
+        {
+            m_targetIndicator.transform.position = new Vector3(0, -10, 0);
+        }
+        else
+        {
+            m_targetIndicator.transform.localPosition = tempAgent.getCurrentPosition();
+            m_targetIndicatorColor[0].color = tempAgent.getHealthColor();
+            m_targetIndicatorColor[1].color = tempAgent.getHealthColor();
         }
 
         return tempAgent;
@@ -147,11 +172,12 @@ public class TargetFinder {
             {
                 if (humanoidAgent.isAimed())
                 {
-                    return m_currentTarget.getTopPosition();
+
+                    return m_currentTarget.getTopPosition()+ new Vector3(0,0.2f,0);
                 }
                 else
                 {
-                    return m_currentTarget.getCurrentPosition() + new Vector3(0, 0.6f, 0);
+                    return m_currentTarget.getCurrentPosition() + new Vector3(0, 1f, 0);
                 }
             }
             else
