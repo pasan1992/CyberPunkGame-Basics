@@ -14,6 +14,7 @@ public class DamageModule
         m_maxHealth = health;
         m_onDestroy += onDestroyCallback;
         m_outLine = outline;
+        m_outLine.OutlineColor = Color.green;
     }
 
     #region commands
@@ -30,9 +31,17 @@ public class DamageModule
         return m_health;
     }
 
+    public virtual void resetCharacter(float health)
+    {
+        m_outLine.enabled = true;
+        m_health = health;
+        m_outLine.OutlineColor = Color.Lerp(Color.red, Color.green, m_health / m_maxHealth);
+    }
+
     public void setHealth(float health)
     {
         m_health = health;
+        m_maxHealth = health;
         m_outLine.OutlineColor = Color.Lerp(Color.red, Color.green, m_health / m_maxHealth);
         if (m_health <= 0)
         {
@@ -65,6 +74,19 @@ public class DamageModule
     public Color getHealthColor()
     {
        return m_outLine.OutlineColor;
+    }
+
+    public float getHealthPercentage()
+    { 
+        if(m_maxHealth != 0)
+        {
+            return m_health / m_maxHealth;
+        }
+        else
+        {
+            return 0;
+        }
+
     }
 
     #endregion

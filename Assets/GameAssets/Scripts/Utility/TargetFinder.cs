@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class TargetFinder {
 
-    private float FIRE_DISTANCE = 13;
+    private float FIRE_DISTANCE = 16;
     private float FIRE_SENSITIVITY = 0.5f;
     private float AUTO_FIRE_ANGLE = 50;
 
@@ -16,7 +16,8 @@ public class TargetFinder {
     private Vector3 m_aimedPosition;
 
     private GameObject m_targetIndicator;
-    private SpriteRenderer[] m_targetIndicatorColor;
+    private SpriteRenderer m_targetIndicatorColor;
+    private HealthBar m_healthBar;
 
     #region Initialize
     public TargetFinder(string ownersName,Vector3 selfPosition,GameObject targetIndicator)
@@ -24,7 +25,8 @@ public class TargetFinder {
         m_selfName = ownersName;
         m_selfPosition = selfPosition;
         m_targetIndicator = targetIndicator;
-        m_targetIndicatorColor = targetIndicator.GetComponentsInChildren<SpriteRenderer>();
+        m_healthBar = m_targetIndicator.GetComponentInChildren<HealthBar>();
+        m_targetIndicatorColor = targetIndicator.GetComponentInChildren<SpriteRenderer>();
 
         MovingAgent[] agents = GameObject.FindObjectsOfType<MovingAgent>();
 
@@ -148,8 +150,17 @@ public class TargetFinder {
         else
         {
             m_targetIndicator.transform.localPosition = tempAgent.getCurrentPosition();
-            m_targetIndicatorColor[0].color = tempAgent.getHealthColor();
-            m_targetIndicatorColor[1].color = tempAgent.getHealthColor();
+            m_targetIndicatorColor.color = tempAgent.getHealthColor();
+            m_healthBar.setHealthPercentage(tempAgent.getHealthPercentage());
+
+            if(tempAgent.GetType() == typeof(FlyingAgent))
+            {
+                m_targetIndicatorColor.enabled = false;
+            }
+            else
+            {
+                m_targetIndicatorColor.enabled = true;
+            }
         }
 
         return tempAgent;
@@ -172,17 +183,16 @@ public class TargetFinder {
             {
                 if (humanoidAgent.isAimed())
                 {
-
-                    return m_currentTarget.getTopPosition()+ new Vector3(0,0.2f,0);
+                    return m_currentTarget.getTopPosition();
                 }
                 else
                 {
-                    return m_currentTarget.getCurrentPosition() + new Vector3(0, 1f, 0);
+                    return m_currentTarget.getCurrentPosition() +new Vector3(0,0.6f,0);
                 }
             }
             else
             {
-                return m_currentTarget.getCurrentPosition() + new Vector3(0, 1.2f, 0);
+                return m_currentTarget.getCurrentPosition() + new Vector3(0, 1.05f, 0);
             }
         }
     }

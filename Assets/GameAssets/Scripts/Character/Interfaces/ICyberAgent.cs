@@ -38,4 +38,7 @@ public interface ICyberAgent
     void setOnEnableCallback(AgentController.agentBasicCallbackDeligate callback);
     bool isDisabled();
     Color getHealthColor();
+    void resetAgent(float health, float skill);
+    Vector3 getMovmentDirection();
+    float getHealthPercentage();
 }

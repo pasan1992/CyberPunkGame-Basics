@@ -72,6 +72,7 @@ MonoBehaviour:
   m_agentFaction: 1
   enemyTag: Player
   skill: 0.3
+  health: 1
 --- !u!114 &215469406
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -84,7 +85,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 263da37e0fbf1dd479ca3343dbbc9072, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 1
 --- !u!1 &2775065028019427810
 GameObject:
   m_ObjectHideFlags: 0
@@ -489,8 +489,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2455626, y: 6.3334885, z: 1.1664915}
-  m_Center: {x: 0, y: -1.0781883, z: 0.00000005721984}
+  m_Size: {x: 2.8403656, y: 6.333489, z: 2.3886087}
+  m_Center: {x: -0.102988504, y: -1.0781884, z: -0.12094443}
 --- !u!95 &2775065029461936819
 Animator:
   serializedVersion: 3

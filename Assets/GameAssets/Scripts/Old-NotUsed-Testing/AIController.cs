@@ -273,6 +273,7 @@ public class AIController : AgentController
 
     public override void OnAgentDestroy()
     {
+        base.OnAgentDestroy();
         throw new System.NotImplementedException();
     }
 
@@ -283,6 +284,11 @@ public class AIController : AgentController
 
     public override void onAgentEnable()
     {
+    }
+
+    public override void resetCharacher()
+    {
+        throw new System.NotImplementedException();
     }
 
     #endregion

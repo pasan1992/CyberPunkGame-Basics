@@ -39,6 +39,27 @@ public class HumanoidDamageModule : DamageModule
     public override void destroyCharacter()
     {
         m_ragdoll.EnableRagdoll();
+
+        GameObject explosion = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.ElectricParticleEffect);
+        explosion.SetActive(true);
+        explosion.transform.position = m_headTransfrom.position;
+    }
+
+    public void emitSmoke()
+    {
+        GameObject explosion = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.ElectricParticleEffect);
+        explosion.SetActive(true);
+        explosion.transform.position = m_headTransfrom.position;
+
+        GameObject smoke = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.SmokeEffect);
+        smoke.SetActive(true);
+        smoke.transform.position = m_headTransfrom.position;
+    }
+
+    public override void resetCharacter(float health)
+    {
+        base.resetCharacter(health);
+        m_ragdoll.DisableRagdoll();
     }
 
     #endregion
@@ -48,6 +69,12 @@ public class HumanoidDamageModule : DamageModule
     public void reactOnHit(Collider collider, Vector3 force, Vector3 point)
     {
         m_hitReaction.Hit(collider, force, point);
+
+
+
+        //GameObject spartks = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.ElectricParticleEffect);
+        //spartks.SetActive(true);
+        //spartks.transform.position = point;
     }
 
     public Transform getHeadTransfrom()

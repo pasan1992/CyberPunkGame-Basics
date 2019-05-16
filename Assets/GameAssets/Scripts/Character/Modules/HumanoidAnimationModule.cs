@@ -103,6 +103,13 @@ public class HumanoidAnimationModule : AnimationModule
         m_aimIK.enabled = false;
     }
 
+    public override void enableAnimationSystem()
+    {
+        m_animator.enabled = true;
+        m_aimIK.enabled = true;
+    }
+
+
     public void setCurretnWeapon(int value)
     {
         m_animator.SetFloat("currentWeapon", value);
@@ -125,5 +132,8 @@ public class HumanoidAnimationModule : AnimationModule
         return m_animator.GetBool("crouched");
     }
 
+    #endregion
+
+    #region Events
     #endregion
 }

@@ -10,6 +10,7 @@ public class PlayerControllerMobile : AgentController
     protected MovingAgent m_selfAgent;
     public float health;
     private TargetFinder m_targetFinder;
+    private bool m_crouched = false;
 
     #region initalize
     protected void Awake()
@@ -22,6 +23,7 @@ public class PlayerControllerMobile : AgentController
     {
         m_selfAgent.togglepSecondaryWeapon();
         m_selfAgent.setHealth(health);
+        m_selfAgent.setFaction(m_agentFaction);
     }
 
     protected void initalizeSelfAgent()
@@ -56,9 +58,16 @@ public class PlayerControllerMobile : AgentController
         bool crouchPressed = SimpleInput.GetButtonDown("Jump");
         #endregion
 
-       #region control agent from input
+        #region control agent from input
 
         #region movment control
+
+        if (crouchPressed)
+        {
+            m_selfAgent.toggleHide();
+            m_crouched = !m_crouched;
+        }
+
         if (runPressed)
         {
             if(m_selfAgent.isCrouched())
@@ -66,17 +75,18 @@ public class PlayerControllerMobile : AgentController
                 m_selfAgent.toggleHide();
             }
 
-            m_selfAgent.moveCharacter(getDirectionRelativeToCamera((new Vector3(inputVertical, 0, -inputHorizontal).normalized)*1.8f));
+            m_selfAgent.moveCharacter(getDirectionRelativeToCamera((new Vector3(inputVertical, 0, -inputHorizontal).normalized)*1.5f));
         }
         else
         {
+            if(m_crouched && !m_selfAgent.isCrouched())
+            {
+                m_selfAgent.toggleHide();
+            }
             m_selfAgent.moveCharacter(getDirectionRelativeToCamera(new Vector3(inputVertical, 0, -inputHorizontal).normalized));
         }
 
-        if (crouchPressed)
-        {
-            m_selfAgent.toggleHide();
-        }
+
         #endregion
 
         #region aiming and fire control
@@ -149,6 +159,7 @@ public class PlayerControllerMobile : AgentController
 
     public override void OnAgentDestroy()
     {
+        base.OnAgentDestroy();
     }
 
     public override void onAgentDisable()
@@ -157,6 +168,11 @@ public class PlayerControllerMobile : AgentController
 
     public override void onAgentEnable()
     {
+    }
+
+    public override void resetCharacher()
+    {
+        throw new System.NotImplementedException();
     }
 
     #endregion

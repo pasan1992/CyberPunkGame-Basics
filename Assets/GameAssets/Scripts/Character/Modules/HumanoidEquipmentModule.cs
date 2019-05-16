@@ -366,5 +366,10 @@ public class HumanoidEquipmentModule
         m_pistol.setOwnerFaction(agentGroup);
     }
 
+    public void resetWeapon()
+    {
+        m_currentWeapon.resetWeapon();
+    }
+
     #endregion
 }

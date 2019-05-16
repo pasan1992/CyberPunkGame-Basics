@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 
-public interface IPoints 
+public interface IPoints
+    
 {
     Vector3 getPosition();
     bool isOccupied();

@@ -129,15 +129,23 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     // Destory Character
     private void destroyCharacter()
     {
+        this.GetComponent<FullBodyBipedIK>().enabled = false;
         m_equipmentModule.DropCurrentWeapon();
         m_characterEnabled = false;
         m_animationModule.disableAnimationSystem();
+        Invoke("postDestoryEffect", 1);
 
         if (m_onDestoryCallback != null)
         {   
             m_onDestoryCallback();
         }
     }
+
+    private void postDestoryEffect()
+    {
+        m_damageModule.emitSmoke();
+    }
+
 
     public void toggleHide()
     {
@@ -180,6 +188,26 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     #endregion
 
     #region Getters and Setters
+
+    public float getHealthPercentage()
+    {
+        return m_damageModule.getHealthPercentage();
+    }
+
+    public Vector3 getMovmentDirection()
+    {
+        return m_movmentVector;
+    }
+
+    public void resetAgent(float health,float skill)
+    {
+        setSkill(skill);
+        m_damageModule.resetCharacter(health);
+        m_animationModule.enableAnimationSystem();
+        m_characterEnabled = true;
+        m_equipmentModule.resetWeapon();
+        this.GetComponent<FullBodyBipedIK>().enabled = true;
+    }
 
     public void setOnDestoryCallback(AgentController.agentBasicCallbackDeligate onDestoryCallback)
     {
@@ -262,7 +290,11 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
     public void setFaction(AgentController.AgentFaction group)
     {
         m_agentFaction = group;
-        m_equipmentModule.setOwnerFaction(group);
+
+        if(m_equipmentModule != null)
+        {
+            m_equipmentModule.setOwnerFaction(group);
+        }
     }
 
     public CharacterMainStates getCharacterMainStates()
@@ -372,6 +404,11 @@ public class MovingAgent : MonoBehaviour,ICyberAgent
         }
 
         return headTransfrom;
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
     }
     #endregion
 

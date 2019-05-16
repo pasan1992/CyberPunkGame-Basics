@@ -3,7 +3,8 @@ using UnityEngine;
 
 public abstract class AgentController : MonoBehaviour
 {
-    
+    protected agentBasicCallbackDeligate m_onDestoryEvent;
+
     protected void intializeAgentCallbacks(ICyberAgent cyberAgent)
     {
         cyberAgent.setOnDestoryCallback(OnAgentDestroy);
@@ -19,7 +20,19 @@ public abstract class AgentController : MonoBehaviour
     public abstract void setMovableAgent(ICyberAgent agent);
     public abstract float getSkill();
     public abstract ICyberAgent getICyberAgent();
-    public abstract void OnAgentDestroy();
+    public virtual void OnAgentDestroy()
+    {
+        if(m_onDestoryEvent !=null)
+        {
+            m_onDestoryEvent();
+        }
+    }
     public abstract void onAgentDisable();
     public abstract void onAgentEnable();
+    public abstract void resetCharacher();
+
+    public void addOnDestroyEvent(agentBasicCallbackDeligate onDestoryCallback)
+    {
+        m_onDestoryEvent = onDestoryCallback;
+    }
 }

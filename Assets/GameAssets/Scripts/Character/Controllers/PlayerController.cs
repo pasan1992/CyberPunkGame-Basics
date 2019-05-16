@@ -207,6 +207,7 @@ public class PlayerController : AgentController
 
     public override void OnAgentDestroy()
     {
+        base.OnAgentDestroy();
     }
 
     public override void onAgentDisable()
@@ -215,6 +216,11 @@ public class PlayerController : AgentController
 
     public override void onAgentEnable()
     {
+    }
+
+    public override void resetCharacher()
+    {
+        throw new System.NotImplementedException();
     }
 
     #endregion

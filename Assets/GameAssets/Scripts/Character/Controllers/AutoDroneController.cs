@@ -9,6 +9,7 @@ public class AutoDroneController :  AgentController
     // Start is called before the first frame update
     public string enemyTag;
     public float skill;
+    public float health = 1;
 
     private FlyingAgent m_selfAgent;
     private NavMeshAgent m_navMeshAgent;
@@ -26,6 +27,13 @@ public class AutoDroneController :  AgentController
         m_behaviorState = new DroneCombatStage(m_selfAgent, m_navMeshAgent, m_enemy);
 
         tempFloat = Random.value * 10;
+    }
+
+    private void Start()
+    {
+        m_selfAgent.aimWeapon();
+        m_selfAgent.setSkill(skill);
+        m_selfAgent.setHealth(health);
     }
 
     private void initalizeTarget()
@@ -60,8 +68,7 @@ public class AutoDroneController :  AgentController
         intializeAgentCallbacks(m_selfAgent);
         //m_selfAgent.setOnDestoryCallback(OnAgentDestroy);
         //m_selfAgent.setOnDisableCallback(onAgentDisable);
-        m_selfAgent.aimWeapon();
-        m_selfAgent.setSkill(skill);
+
     }
 
     #endregion
@@ -118,10 +125,13 @@ public class AutoDroneController :  AgentController
     #region events
     public override void OnAgentDestroy()
     {
+        base.OnAgentDestroy();
         m_navMeshAgent.isStopped = true;
         m_navMeshAgent.enabled = false;
         this.gameObject.SetActive(false);
+        Invoke("resetCharacher", Random.value*5 + 5);
     }
+
 
     public override void onAgentDisable()
     {
@@ -134,7 +144,29 @@ public class AutoDroneController :  AgentController
         //m_navMeshAgent.enabled = true;
         this.transform.position = m_selfAgent.transform.position;
         m_selfAgent.transform.parent = this.transform;
-        m_navMeshAgent.isStopped = false;
+
+        if(m_navMeshAgent.isOnNavMesh && m_navMeshAgent.isStopped)
+        {
+            m_navMeshAgent.isStopped = false;
+        }
+
+    }
+
+    public override void resetCharacher()
+    {
+        //TEMP CODE
+        //this.transform.position = FindObjectOfType<SpawnPoint>().transform.position + new Vector3(0,20,0);
+
+
+        m_selfAgent.resetAgent(health, skill);
+
+        if(m_navMeshAgent.isOnNavMesh && m_navMeshAgent.isStopped)
+        {
+            m_navMeshAgent.isStopped = false;
+        }
+
+        m_navMeshAgent.enabled = true;
+        this.gameObject.SetActive(true);
     }
 
 

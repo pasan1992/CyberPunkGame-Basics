@@ -22,7 +22,7 @@ public class HumanoidMovmentModule : MovmentModule
 
         if(this.isCrouched())
         {
-            crouchSpeedMultiplayer = 0.5f;
+            crouchSpeedMultiplayer = 0.3f;
             movmentDirection = movmentDirection.normalized;
         }
 

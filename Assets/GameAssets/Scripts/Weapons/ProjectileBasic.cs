@@ -10,25 +10,51 @@ public class ProjectileBasic : MonoBehaviour
     public AnimationCurve microLaserBearmTrailCurve;
 
 
-    private string shooterName ="test";
-    private bool hit = false;
+    private string m_shooterName ="test";
+    private bool m_hit = false;
     private AgentController.AgentFaction m_fireFrom;
-    private TrailRenderer trail;
-    private bool enabled = true;
-
+    private TrailRenderer m_trail;
+    private bool m_enabled = true;
+    private Transform m_targetTransfrom;
+    private bool m_followTarget = false;
+    private bool m_targetReached = false;
 
     #region updates
 
     private void Awake()
     {
-        trail = this.GetComponent<TrailRenderer>();
+        m_trail = this.GetComponent<TrailRenderer>();
     }
 
     void FixedUpdate()
     {
-        if(enabled)
+        if(m_enabled)
         {
-            this.transform.Translate(Vector3.forward * speed);
+            //this.transform.Translate(Vector3.forward * speed);
+
+            //if(Vector3.Distance(this.transform.position,m_targetPosition)> 0.5f && !m_targetReached)
+            //{
+            //    this.transform.position = Vector3.MoveTowards(this.transform.position, m_targetPosition, speed);
+            //}
+            //else
+            //}
+
+            if(m_followTarget && !m_targetReached)
+            {
+                this.transform.position = Vector3.MoveTowards(this.transform.position, m_targetTransfrom.position, speed);
+
+                if(Vector3.Distance(this.transform.position,m_targetTransfrom.position) <0.3f)
+                {
+                    m_targetReached = true;
+                }
+            }
+            else
+            {
+                this.transform.Translate(Vector3.forward * speed);
+            }
+
+
+
             DistanceTravelled += Time.deltaTime * speed;
 
             if (DistanceTravelled > 0.5f)
@@ -64,13 +90,13 @@ public class ProjectileBasic : MonoBehaviour
     {
         AgentController agentController = other.transform.GetComponentInParent<AgentController>();
         //Debug.Log(other.name);
-        if (agentController != null && !hit)
+        if (agentController != null && !m_hit)
         {
             ICyberAgent movingAgnet = agentController.getICyberAgent();
             if (movingAgnet !=null && !m_fireFrom.Equals(movingAgnet.getFaction()))
             {
-                hit = true;
-                movingAgnet.reactOnHit(other, (this.transform.forward) * 5f, other.transform.position);
+                m_hit = true;
+                movingAgnet.reactOnHit(other, (this.transform.forward) * 3f, other.transform.position);
                 movingAgnet.damageAgent(1);
             
                 speed = 0;
@@ -90,7 +116,7 @@ public class ProjectileBasic : MonoBehaviour
                 basicHitParticle.transform.position = this.transform.position;
                 basicHitParticle.transform.LookAt(Vector3.up);
              
-                if (!movingAgnet.IsFunctional())
+                if (movingAgnet.GetType() == typeof(MovingAgent))
                 {
                     Rigidbody rb = other.transform.GetComponent<Rigidbody>();
 
@@ -133,16 +159,27 @@ public class ProjectileBasic : MonoBehaviour
     public void OnDisable()
     {
         //CancelInvoke();
-        enabled = false;
+        m_enabled = false;
         speed = 0;
     }
     #endregion
 
 
     #region getters and setters
+
+    public void setFollowTarget(bool enable)
+    {
+        m_followTarget = enable;
+    }
+
+    public void setTargetTransfrom(Transform targetTransfrom)
+    {
+        m_targetTransfrom = targetTransfrom;
+    }
+
     public void setShooterName(string name)
     {
-        this.shooterName = name;
+        this.m_shooterName = name;
     }
 
     public void setFiredFrom(AgentController.AgentFaction group)
@@ -159,20 +196,22 @@ public class ProjectileBasic : MonoBehaviour
     public void resetProjectile()
     {
         DistanceTravelled = 0;
-        hit = false;
-        trail.time = 0.1f;
-        trail.minVertexDistance = 0.1f;
-        trail.widthCurve = laserBeamTrailCurve;
-        enabled = true;
+        m_hit = false;
+        m_trail.time = 0.1f;
+        m_trail.minVertexDistance = 0.1f;
+        m_trail.widthCurve = laserBeamTrailCurve;
+        m_enabled = true;
+        m_followTarget = false;
+        m_targetReached = false;
     }
 
     public void resetToMicroBeam()
     {
         DistanceTravelled = 0;
-        hit = false;
-        trail.time = 0.05f;
-        trail.minVertexDistance = 0.05f;
-        trail.widthCurve = microLaserBearmTrailCurve;
+        m_hit = false;
+        m_trail.time = 0.05f;
+        m_trail.minVertexDistance = 0.05f;
+        m_trail.widthCurve = microLaserBearmTrailCurve;
     }
 
     #endregion

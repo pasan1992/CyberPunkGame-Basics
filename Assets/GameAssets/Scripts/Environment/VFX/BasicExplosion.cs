@@ -46,12 +46,13 @@ public class BasicExplosion : MonoBehaviour
             rb.transform.transform.position = this.transform.position;
             //rb.WakeUp();
             rb.AddForce(Random.insideUnitSphere *(Random.value * 5+5), ForceMode.Impulse);
-            rb.AddForce(Vector3.up * 2, ForceMode.Impulse);
+            rb.AddForce(Vector3.up * 3, ForceMode.Impulse);
+            rb.AddTorque(Random.insideUnitSphere * (Random.value * 5 + 5), ForceMode.Impulse);
         }
 
         getExplosionParticleEffect();
 
-        Invoke("resetAll", 1f);
+        Invoke("resetAll", 3f);
 
     }
 

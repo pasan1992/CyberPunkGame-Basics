@@ -14,7 +14,7 @@ GameObject:
   m_Name: COverPoints (14)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 2
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &387287313
@@ -57,7 +57,7 @@ GameObject:
   m_Name: COverPoints (13)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 2
   m_StaticEditorFlags: 0
   m_IsActive: 1
 --- !u!4 &412552962
@@ -68,7 +68,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 412552961}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.14, y: 0, z: 0.01}
+  m_LocalPosition: {x: -1.4, y: 0, z: 0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 2069444390}
@@ -100,10 +100,10 @@ GameObject:
   - component: {fileID: 2069444387}
   - component: {fileID: 2069444386}
   m_Layer: 14
-  m_Name: Barrier_Plastic_Cover
+  m_Name: Barrier_Plastic_Red_Cover
   m_TagString: Cover
   m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
+  m_NavMeshLayer: 2
   m_StaticEditorFlags: 4294967295
   m_IsActive: 1
 --- !u!4 &2069444390
@@ -113,7 +113,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2069444385}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -12.73, y: 1.08, z: 0.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -197,5 +197,5 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.81303406, y: 1.0085195, z: 2.4016664}
-  m_Center: {x: -0.01945591, y: 0.50425977, z: -0.0018252134}
+  m_Size: {x: 0.81303406, y: 0.6605376, z: 2.4016664}
+  m_Center: {x: -0.01945591, y: 0.3302688, z: -0.0018252134}

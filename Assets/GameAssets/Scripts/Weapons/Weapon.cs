@@ -10,6 +10,7 @@ public abstract class Weapon : MonoBehaviour
 
     public ParticleSystem gunMuzzle;
     public ParticleSystem gunFireLight;
+    public bool playerWeapon;
 
 
     public GameObject targetPoint;
@@ -37,6 +38,10 @@ public abstract class Weapon : MonoBehaviour
     protected bool triggerPulled = false;
     protected bool weaponSafty = false;
 
+    protected Transform m_weaponLocationTransfrom;
+    protected Vector3 m_weaponLocalPosition;
+    protected Quaternion m_weaponRotation;
+
 
     public void Awake()
     {
@@ -46,6 +51,10 @@ public abstract class Weapon : MonoBehaviour
         m_audioScource = this.GetComponent<AudioSource>();
         m_soundManager = GameObject.FindObjectOfType<SoundManager>();
         m_projectilePool = GameObject.FindObjectOfType<ProjectilePool>();
+
+        m_weaponLocationTransfrom = this.transform.parent;
+        m_weaponLocalPosition = this.transform.localPosition;
+        m_weaponRotation = this.transform.localRotation;
     }
 
     #region updates
@@ -167,9 +176,16 @@ public abstract class Weapon : MonoBehaviour
         Tempprojectile.transform.forward = (m_target.transform.position - m_gunFireingPoint).normalized;
 
         Tempprojectile.SetActive(true);
-        Tempprojectile.GetComponent<ProjectileBasic>().speed = 1f;
-        Tempprojectile.GetComponent<ProjectileBasic>().setFiredFrom(m_ownersFaction);
-        
+        ProjectileBasic projetcileBasic = Tempprojectile.GetComponent<ProjectileBasic>();
+        projetcileBasic.speed = 1f;
+        projetcileBasic.setFiredFrom(m_ownersFaction);
+        projetcileBasic.setTargetTransfrom(m_target.transform);
+        if(playerWeapon)
+        {
+            projetcileBasic.setFollowTarget(true);
+        }
+
+
         if (this.isActiveAndEnabled)
         {
             StartCoroutine(waitAndRecoil());
@@ -195,6 +211,16 @@ public abstract class Weapon : MonoBehaviour
         m_rigidbody.isKinematic = false;
         m_rigidbody.useGravity = true;
         m_collider.isTrigger = false;
+    }
+
+    public virtual void resetWeapon()
+    {
+        m_rigidbody.isKinematic = true;
+        m_rigidbody.useGravity = false;
+        m_collider.isTrigger = true;
+        this.transform.parent = m_weaponLocationTransfrom;
+        this.transform.localPosition = m_weaponLocalPosition;
+        this.transform.localRotation = m_weaponRotation;
     }
 
     public virtual void pullTrigger()

@@ -3,7 +3,7 @@
 public class FlyingAgent : MonoBehaviour ,ICyberAgent
 {
     // Start is called before the first frame update
-    public float health = 5;
+    private float health = 0;
 
     private MovmentModule.BASIC_MOVMENT_STATE m_currentFlyingState = MovmentModule.BASIC_MOVMENT_STATE.DIRECTIONAL_MOVMENT;
 
@@ -46,7 +46,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public void Start()
     {
-        Invoke("disableDrone", 3);
+        //Invoke("disableDrone", 3);
     }
 
     #region update
@@ -137,6 +137,11 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     public Vector3 getTopPosition()
     {
         return m_droneRigitBody.transform.position;
+    }
+
+    public float getHealthPercentage()
+    {
+        return m_damageModule.getHealthPercentage();
     }
 
 
@@ -308,6 +313,23 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     private void OnDisable()
     {
         CancelInvoke();
+    }
+
+    public void resetAgent(float health, float skill)
+    {
+        m_damageModule.resetCharacter(health);
+        if(isDisabled())
+        {
+            m_droneRigitBody.transform.position = m_beforeDisablePositionSnapShot;
+            m_droneRigitBody.transform.rotation = m_beforeDisableRotationSnapshot;
+            recover();
+            enableDrone();
+        }
+    }
+
+    public Vector3 getMovmentDirection()
+    {
+       return m_movmentDirection;
     }
     #endregion
 }

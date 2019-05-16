@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class ProjectilePool : MonoBehaviour
 {
-    public enum POOL_OBJECT_TYPE { FireEXplosionParticle,DroneExplosion,HitBasicParticle,BasicProjectile,ElectricParticleEffect}
+    public enum POOL_OBJECT_TYPE {
+        FireEXplosionParticle,
+        DroneExplosion,
+        HitBasicParticle,
+        BasicProjectile,
+        ElectricParticleEffect,
+        SmokeEffect
+    }
 
     // Basic Projectile 
     private List<GameObject> basicProjectilesList;
@@ -17,6 +24,7 @@ public class ProjectilePool : MonoBehaviour
     private List<GameObject> basicFireExplosionParticlesList;
     private List<GameObject> bulletHitBasicParticleList;
     private List<GameObject> electricParticleEffectList;
+    private List<GameObject> smokeEffectList;
 
 
     public int maxExplosions = 10;
@@ -35,7 +43,6 @@ public class ProjectilePool : MonoBehaviour
 
         foreach (POOL_OBJECT_TYPE type in System.Enum.GetValues(typeof(POOL_OBJECT_TYPE)))
         {
-            Debug.Log("working");
             initalziePool(type);
         }
     }
@@ -77,6 +84,12 @@ public class ProjectilePool : MonoBehaviour
                 resourcePath = "ParticleEffects/ElectricShock";
                 electricParticleEffectList = new List<GameObject>();
                 effectList = electricParticleEffectList;
+                break;
+            case POOL_OBJECT_TYPE.SmokeEffect:
+                count = maxExplosions;
+                resourcePath = "ParticleEffects/SmokeParticleEffect";
+                smokeEffectList = new List<GameObject>();
+                effectList = smokeEffectList;
                 break;
         }
 
@@ -178,6 +191,9 @@ public class ProjectilePool : MonoBehaviour
                 break;
             default:
                 effectList = null;
+                break;
+            case POOL_OBJECT_TYPE.SmokeEffect:
+                effectList = smokeEffectList;
                 break;
         }
 

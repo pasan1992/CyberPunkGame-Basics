@@ -26,6 +26,7 @@ public class AutoHumanoidAgentController :  AgentController
         //m_movingAgent.setOnDisableCallback(onAgentDisable);
         m_movingAgent.setFaction(m_agentFaction);
         m_movingAgent.setSkill(skillLevel);
+        m_movingAgent.enableTranslateMovment(false);
     }
     #endregion
 
@@ -54,7 +55,18 @@ public class AutoHumanoidAgentController :  AgentController
 
     public override void OnAgentDestroy()
     {
+        base.OnAgentDestroy();
         m_navMeshAgent.enabled = false;
+        Invoke("resetCharacher", Random.value*10 + 10);
+    }
+
+    public override void resetCharacher()
+    {
+        //TEMP CODE
+        this.transform.position = FindObjectOfType<SpawnPoint>().transform.position;
+
+        m_navMeshAgent.enabled = true;
+        m_movingAgent.resetAgent(health, skillLevel);
     }
 
     public override void onAgentDisable()
