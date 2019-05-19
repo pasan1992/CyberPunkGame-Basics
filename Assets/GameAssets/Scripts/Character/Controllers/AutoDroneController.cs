@@ -22,9 +22,9 @@ public class AutoDroneController :  AgentController
     #region initalize
     void Awake()
     {
-        initalizeNavMeshAgent();
-        initalizeICyberAgent();
+        initalizeNavMeshAgent();      
         initalizeTarget();
+        m_selfAgent = this.GetComponent<FlyingAgent>();
         m_behaviorState = new DroneCombatStage(m_selfAgent, m_navMeshAgent, m_enemy);
 
         tempFloat = Random.value * 10;
@@ -32,9 +32,7 @@ public class AutoDroneController :  AgentController
 
     private void Start()
     {
-        m_selfAgent.aimWeapon();
-        m_selfAgent.setSkill(skill);
-        m_selfAgent.setHealth(health);
+        initalizeICyberAgent();
     }
 
     private void initalizeTarget()
@@ -64,12 +62,11 @@ public class AutoDroneController :  AgentController
 
     private void initalizeICyberAgent()
     {
-        m_selfAgent = this.GetComponent<FlyingAgent>();
         m_selfAgent.setFaction(m_agentFaction);
         intializeAgentCallbacks(m_selfAgent);
-        //m_selfAgent.setOnDestoryCallback(OnAgentDestroy);
-        //m_selfAgent.setOnDisableCallback(onAgentDisable);
-
+        m_selfAgent.aimWeapon();
+        m_selfAgent.setSkill(skill);
+        m_selfAgent.setHealth(health);
     }
 
     #endregion
@@ -79,7 +76,7 @@ public class AutoDroneController :  AgentController
     // Update is called once per frame
     void Update()
     {
-        if(m_selfAgent.IsFunctional() && !m_selfAgent.isDisabled())
+        if(m_selfAgent.IsFunctional() && !m_selfAgent.isDisabled() && isInUse())
         {
             m_behaviorState.updateStage();
         }
@@ -87,17 +84,17 @@ public class AutoDroneController :  AgentController
 
     private void droneUpdate()
     {
-        m_navMeshAgent.SetDestination(m_enemy.getTransfrom().transform.position + new Vector3(tempFloat, 0, tempFloat));
-        m_navMeshAgent.updateRotation = true;
+        //m_navMeshAgent.SetDestination(m_enemy.getTransfrom().transform.position + new Vector3(tempFloat, 0, tempFloat));
+        //m_navMeshAgent.updateRotation = true;
 
-        if (!m_navMeshAgent.pathPending)
-        {
-            Vector3 velocity = m_navMeshAgent.desiredVelocity;
-            velocity = new Vector3(velocity.x, 0, velocity.z);
-            m_selfAgent.moveCharacter(velocity);
-        }
+        //if (!m_navMeshAgent.pathPending)
+        //{
+        //    Vector3 velocity = m_navMeshAgent.desiredVelocity;
+        //    velocity = new Vector3(velocity.x, 0, velocity.z);
+        //    m_selfAgent.moveCharacter(velocity);
+        //}
 
-        m_selfAgent.setTargetPoint(m_enemy.getTransfrom().position);
+        //m_selfAgent.setTargetPoint(m_enemy.getTransfrom().position);
     }
 
     #endregion
@@ -126,10 +123,18 @@ public class AutoDroneController :  AgentController
     #region events
     public override void OnAgentDestroy()
     {
+        //TEst
         base.OnAgentDestroy();
-        m_navMeshAgent.isStopped = true;
+        if(m_navMeshAgent.isOnNavMesh && m_navMeshAgent.isStopped)
+        {
+            m_navMeshAgent.isStopped = true;
+        }
+
         m_navMeshAgent.enabled = false;
-        this.gameObject.SetActive(false);
+
+        this.transform.position = new Vector3(3.18f, 3.27f, 52.93f);
+        setInUse(false);
+        //this.gameObject.SetActive(false);
 
         //Invoke("resetCharacher", Random.value*5 + 5);
     }

@@ -43,4 +43,5 @@ public interface ICyberAgent
     float getHealthPercentage();
     bool isAimed();
     bool isHidden();
+    GameObject getGameObject();
 }

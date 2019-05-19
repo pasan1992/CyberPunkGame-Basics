@@ -9,7 +9,7 @@ public class BasicExplosion : MonoBehaviour
     #region Initialize
 
     Rigidbody[] explosionParticles;
-    ParticleSystem m_particleSystem;
+    //ParticleSystem m_particleSystem;
     void Awake()
     {
        explosionParticles =  this.GetComponentsInChildren<Rigidbody>();
@@ -25,11 +25,11 @@ public class BasicExplosion : MonoBehaviour
             rb.transform.parent = this.transform;
         }
 
-        if(m_particleSystem != null)
-        {
-            m_particleSystem.Stop();
-            m_particleSystem.gameObject.SetActive(false);
-        }
+        //if(m_particleSystem != null)
+        //{
+        //    m_particleSystem.Stop();
+        //    m_particleSystem.gameObject.SetActive(false);
+        //}
         this.gameObject.SetActive(false);
     }
 

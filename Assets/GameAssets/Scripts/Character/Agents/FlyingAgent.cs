@@ -40,13 +40,14 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
         m_animationModule = new AnimationModule(this.GetComponentInChildren<Animator>());
         m_movmentModule = new MovmentModule(m_target, this.gameObject.transform);
-        m_damageModule = new DroneDamageModule(health, this.GetComponentInChildren<Outline>(), DestroyCharacter);
+
     }
     #endregion
 
     public void Start()
     {
         //Invoke("disableDrone", 3);
+        m_damageModule = new DroneDamageModule(health, this.GetComponentInChildren<Outline>(), DestroyCharacter);
     }
 
     #region update
@@ -81,7 +82,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public void setHealth(float value)
     {
-        m_damageModule.setHealth(value);
+        health = value;
     }
 
     public void setTargetPoint(Vector3 position)
@@ -172,10 +173,10 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     }
 
     private void DestroyCharacter()
-    {
-        m_onDestroyCallback();
+    {    
         m_damageModule.ExplosionEffect(m_droneRigitBody.transform.position);
-        CancelInvoke();
+        m_onDestroyCallback();
+        CancelInvoke();       
     }
 
     public void enableTranslateMovment(bool enable)
@@ -317,7 +318,11 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public void resetAgent(float health, float skill)
     {
-        m_damageModule.resetCharacter(health);
+        if(m_damageModule !=null)
+        {
+            m_damageModule.resetCharacter(health);
+        }
+
         if(isDisabled())
         {
             m_droneRigitBody.transform.position = m_beforeDisablePositionSnapShot;
@@ -341,6 +346,11 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     public bool isHidden()
     {
         return false;
+    }
+
+    public GameObject getGameObject()
+    {
+        return this.transform.gameObject;
     }
     #endregion
 }

@@ -15,10 +15,15 @@ public class AutoHumanoidAgentController :  AgentController
     public float skillLevel;
 
     #region initaialize
+
+    private void Awake()
+    {
+        m_movingAgent = this.GetComponent<ICyberAgent>();
+    }
+
     void Start()
     {
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
-        m_movingAgent = this.GetComponent<ICyberAgent>();
         m_currentState = new CombatStage(m_movingAgent, target,m_navMeshAgent);
         m_movingAgent.setHealth(health);
         m_movingAgent.setWeponFireCapability(false);
@@ -34,7 +39,7 @@ public class AutoHumanoidAgentController :  AgentController
     #region update
     void Update()
     {
-        if(m_movingAgent.IsFunctional() && !m_movingAgent.isDisabled())
+        if(m_movingAgent.IsFunctional() && !m_movingAgent.isDisabled() & isInUse())
         {
             m_currentState.updateStage();
         }
@@ -59,8 +64,14 @@ public class AutoHumanoidAgentController :  AgentController
         base.OnAgentDestroy();
         m_navMeshAgent.enabled = false;
 
+        Invoke("reUseCharacter", timeToReset);
         //TEMP CODE
         //Invoke("resetCharacher", Random.value*10 + 10);
+    }
+
+    private void reUseCharacter()
+    {
+        setInUse(false);
     }
 
     public override void resetCharacher()
@@ -68,8 +79,15 @@ public class AutoHumanoidAgentController :  AgentController
         //TEMP CODE
         //this.transform.position = FindObjectOfType<SpawnPoint>().transform.position;
 
-        m_navMeshAgent.enabled = true;
-        m_movingAgent.resetAgent(health, skillLevel);
+        if (m_navMeshAgent != null)
+        {
+            m_navMeshAgent.enabled = true;
+        }
+
+        if (m_movingAgent != null)
+        {
+            m_movingAgent.resetAgent(health, skillLevel);
+        }
     }
 
     public override void onAgentDisable()

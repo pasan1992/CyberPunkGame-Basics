@@ -19,7 +19,6 @@ public class AIController : AgentController
     private float moveCounter;
     private float shootingCounter =2f;
     private Vector3 moveDirection;
-    private int shotCount = 3;
     private bool inScreenLimit = false;
     private bool triggerPulled;
 

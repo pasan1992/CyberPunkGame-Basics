@@ -29,19 +29,43 @@ public class TargetFinder {
         m_healthBar = m_targetIndicator.GetComponentInChildren<HealthBar>();
         m_targetIndicatorColor = targetIndicator.GetComponentInChildren<SpriteRenderer>();
 
-        MovingAgent[] agents = GameObject.FindObjectsOfType<MovingAgent>();
 
-        FlyingAgent[] flyingAgents = GameObject.FindObjectsOfType<FlyingAgent>();
+        //TEMP_CODE
+        EnemyPool enemyPool = GameObject.FindObjectOfType<EnemyPool>();
 
-        foreach (MovingAgent agent in agents)
-        {
-            m_targets.Add(agent);
-        }
+        //if(enemyPool)
+        //{
+        //    //AgentController[] drones = enemyPool.getAllDroids();
+        //    //AgentController[] droids = enemyPool.getAllDrones();
 
-        foreach (FlyingAgent agent in flyingAgents)
-        {
-            m_targets.Add(agent);
-        }
+        //    //foreach(AgentController drone in drones)
+        //    //{
+        //    //    m_targets.Add(drone.getICyberAgent());
+        //    //}
+
+        //    //foreach (AgentController droid in droids)
+        //    //{
+        //    //    m_targets.Add(droid.getICyberAgent());
+        //    //}
+        //}
+        //else
+        //{
+        //    MovingAgent[] agents = GameObject.FindObjectsOfType<MovingAgent>();
+        //    FlyingAgent[] flyingAgents = GameObject.FindObjectsOfType<FlyingAgent>();
+        //    foreach (MovingAgent agent in agents)
+        //    {
+        //        m_targets.Add(agent);
+        //    }
+
+        //    foreach (FlyingAgent agent in flyingAgents)
+        //    {
+        //        m_targets.Add(agent);
+        //    }
+        //}
+
+
+
+
     }
     #endregion
 
@@ -78,6 +102,16 @@ public class TargetFinder {
         {
             return m_aimedPosition;
         }
+    }
+
+    public void AddTarget(ICyberAgent cyberAgent)
+    {
+        m_targets.Add(cyberAgent);
+    }
+
+    public void RemoveTarget(ICyberAgent cyberAgent)
+    {
+        m_targets.Remove(cyberAgent);
     }
 
     public bool canFireAtTargetAgent()
@@ -135,13 +169,21 @@ public class TargetFinder {
 
         foreach (ICyberAgent target in m_targets)
         {
-            float angle = Vector3.Angle(target.getCurrentPosition() - m_selfPosition, aimedPosition - m_selfPosition);
-            float distance = Vector3.Distance(target.getCurrentPosition(), m_selfPosition);
-            if (angle < minAngle && angle < AUTO_FIRE_ANGLE && target.IsFunctional() && target.getName() != m_selfName && distance < FIRE_DISTANCE)
+            if(target != null)
             {
-                minAngle = angle;
-                tempAgent = target;
+                float angle = Vector3.Angle(target.getCurrentPosition() - m_selfPosition, aimedPosition - m_selfPosition);
+                float distance = Vector3.Distance(target.getCurrentPosition(), m_selfPosition);
+                if (angle < minAngle && angle < AUTO_FIRE_ANGLE && target.IsFunctional() && target.getName() != m_selfName && distance < FIRE_DISTANCE)
+                {
+                    minAngle = angle;
+                    tempAgent = target;
+                }
             }
+            else
+            {
+                m_targets.Remove(target);
+            }
+
         }
 
         if(tempAgent == null)

@@ -35,6 +35,7 @@ public class DamageModule
     {
         m_outLine.enabled = true;
         m_health = health;
+        m_maxHealth = health;
         m_outLine.OutlineColor = Color.Lerp(Color.red, Color.green, m_health / m_maxHealth);
     }
 

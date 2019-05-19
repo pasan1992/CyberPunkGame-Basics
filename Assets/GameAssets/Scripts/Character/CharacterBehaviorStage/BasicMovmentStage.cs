@@ -38,6 +38,10 @@ public abstract class BasicMovmentStage : ICharacterBehaviorState
             {
                 velocity = velocity.normalized;
             }
+            else
+            {
+                velocity = velocity * 1.5f;
+            }
 
             velocity = new Vector3(velocity.x, 0, velocity.z);
             m_selfAgent.moveCharacter(velocity);

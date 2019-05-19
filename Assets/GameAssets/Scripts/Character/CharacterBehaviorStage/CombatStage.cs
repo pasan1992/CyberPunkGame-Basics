@@ -12,6 +12,7 @@ public class CombatStage : BasicMovmentStage
     private CoverPoint[] coverPoints;
     private CoverPoint currentCoverPoint;
     private Vector3 randomOffset = Vector3.zero;
+    private static int COVER_POINT_MIN_DISTANCE = 9;
 
     public enum CombatSubStages { LookingForCover,MovingToCover, InCover }
     private CombatSubStages currentCombatSubStage = CombatSubStages.LookingForCover;
@@ -237,9 +238,11 @@ public class CombatStage : BasicMovmentStage
     {
         float minimumDistanceToIdealCoverPoint = 999;
         float minimumDistanceToSafeCoverPoint = 999;
+        float maximumDistanceToRiskyCoverPoint = 0;
 
         CoverPoint tempIDealCoverPoint = null;
         CoverPoint tempSafeCoverPoint = null;
+        CoverPoint tempRiskyCoverPoint = null;
 
 
         foreach (CoverPoint point in coverPoints)
@@ -268,6 +271,16 @@ public class CombatStage : BasicMovmentStage
                     }
 
                 }
+                else
+                {
+                    // Find the safe cover point.
+                    float distanceFromRiskyPoint = point.distanceTo(opponent.getCurrentPosition());
+                    if (maximumDistanceToRiskyCoverPoint < distanceFromRiskyPoint && distanceFromRiskyPoint < COVER_POINT_MIN_DISTANCE)
+                    {
+                        maximumDistanceToRiskyCoverPoint = point.distanceTo(opponent.getCurrentPosition());
+                        tempRiskyCoverPoint = point;
+                    }
+                }
             }
         }
 
@@ -277,11 +290,15 @@ public class CombatStage : BasicMovmentStage
             tempIDealCoverPoint.setOccupent(m_selfAgent);
             return tempIDealCoverPoint;
         }
-        else if(tempSafeCoverPoint != null)
+        else if(tempSafeCoverPoint != null && Vector2.Distance(opponent.getCurrentPosition(), tempSafeCoverPoint.transform.position) <= COVER_POINT_MIN_DISTANCE)
         {
             //tempSafeCoverPoint.stPointOccupentsName(selfAgent.getName());
             tempSafeCoverPoint.setOccupent(m_selfAgent);
             return tempSafeCoverPoint;
+        }
+        else if(tempRiskyCoverPoint !=null)
+        {
+            return tempRiskyCoverPoint;
         }
 
         return null;

@@ -171,6 +171,15 @@ public class PlayerControllerMobile : AgentController
         return m_selfAgent;
     }
 
+    public void addTarget(ICyberAgent cybeAgent)
+    {
+        m_targetFinder.AddTarget(cybeAgent);
+    }
+
+    public void removeTarget(ICyberAgent CybeAgent)
+    {
+        m_targetFinder.AddTarget(CybeAgent);
+    }
     public void setTargetFinder(TargetFinder targetFinder)
     {
         m_targetFinder = targetFinder;

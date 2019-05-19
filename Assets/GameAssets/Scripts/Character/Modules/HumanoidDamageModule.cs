@@ -11,6 +11,7 @@ namespace humanoid
         protected HumanoidAnimationModule m_animationSystem;
         protected Transform m_headTransform;
         protected Transform m_chestTransform;
+        private bool m_ragdollEnabled = false;
 
         public HumanoidDamageModule(float health, RagdollUtility ragdoll, HitReaction hitReaction, HumanoidAnimationModule animationModule, Transform headTransfrom, Transform chestTransfrom, OnDestoryDeligate onDestroyCallback, Outline outline) : base(health, onDestroyCallback, outline)
         {
@@ -42,6 +43,7 @@ namespace humanoid
         public override void destroyCharacter()
         {
             m_ragdoll.EnableRagdoll();
+            m_ragdollEnabled = true;
             GameObject explosion = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.ElectricParticleEffect);
             explosion.SetActive(true);
             explosion.transform.position = m_headTransform.position;
@@ -61,7 +63,12 @@ namespace humanoid
         public override void resetCharacter(float health)
         {
             base.resetCharacter(health);
-            m_ragdoll.DisableRagdoll();
+            if(m_ragdollEnabled)
+            {
+                m_ragdollEnabled = false;
+                m_ragdoll.DisableRagdoll();
+            }
+
         }
 
         #endregion

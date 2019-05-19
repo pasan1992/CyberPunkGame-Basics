@@ -457,6 +457,11 @@ namespace humanoid
         {
             CancelInvoke();
         }
+
+        public GameObject getGameObject()
+        {
+            return this.transform.gameObject;
+        }
         #endregion
 
         #region Commented Code

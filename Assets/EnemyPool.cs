@@ -5,32 +5,40 @@ using UnityEngine;
 public class EnemyPool : MonoBehaviour
 {
     // Start is called before the first frame update
-    AutoDroneController[] drones;
-    AutoHumanoidAgentController[] droids;
+    public AutoDroneController[] drones;
+    public AutoHumanoidAgentController[] droids;
     SpawnPoint[] spawnPoints;
+    
 
     private AgentController.agentOnDestoryEventDelegate m_onDestoryEvent;
+    private PlayerControllerMobile m_mobilePlayer;
 
     void Awake()
     {
-        droids = this.GetComponentsInChildren<AutoHumanoidAgentController>();
-        drones = this.GetComponentsInChildren<AutoDroneController>();
+        //droids = this.GetComponentsInChildren<AutoHumanoidAgentController>();
+        //drones = this.GetComponentsInChildren<AutoDroneController>();
         spawnPoints = FindObjectsOfType<SpawnPoint>();
+        m_mobilePlayer = FindObjectOfType<PlayerControllerMobile>();
 
-        foreach (var droid in droids)
-        {
-            droid.addOnDestroyEvent(OnAgentDestory);
-        }
+        //foreach (var droid in droids)
+        //{
+        //    droid.addOnDestroyEvent(OnAgentDestory);
+        //}
 
-        foreach (var drone in drones)
-        {
-            drone.addOnDestroyEvent(OnAgentDestory);
-        }
+        //foreach (var drone in drones)
+        //{
+        //    drone.addOnDestroyEvent(OnAgentDestory);
+        //}
     }
 
     public void OnAgentDestory(AgentController controller)
     {
         m_onDestoryEvent(controller);
+
+        if (m_mobilePlayer != null)
+        {
+            m_mobilePlayer.removeTarget(controller.getICyberAgent());
+        }
     }
 
     public void setPoolAgentOndestoryEvent(AgentController.agentOnDestoryEventDelegate onDestoryEvent)
@@ -42,11 +50,20 @@ public class EnemyPool : MonoBehaviour
     {
         foreach (var drone in drones)
         {
-            if(!drone.isActiveAndEnabled)
+            if(!drone.isInUse())
             {
+                drone.gameObject.SetActive(true);
                 drone.transform.position = position;
                 drone.health = health;
                 drone.skill = skill;
+
+                drone.addOnDestroyEvent(OnAgentDestory);
+                drone.resetCharacher();
+                drone.setInUse(true);
+                if (m_mobilePlayer !=null)
+                {
+                    m_mobilePlayer.addTarget(drone.getICyberAgent());
+                }
                 return drone;
             }
         }
@@ -58,15 +75,36 @@ public class EnemyPool : MonoBehaviour
     {
         foreach (var droid in droids)
         {
-            if (!droid.isActiveAndEnabled)
+            if (!droid.isInUse())
             {
                 droid.transform.position = position;
                 droid.health = health;
                 droid.skillLevel = skill;
+
+                droid.addOnDestroyEvent(OnAgentDestory);
+                droid.resetCharacher();
+                droid.setInUse(true);
+
+                if (m_mobilePlayer != null)
+                {
+                    m_mobilePlayer.addTarget(droid.getICyberAgent());
+                }
+
                 return droid;
             }
         }
 
         return null;
     }
-}
+
+
+    public AgentController[] getAllDroids()
+    {
+        return droids;
+    }
+
+    public AgentController[] getAllDrones()
+    {
+        return drones;
+    }
+ }
