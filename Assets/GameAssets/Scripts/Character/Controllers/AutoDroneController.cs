@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using humanoid;
 
 [RequireComponent(typeof(FlyingAgent))]
 public class AutoDroneController :  AgentController
@@ -129,7 +130,8 @@ public class AutoDroneController :  AgentController
         m_navMeshAgent.isStopped = true;
         m_navMeshAgent.enabled = false;
         this.gameObject.SetActive(false);
-        Invoke("resetCharacher", Random.value*5 + 5);
+
+        //Invoke("resetCharacher", Random.value*5 + 5);
     }
 
 

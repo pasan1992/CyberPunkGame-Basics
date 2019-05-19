@@ -37,7 +37,7 @@ public class PrimaryWeapon : Weapon
     {
         base.updateWeapon();
 
-        if(triggerPulled)
+        if(triggerPulled && getAmmoCount() > 0)
         {
             updateContinouseFire();
         }

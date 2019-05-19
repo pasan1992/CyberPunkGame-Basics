@@ -11,6 +11,8 @@ public class DroneCombatStage : BasicMovmentStage
     private Vector3 m_movePoint;
     private Vector3 m_randomTargetOffset;
 
+    private float m_timeInFirePosition;
+
     #region Initialize
 
     public DroneCombatStage(ICyberAgent selfAgent, NavMeshAgent navMeshAgent, ICyberAgent opponent) : base(selfAgent, navMeshAgent)
@@ -30,7 +32,7 @@ public class DroneCombatStage : BasicMovmentStage
         // This is needed for calling step update.
         base.updateStage();
 
-        m_selfAgent.setTargetPoint(m_opponent.getTopPosition() + m_randomTargetOffset);
+        m_selfAgent.setTargetPoint(m_opponent.getCurrentPosition()+ m_randomTargetOffset);
     }
 
     protected override void stepUpdate()
@@ -44,9 +46,16 @@ public class DroneCombatStage : BasicMovmentStage
                 m_currentCombatStage = DRONE_COMBAT_STAGES.Moving;
                 break;
             case DRONE_COMBAT_STAGES.Fire:
-                m_currentCombatStage = DRONE_COMBAT_STAGES.DecidingToMove;
+     
+                m_timeInFirePosition += Time.deltaTime;
 
-                if(Vector3.Distance( m_selfAgent.getCurrentPosition(), m_opponent.getCurrentPosition() ) > 10)
+                if(m_timeInFirePosition >0.1f)
+                {
+                    m_timeInFirePosition = 0;
+                    m_currentCombatStage = DRONE_COMBAT_STAGES.DecidingToMove;
+                }
+
+                if (Vector3.Distance( m_selfAgent.getCurrentPosition(), m_opponent.getCurrentPosition() ) > 10)
                 {
                     m_currentCombatStage = DRONE_COMBAT_STAGES.DecidingToMove;
                 }
@@ -94,7 +103,7 @@ public class DroneCombatStage : BasicMovmentStage
     #region Utility
     public void calculateMovePoint()
     {
-        Vector2 randomPoint = Random.insideUnitCircle*(Random.value*5);
+        Vector2 randomPoint = Random.insideUnitCircle*(Random.value*10);
         m_movePoint = m_opponent.getCurrentPosition() + new Vector3(randomPoint.x, 0, randomPoint.y);
         m_navMeshAgent.SetDestination(m_movePoint);
         m_navMeshAgent.isStopped = false;

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using humanoid;
 
 [RequireComponent(typeof(MovingAgent))]
 
@@ -24,14 +25,14 @@ public class PlayerControllerMobile : AgentController
         m_selfAgent.togglepSecondaryWeapon();
         m_selfAgent.setHealth(health);
         m_selfAgent.setFaction(m_agentFaction);
+        m_selfAgent.setPrimayWeaponAmmoCount(10);
+        m_selfAgent.setSecondaryWeaponAmmoCount(10);
     }
 
     protected void initalizeSelfAgent()
     {
         m_selfAgent = this.GetComponent<MovingAgent>();
         intializeAgentCallbacks(m_selfAgent);
-        //m_selfAgent.setOnDestoryCallback(OnAgentDestroy);
-        //m_selfAgent.setOnDisableCallback(onAgentDisable);
     }
 
     #endregion
@@ -55,17 +56,35 @@ public class PlayerControllerMobile : AgentController
         Vector3 aimDirection = getDirectionRelativeToCamera(new Vector3(aimInputVertical, 0, -aimInputHorizontal));
 
         bool runPressed = SimpleInput.GetButton("Run");
-        bool crouchPressed = SimpleInput.GetButtonDown("Jump");
+        bool crouchPressed = SimpleInput.GetButtonDown("Crouch");
+        bool dodge = SimpleInput.GetButtonDown("Dodge");
+        bool rifle = SimpleInput.GetButtonDown("Rifle");
+        bool pistol = SimpleInput.GetButtonDown("Pistol");
         #endregion
 
         #region control agent from input
 
         #region movment control
 
+        if(rifle)
+        {
+            m_selfAgent.togglePrimaryWeapon();
+        }
+
+        if(pistol)
+        {
+            m_selfAgent.togglepSecondaryWeapon();
+        }
+
         if (crouchPressed)
         {
             m_selfAgent.toggleHide();
             m_crouched = !m_crouched;
+        }
+
+        if(dodge)
+        {
+            m_selfAgent.dodgeAttack(getDirectionRelativeToCamera((new Vector3(inputVertical, 0, -inputHorizontal).normalized) * 1.5f));
         }
 
         if (runPressed)

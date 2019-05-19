@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using humanoid;
 
 [RequireComponent(typeof(ICyberAgent))]
 public class AutoHumanoidAgentController :  AgentController
@@ -57,13 +58,15 @@ public class AutoHumanoidAgentController :  AgentController
     {
         base.OnAgentDestroy();
         m_navMeshAgent.enabled = false;
-        Invoke("resetCharacher", Random.value*10 + 10);
+
+        //TEMP CODE
+        //Invoke("resetCharacher", Random.value*10 + 10);
     }
 
     public override void resetCharacher()
     {
         //TEMP CODE
-        this.transform.position = FindObjectOfType<SpawnPoint>().transform.position;
+        //this.transform.position = FindObjectOfType<SpawnPoint>().transform.position;
 
         m_navMeshAgent.enabled = true;
         m_movingAgent.resetAgent(health, skillLevel);

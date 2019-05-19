@@ -16,9 +16,9 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     private DroneDamageModule m_damageModule;
 
     private Rigidbody m_droneRigitBody;
-    private AgentController.agentBasicCallbackDeligate m_onDestroyCallback;
-    private AgentController.agentBasicCallbackDeligate m_onDisableCallback;
-    private AgentController.agentBasicCallbackDeligate m_onEnableCallback;
+    private AgentController.agentBasicEventDelegate m_onDestroyCallback;
+    private AgentController.agentBasicEventDelegate m_onDisableCallback;
+    private AgentController.agentBasicEventDelegate m_onEnableCallback;
     private AgentController.AgentFaction m_faction;
     private float m_skill;
 
@@ -119,17 +119,17 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         m_faction = group;
     }
 
-    public void setOnDestoryCallback(AgentController.agentBasicCallbackDeligate callback)
+    public void setOnDestoryCallback(AgentController.agentBasicEventDelegate callback)
     {
         m_onDestroyCallback = callback;
     }
 
-    public void setOnDisableCallback(AgentController.agentBasicCallbackDeligate callback)
+    public void setOnDisableCallback(AgentController.agentBasicEventDelegate callback)
     {
         m_onDisableCallback = callback;
     }
 
-    public void setOnEnableCallback(AgentController.agentBasicCallbackDeligate callback)
+    public void setOnEnableCallback(AgentController.agentBasicEventDelegate callback)
     {
         m_onEnableCallback = callback;
     }
@@ -327,9 +327,20 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         }
     }
 
+
     public Vector3 getMovmentDirection()
     {
        return m_movmentDirection;
+    }
+
+    public bool isAimed()
+    {
+        return true;
+    }
+
+    public bool isHidden()
+    {
+        return false;
     }
     #endregion
 }

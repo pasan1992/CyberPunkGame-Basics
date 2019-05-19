@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using RootMotion.FinalIK;
+using humanoid;
 
 public class ProjectileBasic : MonoBehaviour
 {
@@ -76,6 +77,7 @@ public class ProjectileBasic : MonoBehaviour
             case "Enemy":
             case "Player":
             case "Head":
+            case "Chest":
                 hitOnEnemy(other);
                 break;
             case "Wall":
@@ -92,12 +94,12 @@ public class ProjectileBasic : MonoBehaviour
         //Debug.Log(other.name);
         if (agentController != null && !m_hit)
         {
-            ICyberAgent movingAgnet = agentController.getICyberAgent();
-            if (movingAgnet !=null && !m_fireFrom.Equals(movingAgnet.getFaction()))
+            ICyberAgent cyberAgent = agentController.getICyberAgent();
+            if (cyberAgent !=null && !m_fireFrom.Equals(cyberAgent.getFaction()))
             {
                 m_hit = true;
-                movingAgnet.reactOnHit(other, (this.transform.forward) * 3f, other.transform.position);
-                movingAgnet.damageAgent(1);
+                cyberAgent.reactOnHit(other, (this.transform.forward) * 3f, other.transform.position);
+                cyberAgent.damageAgent(1);
             
                 speed = 0;
                 //Destroy(this.gameObject);
@@ -115,16 +117,25 @@ public class ProjectileBasic : MonoBehaviour
                 basicHitParticle.SetActive(true);
                 basicHitParticle.transform.position = this.transform.position;
                 basicHitParticle.transform.LookAt(Vector3.up);
-             
-                if (movingAgnet.GetType() == typeof(MovingAgent))
-                {
-                    Rigidbody rb = other.transform.GetComponent<Rigidbody>();
 
-                    if (rb != null)
+                
+             
+                if (!cyberAgent.IsFunctional())
+                {
+                    MovingAgent movingAgent = cyberAgent as MovingAgent;
+                    if(movingAgent !=null)
                     {
-                        rb.isKinematic = false;
-                        rb.AddForce((this.transform.forward) * 200, ForceMode.Impulse);
+                        Rigidbody rb = other.transform.GetComponent<Rigidbody>();
+
+                        if (rb != null)
+                        {
+                            rb.isKinematic = false;
+                            rb.AddForce((this.transform.forward) * 150, ForceMode.Impulse);
+                        }
+
+                        movingAgent.getChestTransfrom().GetComponent<Rigidbody>().AddForce((this.transform.forward) * 60 + Random.insideUnitSphere*10, ForceMode.Impulse);
                     }
+
 
                     //ExplosionEffect(this.transform.position);
                 }

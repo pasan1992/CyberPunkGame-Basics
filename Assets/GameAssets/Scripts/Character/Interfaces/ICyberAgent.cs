@@ -33,12 +33,14 @@ public interface ICyberAgent
     void setFaction(AgentController.AgentFaction group);
     void setSkill(float skill);
     float getSkill();
-    void setOnDestoryCallback(AgentController.agentBasicCallbackDeligate callback);
-    void setOnDisableCallback(AgentController.agentBasicCallbackDeligate callback);
-    void setOnEnableCallback(AgentController.agentBasicCallbackDeligate callback);
+    void setOnDestoryCallback(AgentController.agentBasicEventDelegate callback);
+    void setOnDisableCallback(AgentController.agentBasicEventDelegate callback);
+    void setOnEnableCallback(AgentController.agentBasicEventDelegate callback);
     bool isDisabled();
     Color getHealthColor();
     void resetAgent(float health, float skill);
     Vector3 getMovmentDirection();
     float getHealthPercentage();
+    bool isAimed();
+    bool isHidden();
 }

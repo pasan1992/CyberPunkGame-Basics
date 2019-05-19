@@ -1,11 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using humanoid;
 
 public class TargetFinder {
 
     private float FIRE_DISTANCE = 16;
-    private float FIRE_SENSITIVITY = 0.5f;
+    private float FIRE_SENSITIVITY = 0.9f;
     private float AUTO_FIRE_ANGLE = 50;
 
     private List<ICyberAgent>  m_targets = new List<ICyberAgent>();

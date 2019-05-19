@@ -41,6 +41,7 @@ public abstract class Weapon : MonoBehaviour
     protected Transform m_weaponLocationTransfrom;
     protected Vector3 m_weaponLocalPosition;
     protected Quaternion m_weaponRotation;
+    protected int m_ammoCount = 9999;
 
 
     public void Awake()
@@ -140,6 +141,16 @@ public abstract class Weapon : MonoBehaviour
         weaponSafty = enabled;
     }
 
+    public int getAmmoCount()
+    {
+        return m_ammoCount;
+    }
+
+    public void setAmmoCount(int count)
+    {
+        m_ammoCount = count;
+    }
+
     #endregion
 
     #region commands
@@ -167,30 +178,33 @@ public abstract class Weapon : MonoBehaviour
 
     protected virtual void fireWeapon()
     {
-        // GameObject Tempprojectile = GameObject.Instantiate(projectile, m_gunFireingPoint, this.transform.rotation);
-        GameObject Tempprojectile = m_projectilePool.getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.BasicProjectile);
-        Tempprojectile.transform.position = m_gunFireingPoint;
-        Tempprojectile.transform.rotation = this.transform.rotation;
-        
-
-        Tempprojectile.transform.forward = (m_target.transform.position - m_gunFireingPoint).normalized;
-
-        Tempprojectile.SetActive(true);
-        ProjectileBasic projetcileBasic = Tempprojectile.GetComponent<ProjectileBasic>();
-        projetcileBasic.speed = 1f;
-        projetcileBasic.setFiredFrom(m_ownersFaction);
-        projetcileBasic.setTargetTransfrom(m_target.transform);
-        if(playerWeapon)
+        if(getAmmoCount() > 0)
         {
-            projetcileBasic.setFollowTarget(true);
+            m_ammoCount--;
+            // GameObject Tempprojectile = GameObject.Instantiate(projectile, m_gunFireingPoint, this.transform.rotation);
+            GameObject Tempprojectile = m_projectilePool.getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.BasicProjectile);
+            Tempprojectile.transform.position = m_gunFireingPoint;
+            Tempprojectile.transform.rotation = this.transform.rotation;
+
+
+            Tempprojectile.transform.forward = (m_target.transform.position - m_gunFireingPoint).normalized;
+
+            Tempprojectile.SetActive(true);
+            ProjectileBasic projetcileBasic = Tempprojectile.GetComponent<ProjectileBasic>();
+            projetcileBasic.speed = 1f;
+            projetcileBasic.setFiredFrom(m_ownersFaction);
+            projetcileBasic.setTargetTransfrom(m_target.transform);
+            if (playerWeapon)
+            {
+                projetcileBasic.setFollowTarget(true);
+            }
+
+
+            if (this.isActiveAndEnabled)
+            {
+                StartCoroutine(waitAndRecoil());
+            }
         }
-
-
-        if (this.isActiveAndEnabled)
-        {
-            StartCoroutine(waitAndRecoil());
-        }
-
     }
 
     //public void continouseFire()

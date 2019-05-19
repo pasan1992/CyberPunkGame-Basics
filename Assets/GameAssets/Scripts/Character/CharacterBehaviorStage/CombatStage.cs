@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using humanoid;
 
 public class CombatStage : BasicMovmentStage
 {
@@ -46,7 +47,24 @@ public class CombatStage : BasicMovmentStage
 
         if(currentCombatSubStage.Equals(CombatSubStages.InCover))
         {
-            m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 1.1f, 0)+ randomOffset);
+            if(opponent.isHidden())
+            {
+                if(opponent.isAimed())
+                {
+                    m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 1.1f, 0) + randomOffset);
+                }
+                else
+                {
+                    m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 0.4f, 0) + randomOffset);
+                }
+            }
+            else
+            {
+                m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 1.25f, 0) + randomOffset);
+            }
+
+
+            //m_selfAgent.setTargetPoint(opponent.getTransfrom().position  + randomOffset);
         }
         else
         {
@@ -233,9 +251,9 @@ public class CombatStage : BasicMovmentStage
                 {
 
                     // Find the safe cover point.
-                   if(minimumDistanceToSafeCoverPoint > point.distanceTo(m_selfAgent.getCurrentPosition()))
+                   if(minimumDistanceToSafeCoverPoint > point.distanceTo(opponent.getCurrentPosition()))
                     {
-                        minimumDistanceToSafeCoverPoint = point.distanceTo(m_selfAgent.getCurrentPosition());
+                        minimumDistanceToSafeCoverPoint = point.distanceTo(opponent.getCurrentPosition());
                         tempSafeCoverPoint = point;
                     }
 
@@ -274,7 +292,7 @@ public class CombatStage : BasicMovmentStage
 
         MovingAgent humanoidOpponent = opponent as MovingAgent;
 
-        if(humanoidOpponent != null && humanoidOpponent.isCrouched())
+        if(humanoidOpponent != null && humanoidOpponent.isCrouched() && humanoidOpponent.isAimed())
         {
             targetLocation = humanoidOpponent.getHeadTransfrom();
         }

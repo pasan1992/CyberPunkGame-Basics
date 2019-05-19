@@ -40,7 +40,7 @@ public class CoverPoint : MonoBehaviour, IPoints
     {
         RaycastHit hit;
         string[] layerMaskNames = { "HalfCoverObsticles", "Enmey" };
-        if (Physics.Raycast(transform.position, target.getCurrentPosition() - this.transform.position, out hit,2, LayerMask.GetMask(layerMaskNames)))
+        if (Physics.Raycast(transform.position, target.getCurrentPosition() - this.transform.position, out hit,5, LayerMask.GetMask(layerMaskNames)))
         {
             if(hit.transform.tag =="Cover" || hit.transform.tag == "Wall")
             {
@@ -51,6 +51,10 @@ public class CoverPoint : MonoBehaviour, IPoints
                 return false;
             }
 
+        }
+        else if(Vector3.Distance(target.getCurrentPosition(),transform.position) > 17)
+        {
+            return true;
         }
         else
         {

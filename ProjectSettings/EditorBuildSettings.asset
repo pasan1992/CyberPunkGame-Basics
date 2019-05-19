@@ -26,7 +26,13 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/PC/Test/CoverTesting.unity
     guid: b65ba82536711644ba72a3c7f8cf1f22
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/Mobile/MobileTestScene.unity
     guid: 017842987dea89a45b13fd2560c6ab92
+  - enabled: 0
+    path: Assets/Scenes/Mobile/MobileCityScene.unity
+    guid: 623a6fb04339da448a86ea5b30c05193
+  - enabled: 1
+    path: Assets/Scenes/Mobile/MobileSpaceShipScene/SpaceShip.unity
+    guid: fefc2c668932eef4b87bfb731a4f3f6d
   m_configObjects: {}

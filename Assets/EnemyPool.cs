@@ -9,7 +9,7 @@ public class EnemyPool : MonoBehaviour
     AutoHumanoidAgentController[] droids;
     SpawnPoint[] spawnPoints;
 
-    private int agentCount;
+    private AgentController.agentOnDestoryEventDelegate m_onDestoryEvent;
 
     void Awake()
     {
@@ -28,16 +28,45 @@ public class EnemyPool : MonoBehaviour
         }
     }
 
-    public void OnAgentDestory()
+    public void OnAgentDestory(AgentController controller)
     {
-        agentCount--;
+        m_onDestoryEvent(controller);
+    }
 
-        //if(agentCount == 0)
-        //{
-        //    foreach(AutoDroneController drone in drones)
-        //    {
+    public void setPoolAgentOndestoryEvent(AgentController.agentOnDestoryEventDelegate onDestoryEvent)
+    {
+        m_onDestoryEvent += onDestoryEvent;
+    }
 
-        //    }
-        //}
+    public AutoDroneController getDrone(Vector3 position, float health, float skill)
+    {
+        foreach (var drone in drones)
+        {
+            if(!drone.isActiveAndEnabled)
+            {
+                drone.transform.position = position;
+                drone.health = health;
+                drone.skill = skill;
+                return drone;
+            }
+        }
+
+        return null;
+    }
+
+    public AutoHumanoidAgentController getDroid(Vector3 position, float health, float skill)
+    {
+        foreach (var droid in droids)
+        {
+            if (!droid.isActiveAndEnabled)
+            {
+                droid.transform.position = position;
+                droid.health = health;
+                droid.skillLevel = skill;
+                return droid;
+            }
+        }
+
+        return null;
     }
 }

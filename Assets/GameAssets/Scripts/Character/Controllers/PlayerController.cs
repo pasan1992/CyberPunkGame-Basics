@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using humanoid;
 
 [RequireComponent(typeof(MovingAgent))]
 public class PlayerController : AgentController

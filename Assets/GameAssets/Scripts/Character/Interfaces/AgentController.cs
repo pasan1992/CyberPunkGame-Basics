@@ -3,7 +3,8 @@ using UnityEngine;
 
 public abstract class AgentController : MonoBehaviour
 {
-    protected agentBasicCallbackDeligate m_onDestoryEvent;
+    protected agentOnDestoryEventDelegate m_onDestoryEvent;
+    public float TimeToResetAfterDestoryed = 4;
 
     protected void intializeAgentCallbacks(ICyberAgent cyberAgent)
     {
@@ -12,7 +13,8 @@ public abstract class AgentController : MonoBehaviour
         cyberAgent.setOnEnableCallback(onAgentEnable);
     }
 
-    public delegate void agentBasicCallbackDeligate();
+    public delegate void agentBasicEventDelegate();
+    public delegate void agentOnDestoryEventDelegate(AgentController controller);
 
     public enum AgentFaction { Player,Enemy,Neutral};
     public AgentFaction m_agentFaction;
@@ -20,19 +22,31 @@ public abstract class AgentController : MonoBehaviour
     public abstract void setMovableAgent(ICyberAgent agent);
     public abstract float getSkill();
     public abstract ICyberAgent getICyberAgent();
+
     public virtual void OnAgentDestroy()
     {
         if(m_onDestoryEvent !=null)
         {
-            m_onDestoryEvent();
+            m_onDestoryEvent(this);
         }
+        Invoke("resetControlAgent", TimeToResetAfterDestoryed);
     }
     public abstract void onAgentDisable();
     public abstract void onAgentEnable();
     public abstract void resetCharacher();
 
-    public void addOnDestroyEvent(agentBasicCallbackDeligate onDestoryCallback)
+    public void addOnDestroyEvent(agentOnDestoryEventDelegate onDestoryCallback)
     {
         m_onDestoryEvent = onDestoryCallback;
+    }
+
+    public void resetControlAgent()
+    {
+        this.gameObject.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        CancelInvoke();
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using humanoid;
 
 [RequireComponent(typeof(MovingAgent))]
 public class AIController : AgentController
