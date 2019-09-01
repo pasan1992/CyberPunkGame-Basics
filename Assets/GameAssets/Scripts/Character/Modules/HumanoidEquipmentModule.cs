@@ -21,15 +21,24 @@ namespace humanoid
         protected AgentController.AgentFaction m_ownersFaction;
 
         private bool m_inEquipingAction = false;
+
+        private AgentParameters m_agentParameters;
         #endregion
 
-        public HumanoidEquipmentModule(Weapon[] weapons, WeaponProp[] props, MovingAgent.CharacterMainStates state, GameObject target, Recoil recoil, HumanoidAnimationModule animSystem)
+        public HumanoidEquipmentModule(Weapon[] weapons, 
+        WeaponProp[] props, 
+        MovingAgent.CharacterMainStates state, 
+        GameObject target, 
+        Recoil recoil, 
+        HumanoidAnimationModule animSystem,
+        AgentParameters parameters)
         {
             m_currentState = state;
             m_target = target;
             m_recoil = recoil;
             m_animationSystem = animSystem;
             getAllWeapons(weapons, props);
+            m_agentParameters = parameters;
         }
 
 
@@ -77,6 +86,32 @@ namespace humanoid
         #endregion
 
         #region Event handlers
+
+        public void ReloadEnd()
+        {
+            if(m_currentWeapon !=null)
+            {
+                Debug.Log("Reload End");
+                m_currentWeapon.setReloading(false);
+                int totalAmmo = 0;
+                m_agentParameters.weaponAmmoCount.TryGetValue(m_currentWeapon.name,out totalAmmo);
+                
+                // Enought Ammo available
+                if(totalAmmo > m_currentWeapon.m_magazineSize)
+                {
+                    totalAmmo -=m_currentWeapon.m_magazineSize;
+                  //  m_agentParameters.weaponAmmoCount.(m_currentWeapon.name,totalAmmo);
+                    m_currentWeapon.setAmmoCount(m_currentWeapon.m_magazineSize);
+                    return;
+                }
+
+                // Not enough ammo
+                m_currentWeapon.setAmmoCount(totalAmmo);
+                totalAmmo = 0;
+                return;
+            }
+        }
+
         // Equip Animation event.
         public void EquipAnimationEvent()
         {
@@ -157,7 +192,6 @@ namespace humanoid
             {
                 m_currentWeapon.dropWeapon();
             }
-
         }
 
 
@@ -300,6 +334,19 @@ namespace humanoid
             return m_currentWeapon;
         }
 
+        public int getCurrentWeaponAmmoCount()
+        {
+            int count = 0;
+
+            if(m_currentWeapon)
+            {
+                //m_agentParameters.weaponAmmoCount.TryGetValue(m_currentWeapon.name,out count);
+              count =  m_currentWeapon.getAmmoCount();
+            }
+
+            return count;
+        }
+
         public void setWeaponTarget(GameObject target)
         {
             m_currentWeapon.setGunTarget(target);
@@ -391,6 +438,27 @@ namespace humanoid
         public void setSecondaryWeaponAmmoCount(int count)
         {
             m_pistol.setAmmoCount(count);
+        }
+
+        public void reloadCurretnWeapon()
+        {
+            if(m_currentWeapon !=null)
+            {
+                m_currentWeapon.reloadWeapon();
+                m_animationSystem.triggerReload();
+            }
+        }
+
+        public bool isReloading()
+        {
+            if(m_currentWeapon !=null)
+            {
+               return m_currentWeapon.isReloading();
+            }
+            else
+            {
+                return false;
+            }
         }
 
         #endregion

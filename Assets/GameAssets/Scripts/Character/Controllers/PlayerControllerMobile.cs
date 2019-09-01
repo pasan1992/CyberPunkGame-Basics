@@ -12,12 +12,19 @@ public class PlayerControllerMobile : AgentController
     public float health;
     private TargetFinder m_targetFinder;
     private bool m_crouched = false;
+    private NavMeshAgent m_navMeshAgent;
+    private HealthBar m_healthBar;
+
+    // tempCOde
+    public SpaceShipLevel level;
 
     #region initalize
     protected void Awake()
     {
-        initalizeSelfAgent();    
+        initalizeSelfAgent();
+        m_navMeshAgent = this.GetComponent<NavMeshAgent>();
         m_targetFinder = new TargetFinder(this.name, this.transform.position, GameObject.Find("TargetIndicator"));
+        m_healthBar = this.GetComponentInChildren<HealthBar>();
     }
 
     protected void Start()
@@ -42,6 +49,7 @@ public class PlayerControllerMobile : AgentController
     void Update()
     {
         updateSelfAgentFromInput();
+        m_healthBar.setHealthPercentage(m_selfAgent.getHealthPercentage());
     }
 
     protected void updateSelfAgentFromInput()
@@ -188,6 +196,7 @@ public class PlayerControllerMobile : AgentController
     public override void OnAgentDestroy()
     {
         base.OnAgentDestroy();
+        level.activeRestart();
     }
 
     public override void onAgentDisable()
@@ -201,6 +210,15 @@ public class PlayerControllerMobile : AgentController
     public override void resetCharacher()
     {
         throw new System.NotImplementedException();
+    }
+
+    public override void setPosition(Vector3 postion)
+    {
+    }
+
+    public NavMeshAgent getNavMeshAgent()
+    {
+        return m_navMeshAgent;
     }
 
     #endregion

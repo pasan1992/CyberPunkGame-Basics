@@ -56,8 +56,12 @@ namespace humanoid
             explosion.transform.position = m_headTransform.position;
 
             GameObject smoke = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.SmokeEffect);
-            smoke.SetActive(true);
-            smoke.transform.position = m_headTransform.position;
+            if(smoke !=null)
+            {
+                smoke.SetActive(true);
+                smoke.transform.position = m_headTransform.position;
+            }
+
         }
 
         public override void resetCharacter(float health)

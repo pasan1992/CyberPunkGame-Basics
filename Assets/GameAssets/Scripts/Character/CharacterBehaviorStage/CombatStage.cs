@@ -12,7 +12,7 @@ public class CombatStage : BasicMovmentStage
     private CoverPoint[] coverPoints;
     private CoverPoint currentCoverPoint;
     private Vector3 randomOffset = Vector3.zero;
-    private static int COVER_POINT_MIN_DISTANCE = 9;
+    private static int COVER_POINT_MIN_DISTANCE = 6;
 
     public enum CombatSubStages { LookingForCover,MovingToCover, InCover }
     private CombatSubStages currentCombatSubStage = CombatSubStages.LookingForCover;
@@ -32,7 +32,8 @@ public class CombatStage : BasicMovmentStage
         coverPoints = GameObject.FindObjectsOfType<CoverPoint>();
         selfAgent.toggleHide();
         selfAgent.aimWeapon();
-        selfAgent.togglepSecondaryWeapon();
+        //selfAgent.togglepSecondaryWeapon();
+        selfAgent.togglePrimaryWeapon();
         targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
         findTargetLocationToFire();
     }

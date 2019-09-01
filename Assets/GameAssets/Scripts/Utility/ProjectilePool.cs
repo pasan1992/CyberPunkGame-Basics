@@ -10,7 +10,9 @@ public class ProjectilePool : MonoBehaviour
         HitBasicParticle,
         BasicProjectile,
         ElectricParticleEffect,
-        SmokeEffect
+        SmokeEffect,
+        PistolAmmo,
+        RifleAmmo,
     }
 
     // Basic Projectile 
@@ -31,6 +33,10 @@ public class ProjectilePool : MonoBehaviour
     public int donreExplosions = 10;
 
     private static ProjectilePool thisProjectilePool;
+
+    public int ammoCount = 5;
+    public List<GameObject> pistolAmmoList;
+    public List<GameObject> rifleAmmoList;
 
     #region initialize
 
@@ -90,6 +96,18 @@ public class ProjectilePool : MonoBehaviour
                 resourcePath = "ParticleEffects/SmokeParticleEffect";
                 smokeEffectList = new List<GameObject>();
                 effectList = smokeEffectList;
+                break;
+            case POOL_OBJECT_TYPE.RifleAmmo:
+                count = ammoCount;
+                resourcePath = "Drops/Rifle_Mag";
+                rifleAmmoList = new List<GameObject>();
+                effectList = rifleAmmoList;
+                break;
+            case POOL_OBJECT_TYPE.PistolAmmo:
+                count = ammoCount;
+                resourcePath = "Drops/Pistol_Mag";
+                pistolAmmoList = new List<GameObject>();
+                effectList = pistolAmmoList;
                 break;
         }
 
@@ -195,6 +213,12 @@ public class ProjectilePool : MonoBehaviour
             case POOL_OBJECT_TYPE.SmokeEffect:
                 effectList = smokeEffectList;
                 break;
+            case POOL_OBJECT_TYPE.RifleAmmo:
+                effectList = rifleAmmoList;
+                break;
+            case POOL_OBJECT_TYPE.PistolAmmo:
+                effectList = pistolAmmoList;
+                break;
         }
 
         foreach (GameObject projectile in effectList)
@@ -207,58 +231,6 @@ public class ProjectilePool : MonoBehaviour
 
         return null;
     }
-
-    //public GameObject getBasicProjectie()
-    //{
-    //    foreach (GameObject projectile in basicProjectilesList)
-    //    {
-    //        if(!projectile.activeInHierarchy)
-    //        {
-    //            return projectile;
-    //        }
-    //    }
-
-    //    return null;
-    //}
-
-    //public GameObject getBasicFireExplosionParticle()
-    //{
-    //    foreach (GameObject explosion in basicFireExplosionParticlesList)
-    //    {
-    //        if(!explosion.activeInHierarchy)
-    //        {
-    //            return explosion;
-    //        }
-    //    }
-
-    //    return null;
-    //}
-
-    //public GameObject getBasicDroneExplosion()
-    //{
-    //    foreach (GameObject explosion in basicDroneExplosionList)
-    //    {
-    //        if (!explosion.activeInHierarchy)
-    //        {
-    //            return explosion;
-    //        }
-    //    }
-
-    //    return null;
-    //}
-
-    //public GameObject getBulletHitBasicParticle()
-    //{
-    //    foreach (GameObject bulletHitParticle in bulletHitBasicParticleList)
-    //    {
-    //        if (!bulletHitParticle.activeInHierarchy)
-    //        {
-    //            return bulletHitParticle;
-    //        }
-    //    }
-
-    //    return null;
-    //}
 
 
     public static ProjectilePool getInstance()

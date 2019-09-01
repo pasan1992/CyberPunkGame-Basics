@@ -4,8 +4,9 @@ using UnityEngine;
 public abstract class AgentController : MonoBehaviour
 {
     protected agentOnDestoryEventDelegate m_onDestoryEvent;
-    protected bool inUse = false;
-    public float timeToReset = 2;
+
+    public bool m_inUse = false;
+    public float m_timeToReset = 2;
 
     protected void intializeAgentCallbacks(ICyberAgent cyberAgent)
     {
@@ -30,12 +31,11 @@ public abstract class AgentController : MonoBehaviour
         {
             m_onDestoryEvent(this);
         }
-        //this.gameObject.SetActive(true);
-        //this.transform.position = new Vector3(0, -11, 0);
     }
     public abstract void onAgentDisable();
     public abstract void onAgentEnable();
     public abstract void resetCharacher();
+    public abstract void setPosition(Vector3 postion);
 
     public void addOnDestroyEvent(agentOnDestoryEventDelegate onDestoryCallback)
     {
@@ -44,7 +44,6 @@ public abstract class AgentController : MonoBehaviour
 
     public void resetControlAgent()
     {
-        //this.gameObject.SetActive(false);
     }
 
     private void OnDisable()
@@ -54,11 +53,11 @@ public abstract class AgentController : MonoBehaviour
 
     public bool isInUse()
     {
-        return inUse;
+        return m_inUse;
     }
 
     public void setInUse(bool used)
     {
-        inUse = used;
+        m_inUse = used;
     }
 }

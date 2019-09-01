@@ -38,6 +38,6 @@ public class BasicWaypoint : MonoBehaviour,IPoints
             Gizmos.color = Color.cyan;
         }
 
-        Gizmos.DrawCube(transform.position + new Vector3(0, 0.3f, 0),new Vector3(0.4f,0.4f,0.4f));
+        Gizmos.DrawCube(transform.position + new Vector3(0, 0.8f, 0),new Vector3(0.4f,0.4f,0.4f));
     }
 }

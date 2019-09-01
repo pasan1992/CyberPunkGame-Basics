@@ -6,10 +6,12 @@ using humanoid;
 public class InteractionModule : MonoBehaviour
 {
     private MovingAgent m_movingAgent;
+    private AudioSource audioSocurce;
 
     private void Start()
     {
         m_movingAgent = this.GetComponentInParent<MovingAgent>();
+        audioSocurce = this.GetComponent<AudioSource>();
     }
     private void OnTriggerEnter(Collider other)
     {
@@ -29,7 +31,16 @@ public class InteractionModule : MonoBehaviour
                     break;
             }
 
-            other.gameObject.SetActive(false);
+            audioSocurce.Play();
+            if (ammo.destory)
+            {
+                Destroy(ammo.gameObject);
+            }
+            else
+            {
+                other.gameObject.SetActive(false);
+            }
+
         }
     }
 }

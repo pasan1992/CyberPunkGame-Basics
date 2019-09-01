@@ -26,11 +26,13 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     private Quaternion m_beforeDisableRotationSnapshot;
     private bool m_disabled = false;
     private bool m_recovering = false;
+    private AudioSource m_audioSource;
 
     #region initalize
 
     public void Awake()
     {
+        m_audioSource = this.GetComponent<AudioSource>();
         m_target = new GameObject();
         m_target.transform.position = Vector3.zero;
 
@@ -46,7 +48,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public void Start()
     {
-        //Invoke("disableDrone", 3);
+        Invoke("disableDrone", 3);
         m_damageModule = new DroneDamageModule(health, this.GetComponentInChildren<Outline>(), DestroyCharacter);
     }
 
@@ -83,6 +85,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     public void setHealth(float value)
     {
         health = value;
+        m_damageModule.setHealth(value);
     }
 
     public void setTargetPoint(Vector3 position)
@@ -170,6 +173,8 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         tempProjectile.speed = 1f;
         tempProjectile.setFiredFrom(m_faction);
         tempProjectile.resetToMicroBeam();
+
+        m_audioSource.Play();
     }
 
     private void DestroyCharacter()

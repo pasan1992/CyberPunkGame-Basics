@@ -37,12 +37,18 @@ public abstract class Weapon : MonoBehaviour
 
     protected bool triggerPulled = false;
     protected bool weaponSafty = false;
+    protected bool m_realoding = false;
 
     protected Transform m_weaponLocationTransfrom;
     protected Vector3 m_weaponLocalPosition;
     protected Quaternion m_weaponRotation;
-    protected int m_ammoCount = 9999;
+    private int m_ammoCount = 0;
+    public int m_magazineSize = 0; 
 
+    public string weaponName = "";
+
+    public Vector3 magazinePositionOffset;
+    public GameObject magazineObjProp;
 
     public void Awake()
     {
@@ -100,6 +106,21 @@ public abstract class Weapon : MonoBehaviour
 
     #region getters and setters
 
+    public void setReloading(bool isReloading)
+    {
+        m_realoding = isReloading;
+
+        if(!m_realoding)
+        {
+            magazineObjProp.SetActive(true);
+        }
+    }
+
+    public bool isReloading()
+    {
+        return m_realoding;
+    }
+
     public void setGunTarget(GameObject target)
     {
         this.m_target = target;
@@ -149,6 +170,11 @@ public abstract class Weapon : MonoBehaviour
     public void setAmmoCount(int count)
     {
         m_ammoCount = count;
+    }
+
+    public bool isWeaponEmpty()
+    {
+        return m_ammoCount == 0;
     }
 
     #endregion
@@ -205,19 +231,11 @@ public abstract class Weapon : MonoBehaviour
                 StartCoroutine(waitAndRecoil());
             }
         }
+        else
+        {
+            m_audioScource.PlayOneShot(m_soundManager.getEmptyGunSound());
+        }
     }
-
-    //public void continouseFire()
-    //{
-    //    burstFireInterval += Time.deltaTime;
-
-    //    if (burstFireInterval > (1 / fireRate))
-    //    {
-    //        burstFireInterval = 0;
-    //        fireWeapon();
-    //        StartCoroutine(waitAndRecoil());
-    //    }
-    //}
 
     public virtual void dropWeapon()
     {
@@ -225,6 +243,22 @@ public abstract class Weapon : MonoBehaviour
         m_rigidbody.isKinematic = false;
         m_rigidbody.useGravity = true;
         m_collider.isTrigger = false;
+        if(m_line)
+        {
+        m_line.enabled = false;
+        }
+
+    }
+
+    public virtual void reloadWeapon()
+    {
+        setReloading(true);
+        GameObject obj = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.RifleAmmo);
+        obj.transform.position = this.transform.position + magazinePositionOffset;
+        obj.transform.parent = null;
+        obj.SetActive(true);
+        obj.transform.rotation = Quaternion.Euler(Random.insideUnitSphere*90);
+        magazineObjProp.SetActive(false);
     }
 
     public virtual void resetWeapon()
@@ -239,11 +273,10 @@ public abstract class Weapon : MonoBehaviour
 
     public virtual void pullTrigger()
     {
-        if(!weaponSafty)
+        if(!weaponSafty && !m_realoding)
         {
             triggerPulled = true;
         }
-
     }
 
     public virtual void releaseTrigger()

@@ -6,12 +6,20 @@ public class SoundManager : MonoBehaviour
     private AudioClip m_laserPistol;
     private AudioClip m_laserRifal;
     private AudioClip m_droneExplosion;
+    private AudioClip m_emptyGun;
+
+
+    public string pistolSoundFile;
+    public string emptyGunSoundFile;
+
+    public string rifleSoundFile;
 
     void Awake()
     {
-        m_laserPistol = Resources.Load<AudioClip>("Sounds/LaserPistol");
-        m_laserRifal = Resources.Load<AudioClip>("Sounds/LaserPistol");
+        m_laserPistol = Resources.Load<AudioClip>("Sounds/" + pistolSoundFile);
+        m_laserRifal = Resources.Load<AudioClip>("Sounds/" + rifleSoundFile);
         m_droneExplosion = Resources.Load<AudioClip>("Sounds/DroneExplosion");
+        m_emptyGun = Resources.Load<AudioClip>("Sounds/" + emptyGunSoundFile);
     }
 
     public AudioClip getLaserPistolAudioClip()
@@ -27,5 +35,10 @@ public class SoundManager : MonoBehaviour
     public AudioClip getDroneExplosion()
     {
         return m_droneExplosion;
+    }
+
+    public AudioClip getEmptyGunSound()
+    {
+        return m_emptyGun;
     }
 }

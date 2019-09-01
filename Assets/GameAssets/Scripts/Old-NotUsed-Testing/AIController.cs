@@ -291,5 +291,9 @@ public class AIController : AgentController
         throw new System.NotImplementedException();
     }
 
+    public override void setPosition(Vector3 postion)
+    {
+        m_navMeshAgent.Warp(postion);
+    }
     #endregion
 }

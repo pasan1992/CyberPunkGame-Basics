@@ -7,6 +7,7 @@ public class Ammo :MonoBehaviour
     public enum AMMO_TYPE { Primary, Secondary }
     public AMMO_TYPE m_ammoType;
     public int count;
+    public bool destory = false;
 
     public AMMO_TYPE getAmmoType()
     {

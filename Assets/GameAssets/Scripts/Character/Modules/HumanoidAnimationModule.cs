@@ -36,6 +36,7 @@ namespace humanoid
 
         #endregion
 
+
         #region commands
 
         public MovingAgent.CharacterMainStates unEquipEquipment()
@@ -118,6 +119,11 @@ namespace humanoid
             m_animator.SetFloat("currentWeapon", value);
         }
 
+        public void triggerReload()
+        {
+            m_animator.SetTrigger("realoadWeapon");
+        }
+
         public void triggerDodge()
         {
             m_animator.SetTrigger("dodge");
@@ -134,6 +140,7 @@ namespace humanoid
         {
             return m_animator.GetBool("crouched");
         }
+
 
         #endregion
 

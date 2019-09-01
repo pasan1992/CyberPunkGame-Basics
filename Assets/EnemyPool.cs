@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using humanoid;
 
 public class EnemyPool : MonoBehaviour
 {
@@ -52,8 +53,8 @@ public class EnemyPool : MonoBehaviour
         {
             if(!drone.isInUse())
             {
-                drone.gameObject.SetActive(true);
-                drone.transform.position = position;
+                //drone.gameObject.SetActive(true);
+                drone.setPosition(position);
                 drone.health = health;
                 drone.skill = skill;
 
@@ -64,6 +65,7 @@ public class EnemyPool : MonoBehaviour
                 {
                     m_mobilePlayer.addTarget(drone.getICyberAgent());
                 }
+                drone.transform.position = position;
                 return drone;
             }
         }
@@ -71,13 +73,13 @@ public class EnemyPool : MonoBehaviour
         return null;
     }
 
-    public AutoHumanoidAgentController getDroid(Vector3 position, float health, float skill)
+    public AutoHumanoidAgentController getDroid(Vector3 position, int health, float skill)
     {
         foreach (var droid in droids)
         {
             if (!droid.isInUse())
             {
-                droid.transform.position = position;
+                droid.setPosition(position);
                 droid.health = health;
                 droid.skillLevel = skill;
 
@@ -88,6 +90,16 @@ public class EnemyPool : MonoBehaviour
                 if (m_mobilePlayer != null)
                 {
                     m_mobilePlayer.addTarget(droid.getICyberAgent());
+                }
+                
+                if( (Random.value + skill > 0.95f) && Random.value > 0.5f)
+                {
+                    MovingAgent movingAgent = droid.getICyberAgent() as MovingAgent;
+
+                    if(movingAgent.getCurrentWeaponType().Equals(Weapon.WEAPONTYPE.secondary))
+                    {
+                        movingAgent.togglePrimaryWeapon();
+                    }
                 }
 
                 return droid;

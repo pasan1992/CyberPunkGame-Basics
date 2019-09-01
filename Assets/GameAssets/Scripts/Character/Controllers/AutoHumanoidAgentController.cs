@@ -14,6 +14,8 @@ public class AutoHumanoidAgentController :  AgentController
     public float health;
     public float skillLevel;
 
+    public BasicWaypoint[] basicWaypoints;
+
     #region initaialize
 
     private void Awake()
@@ -28,8 +30,6 @@ public class AutoHumanoidAgentController :  AgentController
         m_movingAgent.setHealth(health);
         m_movingAgent.setWeponFireCapability(false);
         intializeAgentCallbacks(m_movingAgent);
-        //m_movingAgent.setOnDestoryCallback(OnAgentDestroy);
-        //m_movingAgent.setOnDisableCallback(onAgentDisable);
         m_movingAgent.setFaction(m_agentFaction);
         m_movingAgent.setSkill(skillLevel);
         m_movingAgent.enableTranslateMovment(false);
@@ -50,7 +50,6 @@ public class AutoHumanoidAgentController :  AgentController
 
     void OnBecameVisible()
     {
-        //Debug.Log("Visible");
         m_currentState.setWeaponFireCapability(true);
     }
 
@@ -64,9 +63,8 @@ public class AutoHumanoidAgentController :  AgentController
         base.OnAgentDestroy();
         m_navMeshAgent.enabled = false;
 
-        Invoke("reUseCharacter", timeToReset);
-        //TEMP CODE
-        //Invoke("resetCharacher", Random.value*10 + 10);
+        // reset character
+        Invoke("reUseCharacter", m_timeToReset);
     }
 
     private void reUseCharacter()
@@ -76,9 +74,6 @@ public class AutoHumanoidAgentController :  AgentController
 
     public override void resetCharacher()
     {
-        //TEMP CODE
-        //this.transform.position = FindObjectOfType<SpawnPoint>().transform.position;
-
         if (m_navMeshAgent != null)
         {
             m_navMeshAgent.enabled = true;
@@ -117,6 +112,11 @@ public class AutoHumanoidAgentController :  AgentController
     public override ICyberAgent getICyberAgent()
     {
         return m_movingAgent;
+    }
+
+    public override void setPosition(Vector3 postion)
+    {
+        m_navMeshAgent.Warp(postion);
     }
     #endregion
 }

@@ -31,15 +31,6 @@ public class ProjectileBasic : MonoBehaviour
     {
         if(m_enabled)
         {
-            //this.transform.Translate(Vector3.forward * speed);
-
-            //if(Vector3.Distance(this.transform.position,m_targetPosition)> 0.5f && !m_targetReached)
-            //{
-            //    this.transform.position = Vector3.MoveTowards(this.transform.position, m_targetPosition, speed);
-            //}
-            //else
-            //}
-
             if(m_followTarget && !m_targetReached)
             {
                 this.transform.position = Vector3.MoveTowards(this.transform.position, m_targetTransfrom.position, speed);
@@ -81,6 +72,8 @@ public class ProjectileBasic : MonoBehaviour
                 hitOnEnemy(other);
                 break;
             case "Wall":
+                hitOnWall(other);
+                break;
             case "Cover":
                 hitOnWall(other);
                 break;
@@ -91,7 +84,7 @@ public class ProjectileBasic : MonoBehaviour
     private void hitOnEnemy(Collider other)
     {
         AgentController agentController = other.transform.GetComponentInParent<AgentController>();
-        //Debug.Log(other.name);
+
         if (agentController != null && !m_hit)
         {
             ICyberAgent cyberAgent = agentController.getICyberAgent();
@@ -102,24 +95,12 @@ public class ProjectileBasic : MonoBehaviour
                 cyberAgent.damageAgent(1);
             
                 speed = 0;
-                //Destroy(this.gameObject);
                 this.gameObject.SetActive(false);
-
-                //if(particleObject)
-                //{
-                //    //GameObject hitParticle = GameObject.Instantiate(particleObject);
-                //    //hitParticle.transform.position = this.transform.position;
-                //    //hitParticle.transform.LookAt(Vector3.up);
-                //}
-
-                //.getBulletHitBasicParticle();
                 GameObject basicHitParticle = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.HitBasicParticle);
                 basicHitParticle.SetActive(true);
                 basicHitParticle.transform.position = this.transform.position;
                 basicHitParticle.transform.LookAt(Vector3.up);
-
-                
-             
+ 
                 if (!cyberAgent.IsFunctional())
                 {
                     MovingAgent movingAgent = cyberAgent as MovingAgent;
@@ -133,33 +114,40 @@ public class ProjectileBasic : MonoBehaviour
                             rb.AddForce((this.transform.forward) * 150, ForceMode.Impulse);
                         }
 
-                        movingAgent.getChestTransfrom().GetComponent<Rigidbody>().AddForce((this.transform.forward) * 60 + Random.insideUnitSphere*10, ForceMode.Impulse);
+                        Rigidbody hitRb =  movingAgent.getChestTransfrom().GetComponent<Rigidbody>();
+
+                        if(hitRb)
+                        {
+                            hitRb.AddForce((this.transform.forward) * 2 + Random.insideUnitSphere*2, ForceMode.Impulse);
+                        }
+
                     }
-
-
-                    //ExplosionEffect(this.transform.position);
                 }
             }
 
         }
     }
 
-    private void hitOnWall(Collider wall)
+    private void hitOnCOver(Collider cover)
     {
         if(DistanceTravelled > 0.03)
         {
             speed = 0;
-
-            //.getBulletHitBasicParticle();
             GameObject basicHitParticle = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.HitBasicParticle);
             basicHitParticle.SetActive(true);
             basicHitParticle.transform.position = this.transform.position;
             basicHitParticle.transform.LookAt(Vector3.up);
-
-            // Destroy(this.gameObject);
             this.gameObject.SetActive(false);
-        }
-
+        }      
+    }
+    private void hitOnWall(Collider wall)
+    {
+            speed = 0;
+            GameObject basicHitParticle = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.HitBasicParticle);
+            basicHitParticle.SetActive(true);
+            basicHitParticle.transform.position = this.transform.position;
+            basicHitParticle.transform.LookAt(Vector3.up);
+            this.gameObject.SetActive(false);
     }
 
     public void OnEnable()
@@ -169,7 +157,6 @@ public class ProjectileBasic : MonoBehaviour
 
     public void OnDisable()
     {
-        //CancelInvoke();
         m_enabled = false;
         speed = 0;
     }
@@ -228,15 +215,5 @@ public class ProjectileBasic : MonoBehaviour
     #endregion
 
     #region Commands
-
-    //public void ExplosionEffect(Vector3 position)
-    //{
-    //    //.getBasicDroneExplosion()
-    //    BasicExplosion droneExplosion = ProjectilePool.getInstance().getEffect(ProjectilePool.POOL_OBJECT_TYPE.DroneExplosion).GetComponent<BasicExplosion>();
-    //    droneExplosion.gameObject.SetActive(true);
-    //    droneExplosion.gameObject.transform.position = position;
-    //    droneExplosion.GetComponent<BasicExplosion>().exploade();
-    //}
-
     #endregion
 }

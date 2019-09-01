@@ -103,9 +103,15 @@ public class DroneCombatStage : BasicMovmentStage
     #region Utility
     public void calculateMovePoint()
     {
-        Vector2 randomPoint = Random.insideUnitCircle*(Random.value*10);
+        Vector2 randomPoint = Random.insideUnitCircle*(Random.value*5);
         m_movePoint = m_opponent.getCurrentPosition() + new Vector3(randomPoint.x, 0, randomPoint.y);
-        m_navMeshAgent.SetDestination(m_movePoint);
+
+        NavMeshHit hit;
+        NavMesh.SamplePosition(m_movePoint, out hit, 10, 1);
+
+        Vector3 finalPosition = hit.position;
+
+        m_navMeshAgent.SetDestination(finalPosition);
         m_navMeshAgent.isStopped = false;
     }
 

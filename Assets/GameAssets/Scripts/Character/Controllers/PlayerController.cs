@@ -16,6 +16,7 @@ public class PlayerController : AgentController
     private float speedModifyVale;
     private float verticleSpeed;
     private float horizontalSpeed;
+    private HealthBar m_healthBar;
 
     #region Initialize
     private void Start()
@@ -24,12 +25,14 @@ public class PlayerController : AgentController
         m_movingAgent.setFaction(m_agentFaction);
         enemyHitLayerMask = LayerMask.GetMask("Enemy");
         floorHitLayerMask = LayerMask.GetMask("Target");
+        m_healthBar = this.GetComponentInChildren<HealthBar>();
 
         createTargetPlane();
         m_movingAgent.setHealth(health);
         m_movingAgent.enableTranslateMovment(true);
         m_movingAgent.setSkill(1);
         intializeAgentCallbacks(m_movingAgent);
+
         //m_movingAgent.setOnDestoryCallback(OnAgentDestroy);
         //m_movingAgent.setOnDisableCallback(onAgentDisable);
     }
@@ -102,6 +105,11 @@ public class PlayerController : AgentController
             m_movingAgent.moveCharacter(getDirectionRelativeToCamera((new Vector3(verticleSpeed, 0, -horizontalSpeed)).normalized*speedModifyVale));
         }
 
+        if(Input.GetKeyDown(KeyCode.R))
+        {
+            m_movingAgent.reloadWeapon();
+        }
+
 
         UpdateShooting();
 
@@ -146,6 +154,12 @@ public class PlayerController : AgentController
     private void Update()
     {
         controllerUpdate();
+
+        if(m_healthBar)
+        {
+            m_healthBar.setHealthPercentage(m_movingAgent.getHealthPercentage());
+        }
+
     }
     #endregion
 
@@ -222,6 +236,10 @@ public class PlayerController : AgentController
     public override void resetCharacher()
     {
         throw new System.NotImplementedException();
+    }
+
+    public override void setPosition(Vector3 postion)
+    {
     }
 
     #endregion

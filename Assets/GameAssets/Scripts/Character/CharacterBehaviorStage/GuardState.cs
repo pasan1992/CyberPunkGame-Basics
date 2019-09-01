@@ -3,35 +3,55 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class GuardState :ICharacterBehaviorState
+public class GuardState :BasicMovmentStage
 {
-    public void setNavMeshAgent(NavMeshAgent navMeshAgent)
+    BasicWaypoint[] m_wayPoints;
+    BasicWaypoint m_currentWayPoint;
+
+    public enum GuardStages {MovingToWayPoint,AtWayPoint}
+    private GuardStages m_currentStage = GuardStages.AtWayPoint;
+    private int m_currentWayPointID = 0;
+
+    public GuardState(ICyberAgent selfAgent,NavMeshAgent navMeshAgent, BasicWaypoint[] wayPoints):base(selfAgent,navMeshAgent)
     {
-        throw new System.NotImplementedException();
+        m_wayPoints = wayPoints;
+        m_currentWayPoint = wayPoints[0];
+    }
+    public override void setTargets(ICyberAgent target)
+    {
+        
     }
 
-    public void setStepIntervalSize(float timeInSeconds)
+    protected override void stepUpdate()
     {
-        throw new System.NotImplementedException();
+        switch (m_currentStage)
+        {
+            case GuardStages.MovingToWayPoint:
+            if(m_navMeshAgent.remainingDistance < 1)
+            {
+                m_currentStage = GuardStages.AtWayPoint;  
+            }
+            break;
+            case GuardStages.AtWayPoint: 
+            m_navMeshAgent.SetDestination(getNextWaypoint().getPosition());   
+            m_currentStage = GuardStages.MovingToWayPoint;     
+            break;
+        }
     }
 
-    public void setTargets(ICyberAgent target)
+    private BasicWaypoint getNextWaypoint()
     {
-        throw new System.NotImplementedException();
-    }
+        m_currentWayPointID++;
 
-    public void setWeaponFireCapability(bool enabled)
-    {
-        throw new System.NotImplementedException();
-    }
+        if(m_currentWayPointID == m_wayPoints.Length)
+        {
+            m_currentWayPointID = -m_wayPoints.Length +1;
+        }
 
-    public void stopStageBehavior()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void updateStage()
-    {
-        throw new System.NotImplementedException();
+        if(m_currentWayPointID <0)
+        {
+            return  m_wayPoints[-m_currentWayPointID];
+        }
+        return m_wayPoints[m_currentWayPointID];
     }
 }

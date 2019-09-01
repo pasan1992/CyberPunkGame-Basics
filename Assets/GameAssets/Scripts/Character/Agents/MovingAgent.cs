@@ -6,6 +6,7 @@ using UnityEngine.AI;
 
 namespace humanoid
 {
+    [RequireComponent(typeof(AgentParameters))]
     public class MovingAgent : MonoBehaviour, ICyberAgent
     {
         #region parameters
@@ -32,11 +33,14 @@ namespace humanoid
         private float m_skill;
         private bool m_isDisabled = false;
 
+        private AgentParameters m_agentParameters;
+
         #endregion
 
         #region Initalize
         public virtual void Awake()
         {
+            m_agentParameters = this.GetComponent<AgentParameters>();
             m_target = new GameObject();
             m_movmentVector = new Vector3(0, 0, 0);
 
@@ -48,7 +52,7 @@ namespace humanoid
             // Create equipment system.
             Weapon[] currentWeapons = this.GetComponentsInChildren<Weapon>();
             WeaponProp[] currentWeaponProps = this.GetComponentsInChildren<WeaponProp>();
-            m_equipmentModule = new HumanoidEquipmentModule(currentWeapons, currentWeaponProps, m_characterState, m_target, GetComponent<Recoil>(), m_animationModule);
+            m_equipmentModule = new HumanoidEquipmentModule(currentWeapons, currentWeaponProps, m_characterState, m_target, GetComponent<Recoil>(), m_animationModule,m_agentParameters);
 
             // Create movment system.
             m_movmentModule = new HumanoidMovmentModule(this.transform, m_characterState, m_target, m_animationModule);
@@ -74,6 +78,12 @@ namespace humanoid
         #endregion
 
         #region Commands
+
+        public void reloadWeapon()
+        {
+            m_equipmentModule.reloadCurretnWeapon();
+        }
+
         public void damageAgent(float amount)
         {
             m_damageModule.DamageByAmount(amount);
@@ -94,7 +104,17 @@ namespace humanoid
 
         public virtual void weaponFireForAI()
         {
-            StartCoroutine(fireWeapon());
+            if(m_equipmentModule.getCurrentWeaponAmmoCount() > 0)
+            {
+                StartCoroutine(fireWeapon());
+                return;
+            }
+
+            if(!m_equipmentModule.isReloading())
+            {
+                m_equipmentModule.reloadCurretnWeapon();
+            }
+
         }
 
         public virtual void weaponFireForAICover()
@@ -145,7 +165,14 @@ namespace humanoid
 
         private void postDestoryEffect()
         {
-            m_damageModule.emitSmoke();
+            switch (m_agentParameters.AgentType)
+            {
+                case AgentParameters.TypeOfController.droid:
+                case AgentParameters.TypeOfController.drone:
+                    m_damageModule.emitSmoke();
+                break;
+            }
+            
         }
 
 
@@ -365,9 +392,20 @@ namespace humanoid
             m_equipmentModule.setSecondaryWeaponAmmoCount(count);
         }
 
+
+        public Weapon.WEAPONTYPE getCurrentWeaponType()
+        {
+            return m_equipmentModule.getCurrentWeapon().getWeaponType();
+        }
+
         #endregion
 
         #region Events Handlers
+
+        public void ReloadEnd()
+        {
+            m_equipmentModule.ReloadEnd();
+        }
 
         public void EquipAnimationEvent()
         {
@@ -398,7 +436,6 @@ namespace humanoid
             }
             else
             {
-                Debug.Log("idle");
                 m_characterState = CharacterMainStates.Idle;
             }
         }
@@ -435,7 +472,6 @@ namespace humanoid
                     headTransfrom = rb.transform;
                 }
             }
-
             return headTransfrom;
         }
 
@@ -465,33 +501,6 @@ namespace humanoid
         #endregion
 
         #region Commented Code
-
-        //public void unEquipCurentWeapon()
-        //{
-        //    m_characterState = m_equipmentSystem.unEquipCurrentEquipment();
-        //}
-
-        //public void equipCurrentWeapon()
-        //{
-        //    m_characterState = m_equipmentSystem.unEquipCurrentEquipment();
-        //}
-
-        // Getters
-
-
-        /*
-         * Start Shooting.
-         */
-        //public virtual void updateShooting()
-        //{
-        //    if(Input.GetMouseButtonDown(0) && Input.GetMouseButton(1))
-        //    {
-        //       if(m_equipmentSystem.isProperlyAimed())
-        //        {
-        //            m_equipmentSystem.FireCurrentWeapon();
-        //        }
-        //    }
-        //}
         #endregion
     }
 

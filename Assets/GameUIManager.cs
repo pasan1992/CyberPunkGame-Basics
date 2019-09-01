@@ -9,11 +9,14 @@ public class GameUIManager : MonoBehaviour
 
     public Text primaryBulletCount;
     public Text secondaryBulletCount;
+    public Image crouchButton;
 
 
     public UIType m_uiType;
     private AgentController m_controller;
     private MovingAgent m_movingAgent;
+    private bool crouched = false;
+    
 
     void Start()
     {
@@ -36,5 +39,19 @@ public class GameUIManager : MonoBehaviour
     {
         primaryBulletCount.text = m_movingAgent.getPrimaryWeaponAmmoCount().ToString();
         secondaryBulletCount.text = m_movingAgent.getSecondaryWeaponAmmoCount().ToString();
+
+        if(SimpleInput.GetButtonDown("Crouch"))
+        {
+            crouched = !crouched;
+
+            if(crouched)
+            {
+                crouchButton.color = Color.cyan;
+            }
+            else
+            {
+                crouchButton.color = Color.white;
+            }
+        }
     }
 }

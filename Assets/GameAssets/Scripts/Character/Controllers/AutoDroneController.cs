@@ -176,7 +176,10 @@ public class AutoDroneController :  AgentController
         this.gameObject.SetActive(true);
     }
 
-
+    public override void setPosition(Vector3 postion)
+    {
+        m_navMeshAgent.Warp(postion);
+    }
 
     #endregion
 

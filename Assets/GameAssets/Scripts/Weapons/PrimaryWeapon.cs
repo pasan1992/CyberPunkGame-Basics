@@ -37,9 +37,13 @@ public class PrimaryWeapon : Weapon
     {
         base.updateWeapon();
 
-        if(triggerPulled && getAmmoCount() > 0)
+        if(triggerPulled)
         {
             updateContinouseFire();
+        }
+        else
+        {
+            
         }
     }
 
@@ -52,7 +56,7 @@ public class PrimaryWeapon : Weapon
             burstFireInterval = 0;
             fireWeapon();
 
-            if(this.isActiveAndEnabled)
+            if(this.isActiveAndEnabled && getAmmoCount() >0)
             {
                 StartCoroutine(waitAndRecoil());
             }

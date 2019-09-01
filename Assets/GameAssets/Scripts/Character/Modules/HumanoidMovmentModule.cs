@@ -75,7 +75,7 @@ namespace humanoid
                     if (movmentDirection.magnitude > 0)
                     {
                         Vector3 moveDirection = new Vector3(movmentDirection.x, 0, movmentDirection.z);
-                        m_characterTransform.rotation = Quaternion.Lerp(m_characterTransform.rotation, Quaternion.LookRotation(moveDirection, Vector3.up), 5f * Time.deltaTime);
+                        m_characterTransform.rotation = Quaternion.Lerp(m_characterTransform.rotation, Quaternion.LookRotation(moveDirection, Vector3.up), 50f * Time.deltaTime);
                     }
 
                     m_animationSystem.setMovment(movmentDirection.magnitude, 0);
