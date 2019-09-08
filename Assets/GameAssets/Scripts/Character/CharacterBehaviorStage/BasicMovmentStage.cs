@@ -19,6 +19,7 @@ public abstract class BasicMovmentStage : ICharacterBehaviorState
         this.m_selfAgent = selfAgent;
         this.m_navMeshAgent = agent;
         m_navMeshAgent.updateRotation = false;
+        m_stepIntervalInSeconds = Random.Range(0.4f,1f);
     }
 
     #endregion

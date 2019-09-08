@@ -219,7 +219,7 @@ namespace humanoid
         public MovingAgent.CharacterMainStates togglePrimary()
         {
 
-            if (!m_inEquipingAction)
+            if (!m_inEquipingAction && !isReloading())
             {
                 //Debug.Log("Toggle Primary Start");
                 m_animationSystem.setCurretnWeapon(1);
@@ -266,7 +266,7 @@ namespace humanoid
         public MovingAgent.CharacterMainStates toggleSecondary()
         {
 
-            if (!m_inEquipingAction)
+            if (!m_inEquipingAction && !isReloading())
             {
                 //Debug.Log("Toggle Secondary Start");
                 m_animationSystem.setCurretnWeapon(0);

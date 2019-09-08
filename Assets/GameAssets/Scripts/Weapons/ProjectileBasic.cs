@@ -77,6 +77,9 @@ public class ProjectileBasic : MonoBehaviour
             case "Cover":
                 hitOnWall(other);
                 break;
+            case "Floor":
+                hitOnFloor(other);
+                break;
         }
 
     }
@@ -122,6 +125,10 @@ public class ProjectileBasic : MonoBehaviour
                         }
 
                     }
+                    else
+                    {
+                       basicHitParticle.transform.position = movingAgent.getTopPosition();
+                    }
                 }
             }
 
@@ -148,6 +155,17 @@ public class ProjectileBasic : MonoBehaviour
             basicHitParticle.transform.position = this.transform.position;
             basicHitParticle.transform.LookAt(Vector3.up);
             this.gameObject.SetActive(false);
+    }
+
+    private void hitOnFloor(Collider floor)
+    {
+        Debug.Log("floor");
+        speed = 0;
+        GameObject basicHitParticle = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.HitBasicParticle);
+        basicHitParticle.SetActive(true);
+        basicHitParticle.transform.position = this.transform.position;
+        basicHitParticle.transform.LookAt(Vector3.up);
+        this.gameObject.SetActive(false);      
     }
 
     public void OnEnable()

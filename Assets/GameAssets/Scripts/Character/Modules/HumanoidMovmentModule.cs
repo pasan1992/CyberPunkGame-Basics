@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityEngine.AI;
 
 namespace humanoid
 {
@@ -7,17 +8,37 @@ namespace humanoid
         // Start is called before the first frame update
         protected MovingAgent.CharacterMainStates m_characterState;
         protected HumanoidAnimationModule m_animationSystem;
-        protected bool m_enableTranslateMovment = true;
+        protected bool m_physicalLocationChange = true;
+        private NavMeshAgent m_navMeshAgent;
 
-        public HumanoidMovmentModule(Transform transfrom, MovingAgent.CharacterMainStates characterState, GameObject target, HumanoidAnimationModule animationSystem) : base(target, transfrom)
+        // Calulate moving speed;
+        private Vector3 m_previousPosition;
+        private Vector3 m_currentVelocity;
+
+        public HumanoidMovmentModule(
+            Transform transfrom, 
+            MovingAgent.CharacterMainStates characterState, 
+            GameObject target, 
+            HumanoidAnimationModule animationSystem,
+            NavMeshAgent navMeshAgent
+            ) : base(target, transfrom)
         {
             m_characterState = characterState;
             m_animationSystem = animationSystem;
+            m_navMeshAgent = navMeshAgent;
+            m_previousPosition = this.m_characterTransform.position;
         }
 
         #region Update
+
+        private void updateMovingSpeed()
+        {
+            m_currentVelocity = this.m_characterTransform.position - m_previousPosition;
+            m_previousPosition = this.m_characterTransform.position;
+        }
         public override void UpdateMovment(int characterState, Vector3 movmentDirection)
         {
+            updateMovingSpeed();
             m_characterState = (MovingAgent.CharacterMainStates)characterState;
 
             float crouchSpeedMultiplayer = 1;
@@ -52,20 +73,12 @@ namespace humanoid
                     Vector3 selfTransfrommoveDiection = this.m_characterTransform.InverseTransformDirection(movmentDirection);
                     m_animationSystem.setMovment(selfTransfrommoveDiection.z, selfTransfrommoveDiection.x);
 
-                    if (m_enableTranslateMovment)
+                    if (m_physicalLocationChange)
                     {
                         // Move character transfrom
                         Vector3 translateDirection = new Vector3(selfTransfrommoveDiection.x, 0, selfTransfrommoveDiection.z);
-                        this.m_characterTransform.Translate(translateDirection.normalized * crouchSpeedMultiplayer / 50);
+                        this.m_characterTransform.Translate(translateDirection.normalized * crouchSpeedMultiplayer / 10);
                     }
-
-
-                    //Vector3 translateDirection = new Vector3(movmentDirection.x, 0, movmentDirection.z);
-
-                    //if (m_characterController.enabled)
-                    //{
-                    //    m_characterController.Move(translateDirection.normalized / 15);
-                    //}
                     break;
 
                 case MovingAgent.CharacterMainStates.Armed_not_Aimed:
@@ -90,7 +103,7 @@ namespace humanoid
                         divider = 15;
                     }
 
-                    if (m_enableTranslateMovment)
+                    if (m_physicalLocationChange)
                     {
                         this.m_characterTransform.Translate(Vector3.forward * movmentDirection.magnitude * crouchSpeedMultiplayer / divider);
                     }
@@ -115,9 +128,9 @@ namespace humanoid
             return position;
         }
 
-        public void enableTranslateMovment(bool enable)
+        public void setPhysicalLocationChange(bool enable)
         {
-            m_enableTranslateMovment = enable;
+            m_physicalLocationChange = enable;
         }
 
         public bool isCrouched()

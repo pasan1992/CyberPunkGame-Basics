@@ -25,4 +25,9 @@ public class AnimationModule
         m_animator.SetFloat("forward", forward);
         m_animator.SetFloat("side", side);
     }
+
+    public void setAnimationSpeed(float speed)
+    {
+        m_animator.SetFloat("movmenetSpeed",speed);
+    }
 }

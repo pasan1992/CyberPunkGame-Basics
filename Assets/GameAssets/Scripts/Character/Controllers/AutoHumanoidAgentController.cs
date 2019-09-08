@@ -42,6 +42,7 @@ public class AutoHumanoidAgentController :  AgentController
         if(m_movingAgent.IsFunctional() && !m_movingAgent.isDisabled() & isInUse())
         {
             m_currentState.updateStage();
+            m_movingAgent.setAnimationSpeed(m_navMeshAgent.velocity.normalized.magnitude/0.8f);
         }
     }
     #endregion

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using humanoid;
+using UnityEngine.AI;
 
 [RequireComponent(typeof(MovingAgent))]
 public class PlayerController : AgentController
@@ -17,6 +18,9 @@ public class PlayerController : AgentController
     private float verticleSpeed;
     private float horizontalSpeed;
     private HealthBar m_healthBar;
+
+
+    private NavMeshAgent agent;
 
     #region Initialize
     private void Start()
@@ -35,6 +39,7 @@ public class PlayerController : AgentController
 
         //m_movingAgent.setOnDestoryCallback(OnAgentDestroy);
         //m_movingAgent.setOnDisableCallback(onAgentDisable);
+        agent = this.GetComponent<NavMeshAgent>();
     }
 
     private void createTargetPlane()
@@ -61,7 +66,6 @@ public class PlayerController : AgentController
 
     private void controllerUpdate()
     {
-
         verticleSpeed = Mathf.Lerp(verticleSpeed, Input.GetAxis("Vertical"),1);
         horizontalSpeed = Mathf.Lerp(horizontalSpeed, Input.GetAxis("Horizontal"), 1f);
 

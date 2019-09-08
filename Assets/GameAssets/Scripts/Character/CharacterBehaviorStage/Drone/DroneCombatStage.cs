@@ -32,7 +32,7 @@ public class DroneCombatStage : BasicMovmentStage
         // This is needed for calling step update.
         base.updateStage();
 
-        m_selfAgent.setTargetPoint(m_opponent.getCurrentPosition()+ m_randomTargetOffset);
+        m_selfAgent.setTargetPoint(m_opponent.getTopPosition()+ m_randomTargetOffset);
     }
 
     protected override void stepUpdate()

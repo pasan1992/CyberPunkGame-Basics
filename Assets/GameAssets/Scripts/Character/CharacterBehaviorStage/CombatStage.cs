@@ -21,7 +21,7 @@ public class CombatStage : BasicMovmentStage
     private CoverShootingSubStages currentCoverShootingSubStage;
 
     // Parameters
-    float fireRangeDistance = 14;
+    float fireRangeDistance = 25;
     int shotsFromCover = 3;
     int currentShotsFromCover = 0;
 
@@ -92,7 +92,7 @@ public class CombatStage : BasicMovmentStage
 
                 //Debug.Log("In Cover");
 
-                m_selfAgent.lookAtTarget();
+                //m_selfAgent.lookAtTarget();
 
                 if (currentCoverPoint.isSafeFromTarget() && currentCoverPoint.canFireToTarget(fireRangeDistance))
                 {
@@ -161,6 +161,7 @@ public class CombatStage : BasicMovmentStage
                     currentCoverPoint = tempCurrentCoverPoint;
                     m_navMeshAgent.SetDestination(currentCoverPoint.getPosition());
                     currentCombatSubStage = CombatSubStages.MovingToCover;
+                    currentCoverPoint.setOccupent(m_selfAgent);
 
                     // Get up and move
                     m_selfAgent.toggleHide();
@@ -305,9 +306,44 @@ public class CombatStage : BasicMovmentStage
         return null;
     }
     
+    private void findNearOpponent()
+    {
+        Collider[] hitColliders = Physics.OverlapSphere(m_selfAgent.getCurrentPosition(), 15);
+
+        float minDistance = 99999;
+        MovingAgent closetsAgent = null;
+
+        foreach(Collider hitCollider in hitColliders)
+        {
+            if(hitCollider.tag == "Player")
+            {
+                MovingAgent mAgent = hitCollider.transform.root.GetComponent<MovingAgent>();
+
+                if(mAgent && !m_selfAgent.Equals(mAgent) && !m_selfAgent.getFaction().Equals(mAgent.getFaction()) && mAgent.IsFunctional())
+                {
+                    float distance = Vector3.Distance(m_selfAgent.getCurrentPosition(),mAgent.getCurrentPosition());
+
+                    if(distance < minDistance)
+                    {
+                        closetsAgent = mAgent;
+                        minDistance = distance;
+                    }
+                }
+
+            }
+        }
+
+
+        if(closetsAgent)
+        {
+            opponent = closetsAgent;
+        }
+    }
+
     private void findTargetLocationToFire()
     {
 
+        findNearOpponent();
         MovingAgent humanoidOpponent = opponent as MovingAgent;
 
         if(humanoidOpponent != null && humanoidOpponent.isCrouched() && humanoidOpponent.isAimed())

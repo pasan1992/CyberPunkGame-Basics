@@ -55,7 +55,7 @@ namespace humanoid
             m_equipmentModule = new HumanoidEquipmentModule(currentWeapons, currentWeaponProps, m_characterState, m_target, GetComponent<Recoil>(), m_animationModule,m_agentParameters);
 
             // Create movment system.
-            m_movmentModule = new HumanoidMovmentModule(this.transform, m_characterState, m_target, m_animationModule);
+            m_movmentModule = new HumanoidMovmentModule(this.transform, m_characterState, m_target, m_animationModule,this.GetComponent<NavMeshAgent>());
 
             // Create Damage module
             m_damageModule = new HumanoidDamageModule(5, this.GetComponent<RagdollUtility>(), this.GetComponentInChildren<HitReaction>(), m_animationModule, findHeadTransfrom(), findChestTransfrom(), destroyCharacter, this.GetComponentInChildren<Outline>());
@@ -285,7 +285,7 @@ namespace humanoid
 
         public void enableTranslateMovment(bool enable)
         {
-            m_movmentModule.enableTranslateMovment(enable);
+            m_movmentModule.setPhysicalLocationChange(enable);
         }
 
         public Vector3 getCurrentPosition()
@@ -497,6 +497,11 @@ namespace humanoid
         public GameObject getGameObject()
         {
             return this.transform.gameObject;
+        }
+
+        public void setAnimationSpeed(float speed)
+        {
+            m_animationModule.setAnimationSpeed(speed);
         }
         #endregion
 

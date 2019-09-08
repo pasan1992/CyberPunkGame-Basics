@@ -39,8 +39,8 @@ public class CoverPoint : MonoBehaviour, IPoints
     public bool isSafeFromTarget()
     {
         RaycastHit hit;
-        string[] layerMaskNames = { "HalfCoverObsticles", "Enmey" };
-        if (Physics.Raycast(transform.position, target.getCurrentPosition() - this.transform.position, out hit,5, LayerMask.GetMask(layerMaskNames)))
+        string[] layerMaskNames = { "HalfCoverObsticles" };
+        if (Physics.Raycast(transform.position, target.getCurrentPosition() - this.transform.position, out hit,1, LayerMask.GetMask(layerMaskNames)))
         {
             if(hit.transform.tag =="Cover" || hit.transform.tag == "Wall")
             {
@@ -52,14 +52,7 @@ public class CoverPoint : MonoBehaviour, IPoints
             }
 
         }
-        else if(Vector3.Distance(target.getCurrentPosition(),transform.position) > 17)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return false;
     }
 
     public float distanceTo(Vector3 distanceFrom)
@@ -79,7 +72,20 @@ public class CoverPoint : MonoBehaviour, IPoints
 
     public void setOccupent(ICyberAgent agent)
     {
-        this.occupent = agent;
+        if(agent == null)
+        {
+            Invoke("SetOccupentNull",2);
+        }
+        else
+        {
+            this.occupent = agent;
+        }
+    }
+
+    private void SetOccupentNull()
+    {
+        this.occupent = null;
+        CancelInvoke();
     }
     #endregion
 

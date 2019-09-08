@@ -48,7 +48,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public void Start()
     {
-        Invoke("disableDrone", 3);
+        //Invoke("disableDrone", 3);
         m_damageModule = new DroneDamageModule(health, this.GetComponentInChildren<Outline>(), DestroyCharacter);
     }
 
@@ -85,7 +85,11 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     public void setHealth(float value)
     {
         health = value;
-        m_damageModule.setHealth(value);
+        if(m_damageModule != null)
+        {
+            m_damageModule.setHealth(value);
+        }
+        //
     }
 
     public void setTargetPoint(Vector3 position)
@@ -356,6 +360,11 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     public GameObject getGameObject()
     {
         return this.transform.gameObject;
+    }
+
+    public void setAnimationSpeed(float speed)
+    {
+
     }
     #endregion
 }
