@@ -1,7 +1,5 @@
 ﻿using UnityEngine;
 using RootMotion.FinalIK;
-using humanoid;
-
 public class ProjectileBasic : MonoBehaviour
 {
     // Start is called before the first frame update
@@ -75,7 +73,7 @@ public class ProjectileBasic : MonoBehaviour
                 hitOnWall(other);
                 break;
             case "Cover":
-                hitOnWall(other);
+                hitOnCOver(other);
                 break;
             case "Floor":
                 hitOnFloor(other);
@@ -106,7 +104,7 @@ public class ProjectileBasic : MonoBehaviour
  
                 if (!cyberAgent.IsFunctional())
                 {
-                    MovingAgent movingAgent = cyberAgent as MovingAgent;
+                    HumanoidMovingAgent movingAgent = cyberAgent as HumanoidMovingAgent;
                     if(movingAgent !=null)
                     {
                         Rigidbody rb = other.transform.GetComponent<Rigidbody>();
@@ -127,7 +125,7 @@ public class ProjectileBasic : MonoBehaviour
                     }
                     else
                     {
-                       basicHitParticle.transform.position = movingAgent.getTopPosition();
+                       basicHitParticle.transform.position = cyberAgent.getTopPosition();
                     }
                 }
             }

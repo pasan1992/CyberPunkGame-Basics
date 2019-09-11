@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using humanoid;
 
 [RequireComponent(typeof(FlyingAgent))]
 public class AutoDroneController :  AgentController
@@ -43,7 +42,7 @@ public class AutoDroneController :  AgentController
         {
             if (obj != this.gameObject)
             {
-                m_enemy = obj.GetComponent<MovingAgent>();
+                m_enemy = obj.GetComponent<HumanoidMovingAgent>();
 
                 if (m_enemy != null)
                 {

@@ -1,14 +1,13 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using humanoid;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(MovingAgent))]
+[RequireComponent(typeof(HumanoidMovingAgent))]
 public class PlayerController : AgentController
 {
     private bool m_enabled;
-    protected MovingAgent m_movingAgent;
+    protected HumanoidMovingAgent m_movingAgent;
 
     private LayerMask enemyHitLayerMask;
     private LayerMask floorHitLayerMask;
@@ -25,7 +24,7 @@ public class PlayerController : AgentController
     #region Initialize
     private void Start()
     {
-        m_movingAgent = this.GetComponent<MovingAgent>();
+        m_movingAgent = this.GetComponent<HumanoidMovingAgent>();
         m_movingAgent.setFaction(m_agentFaction);
         enemyHitLayerMask = LayerMask.GetMask("Enemy");
         floorHitLayerMask = LayerMask.GetMask("Target");
@@ -194,7 +193,7 @@ public class PlayerController : AgentController
 
     public override void setMovableAgent(ICyberAgent agent)
     {
-        m_movingAgent = (MovingAgent)agent;
+        m_movingAgent = (HumanoidMovingAgent)agent;
     }
 
     private Vector3 getDirectionRelativeToCamera(Vector3 direction)

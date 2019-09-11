@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using humanoid;
 
 public class CombatStage : BasicMovmentStage
 {
@@ -24,6 +23,9 @@ public class CombatStage : BasicMovmentStage
     float fireRangeDistance = 25;
     int shotsFromCover = 3;
     int currentShotsFromCover = 0;
+
+    int coverIteractions = 0;
+    int maxCoverIteractions = 20;
 
     #region initalize
     public CombatStage(ICyberAgent selfAgent,ICyberAgent target,NavMeshAgent navMeshAgent) :base(selfAgent,navMeshAgent)
@@ -94,13 +96,14 @@ public class CombatStage : BasicMovmentStage
 
                 //m_selfAgent.lookAtTarget();
 
-                if (currentCoverPoint.isSafeFromTarget() && currentCoverPoint.canFireToTarget(fireRangeDistance))
+                if ( (coverIteractions < maxCoverIteractions && currentCoverPoint.isSafeFromTarget() ) || (currentCoverPoint.canFireToTarget(fireRangeDistance)) )
                 {
                     switch(currentCoverShootingSubStage)
                     {
                         case CoverShootingSubStages.Cover:
 
-                            m_selfAgent.aimWeapon();
+                            //m_selfAgent.aimWeapon();
+                            m_selfAgent.stopAiming();
                             currentCoverShootingSubStage = CoverShootingSubStages.Peek;
 
                             shotsFromCover = (int)(Random.value * 5);
@@ -108,7 +111,7 @@ public class CombatStage : BasicMovmentStage
 
                             break;
                         case CoverShootingSubStages.Peek:
-
+                            m_selfAgent.aimWeapon();
                             m_selfAgent.weaponFireForAI();
                             currentCoverShootingSubStage = CoverShootingSubStages.Shoot;
                             setStepIntervalSize(0.3f);
@@ -116,7 +119,7 @@ public class CombatStage : BasicMovmentStage
                             break;
                         case CoverShootingSubStages.Shoot:
 
-
+                            coverIteractions ++;
                             currentShotsFromCover++;
                             
                             if(currentShotsFromCover > shotsFromCover)
@@ -141,6 +144,7 @@ public class CombatStage : BasicMovmentStage
                     //Debug.Log("Cover is not safe or cannot fire to target");
                     currentCombatSubStage = CombatSubStages.LookingForCover;
                     setStepIntervalSize(1);
+                    coverIteractions = 0;
                 }
                 break;
             case CombatSubStages.LookingForCover:
@@ -175,7 +179,7 @@ public class CombatStage : BasicMovmentStage
                 if (!m_navMeshAgent.pathPending && m_navMeshAgent.remainingDistance >1)
                 {
 
-                    if(m_navMeshAgent.remainingDistance > 3 && Vector3.Distance(m_selfAgent.getCurrentPosition(),opponent.getCurrentPosition()) > fireRangeDistance)
+                    if(m_navMeshAgent.remainingDistance > 3 && Vector3.Distance(m_selfAgent.getCurrentPosition(),opponent.getCurrentPosition()) > fireRangeDistance*0.55f)
                     {
                         m_enableRun = true;
                         m_selfAgent.stopAiming();
@@ -200,7 +204,9 @@ public class CombatStage : BasicMovmentStage
 
                     // Get down on cover
                     m_selfAgent.toggleHide();
-                    m_selfAgent.stopAiming();
+
+                    //m_selfAgent.stopAiming();
+                    maxCoverIteractions = Random.Range(10,30);
                     setStepIntervalSize(0.8f);
                     m_navMeshAgent.velocity = Vector3.zero;
 
@@ -235,6 +241,11 @@ public class CombatStage : BasicMovmentStage
     #endregion
 
     #region Utility
+
+    private void takeCover()
+    {
+        m_selfAgent.stopAiming();
+    }
 
     private CoverPoint closestCombatLocationAvaialbe()
     {
@@ -311,13 +322,13 @@ public class CombatStage : BasicMovmentStage
         Collider[] hitColliders = Physics.OverlapSphere(m_selfAgent.getCurrentPosition(), 15);
 
         float minDistance = 99999;
-        MovingAgent closetsAgent = null;
+        HumanoidMovingAgent closetsAgent = null;
 
         foreach(Collider hitCollider in hitColliders)
         {
             if(hitCollider.tag == "Player")
             {
-                MovingAgent mAgent = hitCollider.transform.root.GetComponent<MovingAgent>();
+                HumanoidMovingAgent mAgent = hitCollider.transform.root.GetComponent<HumanoidMovingAgent>();
 
                 if(mAgent && !m_selfAgent.Equals(mAgent) && !m_selfAgent.getFaction().Equals(mAgent.getFaction()) && mAgent.IsFunctional())
                 {
@@ -344,7 +355,7 @@ public class CombatStage : BasicMovmentStage
     {
 
         findNearOpponent();
-        MovingAgent humanoidOpponent = opponent as MovingAgent;
+        HumanoidMovingAgent humanoidOpponent = opponent as HumanoidMovingAgent;
 
         if(humanoidOpponent != null && humanoidOpponent.isCrouched() && humanoidOpponent.isAimed())
         {

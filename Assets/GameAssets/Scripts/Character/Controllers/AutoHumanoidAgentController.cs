@@ -2,12 +2,11 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-using humanoid;
 
 [RequireComponent(typeof(ICyberAgent))]
 public class AutoHumanoidAgentController :  AgentController
 {
-    public MovingAgent target;
+    public HumanoidMovingAgent target;
     protected ICyberAgent m_movingAgent;
     protected ICharacterBehaviorState m_currentState;
     protected NavMeshAgent m_navMeshAgent;
