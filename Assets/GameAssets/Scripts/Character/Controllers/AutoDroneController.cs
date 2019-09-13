@@ -8,8 +8,6 @@ public class AutoDroneController :  AgentController
 {
     // Start is called before the first frame update
     public string enemyTag;
-    public float skill;
-    public float health = 1;
 
     private FlyingAgent m_selfAgent;
     private NavMeshAgent m_navMeshAgent;
@@ -64,8 +62,6 @@ public class AutoDroneController :  AgentController
         m_selfAgent.setFaction(m_agentFaction);
         intializeAgentCallbacks(m_selfAgent);
         m_selfAgent.aimWeapon();
-        m_selfAgent.setSkill(skill);
-        m_selfAgent.setHealth(health);
     }
 
     #endregion
@@ -164,7 +160,7 @@ public class AutoDroneController :  AgentController
         //this.transform.position = FindObjectOfType<SpawnPoint>().transform.position + new Vector3(0,20,0);
 
 
-        m_selfAgent.resetAgent(health, skill);
+        m_selfAgent.resetAgent();
 
         if(m_navMeshAgent.isOnNavMesh && m_navMeshAgent.isStopped)
         {

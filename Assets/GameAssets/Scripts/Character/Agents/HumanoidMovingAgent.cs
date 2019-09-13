@@ -4,7 +4,6 @@ using UnityEngine;
 using RootMotion.FinalIK;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(AgentParameters))]
 public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 {
     #region parameters
@@ -15,7 +14,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     private AgentController.agentBasicEventDelegate m_onEnableCallback;
 
     // Main Modules
-    protected HumanoidEquipmentModule m_equipmentModule;
+    protected HumanoidRangedWeaponsModule m_equipmentModule;
     protected HumanoidAnimationModule m_animationModule;
     protected HumanoidMovmentModule m_movmentModule;
     protected HumanoidDamageModule m_damageModule;
@@ -28,21 +27,16 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     private bool m_characterEnabled = true;
     private AgentController.AgentFaction m_agentFaction;
     private Vector3 m_movmentVector;
-    private float m_skill;
     private bool m_isDisabled = false;
 
-    private AgentParameters m_agentParameters;
-
-
     // Public
-    public AgentStats m_agentStats;
+    public AgentData AgentData;
 
     #endregion
 
     #region Initalize
     public virtual void Awake()
     {
-        m_agentParameters = this.GetComponent<AgentParameters>();
         m_target = new GameObject();
         m_movmentVector = new Vector3(0, 0, 0);
 
@@ -54,13 +48,20 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         // Create equipment system.
         Weapon[] currentWeapons = this.GetComponentsInChildren<Weapon>();
         WeaponProp[] currentWeaponProps = this.GetComponentsInChildren<WeaponProp>();
-        m_equipmentModule = new HumanoidEquipmentModule(currentWeapons, currentWeaponProps, m_characterState, m_target, GetComponent<Recoil>(), m_animationModule,m_agentParameters);
+        
+        m_equipmentModule = new HumanoidRangedWeaponsModule(currentWeapons, currentWeaponProps, m_characterState, m_target, GetComponent<Recoil>(), m_animationModule,AgentData);
 
         // Create movment system.
         m_movmentModule = new HumanoidMovmentModule(this.transform, m_characterState, m_target, m_animationModule,this.GetComponent<NavMeshAgent>());
 
         // Create Damage module
-        m_damageModule = new HumanoidDamageModule(5, this.GetComponent<RagdollUtility>(), this.GetComponentInChildren<HitReaction>(), m_animationModule, findHeadTransfrom(), findChestTransfrom(), destroyCharacter, this.GetComponentInChildren<Outline>());
+        m_damageModule = new HumanoidDamageModule(AgentData, 
+        this.GetComponent<RagdollUtility>(), 
+        this.GetComponentInChildren<HitReaction>(),
+        m_animationModule, findHeadTransfrom(), 
+        findChestTransfrom(), 
+        destroyCharacter, 
+        this.GetComponentInChildren<Outline>());
     }
     #endregion
 
@@ -81,29 +82,10 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
     #region Commands
 
-    public void reloadWeapon()
-    {
-        m_equipmentModule.reloadCurretnWeapon();
-    }
-
     public void damageAgent(float amount)
     {
         m_damageModule.DamageByAmount(amount);
     }
-
-    public virtual void pullTrigger()
-    {
-        if (m_equipmentModule.isProperlyAimed() && m_characterState.Equals(CharacterMainStates.Aimed))
-        {
-            m_equipmentModule.pullTrigger();
-        }
-    }
-
-    public virtual void releaseTrigger()
-    {
-        m_equipmentModule.releaseTrigger();
-    }
-
     public virtual void weaponFireForAI()
     {
         if(m_equipmentModule.getCurrentWeaponAmmoCount() > 0)
@@ -111,12 +93,12 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
             StartCoroutine(fireWeapon());
             return;
         }
+        m_equipmentModule.reloadCurretnWeapon();
+    }
 
-        if(!m_equipmentModule.isReloading())
-        {
-            m_equipmentModule.reloadCurretnWeapon();
-        }
-
+    public void reloadCurretnWeapon()
+    {
+        m_equipmentModule.reloadCurretnWeapon();
     }
 
     public virtual void weaponFireForAICover()
@@ -129,6 +111,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     {
         if (m_characterState.Equals(CharacterMainStates.Armed_not_Aimed) && !isEquipingWeapon() && !m_characterState.Equals(CharacterMainStates.Dodge))
         {
+            
             m_characterState = CharacterMainStates.Aimed;
             m_equipmentModule.getCurrentWeapon().setAimed(true);
         }
@@ -167,14 +150,13 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
     private void postDestoryEffect()
     {
-        switch(m_agentStats.AgentNature)
+        switch(AgentData.AgentNature)
         {
-            case AgentStats.AGENT_NATURE.DROID:
+            case AgentData.AGENT_NATURE.DROID:
                 m_damageModule.emitSmoke();
             break;            
         }            
     }
-
 
     public void toggleHide()
     {
@@ -209,6 +191,16 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         }
     }
 
+    public void releaseTrigger()
+    {
+        m_equipmentModule.releaseTrigger();
+    }
+
+    public void pullTrigger()
+    {
+        m_equipmentModule.pullTrigger();
+    }
+
     public void lookAtTarget()
     {
         m_movmentModule.lookAtTarget();
@@ -223,20 +215,14 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         return m_damageModule.getChestTransfrom();
     }
 
-    public float getHealthPercentage()
-    {
-        return m_damageModule.getHealthPercentage();
-    }
-
     public Vector3 getMovmentDirection()
     {
         return m_movmentVector;
     }
 
-    public void resetAgent(float health, float skill)
+    public void resetAgent()
     {
-        setSkill(skill);
-        m_damageModule.resetCharacter(health);
+        m_damageModule.resetCharacter();
         m_animationModule.enableAnimationSystem();
         m_characterEnabled = true;
         m_equipmentModule.resetWeapon();
@@ -280,7 +266,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
     public void setHealth(float health)
     {
-        m_damageModule.setHealth(health);
+        //m_damageModule.setHealth(m_agentStats.Health);
     }
 
     public void enableTranslateMovment(bool enable)
@@ -341,19 +327,14 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         return this.transform;
     }
 
-    public string getName()
-    {
-        return this.name;
-    }
-
     public void setSkill(float skill)
     {
-        m_skill = skill;
+        AgentData.Skill = skill;
     }
 
     public float getSkill()
     {
-        return m_skill;
+        return AgentData.Skill;
     }
 
     public bool isAimed()
@@ -365,11 +346,6 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     public bool isDisabled()
     {
         return m_isDisabled;
-    }
-
-    public Color getHealthColor()
-    {
-        return m_damageModule.getHealthColor();
     }
 
     public int getPrimaryWeaponAmmoCount()
@@ -401,7 +377,6 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     #endregion
 
     #region Events Handlers
-
     public void ReloadEnd()
     {
         m_equipmentModule.ReloadEnd();
@@ -445,9 +420,9 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
     private IEnumerator fireWeapon()
     {
-        pullTrigger();
+        m_equipmentModule.pullTrigger();
         yield return new WaitForSeconds(0.5f);
-        releaseTrigger();
+        m_equipmentModule.releaseTrigger();
     }
 
     private IEnumerator fireWeaponCover()
@@ -455,9 +430,10 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         aimWeapon();
         yield return new WaitForSeconds(2f);
         aimWeapon();
-        pullTrigger();
+        //pullTrigger();
+        m_equipmentModule.pullTrigger();
         yield return new WaitForSeconds(1f);
-        releaseTrigger();
+        m_equipmentModule.releaseTrigger();
         yield return new WaitForSeconds(1f);
         stopAiming();
     }

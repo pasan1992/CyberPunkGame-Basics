@@ -11,8 +11,6 @@ public class PlayerController : AgentController
 
     private LayerMask enemyHitLayerMask;
     private LayerMask floorHitLayerMask;
-    public float health;
-
     private float speedModifyVale;
     private float verticleSpeed;
     private float horizontalSpeed;
@@ -31,9 +29,7 @@ public class PlayerController : AgentController
         m_healthBar = this.GetComponentInChildren<HealthBar>();
 
         createTargetPlane();
-        m_movingAgent.setHealth(health);
         m_movingAgent.enableTranslateMovment(true);
-        m_movingAgent.setSkill(1);
         intializeAgentCallbacks(m_movingAgent);
 
         //m_movingAgent.setOnDestoryCallback(OnAgentDestroy);
@@ -110,7 +106,7 @@ public class PlayerController : AgentController
 
         if(Input.GetKeyDown(KeyCode.R))
         {
-            m_movingAgent.reloadWeapon();
+            m_movingAgent.reloadCurretnWeapon();
         }
 
 
@@ -160,7 +156,7 @@ public class PlayerController : AgentController
 
         if(m_healthBar)
         {
-            m_healthBar.setHealthPercentage(m_movingAgent.getHealthPercentage());
+            m_healthBar.setHealthPercentage(m_movingAgent.AgentData.Health/m_movingAgent.AgentData.MaxHealth);
         }
 
     }

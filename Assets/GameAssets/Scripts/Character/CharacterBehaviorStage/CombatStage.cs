@@ -35,7 +35,7 @@ public class CombatStage : BasicMovmentStage
         selfAgent.toggleHide();
         selfAgent.aimWeapon();
         //selfAgent.togglepSecondaryWeapon();
-        selfAgent.togglePrimaryWeapon();
+        ((HumanoidMovingAgent)selfAgent).togglePrimaryWeapon();
         targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
         findTargetLocationToFire();
     }

@@ -2400,7 +2400,7 @@ PrefabInstance:
     - target: {fileID: 6871290176498475301, guid: 39703dd0faf89464693cdcc27405923c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6871290176498475302, guid: 39703dd0faf89464693cdcc27405923c,
         type: 3}
@@ -2465,6 +2465,26 @@ PrefabInstance:
     - target: {fileID: 6871290176498475320, guid: 39703dd0faf89464693cdcc27405923c,
         type: 3}
       propertyPath: skill
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871290176498475303, guid: 39703dd0faf89464693cdcc27405923c,
+        type: 3}
+      propertyPath: m_damageModule.m_health
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871290176498475303, guid: 39703dd0faf89464693cdcc27405923c,
+        type: 3}
+      propertyPath: m_damageModule.m_maxHealth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871290176498475303, guid: 39703dd0faf89464693cdcc27405923c,
+        type: 3}
+      propertyPath: agentStatus.Skill
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871290176498475303, guid: 39703dd0faf89464693cdcc27405923c,
+        type: 3}
+      propertyPath: agentStatus.AgentNature
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -5020,6 +5040,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AutoMovingAgent_v2 (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 689295171652787206, guid: 686b40a5e671c1944856f84f2ec67cbb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6144393412093649264, guid: 686b40a5e671c1944856f84f2ec67cbb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5304,6 +5329,42 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: -0.009896707
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: m_damageModule.m_maxHealth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: m_agentStats.Skill
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: m_agentStats.MaxHealth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: m_agentStats.Health
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: AgentData.Skill
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: AgentData.MaxHealth
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: AgentData.Health
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: AgentData.maxHealth
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: AgentData.health
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
@@ -6507,12 +6568,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 647623082}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &654432303 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 8209068074782550139, guid: d44a392987e428e45a2445e565f91e5d,
-    type: 3}
-  m_PrefabInstance: {fileID: 5358365714064549303}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &661707229
 GameObject:
   m_ObjectHideFlags: 0
@@ -7402,12 +7457,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d6b4367dea3ff04b9002e3aead7118e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &767320653 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4767483745652486011, guid: d44a392987e428e45a2445e565f91e5d,
-    type: 3}
-  m_PrefabInstance: {fileID: 5358365714064549303}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &780042559
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9993,6 +10042,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AutoMovingAgent_v2 (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 689295171652787206, guid: 686b40a5e671c1944856f84f2ec67cbb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6144393412093649264, guid: 686b40a5e671c1944856f84f2ec67cbb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10277,6 +10331,42 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConnectedAnchor.z
       value: -0.009896707
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: m_damageModule.m_maxHealth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: m_agentStats.Skill
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: m_agentStats.MaxHealth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: m_agentStats.Health
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: AgentData.Skill
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: AgentData.MaxHealth
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: AgentData.Health
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: AgentData.maxHealth
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: AgentData.health
+      value: 5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
@@ -12493,7 +12583,7 @@ PrefabInstance:
     - target: {fileID: 6871290176498475301, guid: 39703dd0faf89464693cdcc27405923c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6871290176498475302, guid: 39703dd0faf89464693cdcc27405923c,
         type: 3}
@@ -12558,6 +12648,26 @@ PrefabInstance:
     - target: {fileID: 6871290176498475320, guid: 39703dd0faf89464693cdcc27405923c,
         type: 3}
       propertyPath: skill
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871290176498475303, guid: 39703dd0faf89464693cdcc27405923c,
+        type: 3}
+      propertyPath: m_damageModule.m_health
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871290176498475303, guid: 39703dd0faf89464693cdcc27405923c,
+        type: 3}
+      propertyPath: m_damageModule.m_maxHealth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871290176498475303, guid: 39703dd0faf89464693cdcc27405923c,
+        type: 3}
+      propertyPath: agentStatus.Skill
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871290176498475303, guid: 39703dd0faf89464693cdcc27405923c,
+        type: 3}
+      propertyPath: agentStatus.AgentNature
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -16926,6 +17036,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: AutoMovingAgent_v2 (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 689295171652787206, guid: 686b40a5e671c1944856f84f2ec67cbb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6144393412093649264, guid: 686b40a5e671c1944856f84f2ec67cbb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -17151,11 +17266,6 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: -0.0000000055879354
       objectReference: {fileID: 0}
-    - target: {fileID: 1590357667873191802, guid: 686b40a5e671c1944856f84f2ec67cbb,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4629036310812625528, guid: 686b40a5e671c1944856f84f2ec67cbb,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -17216,6 +17326,57 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: -0.009896707
       objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: m_damageModule.m_maxHealth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: m_agentStats.Skill
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: m_agentStats.MaxHealth
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: m_agentStats.Health
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: AgentData.Skill
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: AgentData.MaxHealth
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: AgentData.Health
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: AgentData.maxHealth
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
+      propertyPath: AgentData.health
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 1590357667873191802, guid: 686b40a5e671c1944856f84f2ec67cbb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5760451781286982274, guid: 686b40a5e671c1944856f84f2ec67cbb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 38864901196229638, guid: 686b40a5e671c1944856f84f2ec67cbb,
+        type: 3}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 4300038, guid: 462c936cf2b64734eba20cf59acca84e, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
 --- !u!1001 &1825850445
@@ -18919,7 +19080,7 @@ PrefabInstance:
     - target: {fileID: 6871290176498475301, guid: 39703dd0faf89464693cdcc27405923c,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6871290176498475302, guid: 39703dd0faf89464693cdcc27405923c,
         type: 3}
@@ -18984,6 +19145,26 @@ PrefabInstance:
     - target: {fileID: 6871290176498475320, guid: 39703dd0faf89464693cdcc27405923c,
         type: 3}
       propertyPath: skill
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871290176498475303, guid: 39703dd0faf89464693cdcc27405923c,
+        type: 3}
+      propertyPath: m_damageModule.m_health
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871290176498475303, guid: 39703dd0faf89464693cdcc27405923c,
+        type: 3}
+      propertyPath: m_damageModule.m_maxHealth
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871290176498475303, guid: 39703dd0faf89464693cdcc27405923c,
+        type: 3}
+      propertyPath: agentStatus.Skill
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6871290176498475303, guid: 39703dd0faf89464693cdcc27405923c,
+        type: 3}
+      propertyPath: agentStatus.AgentNature
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -20467,11 +20648,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: PlayerPC
       objectReference: {fileID: 0}
-    - target: {fileID: 2784489733749556828, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 2784489733749556807, guid: d44a392987e428e45a2445e565f91e5d,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -20485,7 +20661,7 @@ PrefabInstance:
     - target: {fileID: 2784489733749556807, guid: d44a392987e428e45a2445e565f91e5d,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -3.94
+      value: -3.19
       objectReference: {fileID: 0}
     - target: {fileID: 2784489733749556807, guid: d44a392987e428e45a2445e565f91e5d,
         type: 3}
@@ -20527,31 +20703,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7783047292817674085, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: magazineObjProp
-      value: 
-      objectReference: {fileID: 767320653}
-    - target: {fileID: 2624338875201631734, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: magazineObjProp
-      value: 
-      objectReference: {fileID: 654432303}
-    - target: {fileID: 2784489731896646233, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.x
-      value: -0.037712365
-      objectReference: {fileID: 0}
-    - target: {fileID: 2784489731896646233, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0.000000006519258
-      objectReference: {fileID: 0}
-    - target: {fileID: 2784489731896646233, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.z
-      value: 0.0000000015133992
-      objectReference: {fileID: 0}
     - target: {fileID: 2784489731968934499, guid: d44a392987e428e45a2445e565f91e5d,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -20561,21 +20712,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_ConnectedAnchor.y
       value: -0.0026920594
-      objectReference: {fileID: 0}
-    - target: {fileID: 2784489732162119027, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.x
-      value: 0.03771232
-      objectReference: {fileID: 0}
-    - target: {fileID: 2784489732162119027, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0.000000011641532
-      objectReference: {fileID: 0}
-    - target: {fileID: 2784489732162119027, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.z
-      value: -0.00000008539064
       objectReference: {fileID: 0}
     - target: {fileID: 2784489732395155562, guid: d44a392987e428e45a2445e565f91e5d,
         type: 3}
@@ -20662,46 +20798,6 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.y
       value: 0.006136597
       objectReference: {fileID: 0}
-    - target: {fileID: 2784489733438859394, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: m_ConnectedAnchor.z
-      value: 1.9335355e-16
-      objectReference: {fileID: 0}
-    - target: {fileID: 2784489733749556806, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: m_ApplyRootMotion
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6280258974978153732, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 6280258974978153732, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: m_Speed
-      value: 19
-      objectReference: {fileID: 0}
-    - target: {fileID: 2784489733487162444, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: m_Materials.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2784489733487162444, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: m_Materials.Array.data[1]
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 5358365713966358834, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 1813881778960865218, guid: d44a392987e428e45a2445e565f91e5d,
-        type: 3}
-      propertyPath: health
-      value: 5
-      objectReference: {fileID: 0}
     - target: {fileID: 2784489732026060682, guid: d44a392987e428e45a2445e565f91e5d,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
@@ -20720,17 +20816,17 @@ PrefabInstance:
     - target: {fileID: 2784489732855296093, guid: d44a392987e428e45a2445e565f91e5d,
         type: 3}
       propertyPath: m_ConnectedAnchor.x
-      value: 0.001499993
+      value: 0.0014999865
       objectReference: {fileID: 0}
     - target: {fileID: 2784489732855296093, guid: d44a392987e428e45a2445e565f91e5d,
         type: 3}
       propertyPath: m_ConnectedAnchor.y
-      value: 0.016699996
+      value: 0.016700003
       objectReference: {fileID: 0}
     - target: {fileID: 2784489732855296093, guid: d44a392987e428e45a2445e565f91e5d,
         type: 3}
       propertyPath: m_ConnectedAnchor.z
-      value: 0.00950002
+      value: 0.009500002
       objectReference: {fileID: 0}
     - target: {fileID: 2784489733715516787, guid: d44a392987e428e45a2445e565f91e5d,
         type: 3}
@@ -20742,8 +20838,32 @@ PrefabInstance:
       propertyPath: m_ConnectedAnchor.z
       value: 0.00014363893
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 2784489733749556829, guid: d44a392987e428e45a2445e565f91e5d, type: 3}
+    - target: {fileID: 7852240985771631596, guid: d44a392987e428e45a2445e565f91e5d,
+        type: 3}
+      propertyPath: AgentData.maxHealth
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7852240985771631596, guid: d44a392987e428e45a2445e565f91e5d,
+        type: 3}
+      propertyPath: AgentData.health
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7852240985771631596, guid: d44a392987e428e45a2445e565f91e5d,
+        type: 3}
+      propertyPath: AgentData.AgentNature
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6280258973117777085, guid: d44a392987e428e45a2445e565f91e5d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6280258973250738268, guid: d44a392987e428e45a2445e565f91e5d,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d44a392987e428e45a2445e565f91e5d, type: 3}
 --- !u!1001 &6871290177994209032
 PrefabInstance:
@@ -20830,11 +20950,11 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 5358365714064549303}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7852240985771631596
+--- !u!114 &7852240985771631596 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 7852240985771631596, guid: d44a392987e428e45a2445e565f91e5d,
+    type: 3}
+  m_PrefabInstance: {fileID: 5358365714064549303}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7852240985771631595}
   m_Enabled: 1
@@ -20842,5 +20962,3 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba0cc24f46798454583813343a3fa710, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_agentStats:
-    AgentNature: 0

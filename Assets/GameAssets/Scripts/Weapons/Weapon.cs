@@ -67,6 +67,7 @@ public abstract class Weapon : MonoBehaviour
     #region updates
     public virtual void updateWeapon()
     {
+        // Update line from gun to target.
         if(m_line != null && m_enableLine)
         {
             if (m_isAimed)
@@ -145,11 +146,6 @@ public abstract class Weapon : MonoBehaviour
     public void setAimed(bool aimed)
     {
         m_isAimed = aimed;
-        if (m_enableLine & m_line != null)
-        {
-            //m_line.enabled = aimed;
-        }
-
     }
 
     public virtual WEAPONTYPE getWeaponType()

@@ -3,8 +3,6 @@
 public class FlyingAgent : MonoBehaviour ,ICyberAgent
 {
     // Start is called before the first frame update
-    private float health = 0;
-
     private MovmentModule.BASIC_MOVMENT_STATE m_currentFlyingState = MovmentModule.BASIC_MOVMENT_STATE.DIRECTIONAL_MOVMENT;
 
     private Vector3 m_movmentDirection;
@@ -13,20 +11,21 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     // Modules
     private AnimationModule m_animationModule;
     private MovmentModule m_movmentModule;
-    private DroneDamageModule m_damageModule;
+    public DroneDamageModule m_damageModule;
 
     private Rigidbody m_droneRigitBody;
     private AgentController.agentBasicEventDelegate m_onDestroyCallback;
     private AgentController.agentBasicEventDelegate m_onDisableCallback;
     private AgentController.agentBasicEventDelegate m_onEnableCallback;
     private AgentController.AgentFaction m_faction;
-    private float m_skill;
 
     private Vector3 m_beforeDisablePositionSnapShot;
     private Quaternion m_beforeDisableRotationSnapshot;
     private bool m_disabled = false;
     private bool m_recovering = false;
     private AudioSource m_audioSource;
+
+    public AgentData m_agentData;
 
     #region initalize
 
@@ -48,8 +47,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public void Start()
     {
-        //Invoke("disableDrone", 3);
-        m_damageModule = new DroneDamageModule(health, this.GetComponentInChildren<Outline>(), DestroyCharacter);
+        m_damageModule= new DroneDamageModule(m_agentData, this.GetComponentInChildren<Outline>(), DestroyCharacter);
     }
 
     #region update
@@ -82,16 +80,6 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     #region getters and setters
 
-    public void setHealth(float value)
-    {
-        health = value;
-        if(m_damageModule != null)
-        {
-            m_damageModule.setHealth(value);
-        }
-        //
-    }
-
     public void setTargetPoint(Vector3 position)
     {
         m_target.transform.position = position;
@@ -110,11 +98,6 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     public Color getHealthColor()
     {
         return m_damageModule.getHealthColor();
-    }
-
-    public string getName()
-    {
-        return this.gameObject.name;
     }
 
     public AgentController.AgentFaction getFaction()
@@ -278,44 +261,18 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         throw new System.NotImplementedException();
     }
 
-    public void pullTrigger()
-    {
-        throw new System.NotImplementedException();
-    }
-
-    public void releaseTrigger()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public void reactOnHit(Collider collider, Vector3 force, Vector3 point)
     {
 
     }
-
-    public void togglepSecondaryWeapon()
-    {
-
-    }
-
-    public void togglePrimaryWeapon()
-    {
-
-    }
-
     public void toggleHide()
     {
 
     }
 
-    public void setSkill(float skill)
-    {
-        m_skill = skill;
-    }
-
     public float getSkill()
     {
-        return m_skill;
+        return m_agentData.Skill;
     }
     #endregion
 
@@ -325,11 +282,11 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         CancelInvoke();
     }
 
-    public void resetAgent(float health, float skill)
+    public void resetAgent()
     {
         if(m_damageModule !=null)
         {
-            m_damageModule.resetCharacter(health);
+            m_damageModule.resetCharacter();
         }
 
         if(isDisabled())
@@ -360,11 +317,6 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     public GameObject getGameObject()
     {
         return this.transform.gameObject;
-    }
-
-    public void setAnimationSpeed(float speed)
-    {
-
     }
     #endregion
 }

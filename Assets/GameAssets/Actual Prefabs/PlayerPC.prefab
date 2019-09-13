@@ -11716,10 +11716,9 @@ GameObject:
   - component: {fileID: 2784489733749556824}
   - component: {fileID: 2784489733749556827}
   - component: {fileID: 2784489733749556826}
-  - component: {fileID: 5358365715308865740}
-  - component: {fileID: 2784489733749556829}
   - component: {fileID: 1813881778960865218}
   - component: {fileID: 6280258974978153732}
+  - component: {fileID: 7852240985771631596}
   m_Layer: 12
   m_Name: PlayerPC
   m_TagString: Player
@@ -11778,10 +11777,7 @@ Animator:
   m_UpdateMode: 0
   m_ApplyRootMotion: 1
   m_LinearVelocityBlending: 0
-  m_WarningMessage: "\nBinding warning: Some generic clip(s) animate transforms that
-    are already bound by a Humanoid avatar. These transforms can only be changed by
-    Humanoid clips.\n\tTransform 'Hand_L'\n\tTransform 'Hand_L'\n\tTransform 'Hand_L'\n\tFrom
-    animation clip 'RifleAim'"
+  m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
@@ -12384,31 +12380,6 @@ MonoBehaviour:
   applyIkOnRagdoll: 0
   applyVelocity: 1
   applyAngularVelocity: 1
---- !u!114 &5358365715308865740
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2784489733749556828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 16918b79f5a71b24ab7d91ba46db4545, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  AgentType: 2
---- !u!114 &2784489733749556829
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2784489733749556828}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d563acaf1b7d6444a5a5096f8bd6e2c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1813881778960865218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12424,7 +12395,6 @@ MonoBehaviour:
   m_inUse: 0
   m_timeToReset: 2
   m_agentFaction: 0
-  health: 4
 --- !u!195 &6280258974978153732
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -12435,7 +12405,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 19
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 120
@@ -12447,6 +12417,23 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &7852240985771631596
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2784489733749556828}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba0cc24f46798454583813343a3fa710, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AgentData:
+    AgentNature: 0
+    Skill: 1
+    maxHealth: 0
+    health: 0
 --- !u!1 &2784489733919303412
 GameObject:
   m_ObjectHideFlags: 0
@@ -31791,7 +31778,7 @@ MonoBehaviour:
   m_magazineSize: 30
   weaponName: Rifle
   magazinePositionOffset: {x: 0, y: 0, z: 0}
-  magazineObjProp: {fileID: 0}
+  magazineObjProp: {fileID: 4767483745652486011}
 --- !u!114 &5368162793375829846
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35503,7 +35490,7 @@ MonoBehaviour:
   m_magazineSize: 12
   weaponName: Pistol
   magazinePositionOffset: {x: 0, y: 0, z: 0}
-  magazineObjProp: {fileID: 0}
+  magazineObjProp: {fileID: 8209068074782550139}
 --- !u!114 &6445429084657395614
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -37263,17 +37250,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3907495676557974478, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
         type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3907495676557974478, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
-        type: 3}
       propertyPath: lengthInSec
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3907495676557974478, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
         type: 3}
       propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3907495676557974478, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
+        type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3907495676557974478, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
@@ -37472,11 +37459,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: LaserMuzzleFlash
       objectReference: {fileID: 0}
-    - target: {fileID: 2081248893930762509, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 5926775866237569448, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -37554,17 +37536,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3907495676557974478, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
         type: 3}
-      propertyPath: playOnAwake
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3907495676557974478, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
-        type: 3}
       propertyPath: lengthInSec
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3907495676557974478, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
         type: 3}
       propertyPath: looping
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3907495676557974478, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
+        type: 3}
+      propertyPath: playOnAwake
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3907495676557974478, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
@@ -37739,15 +37721,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0, type: 3}
---- !u!4 &2741061664790573063 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5926775866237569448, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
-    type: 3}
-  m_PrefabInstance: {fileID: 8379534452345977263}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &4787362333404324449 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 3907495676557974478, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 8379534452345977263}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &2741061664790573063 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5926775866237569448, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
     type: 3}
   m_PrefabInstance: {fileID: 8379534452345977263}
   m_PrefabAsset: {fileID: 0}

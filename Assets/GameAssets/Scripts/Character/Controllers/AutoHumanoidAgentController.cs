@@ -3,15 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-[RequireComponent(typeof(ICyberAgent))]
+[RequireComponent(typeof(HumanoidMovingAgent))]
 public class AutoHumanoidAgentController :  AgentController
 {
     public HumanoidMovingAgent target;
-    protected ICyberAgent m_movingAgent;
+    protected HumanoidMovingAgent m_movingAgent;
     protected ICharacterBehaviorState m_currentState;
     protected NavMeshAgent m_navMeshAgent;
-    public float health;
-    public float skillLevel;
+    //public float health;
 
     public BasicWaypoint[] basicWaypoints;
 
@@ -19,18 +18,17 @@ public class AutoHumanoidAgentController :  AgentController
 
     private void Awake()
     {
-        m_movingAgent = this.GetComponent<ICyberAgent>();
+        m_movingAgent = this.GetComponent<HumanoidMovingAgent>();
     }
 
     void Start()
     {
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
         m_currentState = new CombatStage(m_movingAgent, target,m_navMeshAgent);
-        m_movingAgent.setHealth(health);
+        //m_movingAgent.setHealth(health);
         m_movingAgent.setWeponFireCapability(false);
         intializeAgentCallbacks(m_movingAgent);
         m_movingAgent.setFaction(m_agentFaction);
-        m_movingAgent.setSkill(skillLevel);
         m_movingAgent.enableTranslateMovment(false);
     }
     #endregion
@@ -41,7 +39,6 @@ public class AutoHumanoidAgentController :  AgentController
         if(m_movingAgent.IsFunctional() && !m_movingAgent.isDisabled() & isInUse())
         {
             m_currentState.updateStage();
-            m_movingAgent.setAnimationSpeed(m_navMeshAgent.velocity.normalized.magnitude/0.8f);
         }
     }
     #endregion
@@ -81,7 +78,6 @@ public class AutoHumanoidAgentController :  AgentController
 
         if (m_movingAgent != null)
         {
-            m_movingAgent.resetAgent(health, skillLevel);
         }
     }
 
@@ -101,12 +97,12 @@ public class AutoHumanoidAgentController :  AgentController
 
     public override float getSkill()
     {
-        return skillLevel;
+        return m_movingAgent.AgentData.Skill;
     }
 
     public override void setMovableAgent(ICyberAgent agent)
     {
-        m_movingAgent = agent;
+        m_movingAgent = (HumanoidMovingAgent)agent;
     }
 
     public override ICyberAgent getICyberAgent()
