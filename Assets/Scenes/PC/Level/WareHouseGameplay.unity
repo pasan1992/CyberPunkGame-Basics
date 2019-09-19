@@ -5043,7 +5043,7 @@ PrefabInstance:
     - target: {fileID: 689295171652787206, guid: 686b40a5e671c1944856f84f2ec67cbb,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6144393412093649264, guid: 686b40a5e671c1944856f84f2ec67cbb,
         type: 3}
@@ -10045,7 +10045,7 @@ PrefabInstance:
     - target: {fileID: 689295171652787206, guid: 686b40a5e671c1944856f84f2ec67cbb,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6144393412093649264, guid: 686b40a5e671c1944856f84f2ec67cbb,
         type: 3}
@@ -17039,7 +17039,7 @@ PrefabInstance:
     - target: {fileID: 689295171652787206, guid: 686b40a5e671c1944856f84f2ec67cbb,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6144393412093649264, guid: 686b40a5e671c1944856f84f2ec67cbb,
         type: 3}
@@ -17356,11 +17356,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
       propertyPath: AgentData.maxHealth
-      value: 5
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 1675480244, guid: 686b40a5e671c1944856f84f2ec67cbb, type: 3}
       propertyPath: AgentData.health
-      value: 5
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 1590357667873191802, guid: 686b40a5e671c1944856f84f2ec67cbb,
         type: 3}
@@ -17555,7 +17555,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5e567ff2d4aee24b9d89a97c853a918, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorTexture: {fileID: 2800000, guid: 8aa36a7ae0b59384facef7a97485be72, type: 3}
+  aimedTexture: {fileID: 2800000, guid: 8aa36a7ae0b59384facef7a97485be72, type: 3}
+  aimedOnTargetTexture: {fileID: 2800000, guid: a15ad419e8173b044b3d7b1337925d4f,
+    type: 3}
+  idleTexture: {fileID: 2800000, guid: db67680a8a5ecf14fbc7fdbc438ba016, type: 3}
   cursorMode: 0
   hotSpot: {x: 17, y: 17}
 --- !u!114 &1845584497
@@ -20841,12 +20844,12 @@ PrefabInstance:
     - target: {fileID: 7852240985771631596, guid: d44a392987e428e45a2445e565f91e5d,
         type: 3}
       propertyPath: AgentData.maxHealth
-      value: 5
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 7852240985771631596, guid: d44a392987e428e45a2445e565f91e5d,
         type: 3}
       propertyPath: AgentData.health
-      value: 5
+      value: 1000
       objectReference: {fileID: 0}
     - target: {fileID: 7852240985771631596, guid: d44a392987e428e45a2445e565f91e5d,
         type: 3}
@@ -20856,11 +20859,16 @@ PrefabInstance:
     - target: {fileID: 6280258973117777085, guid: d44a392987e428e45a2445e565f91e5d,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6280258973250738268, guid: d44a392987e428e45a2445e565f91e5d,
         type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1813881778960865218, guid: d44a392987e428e45a2445e565f91e5d,
+        type: 3}
+      propertyPath: m_agentFaction
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

@@ -26,7 +26,7 @@ public class AutoHumanoidAgentController :  AgentController
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
         m_currentState = new CombatStage(m_movingAgent, target,m_navMeshAgent);
         //m_movingAgent.setHealth(health);
-        m_movingAgent.setWeponFireCapability(false);
+        m_movingAgent.setWeponFireCapability(true);
         intializeAgentCallbacks(m_movingAgent);
         m_movingAgent.setFaction(m_agentFaction);
         m_movingAgent.enableTranslateMovment(false);
@@ -47,12 +47,12 @@ public class AutoHumanoidAgentController :  AgentController
 
     void OnBecameVisible()
     {
-        m_currentState.setWeaponFireCapability(true);
+        //m_currentState.setWeaponFireCapability(true);
     }
 
     void OnBecameInvisible()
     {
-        m_currentState.setWeaponFireCapability(false);
+        //m_currentState.setWeaponFireCapability(false);
     }
 
     public override void OnAgentDestroy()

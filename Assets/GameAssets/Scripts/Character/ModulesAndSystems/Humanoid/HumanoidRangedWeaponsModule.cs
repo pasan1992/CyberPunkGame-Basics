@@ -10,9 +10,13 @@ public class HumanoidRangedWeaponsModule
     protected Weapon m_currentWeapon;
     protected Weapon m_rifle;
     protected Weapon m_pistol;
-    protected WeaponProp m_rifleProp;
-    protected WeaponProp m_pistolProp;
+   // protected WeaponProp m_rifleProp;
+   // protected WeaponProp m_pistolProp;
     //private AgentParameters m_agentParameters;
+
+    protected GameObject primaryHosterLocation;
+    protected GameObject secondaryHosterLocation;
+    protected GameObject weaponHoldLocation;
 
     protected AgentData m_agentData;
 
@@ -30,7 +34,7 @@ public class HumanoidRangedWeaponsModule
     
     #endregion
 
-    public HumanoidRangedWeaponsModule(Weapon[] weapons, 
+    public HumanoidRangedWeaponsModule( 
     WeaponProp[] props, 
     HumanoidMovingAgent.CharacterMainStates state, 
     GameObject target, 
@@ -43,7 +47,7 @@ public class HumanoidRangedWeaponsModule
         m_recoil = recoil;
         m_animationSystem = animSystem;
         m_agentData = agentData;
-        getAllWeapons(weapons, props);
+        getAllWeapons(props);
     }
 
 
@@ -126,17 +130,18 @@ public class HumanoidRangedWeaponsModule
             case Weapon.WEAPONTYPE.primary:
                 // Select rifle as currentWeapon
                 //  Debug.Log("Primary Equip finished");
-                m_rifleProp.setVisible(false);
+                //m_rifleProp.setVisible(false);    
                 m_currentWeapon = m_rifle;
                 break;
 
             case Weapon.WEAPONTYPE.secondary:
                 // Select pistol as currentWeapon
                 // Debug.Log("Secondary Equip finished");
-                m_pistolProp.setVisible(false);
+                //m_pistolProp.setVisible(false);
                 m_currentWeapon = m_pistol;
                 break;
         }
+        placeWeaponInHand(m_currentWeapon);
 
         // Set Current Weapon Properties.
         m_currentWeapon.gameObject.SetActive(true);
@@ -147,19 +152,22 @@ public class HumanoidRangedWeaponsModule
     public void UnEquipAnimationEvent()
     {
         Weapon.WEAPONTYPE type = m_currentWeapon.getWeaponType();
-        m_currentWeapon.gameObject.SetActive(false);
+        //m_currentWeapon.gameObject.SetActive(false);
         m_currentWeapon = null;
         m_inEquipingAction = false;
 
         switch (type)
         {
             case Weapon.WEAPONTYPE.primary:
-                m_rifleProp.setVisible(true);
+                
+                //m_rifleProp.setVisible(true);
+                placePrimaryWeaponInHosterLocation();
                 // Debug.Log("Primary Unequip Finished");
                 break;
 
             case Weapon.WEAPONTYPE.secondary:
-                m_pistolProp.setVisible(true);
+                //m_pistolProp.setVisible(true);
+                placeSecondaryWeaponInHosterLocation();
                 //Debug.Log("Secondary Unequip Finished");
                 break;
         }
@@ -235,10 +243,17 @@ public class HumanoidRangedWeaponsModule
                 {
                     // Fast toggle
                     m_currentWeapon = m_rifle;
-                    m_pistol.gameObject.SetActive(false);
-                    m_rifle.gameObject.SetActive(true);
-                    m_rifleProp.setVisible(false);
-                    m_pistolProp.setVisible(true);
+
+
+                    //m_pistol.gameObject.SetActive(false);
+                    //m_rifle.gameObject.SetActive(true);
+                    placeWeaponInHand(m_currentWeapon);
+                    placeSecondaryWeaponInHosterLocation();
+
+                    //m_rifleProp.setVisible(false);
+                    //m_pistolProp.setVisible(true);
+                    
+
                     m_animationSystem.fastEquipCurrentEquipment();
 
                     if (m_currentState.Equals(HumanoidMovingAgent.CharacterMainStates.Aimed))
@@ -282,10 +297,15 @@ public class HumanoidRangedWeaponsModule
                 {
                     // Fast toggle
                     m_currentWeapon = m_pistol;
-                    m_rifle.gameObject.SetActive(false);
-                    m_rifleProp.setVisible(true);
-                    m_pistolProp.setVisible(false);
-                    m_pistol.gameObject.SetActive(true);
+
+                    placeWeaponInHand(m_currentWeapon);
+                    placePrimaryWeaponInHosterLocation();
+                    //m_rifle.gameObject.SetActive(false);
+                    //m_rifleProp.setVisible(true);
+                    //m_pistolProp.setVisible(false);
+                    //m_pistol.gameObject.SetActive(true);
+
+
                     m_animationSystem.fastEquipCurrentEquipment();
 
                     if (m_currentState.Equals(HumanoidMovingAgent.CharacterMainStates.Aimed))
@@ -327,7 +347,7 @@ public class HumanoidRangedWeaponsModule
 
     public void setCurretnWeaponProp(WeaponProp weaponProp)
     {
-        this.m_pistolProp = weaponProp;
+        //this.m_pistolProp = weaponProp;
     }
 
     public Weapon getCurrentWeapon()
@@ -363,45 +383,70 @@ public class HumanoidRangedWeaponsModule
         return m_animationSystem.isEquiped();
     }
 
-    private void getAllWeapons(Weapon[] weapons, WeaponProp[] props)
-    {
-        foreach (Weapon wep in weapons)
-        {
-            wep.setOwnerFaction(m_ownersFaction);
-            wep.setAimed(false);
-            wep.setGunTarget(m_target);
-            wep.gameObject.SetActive(false);
-            wep.addOnWeaponFireEvent(OnWeaponFire);
-
-            Weapon.WEAPONTYPE type = wep.getWeaponType();
-
-            switch (type)
-            {
-                case Weapon.WEAPONTYPE.primary:
-                    m_rifle = wep;
-                    break;
-
-                case Weapon.WEAPONTYPE.secondary:
-                    m_pistol = wep;
-                    break;
-            }
-        }
-
+    private void getAllWeapons(WeaponProp[] props)
+    {       
         foreach (WeaponProp prop in props)
         {
-            Weapon.WEAPONTYPE type = prop.getPropType();
+            WeaponProp.WeaponLocation type = prop.getPropType();
 
             switch (type)
             {
-                case Weapon.WEAPONTYPE.primary:
-                    m_rifleProp = prop;
+                case WeaponProp.WeaponLocation.HOSTER_PRIMARY:
+                    primaryHosterLocation = prop.gameObject;
                     break;
 
-                case Weapon.WEAPONTYPE.secondary:
-                    m_pistolProp = prop;
+                case WeaponProp.WeaponLocation.HOSTER_SECONDAY:
+                    secondaryHosterLocation = prop.gameObject;
+                    break;
+                case WeaponProp.WeaponLocation.HAND:
+                    weaponHoldLocation = prop.gameObject;
                     break;
             }
         }
+
+        if(m_agentData.primaryWeapon)
+        {
+            m_rifle = m_agentData.primaryWeapon;
+            m_rifle.setAimed(false);
+            m_rifle.setOwnerFaction(m_ownersFaction);
+            m_rifle.setGunTarget(m_target);
+            m_rifle.addOnWeaponFireEvent(OnWeaponFire);
+            placePrimaryWeaponInHosterLocation();
+        }
+
+        if(m_agentData.secondaryWeapon)
+        {
+            m_pistol = m_agentData.secondaryWeapon;
+            m_pistol.setAimed(false);
+            m_pistol.setOwnerFaction(m_ownersFaction);
+            m_pistol.setGunTarget(m_target);
+            m_pistol.addOnWeaponFireEvent(OnWeaponFire);
+            placeSecondaryWeaponInHosterLocation();           
+        }
+
+        // foreach (Weapon wep in weapons)
+        // {
+        //     wep.setOwnerFaction(m_ownersFaction);
+        //     wep.setAimed(false);
+        //     wep.setGunTarget(m_target);
+        //     //wep.gameObject.SetActive(false);
+        //     wep.addOnWeaponFireEvent(OnWeaponFire);
+
+        //     Weapon.WEAPONTYPE type = wep.getWeaponType();
+
+        //     switch (type)
+        //     {
+        //         case Weapon.WEAPONTYPE.primary:
+        //             m_rifle = wep;
+        //             placePrimaryWeaponInHosterLocation();
+        //             break;
+
+        //         case Weapon.WEAPONTYPE.secondary:
+        //             m_pistol = wep;
+        //             placeSecondaryWeaponInHosterLocation();
+        //             break;
+        //     }
+        // }
     }
 
     public bool isInEquipingAction()
@@ -461,8 +506,27 @@ public class HumanoidRangedWeaponsModule
         }
     }
 
+    public void placePrimaryWeaponInHosterLocation()
+    {
+        m_rifle.transform.parent = primaryHosterLocation.transform;
+        m_rifle.transform.localPosition = Vector3.zero;
+        m_rifle.transform.localRotation = Quaternion.identity;
+    }
+
+    public void placeSecondaryWeaponInHosterLocation()
+    {
+        m_pistol.transform.parent = secondaryHosterLocation.transform;
+        m_pistol.transform.localPosition = Vector3.zero;
+        m_pistol.transform.localRotation = Quaternion.identity;
+    }
+
+    public void placeWeaponInHand(Weapon weapon)
+    {
+        weapon.transform.parent = weaponHoldLocation.transform;
+        weapon.transform.localPosition = Vector3.zero;
+        weapon.transform.localRotation = Quaternion.identity;
+        
+    }
+
     #endregion
 }
-
-
-

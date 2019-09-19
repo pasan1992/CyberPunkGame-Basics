@@ -135,17 +135,35 @@ public class PlayerController : AgentController
         RaycastHit hit;
         Vector3 targetPosition = Vector3.zero;
 
-        if (Physics.Raycast(castPoint, out hit, Mathf.Infinity, floorHitLayerMask))
-        {
-            // targetPosition = setTargetHeight(hit.point, hit.transform.tag);
-            targetPosition = hit.point;
-        }
+        bool found = false;
 
         if (Physics.Raycast(castPoint, out hit, Mathf.Infinity, enemyHitLayerMask))
         {
             //targetPosition = setTargetHeight(hit.point, hit.transform.tag);
+            MouseCurserSystem.getInstance().setMouseCurserState(MouseCurserSystem.CURSOR_STATE.ONTARGET);
+            targetPosition = hit.point;
+            found = true;
+        }
+
+        if (!found && Physics.Raycast(castPoint, out hit, Mathf.Infinity, floorHitLayerMask))
+        {
+            // targetPosition = setTargetHeight(hit.point, hit.transform.tag);
+            
+
+
+            if(m_movingAgent.isAimed())
+            {
+                MouseCurserSystem.getInstance().setMouseCurserState(MouseCurserSystem.CURSOR_STATE.AIMED);
+            }
+            else
+            {
+                MouseCurserSystem.getInstance().setMouseCurserState(MouseCurserSystem.CURSOR_STATE.IDLE);
+            }
+
             targetPosition = hit.point;
         }
+
+
 
         m_movingAgent.setTargetPoint(targetPosition);
     }
