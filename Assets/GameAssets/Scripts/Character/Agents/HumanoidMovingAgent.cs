@@ -82,6 +82,22 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
     #region Commands
 
+    public void pickupItem()
+    {
+       GameObject obj = AgentItemFinder.findNearItem(getCurrentPosition());
+
+       if(obj != null)
+       {
+           m_movmentModule.LookAtObject(obj.transform.position);
+           m_animationModule.triggerPickup();
+           Weapon weapon = obj.GetComponent<Weapon>();
+
+           if(weapon)
+           {
+               m_equipmentModule.equipWeapon(weapon);
+           }
+       }
+    }
     public void damageAgent(float amount)
     {
         m_damageModule.DamageByAmount(amount);

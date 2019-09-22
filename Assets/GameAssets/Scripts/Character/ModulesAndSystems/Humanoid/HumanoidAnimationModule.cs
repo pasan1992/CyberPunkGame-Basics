@@ -29,6 +29,9 @@ public partial class HumanoidAnimationModule : AnimationModule
             case HumanoidMovingAgent.CharacterMainStates.Idle:
                 m_aimIK.solver.IKPositionWeight = Mathf.Lerp(m_aimIK.solver.IKPositionWeight, 0, Time.deltaTime * m_aimSpeed);
                 break;
+            case HumanoidMovingAgent.CharacterMainStates.Dodge:
+                m_aimIK.solver.IKPositionWeight = Mathf.Lerp(m_aimIK.solver.IKPositionWeight, 0, Time.deltaTime * m_aimSpeed);
+                break;
         }
     }
 
@@ -136,6 +139,11 @@ public partial class HumanoidAnimationModule : AnimationModule
     {
         m_animator.SetTrigger("shrug");
         //m_animator.SetTrigger("throw");
+    }
+
+    public void triggerPickup()
+    {
+        m_animator.SetTrigger("pickup");
     }
 
     #endregion

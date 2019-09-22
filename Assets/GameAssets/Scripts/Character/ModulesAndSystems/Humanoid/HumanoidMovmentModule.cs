@@ -151,6 +151,11 @@ public class HumanoidMovmentModule : MovmentModule
         m_characterTransform.LookAt(getTurnPoint(), Vector3.up);
     }
 
+    public void LookAtObject(Vector3 position)
+    {
+        m_characterTransform.LookAt(position,Vector3.up);
+    }
+
     #endregion
 }
 

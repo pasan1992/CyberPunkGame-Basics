@@ -10,7 +10,10 @@ public class PlayerController : AgentController
     protected HumanoidMovingAgent m_movingAgent;
 
     private LayerMask enemyHitLayerMask;
+    private LayerMask targetHitLayerMask;
+
     private LayerMask floorHitLayerMask;
+    
     private float speedModifyVale;
     private float verticleSpeed;
     private float horizontalSpeed;
@@ -25,7 +28,8 @@ public class PlayerController : AgentController
         m_movingAgent = this.GetComponent<HumanoidMovingAgent>();
         m_movingAgent.setFaction(m_agentFaction);
         enemyHitLayerMask = LayerMask.GetMask("Enemy");
-        floorHitLayerMask = LayerMask.GetMask("Target");
+        targetHitLayerMask = LayerMask.GetMask("Target");
+        floorHitLayerMask = LayerMask.GetMask("Floor");
         m_healthBar = this.GetComponentInChildren<HealthBar>();
 
         createTargetPlane();
@@ -35,6 +39,9 @@ public class PlayerController : AgentController
         //m_movingAgent.setOnDestoryCallback(OnAgentDestroy);
         //m_movingAgent.setOnDisableCallback(onAgentDisable);
         agent = this.GetComponent<NavMeshAgent>();
+        //agent.updateRotation = false;
+
+        //m_movingAgent.enableTranslateMovment(false);
     }
 
     private void createTargetPlane()
@@ -59,10 +66,32 @@ public class PlayerController : AgentController
 
     #region Updates
 
+    private void updateNavMesgAgnet()
+    {
+        if(Input.GetMouseButton(0) && !Input.GetMouseButton(1))
+        {
+            RaycastHit hit;
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, floorHitLayerMask))
+            {
+                agent.isStopped = true;
+                agent.SetDestination(hit.point);
+                agent.isStopped = false;
+            }
+        }
+    }
+
     private void controllerUpdate()
     {
-        verticleSpeed = Mathf.Lerp(verticleSpeed, Input.GetAxis("Vertical"),1);
-        horizontalSpeed = Mathf.Lerp(horizontalSpeed, Input.GetAxis("Horizontal"), 1f);
+        //updateNavMesgAgnet();
+
+        verticleSpeed = Mathf.Lerp(verticleSpeed, Input.GetAxis("Vertical"),0.7f);
+        horizontalSpeed = Mathf.Lerp(horizontalSpeed, Input.GetAxis("Horizontal"), 0.7f);
+        //Vector3 velocity = agent.desiredVelocity;
+       //velocity = velocity.normalized;
+
+        //verticleSpeed = agent.velocity.x;
+        //horizontalSpeed = agent.velocity.z;
 
         // Setting Character Aiming.
         if (Input.GetMouseButton(1) && !m_movingAgent.isEquipingWeapon())
@@ -97,16 +126,25 @@ public class PlayerController : AgentController
         {
             speedModifyVale = Mathf.Lerp(speedModifyVale, 2, 0.1f);
             m_movingAgent.moveCharacter(getDirectionRelativeToCamera(new Vector3(verticleSpeed * speedModifyVale, 0, -horizontalSpeed * speedModifyVale)));
+            //velocity = new Vector3(velocity.x, 0, velocity.z);
+            //m_movingAgent.moveCharacter(velocity);
         }
         else
         {
             speedModifyVale = Mathf.Lerp(speedModifyVale, 1f, 0.1f);
             m_movingAgent.moveCharacter(getDirectionRelativeToCamera((new Vector3(verticleSpeed, 0, -horizontalSpeed)).normalized*speedModifyVale));
+            //velocity = new Vector3(velocity.x, 0, velocity.z);
+            //m_movingAgent.moveCharacter(velocity);
         }
 
         if(Input.GetKeyDown(KeyCode.R))
         {
             m_movingAgent.reloadCurretnWeapon();
+        }
+
+        if(Input.GetKeyDown(KeyCode.E))
+        {
+            m_movingAgent.pickupItem();
         }
 
 
@@ -145,7 +183,7 @@ public class PlayerController : AgentController
             found = true;
         }
 
-        if (!found && Physics.Raycast(castPoint, out hit, Mathf.Infinity, floorHitLayerMask))
+        if (!found && Physics.Raycast(castPoint, out hit, Mathf.Infinity, targetHitLayerMask))
         {
             // targetPosition = setTargetHeight(hit.point, hit.transform.tag);
             
@@ -177,6 +215,12 @@ public class PlayerController : AgentController
             m_healthBar.setHealthPercentage(m_movingAgent.AgentData.Health/m_movingAgent.AgentData.MaxHealth);
         }
 
+    }
+
+    private void FixedUpdate()
+    {
+      //  UpdateShooting();
+      //  UpdateTargetPoint();
     }
     #endregion
 

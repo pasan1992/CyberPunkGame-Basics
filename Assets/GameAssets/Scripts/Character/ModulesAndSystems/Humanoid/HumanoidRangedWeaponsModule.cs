@@ -161,13 +161,15 @@ public class HumanoidRangedWeaponsModule
             case Weapon.WEAPONTYPE.primary:
                 
                 //m_rifleProp.setVisible(true);
-                placePrimaryWeaponInHosterLocation();
+                //placePrimaryWeaponInHosterLocation();
                 // Debug.Log("Primary Unequip Finished");
+                placeWeaponinHosterLocation(m_rifle);
                 break;
 
             case Weapon.WEAPONTYPE.secondary:
                 //m_pistolProp.setVisible(true);
-                placeSecondaryWeaponInHosterLocation();
+                placeWeaponinHosterLocation(m_pistol);
+                //placeSecondaryWeaponInHosterLocation();
                 //Debug.Log("Secondary Unequip Finished");
                 break;
         }
@@ -248,7 +250,8 @@ public class HumanoidRangedWeaponsModule
                     //m_pistol.gameObject.SetActive(false);
                     //m_rifle.gameObject.SetActive(true);
                     placeWeaponInHand(m_currentWeapon);
-                    placeSecondaryWeaponInHosterLocation();
+                    placeWeaponinHosterLocation(m_pistol);
+                    //placeSecondaryWeaponInHosterLocation();
 
                     //m_rifleProp.setVisible(false);
                     //m_pistolProp.setVisible(true);
@@ -299,7 +302,8 @@ public class HumanoidRangedWeaponsModule
                     m_currentWeapon = m_pistol;
 
                     placeWeaponInHand(m_currentWeapon);
-                    placePrimaryWeaponInHosterLocation();
+                    //placePrimaryWeaponInHosterLocation();
+                    placeWeaponinHosterLocation(m_rifle);
                     //m_rifle.gameObject.SetActive(false);
                     //m_rifleProp.setVisible(true);
                     //m_pistolProp.setVisible(false);
@@ -411,7 +415,8 @@ public class HumanoidRangedWeaponsModule
             m_rifle.setOwnerFaction(m_ownersFaction);
             m_rifle.setGunTarget(m_target);
             m_rifle.addOnWeaponFireEvent(OnWeaponFire);
-            placePrimaryWeaponInHosterLocation();
+            //placePrimaryWeaponInHosterLocation();
+            placeWeaponinHosterLocation(m_rifle);
         }
 
         if(m_agentData.secondaryWeapon)
@@ -421,7 +426,7 @@ public class HumanoidRangedWeaponsModule
             m_pistol.setOwnerFaction(m_ownersFaction);
             m_pistol.setGunTarget(m_target);
             m_pistol.addOnWeaponFireEvent(OnWeaponFire);
-            placeSecondaryWeaponInHosterLocation();           
+            placeWeaponinHosterLocation(m_pistol);           
         }
 
         // foreach (Weapon wep in weapons)
@@ -506,26 +511,78 @@ public class HumanoidRangedWeaponsModule
         }
     }
 
-    public void placePrimaryWeaponInHosterLocation()
+    // public void placePrimaryWeaponInHosterLocation()
+    // {
+    //     m_rifle.transform.parent = primaryHosterLocation.transform;
+    //     m_rifle.transform.localPosition = Vector3.zero;
+    //     m_rifle.transform.localRotation = Quaternion.identity;
+    // }
+
+    public void placeWeaponinHosterLocation(Weapon weapon)
     {
-        m_rifle.transform.parent = primaryHosterLocation.transform;
-        m_rifle.transform.localPosition = Vector3.zero;
-        m_rifle.transform.localRotation = Quaternion.identity;
+            Transform hosteringLocation = null;
+
+            if(weapon.GetType() == typeof(PrimaryWeapon))
+            {
+                hosteringLocation = primaryHosterLocation.transform;
+            }
+            else if (weapon.GetType() == typeof(SecondaryWeapon))
+            {
+                hosteringLocation = secondaryHosterLocation.transform;
+            }
+            
+            weapon.transform.parent = hosteringLocation;
+            weapon.transform.localPosition = Vector3.zero;
+            weapon.transform.localRotation = Quaternion.identity;
     }
 
-    public void placeSecondaryWeaponInHosterLocation()
-    {
-        m_pistol.transform.parent = secondaryHosterLocation.transform;
-        m_pistol.transform.localPosition = Vector3.zero;
-        m_pistol.transform.localRotation = Quaternion.identity;
-    }
+    // public void placeSecondaryWeaponInHosterLocation()
+    // {
+    //     m_pistol.transform.parent = secondaryHosterLocation.transform;
+    //     m_pistol.transform.localPosition = Vector3.zero;
+    //     m_pistol.transform.localRotation = Quaternion.identity;
+    // }
 
     public void placeWeaponInHand(Weapon weapon)
     {
         weapon.transform.parent = weaponHoldLocation.transform;
-        weapon.transform.localPosition = Vector3.zero;
+        weapon.transform.localPosition = Vector3.zero + weapon.handPlacementOffset;
         weapon.transform.localRotation = Quaternion.identity;
-        
+        m_recoil.handRotationOffset = weapon.weaponRecoilOffset;  
+        weapon.transform.localScale = Vector3.one;     
+    }
+
+    public void equipWeapon(Weapon weapon)
+    {
+        bool weaponEquipable = false;
+        if(weapon.GetType() == typeof(PrimaryWeapon))
+        {
+            if(!m_rifle)
+            {
+                m_rifle = weapon;
+                placeWeaponinHosterLocation(weapon);
+                m_rifle.onWeaponEquip();
+                weaponEquipable = true;
+            }
+        }
+        else if (weapon.GetType() == typeof(SecondaryWeapon))
+        {
+            if(!m_pistol)
+            {
+                m_pistol = weapon;
+                placeWeaponinHosterLocation(weapon);
+                m_pistol.onWeaponEquip();
+                weaponEquipable = true;
+            }
+        }
+
+        if(weaponEquipable)
+        {
+            weapon.setAimed(false);
+            weapon.setOwnerFaction(m_ownersFaction);
+            weapon.setGunTarget(m_target);
+            weapon.addOnWeaponFireEvent(OnWeaponFire);
+        }
     }
 
     #endregion

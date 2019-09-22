@@ -50,6 +50,12 @@ public abstract class Weapon : MonoBehaviour
     public Vector3 magazinePositionOffset;
     public GameObject magazineObjProp;
 
+    public Vector3 handPlacementOffset;
+
+    public Vector3 weaponRecoilOffset;
+
+    public bool isDropped;
+
     public void Awake()
     {
         m_line = this.GetComponent<LineRenderer>();
@@ -287,6 +293,8 @@ public abstract class Weapon : MonoBehaviour
     public void onWeaponEquip()
     {
         setAimed(true);
+        isDropped = false;
+        m_rigidbody.isKinematic = true;
     }
 
     #endregion
