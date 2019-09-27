@@ -85,8 +85,8 @@ public class PlayerController : AgentController
     {
         //updateNavMesgAgnet();
 
-        verticleSpeed = Mathf.Lerp(verticleSpeed, Input.GetAxis("Vertical"),0.7f);
-        horizontalSpeed = Mathf.Lerp(horizontalSpeed, Input.GetAxis("Horizontal"), 0.7f);
+        verticleSpeed = Mathf.Lerp(verticleSpeed, Input.GetAxis("Vertical"),0.85f);
+        horizontalSpeed = Mathf.Lerp(horizontalSpeed, Input.GetAxis("Horizontal"), 0.85f);
         //Vector3 velocity = agent.desiredVelocity;
        //velocity = velocity.normalized;
 

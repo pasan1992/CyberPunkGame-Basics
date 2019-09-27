@@ -214,7 +214,7 @@ namespace RootMotion.FinalIK {
 		public class Range {
 		
 			[HideInInspector][SerializeField] public string name; // Name is composed automatically by InteractionTriggerInspector.cs. Editor only.
-			[HideInInspector][SerializeField] public bool show = true; // Show this range in the Scene view? Editor only.
+			[SerializeField] public bool show = true; // Show this range in the Scene view? Editor only.
 			
 			/// <summary>
 			/// Defines the interaction object and effectors that will be triggered when calling InteractionSystem.TriggerInteraction().

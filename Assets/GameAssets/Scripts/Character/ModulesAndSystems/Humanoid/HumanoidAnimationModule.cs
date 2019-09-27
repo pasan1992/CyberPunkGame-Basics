@@ -32,6 +32,9 @@ public partial class HumanoidAnimationModule : AnimationModule
             case HumanoidMovingAgent.CharacterMainStates.Dodge:
                 m_aimIK.solver.IKPositionWeight = Mathf.Lerp(m_aimIK.solver.IKPositionWeight, 0, Time.deltaTime * m_aimSpeed);
                 break;
+            default:
+                m_aimIK.solver.IKPositionWeight = Mathf.Lerp(m_aimIK.solver.IKPositionWeight, 0, Time.deltaTime * m_aimSpeed);
+                break;
         }
     }
 
@@ -143,7 +146,12 @@ public partial class HumanoidAnimationModule : AnimationModule
 
     public void triggerPickup()
     {
-        m_animator.SetTrigger("pickup");
+        // TODO
+        if(!isCrouched())
+        {
+            m_animator.SetTrigger("pickup");
+        }
+        
     }
 
     #endregion

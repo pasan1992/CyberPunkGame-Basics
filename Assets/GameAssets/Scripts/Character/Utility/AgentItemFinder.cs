@@ -4,27 +4,29 @@ using UnityEngine;
 
 public class AgentItemFinder
 {
-    public static GameObject findNearItem(Vector3 currentPosition)
+    public static Interactable findNearItem(Vector3 currentPosition)
     {
-        Collider[] nearObjects = Physics.OverlapSphere(currentPosition, 1);
-        List<GameObject> pickableObjects = new List<GameObject>();
+        Collider[] nearObjects = Physics.OverlapSphere(currentPosition, 0.7f);
+        List<Interactable> pickableObjects = new List<Interactable>();
 
         foreach(Collider nearObject in nearObjects)
         {
-            if(nearObject.tag == "Item")
+            Interactable interactableObject = nearObject.GetComponent<Interactable>();
+
+            if(interactableObject && interactableObject.properties.interactionEnabled && nearObject.tag == "Item")
             {
-                pickableObjects.Add(nearObject.gameObject);
+                pickableObjects.Add(interactableObject);
             }
         }
         return findTheNearst(pickableObjects,currentPosition);
     }
 
-    private static GameObject findTheNearst(List<GameObject> pickableObjects, Vector3 currentPosition)
+    private static Interactable findTheNearst(List<Interactable> pickableObjects, Vector3 currentPosition)
     {
         float minmumDistance = float.MaxValue;
-        GameObject nearsetObject = null;
+        Interactable nearsetObject = null;
 
-        foreach(GameObject pickableObject in pickableObjects)
+        foreach(Interactable pickableObject in pickableObjects)
         {
             float distance = Vector3.Distance(currentPosition,pickableObject.transform.position);
             if(minmumDistance > distance)

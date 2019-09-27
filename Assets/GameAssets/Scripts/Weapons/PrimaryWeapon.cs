@@ -1,10 +1,21 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(Outline))]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(BoxCollider))]
 public class PrimaryWeapon : Weapon
 {
     protected float burstFireInterval;
 
     #region command
+
+    public void Awake()
+    {
+        base.Awake();
+        properties.Type = InteractableProperties.InteractableType.PrimaryWeapon;
+    }
 
     public override void pullTrigger()
     {

@@ -106,6 +106,10 @@ public class HumanoidMovmentModule : MovmentModule
                     this.m_characterTransform.Translate(Vector3.forward * movmentDirection.magnitude * crouchSpeedMultiplayer / divider);
                 }
                 break;
+            default:
+                // No neet of movment in other states.
+                // Dodge roll, interaction
+                break;
         }
     }
     #endregion

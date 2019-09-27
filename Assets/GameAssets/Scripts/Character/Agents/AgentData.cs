@@ -14,6 +14,8 @@ public class AgentData : AgentBasicData
     public PrimaryWeapon primaryWeapon;
     public SecondaryWeapon secondaryWeapon;
 
+    public List<Interactable> inventryItems;
+
     public AgentData()
     {
         weaponAmmoCount = new Dictionary<string,int>();

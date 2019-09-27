@@ -1,9 +1,21 @@
 ﻿using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
+[RequireComponent(typeof(LineRenderer))]
+[RequireComponent(typeof(Outline))]
+[RequireComponent(typeof(Rigidbody))]
+[RequireComponent(typeof(BoxCollider))]
 public class SecondaryWeapon : Weapon
 {
     private float timeFromLastFire;
     private bool waitToFire = false;
+
+    public void Awake()
+    {
+        base.Awake();
+        properties.Type = InteractableProperties.InteractableType.SecondaryWeapon;
+    }
+
     #region command
 
     public override void pullTrigger()

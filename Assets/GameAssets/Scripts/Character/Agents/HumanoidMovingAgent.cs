@@ -21,8 +21,9 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
 
     // Attributes
-    public enum CharacterMainStates { Aimed, Armed_not_Aimed, Dodge, Idle }
+    public enum CharacterMainStates { Aimed, Armed_not_Aimed, Dodge, Idle,Interaction }
     private CharacterMainStates m_characterState = CharacterMainStates.Idle;
+    private CharacterMainStates m_previousTempState = CharacterMainStates.Idle;
     protected GameObject m_target;
     private bool m_characterEnabled = true;
     private AgentController.AgentFaction m_agentFaction;
@@ -84,19 +85,79 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
     public void pickupItem()
     {
-       GameObject obj = AgentItemFinder.findNearItem(getCurrentPosition());
+       Interactable obj = AgentItemFinder.findNearItem(getCurrentPosition());
 
        if(obj != null)
        {
-           m_movmentModule.LookAtObject(obj.transform.position);
-           m_animationModule.triggerPickup();
-           Weapon weapon = obj.GetComponent<Weapon>();
+           float distance = Vector3.Distance(getCurrentPosition(),obj.transform.position);
 
-           if(weapon)
+           if(distance>0.7f)
            {
-               m_equipmentModule.equipWeapon(weapon);
+               m_movmentModule.LookAtObject(obj.transform.position);
            }
+           
+           m_animationModule.triggerPickup();
+           m_previousTempState = m_characterState;
+           m_characterState = CharacterMainStates.Interaction;
+
+           if(isCrouched())
+           {
+               StartCoroutine(onPickup(obj,0));
+           }
+           else
+           {
+               StartCoroutine(onPickup(obj,0.3f));
+           }
+
        }
+    }
+
+    IEnumerator onPickup(Interactable obj,float waitTime)
+    {
+        yield return new WaitForSeconds(waitTime);
+
+        switch(obj.properties.Type)
+        {
+            case Interactable.InteractableProperties.InteractableType.PrimaryWeapon:
+
+                if(!AgentData.primaryWeapon)
+                {
+                    AgentData.primaryWeapon = obj.GetComponent<PrimaryWeapon>();
+                    m_equipmentModule.equipWeapon(AgentData.primaryWeapon);
+                    obj.OnEquipAction();
+                }
+                else
+                {
+                    AgentData.inventryItems.Add(obj);
+                    obj.OnPickUpAction();
+                }
+
+            break;
+            case Interactable.InteractableProperties.InteractableType.SecondaryWeapon:
+
+                if(!AgentData.secondaryWeapon)
+                {
+                    AgentData.secondaryWeapon = obj.GetComponent<SecondaryWeapon>();
+                    m_equipmentModule.equipWeapon(AgentData.secondaryWeapon);
+                    obj.OnEquipAction();
+                }
+                else
+                {
+                    AgentData.inventryItems.Add(obj);
+                    obj.OnPickUpAction();
+                }
+            
+            break;
+
+            default:
+                    AgentData.inventryItems.Add(obj);
+                    obj.OnPickUpAction();
+            break;
+        }
+
+         yield return new WaitForSeconds(waitTime);
+        m_characterState = m_previousTempState;
+        // Now do your thing here
     }
     public void damageAgent(float amount)
     {
@@ -125,7 +186,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     // Aim Current Weapon -
     public virtual void aimWeapon()
     {
-        if (m_characterState.Equals(CharacterMainStates.Armed_not_Aimed) && !isEquipingWeapon() && !m_characterState.Equals(CharacterMainStates.Dodge))
+        if (m_characterState.Equals(CharacterMainStates.Armed_not_Aimed) && !isEquipingWeapon() /*&& !m_characterState.Equals(CharacterMainStates.Dodge)*/)
         {
             
             m_characterState = CharacterMainStates.Aimed;

@@ -82,7 +82,15 @@ public class HumanoidRangedWeaponsModule
                 }
                 break;
             case HumanoidMovingAgent.CharacterMainStates.Idle:
+
+                // Set one time only
                 if (!m_currentState.Equals(HumanoidMovingAgent.CharacterMainStates.Idle))
+                {
+                    aimCurrentEquipment(false);
+                }
+                break;
+            default:
+                if (m_currentState.Equals(HumanoidMovingAgent.CharacterMainStates.Armed_not_Aimed) || m_currentState.Equals(HumanoidMovingAgent.CharacterMainStates.Aimed))
                 {
                     aimCurrentEquipment(false);
                 }
@@ -101,7 +109,7 @@ public class HumanoidRangedWeaponsModule
         {
             m_currentWeapon.setReloading(false);
             int totalAmmo = 0;
-            m_agentData.weaponAmmoCount.TryGetValue(m_currentWeapon.name,out totalAmmo);
+            m_agentData.weaponAmmoCount.TryGetValue(m_currentWeapon.weaponName,out totalAmmo);
             
             // Enought Ammo available
             if(totalAmmo > m_currentWeapon.m_magazineSize)
@@ -557,23 +565,29 @@ public class HumanoidRangedWeaponsModule
         bool weaponEquipable = false;
         if(weapon.GetType() == typeof(PrimaryWeapon))
         {
-            if(!m_rifle)
+            if(m_rifle)
             {
-                m_rifle = weapon;
-                placeWeaponinHosterLocation(weapon);
-                m_rifle.onWeaponEquip();
-                weaponEquipable = true;
+                m_rifle.dropWeapon();
+                m_rifle = null;
             }
+
+            m_rifle = weapon;
+            placeWeaponinHosterLocation(weapon);
+            m_rifle.onWeaponEquip();
+            weaponEquipable = true;
         }
         else if (weapon.GetType() == typeof(SecondaryWeapon))
         {
-            if(!m_pistol)
+            if(m_pistol)
             {
-                m_pistol = weapon;
-                placeWeaponinHosterLocation(weapon);
-                m_pistol.onWeaponEquip();
-                weaponEquipable = true;
+                m_pistol.dropWeapon();
+                m_pistol = null;
             }
+
+            m_pistol = weapon;
+            placeWeaponinHosterLocation(weapon);
+            m_pistol.onWeaponEquip();
+            weaponEquipable = true;
         }
 
         if(weaponEquipable)

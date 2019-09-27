@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
-public abstract class Weapon : MonoBehaviour
+public abstract class Weapon : Interactable
 {
     public enum WEAPONTYPE { primary,secondary};
     public delegate void WeaponFireDeligaet(float weight);
@@ -53,9 +53,6 @@ public abstract class Weapon : MonoBehaviour
     public Vector3 handPlacementOffset;
 
     public Vector3 weaponRecoilOffset;
-
-    public bool isDropped;
-
     public void Awake()
     {
         m_line = this.GetComponent<LineRenderer>();
@@ -247,7 +244,7 @@ public abstract class Weapon : MonoBehaviour
         m_collider.isTrigger = false;
         if(m_line)
         {
-        m_line.enabled = false;
+            m_line.enabled = false;
         }
 
     }
@@ -293,7 +290,6 @@ public abstract class Weapon : MonoBehaviour
     public void onWeaponEquip()
     {
         setAimed(true);
-        isDropped = false;
         m_rigidbody.isKinematic = true;
     }
 
