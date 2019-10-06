@@ -59,7 +59,7 @@ public class AutoDroneController :  AgentController
 
     private void initalizeICyberAgent()
     {
-        m_selfAgent.setFaction(m_agentFaction);
+        //m_selfAgent.setFaction(m_agentFaction);
         intializeAgentCallbacks(m_selfAgent);
         m_selfAgent.aimWeapon();
     }

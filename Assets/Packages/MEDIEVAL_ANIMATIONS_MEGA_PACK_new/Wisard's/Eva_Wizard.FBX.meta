@@ -1,0 +1,3637 @@
+fileFormatVersion: 2
+guid: ba77048d138697e4b97d4eeb792c861c
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Adam_body
+    100002: //RootNode
+    100004: Bip01
+    100006: Bip01 back_left_Wmount
+    100008: Bip01 back_right_Wmount
+    100010: Bip01 back_shield_mount
+    100012: Bip01 Head
+    100014: Bip01 L Calf
+    100016: Bip01 L Clavicle
+    100018: Bip01 L Finger0
+    100020: Bip01 L Finger01
+    100022: Bip01 L Finger02
+    100024: Bip01 L Finger1
+    100026: Bip01 L Finger11
+    100028: Bip01 L Finger12
+    100030: Bip01 L Finger2
+    100032: Bip01 L Finger21
+    100034: Bip01 L Finger22
+    100036: Bip01 L Finger3
+    100038: Bip01 L Finger31
+    100040: Bip01 L Finger32
+    100042: Bip01 L Finger4
+    100044: Bip01 L Finger41
+    100046: Bip01 L Finger42
+    100048: Bip01 L Foot
+    100050: Bip01 L Forearm
+    100052: Bip01 L ForeTwist
+    100054: Bip01 L ForeTwist1
+    100056: Bip01 L Hand
+    100058: Bip01 L Thigh
+    100060: Bip01 L Toe0
+    100062: Bip01 L UpperArm
+    100064: Bip01 left_Wmount
+    100066: Bip01 LUpArmTwist
+    100068: Bip01 LUpArmTwist1
+    100070: Bip01 Neck
+    100072: Bip01 Pelvis
+    100074: Bip01 R Calf
+    100076: Bip01 R Clavicle
+    100078: Bip01 R Finger0
+    100080: Bip01 R Finger01
+    100082: Bip01 R Finger02
+    100084: Bip01 R Finger1
+    100086: Bip01 R Finger11
+    100088: Bip01 R Finger12
+    100090: Bip01 R Finger2
+    100092: Bip01 R Finger21
+    100094: Bip01 R Finger22
+    100096: Bip01 R Finger3
+    100098: Bip01 R Finger31
+    100100: Bip01 R Finger32
+    100102: Bip01 R Finger4
+    100104: Bip01 R Finger41
+    100106: Bip01 R Finger42
+    100108: Bip01 R Foot
+    100110: Bip01 R Forearm
+    100112: Bip01 R ForeTwist
+    100114: Bip01 R ForeTwist1
+    100116: Bip01 R Hand
+    100118: Bip01 R Thigh
+    100120: Bip01 R Toe0
+    100122: Bip01 R UpperArm
+    100124: Bip01 Rhand_Weapon
+    100126: Bip01 Rhand_WeaponOpp
+    100128: Bip01 right_Wmount
+    100130: Bip01 RUpArmTwist
+    100132: Bip01 RUpArmTwist1
+    100134: Bip01 shield_mount
+    100136: Bip01 Spine
+    100138: Bip01 Spine1
+    100140: Bip01 zeye_left
+    100142: Bip01 zeye_right
+    100144: Bip01 zJaw
+    100146: Bip01 zz_eye_left_lookAt
+    100148: Bip01 zz_eye_right_lookA
+    100150: Stuff
+    100152: Stuff01
+    100154: W_helmet
+    100156: Bip02
+    100158: Bip02 back_left_Wmount
+    100160: Bip02 back_right_Wmount
+    100162: Bip02 back_shield_mount
+    100164: Bip02 Head
+    100166: Bip02 L Calf
+    100168: Bip02 L Clavicle
+    100170: Bip02 L Finger0
+    100172: Bip02 L Finger01
+    100174: Bip02 L Finger02
+    100176: Bip02 L Finger1
+    100178: Bip02 L Finger11
+    100180: Bip02 L Finger12
+    100182: Bip02 L Finger2
+    100184: Bip02 L Finger21
+    100186: Bip02 L Finger22
+    100188: Bip02 L Finger3
+    100190: Bip02 L Finger31
+    100192: Bip02 L Finger32
+    100194: Bip02 L Finger4
+    100196: Bip02 L Finger41
+    100198: Bip02 L Finger42
+    100200: Bip02 L Foot
+    100202: Bip02 L Forearm
+    100204: Bip02 L ForeTwist
+    100206: Bip02 L ForeTwist1
+    100208: Bip02 L Hand
+    100210: Bip02 L Thigh
+    100212: Bip02 L Toe0
+    100214: Bip02 L UpperArm
+    100216: Bip02 left_Wmount
+    100218: Bip02 LUpArmTwist
+    100220: Bip02 LUpArmTwist1
+    100222: Bip02 Neck
+    100224: Bip02 Pelvis
+    100226: Bip02 R Calf
+    100228: Bip02 R Clavicle
+    100230: Bip02 R Finger0
+    100232: Bip02 R Finger01
+    100234: Bip02 R Finger02
+    100236: Bip02 R Finger1
+    100238: Bip02 R Finger11
+    100240: Bip02 R Finger12
+    100242: Bip02 R Finger2
+    100244: Bip02 R Finger21
+    100246: Bip02 R Finger22
+    100248: Bip02 R Finger3
+    100250: Bip02 R Finger31
+    100252: Bip02 R Finger32
+    100254: Bip02 R Finger4
+    100256: Bip02 R Finger41
+    100258: Bip02 R Finger42
+    100260: Bip02 R Foot
+    100262: Bip02 R Forearm
+    100264: Bip02 R ForeTwist
+    100266: Bip02 R ForeTwist1
+    100268: Bip02 R Hand
+    100270: Bip02 R Thigh
+    100272: Bip02 R Toe0
+    100274: Bip02 R UpperArm
+    100276: Bip02 Rhand_Weapon
+    100278: Bip02 Rhand_WeaponOpp
+    100280: Bip02 right_Wmount
+    100282: Bip02 RUpArmTwist
+    100284: Bip02 RUpArmTwist1
+    100286: Bip02 shield_mount
+    100288: Bip02 Spine
+    100290: Bip02 Spine1
+    100292: Bip02 zeye_left
+    100294: Bip02 zeye_right
+    100296: Bip02 zJaw
+    100298: Bip02 zz_eye_left_lookAt
+    100300: Bip02 zz_eye_right_lookA
+    100302: Bip02 zzz_breast_left
+    100304: Bip02 zzz_breast_right
+    100306: Eva
+    100308: Stuff02
+    100310: Stuff03
+    100312: W_helmet01
+    400000: Adam_body
+    400002: //RootNode
+    400004: Bip01
+    400006: Bip01 back_left_Wmount
+    400008: Bip01 back_right_Wmount
+    400010: Bip01 back_shield_mount
+    400012: Bip01 Head
+    400014: Bip01 L Calf
+    400016: Bip01 L Clavicle
+    400018: Bip01 L Finger0
+    400020: Bip01 L Finger01
+    400022: Bip01 L Finger02
+    400024: Bip01 L Finger1
+    400026: Bip01 L Finger11
+    400028: Bip01 L Finger12
+    400030: Bip01 L Finger2
+    400032: Bip01 L Finger21
+    400034: Bip01 L Finger22
+    400036: Bip01 L Finger3
+    400038: Bip01 L Finger31
+    400040: Bip01 L Finger32
+    400042: Bip01 L Finger4
+    400044: Bip01 L Finger41
+    400046: Bip01 L Finger42
+    400048: Bip01 L Foot
+    400050: Bip01 L Forearm
+    400052: Bip01 L ForeTwist
+    400054: Bip01 L ForeTwist1
+    400056: Bip01 L Hand
+    400058: Bip01 L Thigh
+    400060: Bip01 L Toe0
+    400062: Bip01 L UpperArm
+    400064: Bip01 left_Wmount
+    400066: Bip01 LUpArmTwist
+    400068: Bip01 LUpArmTwist1
+    400070: Bip01 Neck
+    400072: Bip01 Pelvis
+    400074: Bip01 R Calf
+    400076: Bip01 R Clavicle
+    400078: Bip01 R Finger0
+    400080: Bip01 R Finger01
+    400082: Bip01 R Finger02
+    400084: Bip01 R Finger1
+    400086: Bip01 R Finger11
+    400088: Bip01 R Finger12
+    400090: Bip01 R Finger2
+    400092: Bip01 R Finger21
+    400094: Bip01 R Finger22
+    400096: Bip01 R Finger3
+    400098: Bip01 R Finger31
+    400100: Bip01 R Finger32
+    400102: Bip01 R Finger4
+    400104: Bip01 R Finger41
+    400106: Bip01 R Finger42
+    400108: Bip01 R Foot
+    400110: Bip01 R Forearm
+    400112: Bip01 R ForeTwist
+    400114: Bip01 R ForeTwist1
+    400116: Bip01 R Hand
+    400118: Bip01 R Thigh
+    400120: Bip01 R Toe0
+    400122: Bip01 R UpperArm
+    400124: Bip01 Rhand_Weapon
+    400126: Bip01 Rhand_WeaponOpp
+    400128: Bip01 right_Wmount
+    400130: Bip01 RUpArmTwist
+    400132: Bip01 RUpArmTwist1
+    400134: Bip01 shield_mount
+    400136: Bip01 Spine
+    400138: Bip01 Spine1
+    400140: Bip01 zeye_left
+    400142: Bip01 zeye_right
+    400144: Bip01 zJaw
+    400146: Bip01 zz_eye_left_lookAt
+    400148: Bip01 zz_eye_right_lookA
+    400150: Stuff
+    400152: Stuff01
+    400154: W_helmet
+    400156: Bip02
+    400158: Bip02 back_left_Wmount
+    400160: Bip02 back_right_Wmount
+    400162: Bip02 back_shield_mount
+    400164: Bip02 Head
+    400166: Bip02 L Calf
+    400168: Bip02 L Clavicle
+    400170: Bip02 L Finger0
+    400172: Bip02 L Finger01
+    400174: Bip02 L Finger02
+    400176: Bip02 L Finger1
+    400178: Bip02 L Finger11
+    400180: Bip02 L Finger12
+    400182: Bip02 L Finger2
+    400184: Bip02 L Finger21
+    400186: Bip02 L Finger22
+    400188: Bip02 L Finger3
+    400190: Bip02 L Finger31
+    400192: Bip02 L Finger32
+    400194: Bip02 L Finger4
+    400196: Bip02 L Finger41
+    400198: Bip02 L Finger42
+    400200: Bip02 L Foot
+    400202: Bip02 L Forearm
+    400204: Bip02 L ForeTwist
+    400206: Bip02 L ForeTwist1
+    400208: Bip02 L Hand
+    400210: Bip02 L Thigh
+    400212: Bip02 L Toe0
+    400214: Bip02 L UpperArm
+    400216: Bip02 left_Wmount
+    400218: Bip02 LUpArmTwist
+    400220: Bip02 LUpArmTwist1
+    400222: Bip02 Neck
+    400224: Bip02 Pelvis
+    400226: Bip02 R Calf
+    400228: Bip02 R Clavicle
+    400230: Bip02 R Finger0
+    400232: Bip02 R Finger01
+    400234: Bip02 R Finger02
+    400236: Bip02 R Finger1
+    400238: Bip02 R Finger11
+    400240: Bip02 R Finger12
+    400242: Bip02 R Finger2
+    400244: Bip02 R Finger21
+    400246: Bip02 R Finger22
+    400248: Bip02 R Finger3
+    400250: Bip02 R Finger31
+    400252: Bip02 R Finger32
+    400254: Bip02 R Finger4
+    400256: Bip02 R Finger41
+    400258: Bip02 R Finger42
+    400260: Bip02 R Foot
+    400262: Bip02 R Forearm
+    400264: Bip02 R ForeTwist
+    400266: Bip02 R ForeTwist1
+    400268: Bip02 R Hand
+    400270: Bip02 R Thigh
+    400272: Bip02 R Toe0
+    400274: Bip02 R UpperArm
+    400276: Bip02 Rhand_Weapon
+    400278: Bip02 Rhand_WeaponOpp
+    400280: Bip02 right_Wmount
+    400282: Bip02 RUpArmTwist
+    400284: Bip02 RUpArmTwist1
+    400286: Bip02 shield_mount
+    400288: Bip02 Spine
+    400290: Bip02 Spine1
+    400292: Bip02 zeye_left
+    400294: Bip02 zeye_right
+    400296: Bip02 zJaw
+    400298: Bip02 zz_eye_left_lookAt
+    400300: Bip02 zz_eye_right_lookA
+    400302: Bip02 zzz_breast_left
+    400304: Bip02 zzz_breast_right
+    400306: Eva
+    400308: Stuff02
+    400310: Stuff03
+    400312: W_helmet01
+    2300000: Stuff
+    2300002: Stuff01
+    2300004: W_helmet
+    2300006: Stuff02
+    2300008: Stuff03
+    2300010: W_helmet01
+    3300000: Stuff
+    3300002: Stuff01
+    3300004: W_helmet
+    3300006: Stuff02
+    3300008: Stuff03
+    3300010: W_helmet01
+    4300000: Stuff01
+    4300002: W_helmet
+    4300004: Stuff
+    4300006: Adam_body
+    4300008: Eva
+    4300010: Stuff02
+    4300012: W_helmet01
+    4300014: Stuff03
+    7400000: Take 001
+    7400002: MECANIM
+    7400004: M_combat_mode_B
+    7400006: M_PutWeapon_Back
+    7400008: IDLE
+    7400010: M_TookWeaponOut
+    7400012: M_Dodge_Jump_Backward
+    7400014: M_Dodge_Jump_Left
+    7400016: M_Dodge_Jump_Right
+    7400018: M_Knocked_backward_onPlace
+    7400020: M_Down_back
+    7400022: M_Recover_from_knocked_backward
+    7400024: M_Knocked_forward
+    7400026: M_Down_forward
+    7400028: M_Recover_from_knocked_forward
+    7400030: M_duck_below_swing
+    7400032: M_magic_light_spell
+    7400034: M_magic_shot_stright
+    7400036: M_combat_mode_A
+    7400038: M_Block_to
+    7400040: M_Block_Keep
+    7400042: M_Block_from
+    7400044: M_dodge_backwards
+    7400046: M_dodge_to_left
+    7400048: M_dodge_to_right
+    7400050: M_Hit_from_back
+    7400052: M_Hit_from_front
+    7400054: M_magic_helix_spell
+    7400056: M_staff_block
+    7400058: M_staff_earthquake_spell
+    7400060: M_staff_Hit_stright_down
+    7400062: M_staff_swing_right
+    7400064: M_dying_B
+    7400066: M_combat_mode_C
+    7400068: M_buff_spell_A
+    7400070: M_buff_spell_B
+    7400072: M_Drinking_potion
+    7400074: M_fire_ball_strong_spell
+    7400076: M_speil_fast_loop
+    7400078: M_speil_magic_trap
+    7400080: M_speil_summoning
+    7400082: M_spell_Barier_start
+    7400084: M_spell_Barier_keep
+    7400086: M_spell_Barier_end
+    7400088: M_spell_cast_A
+    7400090: M_spell_cast_B
+    7400092: M_spell_cast_C
+    7400094: M_spell_cast_D
+    7400096: M_spell_curse
+    7400098: M_spell_sleep
+    7400100: M_Dying_A
+    7400102: M_Die_knocked_backward
+    7400104: M_Die_knocked_forward
+    7400106: M_Casual_walk
+    7400108: M_Cautious_walk
+    7400110: M_walk_trust
+    7400112: M_making_potion
+    7400114: M_run
+    7400116: M_run_blow_A
+    7400118: M_run_blow_B
+    7400120: M_run_blow_C
+    7400122: M_run_blow_D
+    7400124: M_Strife_leftt
+    7400126: M_Strife_right
+    7400128: M_walking_back
+    7400130: RM_M_Casual_walk
+    7400132: RM_M_Cautious_walk
+    7400134: RM_M_walk_trust
+    7400136: RM_M_Dodge_Jump_Backward
+    7400138: RM_M_Dodge_Jump_Left
+    7400140: RM_M_Dodge_Jump_Right
+    7400142: RM_M_run
+    7400144: RM_M_run_blow_A
+    7400146: RM_M_run_blow_B
+    7400148: RM_M_run_blow_C
+    7400150: RM_M_run_blow_D
+    7400152: RM_M_Strife_leftt
+    7400154: RM_M_Strife_right
+    7400156: RM_M_walking_back
+    7400158: RM_M_Die_knocked_backward
+    7400160: RM_M_Die_knocked_forward
+    7400162: MECANIM
+    9500000: //RootNode
+    11100000: //RootNode
+    13700000: Adam_body
+    13700002: Eva
+    2186277476908879412: ImportLogs
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eva_body
+    second: {fileID: 2100000, guid: 7672d34cb03c2ec45810379e088b2d27, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Eva_head
+    second: {fileID: 2100000, guid: be5be3096fa063647bf6072158051030, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Helmet
+    second: {fileID: 2100000, guid: 3ba039c65bc33144ea5512ee370a8bcb, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: staff
+    second: {fileID: 2100000, guid: 6bc77c97ae0859246a68620f3e1c6fe5, type: 2}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 0
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: "\nClip 'Take 001' has import animation warnings that
+      might lower retargeting quality:\nNote: Activate translation DOF on avatar to
+      improve retargeting quality.\n\t'Bip02 Spine' has translation animation that
+      will be discarded.\n\t'Bip02 Spine1' has translation animation that will be
+      discarded.\n"
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 3
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: MECANIM
+      takeName: 
+      firstFrame: 0
+      lastFrame: 10
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_combat_mode_B
+      takeName: 
+      firstFrame: 15
+      lastFrame: 90
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_PutWeapon_Back
+      takeName: 
+      firstFrame: 91
+      lastFrame: 131
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: IDLE
+      takeName: 
+      firstFrame: 132
+      lastFrame: 232
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_TookWeaponOut
+      takeName: 
+      firstFrame: 233
+      lastFrame: 273
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Dodge_Jump_Backward
+      takeName: 
+      firstFrame: 274
+      lastFrame: 299
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Dodge_Jump_Left
+      takeName: 
+      firstFrame: 300
+      lastFrame: 325
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Dodge_Jump_Right
+      takeName: 
+      firstFrame: 326
+      lastFrame: 351
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Knocked_backward_onPlace
+      takeName: 
+      firstFrame: 352
+      lastFrame: 393
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Down_back
+      takeName: 
+      firstFrame: 394
+      lastFrame: 434
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Recover_from_knocked_backward
+      takeName: 
+      firstFrame: 435
+      lastFrame: 475
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Knocked_forward
+      takeName: 
+      firstFrame: 476
+      lastFrame: 504
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Down_forward
+      takeName: 
+      firstFrame: 505
+      lastFrame: 545
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Recover_from_knocked_forward
+      takeName: 
+      firstFrame: 546
+      lastFrame: 578
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_duck_below_swing
+      takeName: 
+      firstFrame: 579
+      lastFrame: 614
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_magic_light_spell
+      takeName: 
+      firstFrame: 615
+      lastFrame: 665
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_magic_shot_stright
+      takeName: 
+      firstFrame: 666
+      lastFrame: 701
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_combat_mode_A
+      takeName: 
+      firstFrame: 706
+      lastFrame: 781
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Block_to
+      takeName: 
+      firstFrame: 782
+      lastFrame: 797
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Block_Keep
+      takeName: 
+      firstFrame: 798
+      lastFrame: 873
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Block_from
+      takeName: 
+      firstFrame: 874
+      lastFrame: 884
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_dodge_backwards
+      takeName: 
+      firstFrame: 885
+      lastFrame: 920
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_dodge_to_left
+      takeName: 
+      firstFrame: 921
+      lastFrame: 956
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_dodge_to_right
+      takeName: 
+      firstFrame: 957
+      lastFrame: 992
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Hit_from_back
+      takeName: 
+      firstFrame: 993
+      lastFrame: 1028
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Hit_from_front
+      takeName: 
+      firstFrame: 1029
+      lastFrame: 1064
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_magic_helix_spell
+      takeName: 
+      firstFrame: 1065
+      lastFrame: 1135
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_staff_block
+      takeName: 
+      firstFrame: 1136
+      lastFrame: 1171
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_staff_earthquake_spell
+      takeName: 
+      firstFrame: 1172
+      lastFrame: 1207
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_staff_Hit_stright_down
+      takeName: 
+      firstFrame: 1208
+      lastFrame: 1243
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_staff_swing_right
+      takeName: 
+      firstFrame: 1244
+      lastFrame: 1279
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_dying_B
+      takeName: 
+      firstFrame: 1280
+      lastFrame: 1345
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_combat_mode_C
+      takeName: 
+      firstFrame: 1350
+      lastFrame: 1425
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_buff_spell_A
+      takeName: 
+      firstFrame: 1426
+      lastFrame: 1476
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_buff_spell_B
+      takeName: 
+      firstFrame: 1477
+      lastFrame: 1567
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Drinking_potion
+      takeName: 
+      firstFrame: 1568
+      lastFrame: 1623
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_fire_ball_strong_spell
+      takeName: 
+      firstFrame: 1624
+      lastFrame: 1699
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_speil_fast_loop
+      takeName: 
+      firstFrame: 1700
+      lastFrame: 1730
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_speil_magic_trap
+      takeName: 
+      firstFrame: 1731
+      lastFrame: 1831
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_speil_summoning
+      takeName: 
+      firstFrame: 1832
+      lastFrame: 1867
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_spell_Barier_start
+      takeName: 
+      firstFrame: 1868
+      lastFrame: 1886
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_spell_Barier_keep
+      takeName: 
+      firstFrame: 1887
+      lastFrame: 1922
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_spell_Barier_end
+      takeName: 
+      firstFrame: 1923
+      lastFrame: 1938
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_spell_cast_A
+      takeName: 
+      firstFrame: 1939
+      lastFrame: 2009
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_spell_cast_B
+      takeName: 
+      firstFrame: 2010
+      lastFrame: 2044.9999
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_spell_cast_C
+      takeName: 
+      firstFrame: 2045.9999
+      lastFrame: 2081
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_spell_cast_D
+      takeName: 
+      firstFrame: 2082
+      lastFrame: 2117
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_spell_curse
+      takeName: 
+      firstFrame: 2118
+      lastFrame: 2178
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_spell_sleep
+      takeName: 
+      firstFrame: 2179
+      lastFrame: 2219
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Dying_A
+      takeName: 
+      firstFrame: 2220
+      lastFrame: 2260
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Die_knocked_backward
+      takeName: 
+      firstFrame: 2265
+      lastFrame: 2282
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Die_knocked_forward
+      takeName: 
+      firstFrame: 2287
+      lastFrame: 2304
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 1
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Casual_walk
+      takeName: 
+      firstFrame: 2309
+      lastFrame: 2344
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Cautious_walk
+      takeName: 
+      firstFrame: 2349
+      lastFrame: 2389
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_walk_trust
+      takeName: 
+      firstFrame: 2390
+      lastFrame: 2425
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_making_potion
+      takeName: 
+      firstFrame: 2430
+      lastFrame: 2460
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_run
+      takeName: 
+      firstFrame: 2465
+      lastFrame: 2491
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_run_blow_A
+      takeName: 
+      firstFrame: 2492
+      lastFrame: 2536
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_run_blow_B
+      takeName: 
+      firstFrame: 2537
+      lastFrame: 2581
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_run_blow_C
+      takeName: 
+      firstFrame: 2582
+      lastFrame: 2626
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_run_blow_D
+      takeName: 
+      firstFrame: 2627
+      lastFrame: 2671
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Strife_leftt
+      takeName: 
+      firstFrame: 2677
+      lastFrame: 2711
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_Strife_right
+      takeName: 
+      firstFrame: 2717
+      lastFrame: 2751
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 0
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 0
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: M_walking_back
+      takeName: 
+      firstFrame: 2756
+      lastFrame: 2791
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RM_M_Casual_walk
+      takeName: 
+      firstFrame: 2796
+      lastFrame: 2831
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RM_M_Cautious_walk
+      takeName: 
+      firstFrame: 2836
+      lastFrame: 2876
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RM_M_walk_trust
+      takeName: 
+      firstFrame: 2881
+      lastFrame: 2916
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RM_M_Dodge_Jump_Backward
+      takeName: 
+      firstFrame: 2921
+      lastFrame: 2946
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RM_M_Dodge_Jump_Left
+      takeName: 
+      firstFrame: 2951
+      lastFrame: 2976
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RM_M_Dodge_Jump_Right
+      takeName: 
+      firstFrame: 2981
+      lastFrame: 3006
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RM_M_run
+      takeName: 
+      firstFrame: 3012
+      lastFrame: 3037
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RM_M_run_blow_A
+      takeName: 
+      firstFrame: 3042
+      lastFrame: 3086
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RM_M_run_blow_B
+      takeName: 
+      firstFrame: 3091
+      lastFrame: 3135
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RM_M_run_blow_C
+      takeName: 
+      firstFrame: 3140
+      lastFrame: 3184
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RM_M_run_blow_D
+      takeName: 
+      firstFrame: 3189
+      lastFrame: 3233
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RM_M_Strife_leftt
+      takeName: 
+      firstFrame: 3239
+      lastFrame: 3273
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RM_M_Strife_right
+      takeName: 
+      firstFrame: 3279
+      lastFrame: 3313
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RM_M_walking_back
+      takeName: 
+      firstFrame: 3319
+      lastFrame: 3353
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RM_M_Die_knocked_backward
+      takeName: 
+      firstFrame: 3358
+      lastFrame: 3375
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: RM_M_Die_knocked_forward
+      takeName: 
+      firstFrame: 3380
+      lastFrame: 3397
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 0
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    - serializedVersion: 16
+      name: MECANIM
+      takeName: 
+      firstFrame: 3403
+      lastFrame: 3412
+      wrapMode: 1
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      hasAdditiveReferencePose: 0
+      loopTime: 1
+      loopBlend: 1
+      loopBlendOrientation: 0
+      loopBlendPositionY: 0
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+      additiveReferencePoseFrame: 0
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 0.01
+    meshCompression: 0
+    addColliders: 0
+    useSRGBMaterialColor: 1
+    importVisibility: 0
+    importBlendShapes: 1
+    importCameras: 0
+    importLights: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 4
+    normalCalculationMode: 0
+    legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 1
+    blendShapeNormalImportMode: 1
+    normalSmoothingSource: 0
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human:
+    - boneName: Bip02 Pelvis
+      humanName: Hips
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Thigh
+      humanName: LeftUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Thigh
+      humanName: RightUpperLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Calf
+      humanName: LeftLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Calf
+      humanName: RightLowerLeg
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Foot
+      humanName: LeftFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Foot
+      humanName: RightFoot
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 Spine
+      humanName: Spine
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 Spine1
+      humanName: Chest
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 Neck
+      humanName: Neck
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 Head
+      humanName: Head
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Clavicle
+      humanName: LeftShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Clavicle
+      humanName: RightShoulder
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L UpperArm
+      humanName: LeftUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R UpperArm
+      humanName: RightUpperArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Forearm
+      humanName: LeftLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Forearm
+      humanName: RightLowerArm
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Hand
+      humanName: LeftHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Hand
+      humanName: RightHand
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Toe0
+      humanName: LeftToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Toe0
+      humanName: RightToes
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 zeye_left
+      humanName: LeftEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 zeye_right
+      humanName: RightEye
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 zJaw
+      humanName: Jaw
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Finger0
+      humanName: Left Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Finger01
+      humanName: Left Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Finger02
+      humanName: Left Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Finger1
+      humanName: Left Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Finger11
+      humanName: Left Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Finger12
+      humanName: Left Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Finger2
+      humanName: Left Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Finger21
+      humanName: Left Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Finger22
+      humanName: Left Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Finger3
+      humanName: Left Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Finger31
+      humanName: Left Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Finger32
+      humanName: Left Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Finger4
+      humanName: Left Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Finger41
+      humanName: Left Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 L Finger42
+      humanName: Left Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Finger0
+      humanName: Right Thumb Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Finger01
+      humanName: Right Thumb Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Finger02
+      humanName: Right Thumb Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Finger1
+      humanName: Right Index Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Finger11
+      humanName: Right Index Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Finger12
+      humanName: Right Index Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Finger2
+      humanName: Right Middle Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Finger21
+      humanName: Right Middle Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Finger22
+      humanName: Right Middle Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Finger3
+      humanName: Right Ring Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Finger31
+      humanName: Right Ring Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Finger32
+      humanName: Right Ring Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Finger4
+      humanName: Right Little Proximal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Finger41
+      humanName: Right Little Intermediate
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    - boneName: Bip02 R Finger42
+      humanName: Right Little Distal
+      limit:
+        min: {x: 0, y: 0, z: 0}
+        max: {x: 0, y: 0, z: 0}
+        value: {x: 0, y: 0, z: 0}
+        length: 0
+        modified: 0
+    skeleton:
+    - name: Eva_Wizard(Clone)
+      parentName: 
+      position: {x: 0, y: 0, z: 0}
+      rotation: {x: 0, y: 0, z: 0, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02
+      parentName: 
+      position: {x: 0, y: 1.071071, z: 0}
+      rotation: {x: -0.5, y: 0.5, z: 0.5, w: 0.5}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 Pelvis
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.49999964, y: 0.50000036, z: 0.49999964, w: 0.50000036}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 L Thigh
+      parentName: 
+      position: {x: 0.00000015258789, y: 0.00000019945416, z: 0.11006355}
+      rotation: {x: -0.020547692, y: 0.9997788, z: 0.00021340702, w: 0.004486311}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: Bip02 L Calf
+      parentName: 
+      position: {x: -0.51199687, y: 0.0000000047683715, z: 0.000000009536743}
+      rotation: {x: 2.3146712e-10, y: 2.5160854e-11, z: 0.10806506, w: 0.99414384}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: Bip02 L Foot
+      parentName: 
+      position: {x: -0.49682575, y: 0.0000000047683715, z: -0.000000019073486}
+      rotation: {x: 0.0006977223, y: 0.0044376077, z: -0.08761377, w: 0.9961444}
+      scale: {x: 0.9999999, y: 0.9999998, z: 0.99999994}
+    - name: Bip02 L Toe0
+      parentName: 
+      position: {x: -0.06893762, y: 0.15987761, z: 0}
+      rotation: {x: 1.0066172e-21, y: 1.0066172e-21, z: -0.7071068, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 left_Wmount
+      parentName: 
+      position: {x: -0.088487625, y: 0.0719471, z: 0.24196465}
+      rotation: {x: -0.0937079, y: -0.020119855, z: 0.9735659, w: 0.20732477}
+      scale: {x: 1.0000001, y: 0.99999994, z: 0.99999994}
+    - name: Bip02 R Thigh
+      parentName: 
+      position: {x: -0.00000015258789, y: -0.00000010581816, z: -0.11006355}
+      rotation: {x: -0.020547686, y: 0.9997788, z: -0.00021476322, w: -0.004487814}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: Bip02 R Calf
+      parentName: 
+      position: {x: -0.51199687, y: 0, z: 0}
+      rotation: {x: -5.786678e-11, y: -6.2902136e-12, z: 0.10806506, w: 0.99414384}
+      scale: {x: 0.99999994, y: 1.0000001, z: 1}
+    - name: Bip02 R Foot
+      parentName: 
+      position: {x: -0.49682575, y: 0, z: 0}
+      rotation: {x: -0.0006977299, y: -0.004437694, z: -0.08761376, w: 0.9961444}
+      scale: {x: 0.9999999, y: 0.9999998, z: 0.99999994}
+    - name: Bip02 R Toe0
+      parentName: 
+      position: {x: -0.06893762, y: 0.1598776, z: 0}
+      rotation: {x: 1.0066172e-21, y: 1.0066172e-21, z: -0.7071068, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 right_Wmount
+      parentName: 
+      position: {x: -0.08848831, y: 0.07194643, z: -0.24196462}
+      rotation: {x: 0.093708426, y: 0.020118797, z: 0.97356576, w: 0.20732513}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: Bip02 Spine
+      parentName: 
+      position: {x: -0.11083069, y: -0.005818708, z: 0.00000017044309}
+      rotation: {x: -0.0000020790678, y: 0.0000006922694, z: 0.0016292274, w: 0.9999987}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 Spine1
+      parentName: 
+      position: {x: -0.14930168, y: -0.00020755261, z: -5.7566807e-10}
+      rotation: {x: -7.208476e-14, y: -0.000000001479539, z: 0.00053343654, w: 0.9999999}
+      scale: {x: 0.99999994, y: 0.99999994, z: 1}
+    - name: Bip02 back_left_Wmount
+      parentName: 
+      position: {x: -0.4406056, y: -0.15248905, z: 0.23803183}
+      rotation: {x: 0.20056525, y: 0.67522836, z: 0.7001079, w: -0.11700099}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
+    - name: Bip02 back_right_Wmount
+      parentName: 
+      position: {x: -0.43669388, y: -0.117953934, z: -0.23820345}
+      rotation: {x: -0.11000279, y: 0.7009214, z: 0.6839137, w: 0.16991343}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: Stuff03
+      parentName: 
+      position: {x: 0.0011289978, y: 0.00045894622, z: -0.0050666807}
+      rotation: {x: -0.76883274, y: -0.029319119, z: -0.018946873, w: 0.63849646}
+      scale: {x: 0.99999994, y: 1.0000002, z: 0.99999994}
+    - name: Bip02 back_shield_mount
+      parentName: 
+      position: {x: -0.14125152, y: -0.29249874, z: 0.000104822415}
+      rotation: {x: 0.7481625, y: 0.6635156, z: 0.00003160663, w: 0.000060988754}
+      scale: {x: 1.0000001, y: 0.99999994, z: 0.9999999}
+    - name: Bip02 L Clavicle
+      parentName: 
+      position: {x: -0.21791808, y: 0.008225387, z: 0.0410744}
+      rotation: {x: 0.70866203, y: 0.003256008, z: -0.7055354, w: -0.0027061517}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 L UpperArm
+      parentName: 
+      position: {x: -0.13962434, y: -5.9604643e-10, z: 0}
+      rotation: {x: -0.019445537, y: 0.004931796, z: -0.0037886272, w: 0.99979156}
+      scale: {x: 1, y: 1.0000002, z: 1.0000001}
+    - name: Bip02 L Forearm
+      parentName: 
+      position: {x: -0.2685382, y: 0, z: 0.00000015258789}
+      rotation: {x: -0.000000001863327, y: 9.2995817e-10, z: 0.000732423, w: 0.99999976}
+      scale: {x: 0.99999994, y: 0.99999994, z: 1}
+    - name: Bip02 L ForeTwist
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: 0.017072003, y: 4.5664994e-10, z: -5.317424e-10, w: 0.99985427}
+      scale: {x: 1, y: 0.99999994, z: 0.99999994}
+    - name: Bip02 L ForeTwist1
+      parentName: 
+      position: {x: -0.13023323, y: 0.0000000047683715, z: 0}
+      rotation: {x: 0.03413903, y: 4.475055e-10, z: -5.3946086e-10, w: 0.9994171}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 L Hand
+      parentName: 
+      position: {x: -0.26046643, y: 0.0000000047683715, z: 0}
+      rotation: {x: -0.66994786, y: -0.006632313, z: 0.0007332339, w: 0.74237823}
+      scale: {x: 0.99999994, y: 1, z: 1}
+    - name: Bip02 L Finger0
+      parentName: 
+      position: {x: -0.022584915, y: 0.00887329, z: -0.028746985}
+      rotation: {x: 0.70053893, y: -0.11476552, z: 0.116498485, w: 0.69462377}
+      scale: {x: 1.0000005, y: 0.99999964, z: 0.9999995}
+    - name: Bip02 L Finger01
+      parentName: 
+      position: {x: -0.036624677, y: 0, z: -0.00000015258789}
+      rotation: {x: -0.0000000025323748, y: 0.000000014806183, z: -0.08113261, w: 0.9967033}
+      scale: {x: 1.0000001, y: 0.99999994, z: 1.0000001}
+    - name: Bip02 L Finger02
+      parentName: 
+      position: {x: -0.019484634, y: -0.000000019073486, z: 0.00000015258789}
+      rotation: {x: 6.5023154e-10, y: 0.000000016168661, z: -0.040183067, w: 0.99919236}
+      scale: {x: 1, y: 1.0000001, z: 1.0000001}
+    - name: Bip02 L Finger1
+      parentName: 
+      position: {x: -0.08193169, y: -0.0011753845, z: -0.032323044}
+      rotation: {x: 0.005121767, y: 0.00856821, z: 0.005093254, w: 0.99993724}
+      scale: {x: 1.0000001, y: 1, z: 1.0000001}
+    - name: Bip02 L Finger11
+      parentName: 
+      position: {x: -0.036181413, y: 0, z: 0}
+      rotation: {x: -0.0000000037236627, y: -1.1009479e-10, z: 0.029553346, w: 0.9995632}
+      scale: {x: 0.99999994, y: 1.0000001, z: 1}
+    - name: Bip02 L Finger12
+      parentName: 
+      position: {x: -0.027693786, y: -0.00000015258789, z: 0.000000014305114}
+      rotation: {x: -0.000000003746489, y: -5.0157223e-10, z: -0.037116777, w: 0.999311}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1}
+    - name: Bip02 L Finger2
+      parentName: 
+      position: {x: -0.08052841, y: -0.0035382078, z: -0.009193039}
+      rotation: {x: 0.0003877457, y: -0.00986753, z: -0.019610396, w: 0.99975896}
+      scale: {x: 1.0000002, y: 0.99999994, z: 1.0000002}
+    - name: Bip02 L Finger21
+      parentName: 
+      position: {x: -0.04213455, y: 0, z: 0}
+      rotation: {x: -0.0000000018780342, y: -3.9909256e-10, z: -0.035580516, w: 0.9993668}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: Bip02 L Finger22
+      parentName: 
+      position: {x: -0.028429031, y: 0, z: 0}
+      rotation: {x: -1.3957512e-11, y: 2.9070346e-10, z: 0.04795764, w: 0.9988494}
+      scale: {x: 0.9999999, y: 0.99999994, z: 0.99999994}
+    - name: Bip02 L Finger3
+      parentName: 
+      position: {x: -0.08194351, y: -0.0030052185, z: 0.009984102}
+      rotation: {x: -0.00001705628, y: -0.00960039, z: -0.03358028, w: 0.99938995}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: Bip02 L Finger31
+      parentName: 
+      position: {x: -0.0354377, y: 0, z: -0.000000009536743}
+      rotation: {x: 0.0000000019073667, y: -0.000000002114179, z: 0.020954981, w: 0.9997804}
+      scale: {x: 0.9999999, y: 0.9999999, z: 0.9999999}
+    - name: Bip02 L Finger32
+      parentName: 
+      position: {x: -0.027425308, y: 0, z: 0}
+      rotation: {x: 0.0000000020389452, y: -0.0000000031523535, z: 0.054949224, w: 0.99848914}
+      scale: {x: 0.99999994, y: 0.99999994, z: 0.9999999}
+    - name: Bip02 L Finger4
+      parentName: 
+      position: {x: -0.08116157, y: 0.00056610105, z: 0.030575475}
+      rotation: {x: -0.0070702243, y: -0.02219261, z: -0.04040569, w: 0.99891186}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 L Finger41
+      parentName: 
+      position: {x: -0.03100792, y: 0, z: 0}
+      rotation: {x: -9.873609e-12, y: -4.6555662e-10, z: -0.021203414, w: 0.9997752}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 L Finger42
+      parentName: 
+      position: {x: -0.024141006, y: -0.00000015258789, z: 0.000000009536743}
+      rotation: {x: 0.0000000018227553, y: 0.0000000030509864, z: 0.01312592, w: 0.9999139}
+      scale: {x: 1.0000001, y: 0.99999994, z: 0.99999994}
+    - name: Bip02 Rhand_WeaponOpp
+      parentName: 
+      position: {x: -0.06750206, y: 0.041083068, z: 0.0028581715}
+      rotation: {x: 0.49753687, y: 0.5029688, z: 0.50245965, w: -0.4970048}
+      scale: {x: 1.0000001, y: 0.9999998, z: 0.9999999}
+    - name: Bip02 shield_mount
+      parentName: 
+      position: {x: -0.10500847, y: 0.020223388, z: -0.017819613}
+      rotation: {x: 0.6470497, y: 0.3484744, z: 0.36411932, w: 0.5721096}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1}
+    - name: Bip02 LUpArmTwist
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.0000000018626454, y: -6.5052136e-19, z: 3.4924597e-10, w: 1}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: Bip02 LUpArmTwist1
+      parentName: 
+      position: {x: -0.13426909, y: 0.0000000047683715, z: 0}
+      rotation: {x: -0.0000000018626454, y: -6.5052136e-19, z: 3.4924597e-10, w: 1}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: Bip02 Neck
+      parentName: 
+      position: {x: -0.29961303, y: 0.011667657, z: 0.000000072212835}
+      rotation: {x: 0.00000015710016, y: 0.0000008435131, z: -0.13298048, w: 0.99111867}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 Head
+      parentName: 
+      position: {x: -0.087714076, y: 0, z: 0}
+      rotation: {x: -0.00000012504493, y: -0.0000006685131, z: 0.0664853, w: 0.9977874}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 zeye_left
+      parentName: 
+      position: {x: -0.07814453, y: 0.09171256, z: 0.034634013}
+      rotation: {x: 0.052594453, y: -0.006561015, z: -0.5456609, w: 0.8363283}
+      scale: {x: 1, y: 1, z: 0.99999994}
+    - name: Bip02 zeye_right
+      parentName: 
+      position: {x: -0.07814438, y: 0.09171275, z: -0.034633506}
+      rotation: {x: -0.052594457, y: 0.0065640435, z: -0.54566085, w: 0.8363283}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: Bip02 zJaw
+      parentName: 
+      position: {x: -0.015644379, y: 0.018894749, z: 0.00000007262228}
+      rotation: {x: 0.00000018375873, y: 0.000003564237, z: -0.8300524, w: 0.55768543}
+      scale: {x: 1.0000002, y: 1.0000002, z: 1}
+    - name: Bip02 zz_eye_left_lookAt
+      parentName: 
+      position: {x: -0.078381956, y: 0.08101992, z: 0.03277259}
+      rotation: {x: 0.058341246, y: 0.009946069, z: -0.68844384, w: 0.72287107}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 zz_eye_right_lookA
+      parentName: 
+      position: {x: -0.07838181, y: 0.08101875, z: -0.032772016}
+      rotation: {x: -0.029001247, y: 0.023159781, z: -0.6776322, w: 0.73446393}
+      scale: {x: 0.99999994, y: 1, z: 1}
+    - name: W_helmet01
+      parentName: 
+      position: {x: -0.14006867, y: -0.0029735183, z: -0.000010228236}
+      rotation: {x: 0.70269793, y: 0.07883911, z: -0.70269793, w: 0.07883911}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000004}
+    - name: Bip02 R Clavicle
+      parentName: 
+      position: {x: -0.21791808, y: 0.008225615, z: -0.04107435}
+      rotation: {x: 0.70866203, y: 0.0032540595, z: 0.7055354, w: 0.002704178}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 R UpperArm
+      parentName: 
+      position: {x: -0.1396243, y: 0.0000000011920929, z: 0}
+      rotation: {x: 0.019445537, y: -0.004931796, z: -0.0037886275, w: 0.99979156}
+      scale: {x: 0.99999994, y: 1.0000001, z: 1.0000001}
+    - name: Bip02 R Forearm
+      parentName: 
+      position: {x: -0.2685382, y: 0, z: -0.00000015258789}
+      rotation: {x: -0.0000000018623036, y: -4.670254e-10, z: 0.00073242147, w: 0.99999976}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 R ForeTwist
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.017071998, y: 8.446629e-12, z: -4.94693e-10, w: 0.99985427}
+      scale: {x: 1, y: 0.99999994, z: 1}
+    - name: Bip02 R ForeTwist1
+      parentName: 
+      position: {x: -0.13023323, y: 0.000000009536743, z: 0}
+      rotation: {x: -0.03413902, y: 1.6890796e-11, z: -4.944768e-10, w: 0.9994171}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 R Hand
+      parentName: 
+      position: {x: -0.2604665, y: 0.0000000047683715, z: 0}
+      rotation: {x: 0.66994786, y: 0.006632313, z: 0.0007332335, w: 0.74237823}
+      scale: {x: 1, y: 1, z: 1.0000001}
+    - name: Bip02 R Finger0
+      parentName: 
+      position: {x: -0.022584915, y: 0.00887329, z: 0.028746985}
+      rotation: {x: -0.70053893, y: 0.114765495, z: 0.11649847, w: 0.69462377}
+      scale: {x: 1.0000004, y: 0.9999995, z: 0.9999995}
+    - name: Bip02 R Finger01
+      parentName: 
+      position: {x: -0.036624677, y: 0.000000019073486, z: 0}
+      rotation: {x: 0.000000006325666, y: -0.000000014122158, z: -0.08113261, w: 0.9967033}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
+    - name: Bip02 R Finger02
+      parentName: 
+      position: {x: -0.01948471, y: -0.000000019073486, z: 0}
+      rotation: {x: -6.642649e-10, y: -0.000000016517623, z: -0.04018305, w: 0.99919236}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1.0000001}
+    - name: Bip02 R Finger1
+      parentName: 
+      position: {x: -0.08193176, y: -0.0011753845, z: 0.032323044}
+      rotation: {x: -0.0051217633, y: -0.008568211, z: 0.0050932537, w: 0.99993724}
+      scale: {x: 1.0000001, y: 1, z: 1}
+    - name: Bip02 R Finger11
+      parentName: 
+      position: {x: -0.036181413, y: 0.00000015258789, z: -0.000000014305114}
+      rotation: {x: -0.0000000037443058, y: 5.8809213e-10, z: 0.029553348, w: 0.9995632}
+      scale: {x: 0.9999998, y: 1, z: 1}
+    - name: Bip02 R Finger12
+      parentName: 
+      position: {x: -0.027693862, y: -0.00000015258789, z: -0.000000014305114}
+      rotation: {x: 4.8610803e-11, y: 0.0000000013087696, z: -0.037116777, w: 0.999311}
+      scale: {x: 1.0000002, y: 1.0000001, z: 1.0000001}
+    - name: Bip02 R Finger2
+      parentName: 
+      position: {x: -0.08052841, y: -0.0035382078, z: 0.009193039}
+      rotation: {x: -0.0003877457, y: 0.00986753, z: -0.019610398, w: 0.99975896}
+      scale: {x: 1.0000002, y: 0.99999994, z: 1.0000002}
+    - name: Bip02 R Finger21
+      parentName: 
+      position: {x: -0.042134397, y: 0, z: 0}
+      rotation: {x: 3.3136934e-11, y: 9.3073294e-10, z: -0.03558051, w: 0.9993668}
+      scale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
+    - name: Bip02 R Finger22
+      parentName: 
+      position: {x: -0.028428955, y: -0.00000015258789, z: 0}
+      rotation: {x: 0.0000000037335655, y: -8.2976966e-11, z: 0.04795764, w: 0.9988494}
+      scale: {x: 0.99999994, y: 1, z: 1.0000001}
+    - name: Bip02 R Finger3
+      parentName: 
+      position: {x: -0.08194344, y: -0.0030052185, z: -0.009984102}
+      rotation: {x: 0.000017058072, y: 0.009600388, z: -0.033580277, w: 0.99938995}
+      scale: {x: 1.0000001, y: 1, z: 1}
+    - name: Bip02 R Finger31
+      parentName: 
+      position: {x: -0.0354377, y: 0.00000015258789, z: 0}
+      rotation: {x: 0.0000000017963703, y: 0.0000000031815555, z: 0.02095498, w: 0.9997804}
+      scale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
+    - name: Bip02 R Finger32
+      parentName: 
+      position: {x: -0.027425308, y: -0.00000015258789, z: 0}
+      rotation: {x: -0.0000000020389452, y: 0.0000000031523535, z: 0.054949224, w: 0.99848914}
+      scale: {x: 0.99999994, y: 0.99999994, z: 0.99999994}
+    - name: Bip02 R Finger4
+      parentName: 
+      position: {x: -0.08116157, y: 0.00056610105, z: -0.030575475}
+      rotation: {x: 0.007070226, y: 0.022192607, z: -0.04040569, w: 0.99891186}
+      scale: {x: 1, y: 1, z: 0.99999994}
+    - name: Bip02 R Finger41
+      parentName: 
+      position: {x: -0.03100792, y: -0.00000015258789, z: 0}
+      rotation: {x: 0.0000000037047052, y: -0.0000000010101021, z: -0.021203417, w: 0.9997752}
+      scale: {x: 1, y: 1.0000001, z: 1}
+    - name: Bip02 R Finger42
+      parentName: 
+      position: {x: -0.024141083, y: -0.00000030517577, z: -0.000000019073486}
+      rotation: {x: 1.1002018e-10, y: -0.00000000838118, z: 0.01312592, w: 0.9999139}
+      scale: {x: 1.0000001, y: 1, z: 0.99999994}
+    - name: Bip02 Rhand_Weapon
+      parentName: 
+      position: {x: -0.06916023, y: 0.016004639, z: -0.006537838}
+      rotation: {x: -0.5362113, y: 0.46707642, z: 0.4807308, w: 0.5130448}
+      scale: {x: 1.0000001, y: 0.99999994, z: 1}
+    - name: Stuff02
+      parentName: 
+      position: {x: -0.00000006198883, y: 0, z: 0}
+      rotation: {x: -0.000000141561, y: -0.00000004842876, z: -0.000000057043508,
+        w: 1}
+      scale: {x: 1.0000001, y: 1.0000002, z: 1.0000002}
+    - name: Bip02 RUpArmTwist
+      parentName: 
+      position: {x: -0, y: 0, z: 0}
+      rotation: {x: -0.0000000018626451, y: 1.0299921e-18, z: -5.529728e-10, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 RUpArmTwist1
+      parentName: 
+      position: {x: -0.13426912, y: 0.0000000047683715, z: 0}
+      rotation: {x: -0.0000000018626451, y: 1.0299921e-18, z: -5.529728e-10, w: 1}
+      scale: {x: 1, y: 1, z: 1}
+    - name: Bip02 zzz_breast_left
+      parentName: 
+      position: {x: -0.1080397, y: 0.11737304, z: 0.080803186}
+      rotation: {x: 0.057377037, y: 0.05961314, z: -0.6128854, w: 0.785828}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: Bip02 zzz_breast_right
+      parentName: 
+      position: {x: -0.1080397, y: 0.11737352, z: -0.080802545}
+      rotation: {x: -0.057377174, y: -0.05960959, z: -0.6128858, w: 0.785828}
+      scale: {x: 1.0000001, y: 1.0000001, z: 1}
+    - name: Eva
+      parentName: 
+      position: {x: 0.000000038146972, y: 0.9579364, z: -0.00841917}
+      rotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071068}
+      scale: {x: 1, y: 1, z: 1}
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 3
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

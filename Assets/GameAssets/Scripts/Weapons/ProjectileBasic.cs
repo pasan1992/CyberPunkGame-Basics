@@ -11,7 +11,7 @@ public class ProjectileBasic : MonoBehaviour
 
     private string m_shooterName ="test";
     private bool m_hit = false;
-    private AgentController.AgentFaction m_fireFrom;
+    private AgentBasicData.AgentFaction m_fireFrom;
     private TrailRenderer m_trail;
     private bool m_enabled = true;
     private Transform m_targetTransfrom;
@@ -40,14 +40,14 @@ public class ProjectileBasic : MonoBehaviour
             }
             else
             {
-                this.transform.Translate(Vector3.forward * speed);
+                this.transform.Translate(Vector3.forward * speed + Vector3.down *DistanceTravelled*6*Time.deltaTime);
             }
 
 
 
             DistanceTravelled += Time.deltaTime * speed;
 
-            if (DistanceTravelled > 0.5f)
+            if (DistanceTravelled > 1f)
             {
                 this.gameObject.SetActive(false);
             }
@@ -157,7 +157,6 @@ public class ProjectileBasic : MonoBehaviour
 
     private void hitOnFloor(Collider floor)
     {
-        Debug.Log("floor");
         speed = 0;
         GameObject basicHitParticle = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.HitBasicParticle);
         basicHitParticle.SetActive(true);
@@ -196,12 +195,12 @@ public class ProjectileBasic : MonoBehaviour
         this.m_shooterName = name;
     }
 
-    public void setFiredFrom(AgentController.AgentFaction group)
+    public void setFiredFrom(AgentBasicData.AgentFaction group)
     {
         m_fireFrom = group;
     }
 
-    public AgentController.AgentFaction getFireFrom()
+    public AgentBasicData.AgentFaction getFireFrom()
     {
         return m_fireFrom;
     }

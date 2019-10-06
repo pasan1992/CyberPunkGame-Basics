@@ -8,10 +8,13 @@ public partial class HumanoidAnimationModule : AnimationModule
     protected AimIK m_aimIK;
     protected float m_aimSpeed = 10;
 
-    public HumanoidAnimationModule(Animator animator, AimIK m_aimIK, float AimSpeed) : base(animator)
+    protected AgentFunctionalComponents m_functionalComponents;
+
+    public HumanoidAnimationModule(Animator animator, AimIK m_aimIK,AgentFunctionalComponents functionalComponents, float AimSpeed) : base(animator)
     {
         this.m_aimIK = m_aimIK;
         m_aimSpeed = AimSpeed;
+        m_functionalComponents = functionalComponents;
     }
 
     #region updates
@@ -117,9 +120,27 @@ public partial class HumanoidAnimationModule : AnimationModule
         m_aimIK.enabled = true;
     }
 
+    public bool checkCurrentAnimationTag(string tagName)
+    {
+      return  m_animator.GetCurrentAnimatorStateInfo(2).IsTag(tagName);
+    }
 
+    public void setUpperAnimationLayerWeight(float weight)
+    {
+        m_animator.SetLayerWeight(2,weight);
+    }
     public void setCurretnWeapon(int value)
     {
+        switch (value)
+        {
+            case 0:
+            case 1:
+                m_aimIK.solver.transform = m_functionalComponents.weaponAimTransform.transform;
+            break;
+            case 2:
+                m_aimIK.solver.transform = m_functionalComponents.lookAimTransform.transform;
+            break;
+        }
         m_animator.SetFloat("currentWeapon", value);
     }
 
@@ -166,6 +187,8 @@ public partial class HumanoidAnimationModule : AnimationModule
     {
         return m_animator.GetBool("crouched");
     }
+
+
 
 
     #endregion

@@ -28,7 +28,7 @@ public class AutoHumanoidAgentController :  AgentController
         //m_movingAgent.setHealth(health);
         m_movingAgent.setWeponFireCapability(true);
         intializeAgentCallbacks(m_movingAgent);
-        m_movingAgent.setFaction(m_agentFaction);
+        //m_movingAgent.setFaction(m_agentFaction);
         m_movingAgent.enableTranslateMovment(false);
     }
     #endregion

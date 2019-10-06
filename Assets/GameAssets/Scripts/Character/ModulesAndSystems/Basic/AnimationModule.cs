@@ -4,6 +4,7 @@ public class AnimationModule
 {
     // Start is called before the first frame update
     protected Animator m_animator;
+    protected bool rootMotionEnabled;
     
     public AnimationModule(Animator animator)
     {
@@ -29,5 +30,14 @@ public class AnimationModule
     public void setAnimationSpeed(float speed)
     {
         m_animator.SetFloat("movmenetSpeed",speed);
+    }
+
+    public virtual void setRootMotionStatus(bool status)
+    {
+        if(rootMotionEnabled != status)
+        {
+            rootMotionEnabled = status;
+            m_animator.applyRootMotion =status;
+        }
     }
 }

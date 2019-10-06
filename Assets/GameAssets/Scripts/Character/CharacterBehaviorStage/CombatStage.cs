@@ -55,16 +55,16 @@ public class CombatStage : BasicMovmentStage
             {
                 if(opponent.isAimed())
                 {
-                    m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 1.1f, 0) + randomOffset);
+                    m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 1.1f, 0) + randomOffset + opponent.getCurrentVelocity()*10f);
                 }
                 else
                 {
-                    m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 0.4f, 0) + randomOffset);
+                    m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 0.4f, 0) + randomOffset + opponent.getCurrentVelocity()*10f);
                 }
             }
             else
             {
-                m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 1.25f, 0) + randomOffset);
+                m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 1.25f, 0) + randomOffset + opponent.getCurrentVelocity()*10f);
             }
 
 
@@ -72,7 +72,7 @@ public class CombatStage : BasicMovmentStage
         }
         else
         {
-            m_selfAgent.setTargetPoint(targetLocation.position + randomOffset);
+            m_selfAgent.setTargetPoint(targetLocation.position + randomOffset + opponent.getCurrentVelocity()*10f);
         }
 
     }
@@ -227,12 +227,13 @@ public class CombatStage : BasicMovmentStage
             {
                 ICyberAgent cyberAgent = agent.getICyberAgent();
                 float distance = Vector3.Distance(m_selfAgent.getCurrentPosition(), cyberAgent.getCurrentPosition());
-                if (cyberAgent.IsFunctional() && cyberAgent.getFaction() != m_selfAgent.getFaction() && !cyberAgent.getFaction().Equals(AgentController.AgentFaction.Player))
+                if (cyberAgent.IsFunctional() && cyberAgent.getFaction() != m_selfAgent.getFaction() && !cyberAgent.getFaction().Equals(AgentBasicData.AgentFaction.Player))
                 {
                     if (distance < minimumDistance)
                     {
                         minimumDistance = distance;
                         opponent = cyberAgent;
+                         targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
                     }
                 }
             }

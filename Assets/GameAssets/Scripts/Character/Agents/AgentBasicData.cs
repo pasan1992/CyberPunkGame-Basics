@@ -7,7 +7,7 @@ public class AgentBasicData
 {
     public enum AGENT_NATURE { DROID,DRONE,PLAYER,HUMANOID}
 
-
+#region Static
     [Header("Agent Static Parameters")]
     [Tooltip("This governs non functional behavior of the unity Ex:- Post destory effects")]
     public AGENT_NATURE AgentNature; 
@@ -16,8 +16,14 @@ public class AgentBasicData
     [SerializeField] 
     private float maxHealth;
 
+    public enum AgentFaction { Player,Enemy,Neutral};
+    public AgentFaction m_agentFaction;
+#endregion
 
-    [Space(10)]
+[Space(10)]
+
+#region Dynamic
+      
     [Header("Agent Dynamic Parameters")]
     [SerializeField] 
     private float health;
@@ -51,5 +57,6 @@ public class AgentBasicData
                 health = MaxHealth;
             }
         }
-    }
+    }  
+#endregion
 }

@@ -35,7 +35,10 @@ EditorBuildSettings:
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PC/DevelopmentScenes/DevScene1-unevenland.unity
     guid: 1e947964fcb38874db0a813af699b89d
+  - enabled: 1
+    path: Assets/Scenes/PC/DevelopmentScenes/DevScene2-unevenland.unity
+    guid: b53f1e5ed9c87834c96c76837d57440e
   m_configObjects: {}

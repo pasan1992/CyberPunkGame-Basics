@@ -74,8 +74,9 @@ public class HumanoidMovmentModule : MovmentModule
                 if (m_physicalLocationChange)
                 {
                     // Move character transfrom
+                    m_animationSystem.setRootMotionStatus(true);
                     Vector3 translateDirection = new Vector3(selfTransfrommoveDiection.x, 0, selfTransfrommoveDiection.z);
-                    this.m_characterTransform.Translate(translateDirection.normalized * crouchSpeedMultiplayer / 10);
+                    this.m_characterTransform.Translate(translateDirection.normalized * crouchSpeedMultiplayer / 25);
                 }
                 break;
 
@@ -91,20 +92,27 @@ public class HumanoidMovmentModule : MovmentModule
 
                 m_animationSystem.setMovment(movmentDirection.magnitude, 0);
 
-                float divider = 1;
-                if (m_characterState.Equals(HumanoidMovingAgent.CharacterMainStates.Idle))
-                {
-                    divider = 20;
-                }
-                else
-                {
-                    divider = 15;
-                }
 
-                if (m_physicalLocationChange)
+
+
+                if(m_physicalLocationChange)
                 {
-                    this.m_characterTransform.Translate(Vector3.forward * movmentDirection.magnitude * crouchSpeedMultiplayer / divider);
+                    float divider = 1;
+                    if (m_characterState.Equals(HumanoidMovingAgent.CharacterMainStates.Idle))
+                    {
+                        divider = 35;
+                    }
+                    else
+                    {
+                        divider = 30;
+                    }
+                    m_animationSystem.setRootMotionStatus(true);
+                    this.m_characterTransform.Translate(Vector3.forward * movmentDirection.magnitude * crouchSpeedMultiplayer / divider);             
                 }
+                // if (m_physicalLocationChange)
+                // {
+                //     this.m_characterTransform.Translate(Vector3.forward * movmentDirection.magnitude * crouchSpeedMultiplayer / divider);
+                // }
                 break;
             default:
                 // No neet of movment in other states.
@@ -118,6 +126,18 @@ public class HumanoidMovmentModule : MovmentModule
     /*
         * Current Target direction from the player
         */
+
+    public Vector3 getCurrentVelocity()
+    {
+        if(m_physicalLocationChange)
+        {
+            return m_currentVelocity;
+        }
+        else
+        {
+            return m_navMeshAgent.velocity;
+        } 
+    }
     private Vector3 getTargetDirection()
     {
         return (m_target.transform.position - m_characterTransform.position).normalized;
