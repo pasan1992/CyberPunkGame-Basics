@@ -1,11 +1,6 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
-[RequireComponent(typeof(LineRenderer))]
-[RequireComponent(typeof(Outline))]
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(BoxCollider))]
-public class SecondaryWeapon : Weapon
+public class SecondaryWeapon : RangedWeapon
 {
     private float timeFromLastFire;
     private bool waitToFire = false;

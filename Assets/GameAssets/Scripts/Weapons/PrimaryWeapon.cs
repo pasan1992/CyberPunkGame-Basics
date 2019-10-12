@@ -1,11 +1,7 @@
 ﻿using UnityEngine;
 
-[RequireComponent(typeof(AudioSource))]
-[RequireComponent(typeof(LineRenderer))]
-[RequireComponent(typeof(Outline))]
-[RequireComponent(typeof(Rigidbody))]
-[RequireComponent(typeof(BoxCollider))]
-public class PrimaryWeapon : Weapon
+
+public class PrimaryWeapon : RangedWeapon
 {
     protected float burstFireInterval;
 

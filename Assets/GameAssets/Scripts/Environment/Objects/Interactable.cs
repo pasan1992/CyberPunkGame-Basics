@@ -5,11 +5,16 @@ using UnityEngine;
 public class Interactable : MonoBehaviour
 {
     [System.Serializable]
+
+    
     public class InteractableProperties
     {
+
         public enum InteractableType {PrimaryWeapon,SecondaryWeapon,Switch,Pickup}
         public InteractableType Type = InteractableType.PrimaryWeapon;
         public bool interactionEnabled = false;
+
+        public string itemName = "";
     }
 
    [SerializeField]

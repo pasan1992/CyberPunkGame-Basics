@@ -57,13 +57,6 @@ public class PlayerController : AgentController
     }
     #endregion
 
-    //public PlayerAgent(LayerMask enemyHitLayerMask, LayerMask floorHitLayerMask)
-    //{
-    //    this.enemyHitLayerMask = enemyHitLayerMask;
-    //    this.floorHitLayerMask = floorHitLayerMask;
-    //}
-
-
     #region Updates
 
     private void updateNavMesgAgnet()
@@ -93,8 +86,13 @@ public class PlayerController : AgentController
         //verticleSpeed = agent.velocity.x;
         //horizontalSpeed = agent.velocity.z;
 
+        // if(Input.GetMouseButtonDown(1) && !m_movingAgent.isEquipingWeapon() && !m_movingAgent.isEquiped())
+        // {
+        //     m_movingAgent.togglePrimaryWeapon();
+        // }
+
         // Setting Character Aiming.
-        if (Input.GetMouseButton(1) && !m_movingAgent.isEquipingWeapon())
+        if (Input.GetMouseButton(1) && !m_movingAgent.isEquipingWeapon() && m_movingAgent.isEquiped())
         {
             m_movingAgent.aimWeapon();
         }

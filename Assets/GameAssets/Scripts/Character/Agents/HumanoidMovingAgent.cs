@@ -49,10 +49,10 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         m_animationModule = new HumanoidAnimationModule(this.GetComponent<Animator>(), this.GetComponent<AimIK>(),AgentComponents, 10);
 
         // Create equipment system.
-        Weapon[] currentWeapons = this.GetComponentsInChildren<Weapon>();
+        RangedWeapon[] currentWeapons = this.GetComponentsInChildren<RangedWeapon>();
         WeaponProp[] currentWeaponProps = this.GetComponentsInChildren<WeaponProp>();
         
-        m_equipmentModule = new HumanoidRangedWeaponsModule(currentWeaponProps, m_characterState, m_target, GetComponent<Recoil>(), m_animationModule,AgentData);
+        m_equipmentModule = new HumanoidRangedWeaponsModule(currentWeaponProps, m_characterState, m_target, GetComponent<Recoil>(), m_animationModule,AgentData,AgentComponents);
 
         // Create movment system.
         m_movmentModule = new HumanoidMovmentModule(this.transform, m_characterState, m_target, m_animationModule,this.GetComponent<NavMeshAgent>());
@@ -459,7 +459,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     }
 
 
-    public Weapon.WEAPONTYPE getCurrentWeaponType()
+    public RangedWeapon.WEAPONTYPE getCurrentWeaponType()
     {
         return m_equipmentModule.getCurrentWeapon().getWeaponType();
     }

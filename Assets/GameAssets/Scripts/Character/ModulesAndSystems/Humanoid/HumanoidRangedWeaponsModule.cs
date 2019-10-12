@@ -8,15 +8,17 @@ public class HumanoidRangedWeaponsModule
 
     // Weapon Related properties
     protected Weapon m_currentWeapon;
-    protected Weapon m_rifle;
-    protected Weapon m_pistol;
-    protected Weapon m_grenede;
+    protected RangedWeapon m_rifle;
+    protected RangedWeapon m_pistol;
+    protected Grenade m_grenede;
 
     protected GameObject primaryHosterLocation;
     protected GameObject secondaryHosterLocation;
     protected GameObject weaponHoldLocation;
 
     protected AgentData m_agentData;
+
+    protected AgentFunctionalComponents m_agentComponents;
 
     protected GameObject m_target;
     protected Recoil m_recoil;
@@ -44,13 +46,15 @@ public class HumanoidRangedWeaponsModule
     GameObject target, 
     Recoil recoil, 
     HumanoidAnimationModule animSystem,
-    AgentData agentData)
+    AgentData agentData,
+    AgentFunctionalComponents agentComponets)
     {
         m_currentState = state;
         m_target = target;
         m_recoil = recoil;
         m_animationSystem = animSystem;
         m_agentData = agentData;
+        m_agentComponents = agentComponets;
         getAllWeapons(props);
     }
 
@@ -151,26 +155,29 @@ public class HumanoidRangedWeaponsModule
     public void OnThrow()
     {
         //m_inWeaponAction = false;
+        m_grenede.ThrowGrenede();
     }
     public void ReloadEnd()
     {
-        if(m_currentWeapon !=null)
+        RangedWeapon currentRangedWeapon = (RangedWeapon)m_currentWeapon;
+
+        if(m_currentWeapon !=null && currentRangedWeapon)
         {
-            m_currentWeapon.setReloading(false);
+            currentRangedWeapon.setReloading(false);
             int totalAmmo = 0;
-            m_agentData.weaponAmmoCount.TryGetValue(m_currentWeapon.weaponName,out totalAmmo);
+            m_agentData.weaponAmmoCount.TryGetValue(m_currentWeapon.properties.itemName,out totalAmmo);
             
             // Enought Ammo available
-            if(totalAmmo > m_currentWeapon.m_magazineSize)
+            if(totalAmmo > currentRangedWeapon.m_magazineSize)
             {
-                totalAmmo -=m_currentWeapon.m_magazineSize;
+                totalAmmo -=currentRangedWeapon.m_magazineSize;
                 //  m_agentParameters.weaponAmmoCount.(m_currentWeapon.name,totalAmmo);
-                m_currentWeapon.setAmmoCount(m_currentWeapon.m_magazineSize);
+                currentRangedWeapon.setAmmoCount(currentRangedWeapon.m_magazineSize);
                 return;
             }
 
             // Not enough ammo
-            m_currentWeapon.setAmmoCount(totalAmmo);
+            currentRangedWeapon.setAmmoCount(totalAmmo);
             totalAmmo = 0;
             return;
         }
@@ -179,43 +186,42 @@ public class HumanoidRangedWeaponsModule
     // Equip Animation event.
     public void EquipAnimationEvent()
     {
-        Weapon.WEAPONTYPE type = m_currentWeapon.getWeaponType();
+        RangedWeapon.WEAPONTYPE type = m_currentWeapon.getWeaponType();
         m_inEquipingAction = false;
-
-        // switch (type)
-        // {
-        //     case Weapon.WEAPONTYPE.primary:
-        //         // Select rifle as currentWeapon
-        //         //  Debug.Log("Primary Equip finished");
-        //         //m_rifleProp.setVisible(false);    
-        //         m_currentWeapon = m_rifle;
-        //         break;
-
-        //     case Weapon.WEAPONTYPE.secondary:
-        //         // Select pistol as currentWeapon
-        //         // Debug.Log("Secondary Equip finished");
-        //         //m_pistolProp.setVisible(false);
-        //         m_currentWeapon = m_pistol;
-        //         break;
-        // }
         placeWeaponInHand(m_currentWeapon);
 
         // Set Current Weapon Properties.
         m_currentWeapon.gameObject.SetActive(true);
-        m_currentWeapon.setGunTarget(m_target);
+
+        switch(m_currentWeapon.getWeaponType())
+        {
+            case Weapon.WEAPONTYPE.primary:
+            case Weapon.WEAPONTYPE.secondary:
+                ((RangedWeapon)m_currentWeapon).setGunTarget(m_target);
+            break;
+
+            case Weapon.WEAPONTYPE.grenede:
+                m_currentWeapon.setGunTarget(m_target);
+            break;
+        }
+
+        // if(m_currentWeapon.GetType().Equals(typeof( RangedWeapon)))
+        // {
+        //     ((RangedWeapon)m_currentWeapon).setGunTarget(m_target);
+        // }      
     }
 
     // UnEquip Animation event.
     public void UnEquipAnimationEvent()
     {
-        Weapon.WEAPONTYPE type = m_currentWeapon.getWeaponType();
+        RangedWeapon.WEAPONTYPE type = m_currentWeapon.getWeaponType();
         //m_currentWeapon.gameObject.SetActive(false);
         m_currentWeapon = null;
         m_inEquipingAction = false;
 
         switch (type)
         {
-            case Weapon.WEAPONTYPE.primary:
+            case RangedWeapon.WEAPONTYPE.primary:
                 
                 //m_rifleProp.setVisible(true);
                 //placePrimaryWeaponInHosterLocation();
@@ -223,7 +229,7 @@ public class HumanoidRangedWeaponsModule
                 placeWeaponinHosterLocation(m_rifle);
                 break;
 
-            case Weapon.WEAPONTYPE.secondary:
+            case RangedWeapon.WEAPONTYPE.secondary:
                 //m_pistolProp.setVisible(true);
                 placeWeaponinHosterLocation(m_pistol);
                 //placeSecondaryWeaponInHosterLocation();
@@ -244,12 +250,29 @@ public class HumanoidRangedWeaponsModule
     {
         if (isProperlyAimed() && m_currentState.Equals(HumanoidMovingAgent.CharacterMainStates.Aimed) && m_currentWeapon)
         {
-            m_currentWeapon.pullTrigger();
-
-            if(m_currentWeapon.GetType().Equals(typeof(Grenade)))
+            switch(m_currentWeapon.getWeaponType())
             {
-                m_inWeaponAction = true;
+                case Weapon.WEAPONTYPE.primary:
+                case Weapon.WEAPONTYPE.secondary:
+                    ((RangedWeapon)m_currentWeapon).pullTrigger();
+                break;
+
+                case Weapon.WEAPONTYPE.grenede:
+                    m_inWeaponAction = true;
+                    m_grenede.pullGrenedePin();
+                break;
             }
+
+            // if(m_currentWeapon.GetType().Equals(typeof( RangedWeapon)))
+            // {
+            //     ((RangedWeapon)m_currentWeapon).pullTrigger();
+            // }  
+            // //m_currentWeapon.pullTrigger();
+
+            // if(m_currentWeapon.GetType().Equals(typeof(Grenade)))
+            // {
+            //     m_inWeaponAction = true;
+            // }
         }
     }
 
@@ -257,12 +280,30 @@ public class HumanoidRangedWeaponsModule
     {
         if (m_currentWeapon)
         {
-            m_currentWeapon.releaseTrigger();
+            //m_currentWeapon.releaseTrigger();
 
-            if(m_currentWeapon.GetType().Equals(typeof(Grenade)))
+            // if(m_currentWeapon.GetType().Equals(typeof(RangedWeapon)))
+            // {
+            //     ((RangedWeapon)m_currentWeapon).releaseTrigger();
+            // } 
+
+            // if(m_currentWeapon.GetType().Equals(typeof(Grenade)))
+            // {
+            //     m_animationSystem.triggerThrow();
+            //     m_inWeaponAction = true;
+            // }
+
+            switch(m_currentWeapon.getWeaponType())
             {
-                m_animationSystem.triggerThrow();
-                m_inWeaponAction = true;
+                case Weapon.WEAPONTYPE.primary:
+                case Weapon.WEAPONTYPE.secondary:
+                    ((RangedWeapon)m_currentWeapon).releaseTrigger();
+                break;
+
+                case Weapon.WEAPONTYPE.grenede:
+                    m_animationSystem.triggerThrow();
+                    m_inWeaponAction = true;
+                break;
             }
         }
     }
@@ -290,8 +331,20 @@ public class HumanoidRangedWeaponsModule
     {
         if(m_currentWeapon !=null && !isReloading() && !m_inWeaponAction && !m_currentWeapon.GetType().Equals(typeof(Grenade)))
         {
-            m_currentWeapon.reloadWeapon();
-            m_animationSystem.triggerReload();
+            switch(m_currentWeapon.getWeaponType())
+            {
+                case Weapon.WEAPONTYPE.primary:
+                case Weapon.WEAPONTYPE.secondary:
+                    ((RangedWeapon)m_currentWeapon).reloadWeapon();
+                    m_animationSystem.triggerReload();
+                break;
+
+                case Weapon.WEAPONTYPE.grenede:
+                    m_inWeaponAction = true;
+                break;
+            }
+            // m_currentWeapon.reloadWeapon();
+            // m_animationSystem.triggerReload();
         }
     }
     public HumanoidMovingAgent.CharacterMainStates togglePrimary()
@@ -303,7 +356,7 @@ public class HumanoidRangedWeaponsModule
             if (m_currentWeapon != null)
             {
                 // UnEquip Weapon With Animation
-                if (m_currentWeapon.getWeaponType().Equals(Weapon.WEAPONTYPE.primary))
+                if (m_currentWeapon.getWeaponType().Equals(RangedWeapon.WEAPONTYPE.primary))
                 {
                     m_inEquipingAction = true;
                     return m_animationSystem.unEquipEquipment();
@@ -356,7 +409,7 @@ public class HumanoidRangedWeaponsModule
             if (m_currentWeapon != null)
             {
                 // Unequip weapon with animation
-                if (m_currentWeapon.getWeaponType().Equals(Weapon.WEAPONTYPE.secondary))
+                if (m_currentWeapon.getWeaponType().Equals(RangedWeapon.WEAPONTYPE.secondary))
                 {
                     m_inEquipingAction = true;
                     return m_animationSystem.unEquipEquipment();
@@ -409,7 +462,7 @@ public class HumanoidRangedWeaponsModule
            if(m_currentWeapon != null)
            {
                // Unequip weapon with animation
-                if (m_currentWeapon.getWeaponType().Equals(Weapon.WEAPONTYPE.grenede))
+                if (m_currentWeapon.getWeaponType().Equals(RangedWeapon.WEAPONTYPE.grenede))
                 {
                     // Since there are not equiping animation, no need to have m_inEquipingAction enable
                     //m_inEquipingAction = true;
@@ -456,7 +509,7 @@ public class HumanoidRangedWeaponsModule
         return m_animationSystem.isProperlyAimed();
     }
 
-    public void setCurrentWeapon(Weapon currentWeapon)
+    public void setCurrentWeapon(RangedWeapon currentWeapon)
     {
         this.m_currentWeapon = currentWeapon;
         m_currentWeapon.setGunTarget(m_target);
@@ -480,7 +533,17 @@ public class HumanoidRangedWeaponsModule
         if(m_currentWeapon)
         {
             //m_agentParameters.weaponAmmoCount.TryGetValue(m_currentWeapon.name,out count);
-            count =  m_currentWeapon.getAmmoCount();
+            switch(m_currentWeapon.getWeaponType())
+            {
+                case Weapon.WEAPONTYPE.primary:
+                case Weapon.WEAPONTYPE.secondary:
+                    count =  ((RangedWeapon)m_currentWeapon).getAmmoCount();
+                break;
+
+                case Weapon.WEAPONTYPE.grenede:
+                break;
+            }
+
         }
 
         return count;
@@ -529,6 +592,7 @@ public class HumanoidRangedWeaponsModule
             m_rifle.setOwnerFaction(m_agentData.m_agentFaction);
             m_rifle.setGunTarget(m_target);
             m_rifle.addOnWeaponFireEvent(OnWeaponFire);
+            m_rifle.targetPointTransfrom = m_agentComponents.weaponAimTransform;
             //placePrimaryWeaponInHosterLocation();
             placeWeaponinHosterLocation(m_rifle);
         }
@@ -540,37 +604,15 @@ public class HumanoidRangedWeaponsModule
             m_pistol.setOwnerFaction(m_agentData.m_agentFaction);
             m_pistol.setGunTarget(m_target);
             m_pistol.addOnWeaponFireEvent(OnWeaponFire);
+            m_pistol.targetPointTransfrom = m_agentComponents.weaponAimTransform;
             placeWeaponinHosterLocation(m_pistol);           
         }
 
         if(m_agentData.grenade)
         {
             m_grenede = m_agentData.grenade;
+            m_grenede.setGunTarget(m_target);
         }
-
-        // foreach (Weapon wep in weapons)
-        // {
-        //     wep.setOwnerFaction(m_ownersFaction);
-        //     wep.setAimed(false);
-        //     wep.setGunTarget(m_target);
-        //     //wep.gameObject.SetActive(false);
-        //     wep.addOnWeaponFireEvent(OnWeaponFire);
-
-        //     Weapon.WEAPONTYPE type = wep.getWeaponType();
-
-        //     switch (type)
-        //     {
-        //         case Weapon.WEAPONTYPE.primary:
-        //             m_rifle = wep;
-        //             placePrimaryWeaponInHosterLocation();
-        //             break;
-
-        //         case Weapon.WEAPONTYPE.secondary:
-        //             m_pistol = wep;
-        //             placeSecondaryWeaponInHosterLocation();
-        //             break;
-        //     }
-        // }
     }
 
     public bool isInEquipingAction()
@@ -620,22 +662,24 @@ public class HumanoidRangedWeaponsModule
 
     public bool isReloading()
     {
-        if(m_currentWeapon !=null)
+        if(m_currentWeapon)
         {
-            return m_currentWeapon.isReloading();
+            switch(m_currentWeapon.getWeaponType())
+            {
+                case Weapon.WEAPONTYPE.primary:
+                case Weapon.WEAPONTYPE.secondary:
+                    return ((RangedWeapon)m_currentWeapon).isReloading();
+                case Weapon.WEAPONTYPE.grenede:
+                    return false;
+                default:
+                    return false;
+            }
         }
         else
         {
             return false;
         }
     }
-
-    // public void placePrimaryWeaponInHosterLocation()
-    // {
-    //     m_rifle.transform.parent = primaryHosterLocation.transform;
-    //     m_rifle.transform.localPosition = Vector3.zero;
-    //     m_rifle.transform.localRotation = Quaternion.identity;
-    // }
 
     public void placeWeaponinHosterLocation(Weapon weapon)
     {
@@ -659,60 +703,61 @@ public class HumanoidRangedWeaponsModule
             weapon.transform.localPosition = Vector3.zero;
             weapon.transform.localRotation = Quaternion.identity;
     }
-
-    // public void placeSecondaryWeaponInHosterLocation()
-    // {
-    //     m_pistol.transform.parent = secondaryHosterLocation.transform;
-    //     m_pistol.transform.localPosition = Vector3.zero;
-    //     m_pistol.transform.localRotation = Quaternion.identity;
-    // }
-
     public void placeWeaponInHand(Weapon weapon)
     {
         weapon.transform.parent = weaponHoldLocation.transform;
-        weapon.transform.localPosition = Vector3.zero + weapon.handPlacementOffset;
+        weapon.transform.localPosition = Vector3.zero + weapon.nonFunctionalProperties.handPlacementOffset;
         weapon.transform.localRotation = Quaternion.identity;
-        m_recoil.handRotationOffset = weapon.weaponRecoilOffset;  
+        m_recoil.handRotationOffset = weapon.nonFunctionalProperties.weaponRecoilOffset;  
         weapon.transform.localScale = Vector3.one;     
     }
 
     public void equipWeapon(Weapon weapon)
     {
-        bool weaponEquipable = false;
-        if(weapon.GetType() == typeof(PrimaryWeapon))
+        switch(weapon.getWeaponType())
         {
-            if(m_rifle)
-            {
-                m_rifle.dropWeapon();
-                m_rifle = null;
-            }
+            case Weapon.WEAPONTYPE.primary:
+                if(m_rifle)
+                {
+                    m_rifle.dropWeapon();
+                    m_rifle = null;
+                }
 
-            m_rifle = weapon;
-            placeWeaponinHosterLocation(weapon);
-            m_rifle.onWeaponEquip();
-            weaponEquipable = true;
-        }
-        else if (weapon.GetType() == typeof(SecondaryWeapon))
-        {
-            if(m_pistol)
-            {
-                m_pistol.dropWeapon();
-                m_pistol = null;
-            }
+                m_rifle = (PrimaryWeapon)weapon;
+                placeWeaponinHosterLocation(weapon);
+                m_rifle.onWeaponEquip();
+                ((RangedWeapon)weapon).addOnWeaponFireEvent(OnWeaponFire);
+                m_rifle.targetPointTransfrom = m_agentComponents.weaponAimTransform;
+            break;
+            case Weapon.WEAPONTYPE.secondary:
+                if(m_pistol)
+                {
+                    m_pistol.dropWeapon();
+                    m_pistol = null;
+                }
 
-            m_pistol = weapon;
-            placeWeaponinHosterLocation(weapon);
-            m_pistol.onWeaponEquip();
-            weaponEquipable = true;
+                m_pistol = (SecondaryWeapon)weapon;
+                placeWeaponinHosterLocation(weapon);
+                m_pistol.onWeaponEquip();
+                ((RangedWeapon)weapon).addOnWeaponFireEvent(OnWeaponFire);
+                m_pistol.targetPointTransfrom = m_agentComponents.weaponAimTransform;
+            break;
+            case Weapon.WEAPONTYPE.grenede:
+                if(m_grenede)
+                {
+                    m_grenede.dropWeapon();
+                    m_grenede = null;
+                }
+                m_grenede = (Grenade)weapon;
+                placeWeaponinHosterLocation(weapon);
+                m_grenede.onWeaponEquip();
+                //m_grenede.targetPointTransfrom = m_agentComponents.lookAimTransform;
+            break;
         }
 
-        if(weaponEquipable)
-        {
-            weapon.setAimed(false);
-            weapon.setOwnerFaction(m_agentData.m_agentFaction);
-            weapon.setGunTarget(m_target);
-            weapon.addOnWeaponFireEvent(OnWeaponFire);
-        }
+        weapon.setAimed(false);
+        weapon.setOwnerFaction(m_agentData.m_agentFaction);
+        weapon.setGunTarget(m_target);
     }
 
     #endregion
