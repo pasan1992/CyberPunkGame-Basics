@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class Grenade : Weapon
 {
-    public GameObject tempGrenede;
+    private GameObject m_tempGrenede;
+
     public override WEAPONTYPE getWeaponType()
     {
         return WEAPONTYPE.grenede;
@@ -12,27 +13,27 @@ public class Grenade : Weapon
 
     public void pullGrenedePin()
     {
-        tempGrenede.SetActive(true);
-        tempGrenede.GetComponent<BasicTimerExplosion>().resetAll();
-        Rigidbody rb = tempGrenede.GetComponent<Rigidbody>();
+        m_tempGrenede = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.Grenade);
+        m_tempGrenede.SetActive(true);
+        m_tempGrenede.GetComponent<BasicTimerExplosion>().resetAll();
+        Rigidbody rb = m_tempGrenede.GetComponent<Rigidbody>();
         rb.isKinematic = true;
         rb.collisionDetectionMode = CollisionDetectionMode.Discrete;
-        tempGrenede.transform.parent = this.transform;
-        tempGrenede.transform.localPosition =Vector3.zero;
-        tempGrenede.GetComponent<BasicTimerExplosion>().startCountDown();
+        m_tempGrenede.transform.parent = this.transform;
+        m_tempGrenede.transform.localPosition =Vector3.zero;
+        m_tempGrenede.GetComponent<BasicTimerExplosion>().startCountDown();
     }
 
     public void ThrowGrenede()
     {
-        tempGrenede.transform.parent = null;
-        Rigidbody rb = tempGrenede.GetComponent<Rigidbody>();
+        m_tempGrenede.transform.parent = null;
+        Rigidbody rb = m_tempGrenede.GetComponent<Rigidbody>();
         rb.isKinematic = false;
         rb.velocity = Vector3.zero;
-        // tempGrenede.GetComponent<Rigidbody>().isKinematic = false;
-        // tempGrenede.GetComponent<Rigidbody>().velocity = Vector3.zero;
-        tempGrenede.transform.position = this.transform.position;
+        rb.collisionDetectionMode = CollisionDetectionMode.ContinuousSpeculative;
+        m_tempGrenede.transform.position = this.transform.position;
         Vector3 throwVeclocity = calculateThrowVelocity(m_target.transform.position - this.transform.position - Vector3.up*1.5f);
-        tempGrenede.GetComponent<Rigidbody>().AddForce(throwVeclocity,ForceMode.VelocityChange);
+        m_tempGrenede.GetComponent<Rigidbody>().AddForce(throwVeclocity,ForceMode.VelocityChange);
     }
 
 

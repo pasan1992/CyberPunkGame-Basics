@@ -13,6 +13,7 @@ public class ProjectilePool : MonoBehaviour
         SmokeEffect,
         PistolAmmo,
         RifleAmmo,
+        Grenade
     }
 
     // Basic Projectile 
@@ -35,8 +36,10 @@ public class ProjectilePool : MonoBehaviour
     private static ProjectilePool thisProjectilePool;
 
     public int ammoCount = 5;
-    public List<GameObject> pistolAmmoList;
-    public List<GameObject> rifleAmmoList;
+    private List<GameObject> pistolAmmoList;
+    private List<GameObject> rifleAmmoList;
+
+    public List<GameObject> grenadeList;
 
     #region initialize
 
@@ -109,6 +112,12 @@ public class ProjectilePool : MonoBehaviour
                 pistolAmmoList = new List<GameObject>();
                 effectList = pistolAmmoList;
                 break;
+            case POOL_OBJECT_TYPE.Grenade:
+                count = ammoCount;
+                resourcePath = "Prefab/Grenede_throwObject";
+                grenadeList = new List<GameObject>();
+                effectList = grenadeList;          
+            break;
         }
 
         GameObject bulletHitBasicParticlePrefab = Resources.Load<GameObject>(resourcePath);
@@ -218,6 +227,9 @@ public class ProjectilePool : MonoBehaviour
                 break;
             case POOL_OBJECT_TYPE.PistolAmmo:
                 effectList = pistolAmmoList;
+                break;
+            case POOL_OBJECT_TYPE.Grenade:
+                effectList = grenadeList;
                 break;
         }
 

@@ -4,13 +4,22 @@ using UnityEngine;
 
 public class BasicExplodingObject : MonoBehaviour
 {
+     [SerializeField] 
+    private float m_baseDamage;
+
+     [SerializeField] 
+    private float m_range;
+
+    public float BaseDamage { get => m_baseDamage; set => m_baseDamage = value; }
+    public float Range { get => m_range; set => m_range = value; }
+
     public void explode()
     {
        GameObject explostion = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.FireEXplosionParticle);
        explostion.transform.position = this.transform.position;
        explostion.SetActive(true);
-       this.gameObject.SetActive(false);
        damgeAround();
+       this.gameObject.SetActive(false);
     }
 
     private void damgeAround()
@@ -41,25 +50,33 @@ public class BasicExplodingObject : MonoBehaviour
     private void hitOnEnemy(Collider other)
     {
       ICyberAgent agent =  other.GetComponentInParent<ICyberAgent>();
-      agent.reactOnHit(other, (this.transform.forward) * 3f, other.transform.position);
+      
+      Vector3 direction;
+      float damagePropotion = DamageCalculator.getExplosionDamgage(this.transform.position,other.transform.position,m_range,out direction);
 
-      if(agent.IsFunctional())
+      if(damagePropotion > 0)
       {
-        if(other.tag =="Head")
-        {
-            agent.damageAgent(2);
+        if(agent.IsFunctional())
+        { 
+            if(other.tag =="Chest")
+            {   
+                if(!DamageCalculator.isSafeFromTarget(this.transform.position,other.transform.position,m_range))
+                {
+                    agent.damageAgent(m_baseDamage*damagePropotion);
+                }           
+            }
         }
-        
-      }
-      else
-      {
-         Rigidbody rb = other.GetComponent<Rigidbody>();
-         float chance = Random.value;
-          if(rb && chance >0.5f)
-          {
-              rb.AddForce(Random.insideUnitCircle*Random.value*50,ForceMode.Impulse);
-          }
-      }
+        else
+        {
+            Rigidbody rb = other.GetComponent<Rigidbody>();
+            
+            float chance = Random.value;
 
+            if(rb && chance >0.5f)
+            {
+                rb.AddForce(direction*damagePropotion*BaseDamage*10,ForceMode.Impulse);
+            }
+        }
+      }
     }
 }

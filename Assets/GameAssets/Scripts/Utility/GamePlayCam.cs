@@ -54,7 +54,7 @@ public class GamePlayCam : MonoBehaviour
             aimedPlayerPositon = target.transform.position;
             return newCameraPosition;
         }
-        else if(aimedPlayerPositon == target.transform.position)
+        else if(Vector3.Distance(aimedPlayerPositon,target.transform.position) <0.1f )
         {
             return  newCameraPosition;
         }

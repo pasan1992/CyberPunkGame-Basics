@@ -131,16 +131,6 @@ public abstract class RangedWeapon : Weapon
         m_onWeaponFire = onfire;
     }
 
-    // public override void setAimed(bool aimed)
-    // {
-    //     m_isAimed = aimed;
-    // }
-
-    // public override void setWeaponSafty(bool enabled)
-    // {
-    //     weaponSafty = enabled;
-    // }
-
     public int getAmmoCount()
     {
         return m_ammoCount;

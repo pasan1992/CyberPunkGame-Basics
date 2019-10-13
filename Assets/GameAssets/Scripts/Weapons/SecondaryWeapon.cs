@@ -11,6 +11,7 @@ public class SecondaryWeapon : RangedWeapon
         properties.Type = InteractableProperties.InteractableType.SecondaryWeapon;
     }
 
+
     #region command
 
     public override void pullTrigger()

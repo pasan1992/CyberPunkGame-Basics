@@ -31515,7 +31515,7 @@ MonoBehaviour:
     itemName: Pistol
   nonFunctionalProperties:
     magazinePositionOffset: {x: 0, y: 0, z: 0}
-    magazineObjProp: {fileID: 0}
+    magazineObjProp: {fileID: 8851718179624514391}
     handPlacementOffset: {x: 0, y: 0, z: 0}
     weaponRecoilOffset: {x: 0, y: 0, z: 0}
   gunMuzzle: {fileID: 8851718180373007921}

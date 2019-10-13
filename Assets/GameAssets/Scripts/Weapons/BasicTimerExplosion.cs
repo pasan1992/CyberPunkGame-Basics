@@ -4,34 +4,38 @@ using UnityEngine;
 
 public class BasicTimerExplosion : BasicExplodingObject
 {
-    public float explosionCountDown;
-    public float currentCownDown = 0;
-    public bool countDownStarted = false;
+     [SerializeField] 
+    private float m_explosionCountDown;
+    private float m_currentCownDown = 0;
+    private bool m_countDownStarted = false;
 
+    public float ExplosionCountDown { get => m_explosionCountDown; set => m_explosionCountDown = value; }
+    public bool CountDownStarted { get => m_countDownStarted; set => m_countDownStarted = value; }
+    public float CurrentCownDown { get => m_currentCownDown; set => m_currentCownDown = value; }
 
     public void Update()
     {
-        if(explosionCountDown < currentCownDown && countDownStarted)
+        if(ExplosionCountDown < CurrentCownDown && CountDownStarted)
         {
-            explode();
             resetAll();
+            explode();
         }
 
-        if(countDownStarted)
+        if(CountDownStarted)
         {
-            currentCownDown += (Time.deltaTime % 60);
+            CurrentCownDown += (Time.deltaTime % 60);
         }
     }
 
     public void startCountDown()
     {
-        countDownStarted = true;
+        CountDownStarted = true;
     }
 
     public void resetAll()
     {
-        currentCownDown = 0;
-        countDownStarted = false;
+        CurrentCownDown = 0;
+        CountDownStarted = false;
     }
 
 }

@@ -31,7 +31,7 @@ TagManager:
   - Character
   - Floor
   - HalfCoverObsticles
-  - FullCOverObsticles
+  - FullCoverObsticles
   - Enviornment
   - ExplosionParticle
   - Weapon
