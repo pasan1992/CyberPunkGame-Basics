@@ -8,10 +8,13 @@ public partial class HumanoidAnimationModule : AnimationModule
     protected AimIK m_aimIK;
     protected float m_aimSpeed = 10;
 
-    public HumanoidAnimationModule(Animator animator, AimIK m_aimIK, float AimSpeed) : base(animator)
+    protected AgentFunctionalComponents m_functionalComponents;
+
+    public HumanoidAnimationModule(Animator animator, AimIK m_aimIK,AgentFunctionalComponents functionalComponents, float AimSpeed) : base(animator)
     {
         this.m_aimIK = m_aimIK;
         m_aimSpeed = AimSpeed;
+        m_functionalComponents = functionalComponents;
     }
 
     #region updates
@@ -26,7 +29,7 @@ public partial class HumanoidAnimationModule : AnimationModule
             case HumanoidMovingAgent.CharacterMainStates.Armed_not_Aimed:
                 m_aimIK.solver.IKPositionWeight = Mathf.Lerp(m_aimIK.solver.IKPositionWeight, 0, Time.deltaTime * m_aimSpeed);
                 break;
-            case HumanoidMovingAgent.CharacterMainStates.Idle:
+            case HumanoidMovingAgent.CharacterMainStates.UnArmed:
                 m_aimIK.solver.IKPositionWeight = Mathf.Lerp(m_aimIK.solver.IKPositionWeight, 0, Time.deltaTime * m_aimSpeed);
                 break;
             case HumanoidMovingAgent.CharacterMainStates.Dodge:
@@ -46,7 +49,7 @@ public partial class HumanoidAnimationModule : AnimationModule
     public HumanoidMovingAgent.CharacterMainStates unEquipEquipment()
     {
         m_animator.SetBool("equip", false);
-        return HumanoidMovingAgent.CharacterMainStates.Idle;
+        return HumanoidMovingAgent.CharacterMainStates.UnArmed;
     }
 
     HumanoidMovingAgent.CharacterMainStates toggleEquip()
@@ -61,7 +64,7 @@ public partial class HumanoidAnimationModule : AnimationModule
         }
         else
         {
-            return HumanoidMovingAgent.CharacterMainStates.Idle;
+            return HumanoidMovingAgent.CharacterMainStates.UnArmed;
         }
     }
 
@@ -120,6 +123,16 @@ public partial class HumanoidAnimationModule : AnimationModule
 
     public void setCurretnWeapon(int value)
     {
+        switch (value)
+        {
+            case 0:
+            case 1:
+                m_aimIK.solver.transform = m_functionalComponents.weaponAimTransform.transform;
+            break;
+            case 2:
+                m_aimIK.solver.transform = m_functionalComponents.lookAimTransform.transform;
+            break;
+        }
         m_animator.SetFloat("currentWeapon", value);
     }
 

@@ -25,8 +25,8 @@ public interface ICyberAgent
     void dodgeAttack(Vector3 dodgeDirection);
     void lookAtTarget();
     Vector3 getTopPosition();
-    AgentController.AgentFaction getFaction();
-    void setFaction(AgentController.AgentFaction group);
+    AgentBasicData.AgentFaction getFaction();
+    void setFaction(AgentBasicData.AgentFaction group);
     float getSkill();
     void setOnDestoryCallback(AgentController.agentBasicEventDelegate callback);
     void setOnDisableCallback(AgentController.agentBasicEventDelegate callback);
@@ -34,6 +34,7 @@ public interface ICyberAgent
     bool isDisabled();
     void resetAgent();
     Vector3 getMovmentDirection();
+    Vector3 getCurrentVelocity();
     bool isAimed();
     bool isHidden();
     GameObject getGameObject();

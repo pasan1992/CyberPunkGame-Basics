@@ -26,7 +26,7 @@ public class PlayerController : AgentController
     private void Start()
     {
         m_movingAgent = this.GetComponent<HumanoidMovingAgent>();
-        m_movingAgent.setFaction(m_agentFaction);
+        //m_movingAgent.setFaction(m_agentFaction);
         enemyHitLayerMask = LayerMask.GetMask("Enemy");
         targetHitLayerMask = LayerMask.GetMask("Target");
         floorHitLayerMask = LayerMask.GetMask("Floor");
@@ -85,8 +85,8 @@ public class PlayerController : AgentController
     {
         //updateNavMesgAgnet();
 
-        verticleSpeed = Mathf.Lerp(verticleSpeed, Input.GetAxis("Vertical"),0.85f);
-        horizontalSpeed = Mathf.Lerp(horizontalSpeed, Input.GetAxis("Horizontal"), 0.85f);
+        verticleSpeed = Mathf.Lerp(verticleSpeed, Input.GetAxis("Vertical"),0.7f);
+        horizontalSpeed = Mathf.Lerp(horizontalSpeed, Input.GetAxis("Horizontal"), 0.7f);
         //Vector3 velocity = agent.desiredVelocity;
        //velocity = velocity.normalized;
 
@@ -112,6 +112,11 @@ public class PlayerController : AgentController
             m_movingAgent.togglePrimaryWeapon();
         }
 
+        if (Input.GetKeyDown(KeyCode.Alpha3))
+        {
+            m_movingAgent.toggleGrenede();
+        }
+
         if (Input.GetKeyDown(KeyCode.C))
         {
             m_movingAgent.toggleHide();
@@ -124,7 +129,7 @@ public class PlayerController : AgentController
 
         if(Input.GetKey(KeyCode.LeftShift))
         {
-            speedModifyVale = Mathf.Lerp(speedModifyVale, 2, 0.1f);
+            speedModifyVale = Mathf.Lerp(speedModifyVale, 1.5f, 0.1f);
             m_movingAgent.moveCharacter(getDirectionRelativeToCamera(new Vector3(verticleSpeed * speedModifyVale, 0, -horizontalSpeed * speedModifyVale)));
             //velocity = new Vector3(velocity.x, 0, velocity.z);
             //m_movingAgent.moveCharacter(velocity);

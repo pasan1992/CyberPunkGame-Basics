@@ -10,6 +10,7 @@ public class HumanoidRangedWeaponsModule
     protected Weapon m_currentWeapon;
     protected Weapon m_rifle;
     protected Weapon m_pistol;
+    protected Weapon m_grenede;
    // protected WeaponProp m_rifleProp;
    // protected WeaponProp m_pistolProp;
     //private AgentParameters m_agentParameters;
@@ -26,7 +27,7 @@ public class HumanoidRangedWeaponsModule
     protected Recoil m_recoil;
     protected HumanoidMovingAgent.CharacterMainStates m_currentState;
     protected HumanoidAnimationModule m_animationSystem;
-    protected AgentController.AgentFaction m_ownersFaction;
+    //protected AgentBasicData.AgentFaction m_ownersFaction;
 
 
     // Functional related properties
@@ -81,10 +82,10 @@ public class HumanoidRangedWeaponsModule
                     aimCurrentEquipment(false);
                 }
                 break;
-            case HumanoidMovingAgent.CharacterMainStates.Idle:
+            case HumanoidMovingAgent.CharacterMainStates.UnArmed:
 
                 // Set one time only
-                if (!m_currentState.Equals(HumanoidMovingAgent.CharacterMainStates.Idle))
+                if (!m_currentState.Equals(HumanoidMovingAgent.CharacterMainStates.UnArmed))
                 {
                     aimCurrentEquipment(false);
                 }
@@ -252,19 +253,10 @@ public class HumanoidRangedWeaponsModule
                 else
                 {
                     // Fast toggle
+                    placeWeaponinHosterLocation(m_currentWeapon);
                     m_currentWeapon = m_rifle;
-
-
-                    //m_pistol.gameObject.SetActive(false);
-                    //m_rifle.gameObject.SetActive(true);
                     placeWeaponInHand(m_currentWeapon);
-                    placeWeaponinHosterLocation(m_pistol);
-                    //placeSecondaryWeaponInHosterLocation();
-
-                    //m_rifleProp.setVisible(false);
-                    //m_pistolProp.setVisible(true);
-                    
-
+                         
                     m_animationSystem.fastEquipCurrentEquipment();
 
                     if (m_currentState.Equals(HumanoidMovingAgent.CharacterMainStates.Aimed))
@@ -294,9 +286,9 @@ public class HumanoidRangedWeaponsModule
 
         if (!m_inEquipingAction && !isReloading() && m_pistol)
         {
-            //Debug.Log("Toggle Secondary Start");
             m_animationSystem.setCurretnWeapon(0);
 
+            // Current weapon equiped
             if (m_currentWeapon != null)
             {
                 if (m_currentWeapon.getWeaponType().Equals(Weapon.WEAPONTYPE.secondary))
@@ -307,15 +299,10 @@ public class HumanoidRangedWeaponsModule
                 else
                 {
                     // Fast toggle
+                    placeWeaponinHosterLocation(m_currentWeapon);
                     m_currentWeapon = m_pistol;
-
                     placeWeaponInHand(m_currentWeapon);
-                    //placePrimaryWeaponInHosterLocation();
-                    placeWeaponinHosterLocation(m_rifle);
-                    //m_rifle.gameObject.SetActive(false);
-                    //m_rifleProp.setVisible(true);
-                    //m_pistolProp.setVisible(false);
-                    //m_pistol.gameObject.SetActive(true);
+                    
 
 
                     m_animationSystem.fastEquipCurrentEquipment();
@@ -328,6 +315,7 @@ public class HumanoidRangedWeaponsModule
                     return m_currentState;
                 }
             }
+            // no current weapon
             else
             {
                 m_inEquipingAction = true;
@@ -341,6 +329,41 @@ public class HumanoidRangedWeaponsModule
             return m_currentState;
         }
     }
+
+    public HumanoidMovingAgent.CharacterMainStates toggleGrenede()
+    {
+       if(!m_inEquipingAction && !isReloading() && m_grenede)
+       {
+           if(m_currentWeapon != null)
+           {
+                if (m_currentWeapon.getWeaponType().Equals(Weapon.WEAPONTYPE.grenede))
+                {
+                    // Since there are not equiping animation, no need to have m_inEquipingAction enable
+                    //m_inEquipingAction = true;
+                    m_currentWeapon = null;
+                    return m_animationSystem.unEquipEquipment();
+                }
+                else
+                {
+                    placeWeaponinHosterLocation(m_currentWeapon);
+                    m_currentWeapon = m_grenede;
+                    placeWeaponInHand(m_currentWeapon);
+                    m_animationSystem.setCurretnWeapon(2);
+
+                    m_animationSystem.fastEquipCurrentEquipment();
+                }
+           }
+           // No current weapon - equip in idle
+           else
+           {
+                m_animationSystem.setCurretnWeapon(2);
+                m_currentWeapon = m_grenede;
+                return m_animationSystem.equipCurrentEquipment();
+           }
+       }
+       
+        return m_currentState;
+    } 
     #endregion
 
     #region Getters And Setters definition
@@ -354,7 +377,7 @@ public class HumanoidRangedWeaponsModule
     {
         this.m_currentWeapon = currentWeapon;
         m_currentWeapon.setGunTarget(m_target);
-        m_currentWeapon.setOwnerFaction(m_ownersFaction);
+        m_currentWeapon.setOwnerFaction(m_agentData.m_agentFaction);
     }
 
     public void setCurretnWeaponProp(WeaponProp weaponProp)
@@ -420,7 +443,7 @@ public class HumanoidRangedWeaponsModule
         {
             m_rifle = m_agentData.primaryWeapon;
             m_rifle.setAimed(false);
-            m_rifle.setOwnerFaction(m_ownersFaction);
+            m_rifle.setOwnerFaction(m_agentData.m_agentFaction);
             m_rifle.setGunTarget(m_target);
             m_rifle.addOnWeaponFireEvent(OnWeaponFire);
             //placePrimaryWeaponInHosterLocation();
@@ -431,10 +454,15 @@ public class HumanoidRangedWeaponsModule
         {
             m_pistol = m_agentData.secondaryWeapon;
             m_pistol.setAimed(false);
-            m_pistol.setOwnerFaction(m_ownersFaction);
+            m_pistol.setOwnerFaction(m_agentData.m_agentFaction);
             m_pistol.setGunTarget(m_target);
             m_pistol.addOnWeaponFireEvent(OnWeaponFire);
             placeWeaponinHosterLocation(m_pistol);           
+        }
+
+        if(m_agentData.grenade)
+        {
+            m_grenede = m_agentData.grenade;
         }
 
         // foreach (Weapon wep in weapons)
@@ -467,9 +495,9 @@ public class HumanoidRangedWeaponsModule
         return m_inEquipingAction;
     }
 
-    public void setOwnerFaction(AgentController.AgentFaction agentGroup)
+    public void setOwnerFaction(AgentBasicData.AgentFaction agentGroup)
     {
-        this.m_ownersFaction = agentGroup;
+        m_agentData.m_agentFaction = agentGroup;
 
         if(m_rifle)
         {
@@ -529,12 +557,17 @@ public class HumanoidRangedWeaponsModule
     public void placeWeaponinHosterLocation(Weapon weapon)
     {
             Transform hosteringLocation = null;
+            System.Type weaponType = weapon.GetType();
 
-            if(weapon.GetType() == typeof(PrimaryWeapon))
+            if(weaponType == typeof(PrimaryWeapon))
             {
                 hosteringLocation = primaryHosterLocation.transform;
             }
-            else if (weapon.GetType() == typeof(SecondaryWeapon))
+            else if (weaponType == typeof(SecondaryWeapon))
+            {
+                hosteringLocation = secondaryHosterLocation.transform;
+            }
+            else if(weaponType == typeof(Grenade))
             {
                 hosteringLocation = secondaryHosterLocation.transform;
             }
@@ -593,7 +626,7 @@ public class HumanoidRangedWeaponsModule
         if(weaponEquipable)
         {
             weapon.setAimed(false);
-            weapon.setOwnerFaction(m_ownersFaction);
+            weapon.setOwnerFaction(m_agentData.m_agentFaction);
             weapon.setGunTarget(m_target);
             weapon.addOnWeaponFireEvent(OnWeaponFire);
         }

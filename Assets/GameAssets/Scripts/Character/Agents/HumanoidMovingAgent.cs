@@ -21,17 +21,20 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
 
     // Attributes
-    public enum CharacterMainStates { Aimed, Armed_not_Aimed, Dodge, Idle,Interaction }
-    private CharacterMainStates m_characterState = CharacterMainStates.Idle;
-    private CharacterMainStates m_previousTempState = CharacterMainStates.Idle;
+    public enum CharacterMainStates { Aimed, Armed_not_Aimed, Dodge, UnArmed,Interaction }
+    private CharacterMainStates m_characterState = CharacterMainStates.UnArmed;
+    private CharacterMainStates m_previousTempState = CharacterMainStates.UnArmed;
     protected GameObject m_target;
     private bool m_characterEnabled = true;
-    private AgentController.AgentFaction m_agentFaction;
+    //private AgentBasicData.AgentFaction m_agentFaction;
     private Vector3 m_movmentVector;
     private bool m_isDisabled = false;
 
     // Public
     public AgentData AgentData;
+
+    public AgentFunctionalComponents AgentComponents;
+    
 
     #endregion
 
@@ -44,7 +47,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         // Create Animation system.
         AimIK aimIK = this.GetComponent<AimIK>();
         aimIK.solver.target = m_target.transform;
-        m_animationModule = new HumanoidAnimationModule(this.GetComponent<Animator>(), this.GetComponent<AimIK>(), 10);
+        m_animationModule = new HumanoidAnimationModule(this.GetComponent<Animator>(), this.GetComponent<AimIK>(),AgentComponents, 10);
 
         // Create equipment system.
         Weapon[] currentWeapons = this.GetComponentsInChildren<Weapon>();
@@ -53,7 +56,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         m_equipmentModule = new HumanoidRangedWeaponsModule(currentWeaponProps, m_characterState, m_target, GetComponent<Recoil>(), m_animationModule,AgentData);
 
         // Create movment system.
-        m_movmentModule = new HumanoidMovmentModule(this.transform, m_characterState, m_target, m_animationModule,this.GetComponent<NavMeshAgent>());
+        m_movmentModule = new HumanoidMovmentModule(this.transform, m_characterState, m_target, m_animationModule,this.GetComponent<NavMeshAgent>(),AgentData);
 
         // Create Damage module
         m_damageModule = new HumanoidDamageModule(AgentData, 
@@ -85,31 +88,35 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
     public void pickupItem()
     {
-       Interactable obj = AgentItemFinder.findNearItem(getCurrentPosition());
+        bool pickupCondition = (m_characterState.Equals(CharacterMainStates.UnArmed) || m_characterState.Equals(CharacterMainStates.Armed_not_Aimed));
+        if(pickupCondition)
+        {
+            Interactable obj = AgentItemFinder.findNearItem(getCurrentPosition());
 
-       if(obj != null)
-       {
-           float distance = Vector3.Distance(getCurrentPosition(),obj.transform.position);
+            if(obj != null)
+            {
+                float distance = Vector3.Distance(getCurrentPosition(),obj.transform.position);
 
-           if(distance>0.7f)
-           {
-               m_movmentModule.LookAtObject(obj.transform.position);
-           }
-           
-           m_animationModule.triggerPickup();
-           m_previousTempState = m_characterState;
-           m_characterState = CharacterMainStates.Interaction;
+                if(distance>0.7f)
+                {
+                    m_movmentModule.LookAtObject(obj.transform.position);
+                }
+                
+                m_animationModule.triggerPickup();
+                m_previousTempState = m_characterState;
+                m_characterState = CharacterMainStates.Interaction;
 
-           if(isCrouched())
-           {
-               StartCoroutine(onPickup(obj,0));
-           }
-           else
-           {
-               StartCoroutine(onPickup(obj,0.3f));
-           }
+                if(isCrouched())
+                {
+                    StartCoroutine(onPickup(obj,0));
+                }
+                else
+                {
+                    StartCoroutine(onPickup(obj,0.3f));
+                }
 
-       }
+            }
+        }
     }
 
     IEnumerator onPickup(Interactable obj,float waitTime)
@@ -252,6 +259,11 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         m_characterState = m_equipmentModule.toggleSecondary();
     }
 
+    public void toggleGrenede()
+    {
+         m_characterState = m_equipmentModule.toggleGrenede();
+    }
+
     public void reactOnHit(Collider collider, Vector3 force, Vector3 point)
     {
         m_damageModule.reactOnHit(collider, force, point);
@@ -379,14 +391,14 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         return m_movmentModule.isCrouched();
     }
 
-    public AgentController.AgentFaction getFaction()
+    public AgentBasicData.AgentFaction getFaction()
     {
-        return m_agentFaction;
+        return AgentData.m_agentFaction;
     }
 
-    public void setFaction(AgentController.AgentFaction group)
+    public void setFaction(AgentBasicData.AgentFaction group)
     {
-        m_agentFaction = group;
+        AgentData.m_agentFaction = group;
 
         if (m_equipmentModule != null)
         {
@@ -488,7 +500,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         }
         else
         {
-            m_characterState = CharacterMainStates.Idle;
+            m_characterState = CharacterMainStates.UnArmed;
         }
     }
     #endregion
@@ -552,9 +564,19 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         return this.transform.gameObject;
     }
 
+    public Vector3 getTargetPosition()
+    {
+        return m_target.transform.position;
+    }
+
     public void setAnimationSpeed(float speed)
     {
         m_animationModule.setAnimationSpeed(speed);
+    }
+
+    public Vector3 getCurrentVelocity()
+    {
+        return m_movmentModule.getCurrentVelocity();
     }
     #endregion
 

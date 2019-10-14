@@ -13,6 +13,7 @@ public class AgentData : AgentBasicData
     public Dictionary<string,int> weaponAmmoCount;
     public PrimaryWeapon primaryWeapon;
     public SecondaryWeapon secondaryWeapon;
+    public Grenade grenade;
 
     public List<Interactable> inventryItems;
 

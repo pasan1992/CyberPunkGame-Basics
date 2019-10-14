@@ -18,8 +18,8 @@ public abstract class AgentController : MonoBehaviour
     public delegate void agentBasicEventDelegate();
     public delegate void agentOnDestoryEventDelegate(AgentController controller);
 
-    public enum AgentFaction { Player,Enemy,Neutral};
-    public AgentFaction m_agentFaction;
+    // public enum AgentFaction { Player,Enemy,Neutral};
+    // public AgentFaction m_agentFaction;
         
     public abstract void setMovableAgent(ICyberAgent agent);
     public abstract float getSkill();

@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public abstract class Weapon : Interactable
 {
-    public enum WEAPONTYPE { primary,secondary};
+    public enum WEAPONTYPE { primary,secondary,grenede};
     public delegate void WeaponFireDeligaet(float weight);
 
     public ParticleSystem gunMuzzle;
@@ -26,7 +26,7 @@ public abstract class Weapon : Interactable
     private BoxCollider m_collider;
     public bool m_enableLine = true;
     private WeaponFireDeligaet m_onWeaponFire;
-    private AgentController.AgentFaction m_ownersFaction;
+    private AgentBasicData.AgentFaction m_ownersFaction;
     private GameObject m_target;
     private Vector3 m_gunFireingPoint;
 
@@ -102,9 +102,10 @@ public abstract class Weapon : Interactable
             }
         }
 
-
-        m_gunFireingPoint = targetPoint.transform.position - targetPoint.transform.forward * 0.1f;
-
+        if(targetPoint)
+        {
+            m_gunFireingPoint = targetPoint.transform.position - targetPoint.transform.forward * 0.1f;
+        }
     }
     #endregion 
 
@@ -130,7 +131,7 @@ public abstract class Weapon : Interactable
         this.m_target = target;
     }
 
-    public void setOwnerFaction(AgentController.AgentFaction owner)
+    public void setOwnerFaction(AgentBasicData.AgentFaction owner)
     {
         m_ownersFaction = owner;
     }
@@ -219,10 +220,11 @@ public abstract class Weapon : Interactable
             projetcileBasic.speed = 1f;
             projetcileBasic.setFiredFrom(m_ownersFaction);
             projetcileBasic.setTargetTransfrom(m_target.transform);
-            if (playerWeapon)
-            {
-                projetcileBasic.setFollowTarget(true);
-            }
+
+            // if (!playerWeapon)
+            // {
+            //     projetcileBasic.setFollowTarget(true);
+            // }
 
 
             if (this.isActiveAndEnabled)

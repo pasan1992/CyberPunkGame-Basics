@@ -13,18 +13,24 @@ public class HumanoidMovmentModule : MovmentModule
     private Vector3 m_previousPosition;
     private Vector3 m_currentVelocity;
 
+    private AgentData m_agentData;
+
+    private EnumUtility.MovementStatus m_currentMovmentState;
+
     public HumanoidMovmentModule(
         Transform transfrom, 
         HumanoidMovingAgent.CharacterMainStates characterState, 
         GameObject target, 
         HumanoidAnimationModule animationSystem,
-        NavMeshAgent navMeshAgent
+        NavMeshAgent navMeshAgent,
+        AgentData agentData
         ) : base(target, transfrom)
     {
         m_characterState = characterState;
         m_animationSystem = animationSystem;
         m_navMeshAgent = navMeshAgent;
-        m_previousPosition = this.m_characterTransform.position;
+        m_previousPosition = this.m_characterTransform.position;   
+        m_agentData = agentData;     
     }
 
     #region Update
@@ -34,9 +40,42 @@ public class HumanoidMovmentModule : MovmentModule
         m_currentVelocity = this.m_characterTransform.position - m_previousPosition;
         m_previousPosition = this.m_characterTransform.position;
     }
-    public override void UpdateMovment(int characterState, Vector3 movmentDirection)
+    
+    private void updateStamina(Vector3 movmentVelocity)
     {
+
+        m_currentMovmentState = AnimatorConstants.getMovementStatus(movmentVelocity.magnitude,m_agentData.CurrentStamina,m_currentMovmentState);
+               
+        switch (m_currentMovmentState)
+        {
+            case EnumUtility.MovementStatus.IDLE:
+            case EnumUtility.MovementStatus.WALKING:
+            case EnumUtility.MovementStatus.RECOVERY:
+                //Debug.Log("walking");
+                if(m_agentData.CurrentStamina < m_agentData.MaxStamina) 
+                {
+                    m_agentData.CurrentStamina += (Time.deltaTime * m_agentData.StaminaRegenRate/2);
+                }
+                break;
+
+            case EnumUtility.MovementStatus.RUNNING:
+               // Debug.Log("Running");
+               if(m_agentData.CurrentStamina > 0.5f)
+                {
+                    m_agentData.CurrentStamina -= (Time.deltaTime * m_agentData.StaminaRegenRate*2);
+                }
+                break;
+
+            default:
+                break;
+        }
+    }
+
+    public override void UpdateMovment(int characterState, Vector3 movmentVelocity)
+    {
+        Debug.Log(m_agentData.CurrentStamina);
         updateMovingSpeed();
+       // movmentDirection = updateStamina(movmentDirection,characterState);
         m_characterState = (HumanoidMovingAgent.CharacterMainStates)characterState;
 
         float crouchSpeedMultiplayer = 1;
@@ -44,7 +83,7 @@ public class HumanoidMovmentModule : MovmentModule
         if (this.isCrouched())
         {
             crouchSpeedMultiplayer = 0.3f;
-            movmentDirection = movmentDirection.normalized;
+            movmentVelocity = movmentVelocity.normalized;
         }
 
         switch (m_characterState)
@@ -54,7 +93,7 @@ public class HumanoidMovmentModule : MovmentModule
                 //Turn player
                 float angle = Vector3.Angle(getTargetDirection(), this.m_characterTransform.forward);
 
-                if (movmentDirection.magnitude < 0.1)
+                if (movmentVelocity.magnitude < 0.1)
                 {
                     if (Mathf.Abs(angle) > 90)
                     {
@@ -68,43 +107,55 @@ public class HumanoidMovmentModule : MovmentModule
                 }
 
                 // Move Character animator
-                Vector3 selfTransfrommoveDiection = this.m_characterTransform.InverseTransformDirection(movmentDirection);
+                Vector3 selfTransfrommoveDiection = this.m_characterTransform.InverseTransformDirection(movmentVelocity);
                 m_animationSystem.setMovment(selfTransfrommoveDiection.z, selfTransfrommoveDiection.x);
 
                 if (m_physicalLocationChange)
                 {
                     // Move character transfrom
+                    m_animationSystem.setRootMotionStatus(true);
                     Vector3 translateDirection = new Vector3(selfTransfrommoveDiection.x, 0, selfTransfrommoveDiection.z);
-                    this.m_characterTransform.Translate(translateDirection.normalized * crouchSpeedMultiplayer / 10);
+                    this.m_characterTransform.Translate(translateDirection.normalized * crouchSpeedMultiplayer / 25);
                 }
                 break;
 
             case HumanoidMovingAgent.CharacterMainStates.Armed_not_Aimed:
-            case HumanoidMovingAgent.CharacterMainStates.Idle:
+            case HumanoidMovingAgent.CharacterMainStates.UnArmed:
+
+                
+
+                if(m_agentData.CurrentStamina <= 5f || m_currentMovmentState.Equals(EnumUtility.MovementStatus.RECOVERY))
+                {
+                    movmentVelocity = movmentVelocity.normalized;
+                }
+                updateStamina(movmentVelocity);
 
                 //Move character and turn
-                if (movmentDirection.magnitude > 0)
+                if (movmentVelocity.magnitude > 0)
                 {
-                    Vector3 moveDirection = new Vector3(movmentDirection.x, 0, movmentDirection.z);
+                    Vector3 moveDirection = new Vector3(movmentVelocity.x, 0, movmentVelocity.z);
                     m_characterTransform.rotation = Quaternion.Lerp(m_characterTransform.rotation, Quaternion.LookRotation(moveDirection, Vector3.up), 50f * Time.deltaTime);
                 }
 
-                m_animationSystem.setMovment(movmentDirection.magnitude, 0);
+                m_animationSystem.setMovment(movmentVelocity.magnitude, 0);
+                if(m_physicalLocationChange)
+                {
+                    float divider = 1;
+                    if (m_characterState.Equals(HumanoidMovingAgent.CharacterMainStates.UnArmed))
+                    {
+                        divider = 35;
+                    }
+                    else
+                    {
+                        divider = 30;
+                    }
+                    m_animationSystem.setRootMotionStatus(true);
+                    this.m_characterTransform.Translate(Vector3.forward * movmentVelocity.magnitude * crouchSpeedMultiplayer / divider);             
+                }
+               
+              
+             
 
-                float divider = 1;
-                if (m_characterState.Equals(HumanoidMovingAgent.CharacterMainStates.Idle))
-                {
-                    divider = 20;
-                }
-                else
-                {
-                    divider = 15;
-                }
-
-                if (m_physicalLocationChange)
-                {
-                    this.m_characterTransform.Translate(Vector3.forward * movmentDirection.magnitude * crouchSpeedMultiplayer / divider);
-                }
                 break;
             default:
                 // No neet of movment in other states.
@@ -118,6 +169,18 @@ public class HumanoidMovmentModule : MovmentModule
     /*
         * Current Target direction from the player
         */
+
+    public Vector3 getCurrentVelocity()
+    {
+        if(m_physicalLocationChange)
+        {
+            return m_currentVelocity;
+        }
+        else
+        {
+            return m_navMeshAgent.velocity;
+        } 
+    }
     private Vector3 getTargetDirection()
     {
         return (m_target.transform.position - m_characterTransform.position).normalized;

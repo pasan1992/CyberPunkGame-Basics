@@ -17,7 +17,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     private AgentController.agentBasicEventDelegate m_onDestroyCallback;
     private AgentController.agentBasicEventDelegate m_onDisableCallback;
     private AgentController.agentBasicEventDelegate m_onEnableCallback;
-    private AgentController.AgentFaction m_faction;
+    private AgentBasicData.AgentFaction m_faction;
 
     private Vector3 m_beforeDisablePositionSnapShot;
     private Quaternion m_beforeDisableRotationSnapshot;
@@ -100,12 +100,12 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         return m_damageModule.getHealthColor();
     }
 
-    public AgentController.AgentFaction getFaction()
+    public AgentBasicData.AgentFaction getFaction()
     {
         return m_faction;
     }
 
-    public void setFaction(AgentController.AgentFaction group)
+    public void setFaction(AgentBasicData.AgentFaction group)
     {
         m_faction = group;
     }
@@ -274,6 +274,11 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     {
         return m_agentData.Skill;
     }
+
+    public Vector3 getCurrentVelocty()
+    {
+        return Vector3.zero;
+    }
     #endregion
 
     #region Events
@@ -317,6 +322,11 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     public GameObject getGameObject()
     {
         return this.transform.gameObject;
+    }
+
+    public Vector3 getCurrentVelocity()
+    {
+        throw new System.NotImplementedException();
     }
     #endregion
 }
