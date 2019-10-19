@@ -10,7 +10,7 @@ public class Interactable : MonoBehaviour
     public class InteractableProperties
     {
 
-        public enum InteractableType {PrimaryWeapon,SecondaryWeapon,Switch,Pickup}
+        public enum InteractableType {PrimaryWeapon,SecondaryWeapon,Grenade,Switch,Pickup}
         public InteractableType Type = InteractableType.PrimaryWeapon;
         public bool interactionEnabled = false;
 

@@ -78,8 +78,8 @@ public class PlayerController : AgentController
     {
         //updateNavMesgAgnet();
 
-        verticleSpeed = Mathf.Lerp(verticleSpeed, Input.GetAxis("Vertical"),0.7f);
-        horizontalSpeed = Mathf.Lerp(horizontalSpeed, Input.GetAxis("Horizontal"), 0.7f);
+        verticleSpeed = Mathf.Lerp(verticleSpeed, Input.GetAxis("Vertical"),1f);
+        horizontalSpeed = Mathf.Lerp(horizontalSpeed, Input.GetAxis("Horizontal"), 1f);
         //Vector3 velocity = agent.desiredVelocity;
        //velocity = velocity.normalized;
 
@@ -92,7 +92,7 @@ public class PlayerController : AgentController
         // }
 
         // Setting Character Aiming.
-        if (Input.GetMouseButton(1) && !m_movingAgent.isEquipingWeapon() && m_movingAgent.isEquiped())
+        if (Input.GetMouseButton(1) && !m_movingAgent.isEquipingWeapon() && m_movingAgent.isReadyToAim())
         {
             m_movingAgent.aimWeapon();
         }

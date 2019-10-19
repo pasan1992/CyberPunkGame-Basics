@@ -11,13 +11,16 @@ public class GamePlayCam : MonoBehaviour
     public bool roataionEnabled = true;
     private Vector3 offset;
 
+    private Vector3 m_cameraAimOffset;
+
     private Vector3 aimedPlayerPositon;
     Vector3 newCameraPosition;
 
-    public float speedMultiplayer;
+    //public float speedMultiplayer;
     void Start()
     {
         offset = target.transform.position - this.transform.position;
+        m_cameraAimOffset = Vector3.zero;
     }
 
     // Update is called once per frame
@@ -25,15 +28,9 @@ public class GamePlayCam : MonoBehaviour
     {
         if(roataionEnabled)
         {
-            // if (Input.GetMouseButton(2))
-            // {
-            //     Quaternion cameraTurnAngle = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * rotationSpeed, Vector3.up);
-            //     offset = cameraTurnAngle * offset;
-            // }
-
             //this.transform.position = Vector3.Lerp(this.transform.position, target.transform.position - offset, Time.deltaTime * 5);
-            speedMultiplayer =Mathf.Lerp(speedMultiplayer, (target.getCurrentVelocity().normalized).magnitude,0.1f);
-            this.transform.position = Vector3.Lerp(this.transform.position, calcualteCameraAimPositon(), Time.deltaTime * 4);
+            //speedMultiplayer =Mathf.Lerp(speedMultiplayer, (target.getCurrentVelocity().normalized).magnitude,0.1f);
+            this.transform.position = Vector3.Lerp(this.transform.position, calcualteCameraAimPositon(), Time.deltaTime * UtilityConstance.CAMERA_VIEW_FOLLOW_RATE);
             //this.transform.LookAt(target.transform);
 
             transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(target.transform.position - this.transform.position), Time.deltaTime * 1);
@@ -48,9 +45,13 @@ public class GamePlayCam : MonoBehaviour
 
     private Vector3 calcualteCameraAimPositon()
     {
-        if(target.isAimed())
+        if(target.isAimed() 
+        // To Avoid unplesent behavior of the camera when dodging + aimed 
+        || (HumanoidMovingAgent.CharacterMainStates.Dodge.Equals(target.getCharacterMainStates()) && target.hasWeaponInHand() && Input.GetMouseButton(1) ) )
         {
-            newCameraPosition = target.transform.position + Vector3.ClampMagnitude((target.getTargetPosition() - target.transform.position)/2,7 ) - offset;
+            // Smooth the motion of the camera aim offset
+            m_cameraAimOffset = Vector3.Lerp(m_cameraAimOffset,Vector3.ClampMagnitude((target.getTargetPosition() - target.transform.position)/2,UtilityConstance.CAMERA_AIM_OFFSET_MAX_DISTANCE ),UtilityConstance.CAMERA_AIM_OFFSET_CHANGE_RATE);
+            newCameraPosition = target.transform.position + Vector3.ClampMagnitude((target.getTargetPosition() - target.transform.position)/2,UtilityConstance.CAMERA_AIM_OFFSET_MAX_DISTANCE ) - offset;
             aimedPlayerPositon = target.transform.position;
             return newCameraPosition;
         }
@@ -60,7 +61,9 @@ public class GamePlayCam : MonoBehaviour
         }
         else
         {
-           return  target.transform.position - offset; 
+            // To smoothly return the camera to its original position
+           m_cameraAimOffset = Vector3.Lerp(m_cameraAimOffset,Vector3.zero,UtilityConstance.CAMERA_AIM_OFFSET_CHANGE_RATE);
+           return  target.transform.position - offset + m_cameraAimOffset; 
         }
     }
 }

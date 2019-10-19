@@ -256,7 +256,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         throw new System.NotImplementedException();
     }
 
-    public bool isEquiped()
+    public bool isReadyToAim()
     {
         throw new System.NotImplementedException();
     }

@@ -301,8 +301,11 @@ public class HumanoidRangedWeaponsModule
                 break;
 
                 case Weapon.WEAPONTYPE.grenede:
-                    m_animationSystem.triggerThrow();
-                    m_inWeaponAction = true;
+                    if(m_grenede.isPinPulled())
+                    {
+                        m_animationSystem.triggerThrow();
+                        m_inWeaponAction = true;
+                    }
                 break;
             }
         }

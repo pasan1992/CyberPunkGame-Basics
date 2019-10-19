@@ -233,7 +233,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         }
     }
 
-    private void postDestoryEffect()
+    private void damageAgent()
     {
         switch(AgentData.AgentNature)
         {
@@ -250,14 +250,24 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
     public void togglePrimaryWeapon()
     {
-        // !improtant. Returns the character state after the toggle.
-        m_characterState = m_equipmentModule.togglePrimary();
+        // To make sure that weapon toggle won't happen mid interaction.
+        if(!m_characterState.Equals(CharacterMainStates.Interaction))
+        {
+             // !improtant. Returns the character state after the toggle.
+            m_characterState = m_equipmentModule.togglePrimary();
+        }
+        
     }
 
     public void togglepSecondaryWeapon()
     {
-        // !important Returns the character state after the toggle
-        m_characterState = m_equipmentModule.toggleSecondary();
+        // To make sure that weapon toggle won't happen mid interaction.
+        if(!m_characterState.Equals(CharacterMainStates.Interaction))
+        {
+             // !important Returns the character state after the toggle
+            m_characterState = m_equipmentModule.toggleSecondary();
+        }
+       
     }
 
     public void toggleGrenede()
@@ -339,9 +349,14 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         return m_damageModule.HealthAvailable();
     }
 
-    public bool isEquiped()
+    public bool isReadyToAim()
     {
         return m_animationModule.isEquiped() && (m_characterState.Equals(CharacterMainStates.Armed_not_Aimed) || m_characterState.Equals(CharacterMainStates.Aimed));
+    }
+
+    public bool hasWeaponInHand()
+    {
+        return m_animationModule.isEquiped();
     }
 
     public void setTargetPoint(Vector3 position)

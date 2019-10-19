@@ -17,7 +17,7 @@ public interface ICyberAgent
     //void DestroyCharacter();
     Vector3 getCurrentPosition();
     void toggleHide();
-    bool isEquiped();
+    bool isReadyToAim();
     void weaponFireForAI();
     void weaponFireForAICover();
     void setWeponFireCapability(bool enadled);
