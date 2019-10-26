@@ -539,7 +539,7 @@ MonoBehaviour:
     itemName: Pistol
   nonFunctionalProperties:
     magazinePositionOffset: {x: 0, y: 0, z: 0}
-    magazineObjProp: {fileID: 0}
+    magazineObjProp: {fileID: 650309632573424289}
     handPlacementOffset: {x: 0, y: 0, z: 0}
     weaponRecoilOffset: {x: 0, y: 0, z: 0}
   gunMuzzle: {fileID: 584283732600178912}
@@ -865,13 +865,14 @@ GameObject:
   - component: {fileID: 77053153}
   - component: {fileID: 843638466}
   - component: {fileID: 1675480244}
+  - component: {fileID: 44581552}
   m_Layer: 12
   m_Name: AutoMovingAgent_v2
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6144393412093649264
 Transform:
   m_ObjectHideFlags: 0
@@ -1618,17 +1619,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   AgentData:
     AgentNature: 0
-    Skill: 0.9
+    Skill: 1
     maxHealth: 1
     m_agentFaction: 1
     health: 1
-    primaryWeapon: {fileID: 3258094685774648947}
+    primaryWeapon: {fileID: 0}
     secondaryWeapon: {fileID: 8811905254473965703}
     grenade: {fileID: 0}
     inventryItems: []
   AgentComponents:
     weaponAimTransform: {fileID: 650309632995487455}
     lookAimTransform: {fileID: 2866542477539524857}
+--- !u!114 &44581552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 689295171652787206}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f3d95eb3df20c42b2304787911f219, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &759841146242337106
 GameObject:
   m_ObjectHideFlags: 0
@@ -6332,7 +6345,7 @@ SkinnedMeshRenderer:
   m_Quality: 0
   m_UpdateWhenOffscreen: 0
   m_SkinnedMotionVectors: 1
-  m_Mesh: {fileID: 4300038, guid: f13349cc09b03d447a26b54d406aaa8e, type: 3}
+  m_Mesh: {fileID: 4300038, guid: 462c936cf2b64734eba20cf59acca84e, type: 3}
   m_Bones:
   - {fileID: 9167805548645969263}
   - {fileID: 4761859069524608544}
@@ -8410,15 +8423,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 284a205908f69fd4ea10faffd0afe7a4, type: 3}
---- !u!4 &584283732930842273 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 7653251701597622535, guid: 284a205908f69fd4ea10faffd0afe7a4,
-    type: 3}
-  m_PrefabInstance: {fileID: 7074597743246745510}
-  m_PrefabAsset: {fileID: 0}
 --- !u!198 &584283732600178912 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 7653251701401245510, guid: 284a205908f69fd4ea10faffd0afe7a4,
+    type: 3}
+  m_PrefabInstance: {fileID: 7074597743246745510}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &584283732930842273 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 7653251701597622535, guid: 284a205908f69fd4ea10faffd0afe7a4,
     type: 3}
   m_PrefabInstance: {fileID: 7074597743246745510}
   m_PrefabAsset: {fileID: 0}
@@ -8439,11 +8452,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Rifle
-      objectReference: {fileID: 0}
-    - target: {fileID: 7245728428309211730, guid: e353e025b0912474287c24977a5250c8,
-        type: 3}
-      propertyPath: m_Layer
-      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 7245728428309211729, guid: e353e025b0912474287c24977a5250c8,
         type: 3}
@@ -8515,36 +8523,6 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 6893033662867202442, guid: e353e025b0912474287c24977a5250c8,
-        type: 3}
-      propertyPath: gunFireLight
-      value: 
-      objectReference: {fileID: 3907495674779329545}
-    - target: {fileID: 6893033662867202442, guid: e353e025b0912474287c24977a5250c8,
-        type: 3}
-      propertyPath: m_magazineSize
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 7245728429423543320, guid: e353e025b0912474287c24977a5250c8,
-        type: 3}
-      propertyPath: m_Layer
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 7245728428526895235, guid: e353e025b0912474287c24977a5250c8,
-        type: 3}
-      propertyPath: m_Layer
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 125577584324656439, guid: e353e025b0912474287c24977a5250c8,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.g
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 125577584324656439, guid: e353e025b0912474287c24977a5250c8,
-        type: 3}
-      propertyPath: InitialModule.startColor.maxColor.b
-      value: 0.048927307
-      objectReference: {fileID: 0}
     - target: {fileID: 8779066263672873401, guid: e353e025b0912474287c24977a5250c8,
         type: 3}
       propertyPath: outlineColor.r
@@ -8555,10 +8533,25 @@ PrefabInstance:
       propertyPath: outlineColor.g
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 125577584324656436, guid: e353e025b0912474287c24977a5250c8,
+    - target: {fileID: 7245728428309211693, guid: e353e025b0912474287c24977a5250c8,
         type: 3}
-      propertyPath: m_Layer
-      value: 18
+      propertyPath: m_IsKinematic
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6893033662867202442, guid: e353e025b0912474287c24977a5250c8,
+        type: 3}
+      propertyPath: gunFireLight
+      value: 
+      objectReference: {fileID: 3907495674779329545}
+    - target: {fileID: 6893033662867202442, guid: e353e025b0912474287c24977a5250c8,
+        type: 3}
+      propertyPath: m_magazineSize
+      value: 15
+      objectReference: {fileID: 0}
+    - target: {fileID: 1261228174992102316, guid: e353e025b0912474287c24977a5250c8,
+        type: 3}
+      propertyPath: m_RootOrder
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 125577584324656437, guid: e353e025b0912474287c24977a5250c8,
         type: 3}
@@ -8575,49 +8568,18 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 0.3
       objectReference: {fileID: 0}
-    - target: {fileID: 7245728427892807722, guid: e353e025b0912474287c24977a5250c8,
+    - target: {fileID: 125577584324656439, guid: e353e025b0912474287c24977a5250c8,
         type: 3}
-      propertyPath: m_Layer
-      value: 18
+      propertyPath: InitialModule.startColor.maxColor.g
+      value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7245728428962021133, guid: e353e025b0912474287c24977a5250c8,
+    - target: {fileID: 125577584324656439, guid: e353e025b0912474287c24977a5250c8,
         type: 3}
-      propertyPath: m_Layer
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 7245728428715953479, guid: e353e025b0912474287c24977a5250c8,
-        type: 3}
-      propertyPath: m_Layer
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 5825933417176006192, guid: e353e025b0912474287c24977a5250c8,
-        type: 3}
-      propertyPath: m_Layer
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 1261228174992102316, guid: e353e025b0912474287c24977a5250c8,
-        type: 3}
-      propertyPath: m_RootOrder
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 125577584663706485, guid: e353e025b0912474287c24977a5250c8,
-        type: 3}
-      propertyPath: m_Layer
-      value: 18
-      objectReference: {fileID: 0}
-    - target: {fileID: 125577583439287504, guid: e353e025b0912474287c24977a5250c8,
-        type: 3}
-      propertyPath: m_Layer
-      value: 18
+      propertyPath: InitialModule.startColor.maxColor.b
+      value: 0.048927307
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: e353e025b0912474287c24977a5250c8, type: 3}
---- !u!1 &1590357666045894059 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7245728428309211730, guid: e353e025b0912474287c24977a5250c8,
-    type: 3}
-  m_PrefabInstance: {fileID: 8259577813798877177}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8296138932241583247 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 125577584663706486, guid: e353e025b0912474287c24977a5250c8,
@@ -8630,15 +8592,9 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 8259577813798877177}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &3258094685774648947 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 6893033662867202442, guid: e353e025b0912474287c24977a5250c8,
+--- !u!1 &1590357666045894059 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7245728428309211730, guid: e353e025b0912474287c24977a5250c8,
     type: 3}
   m_PrefabInstance: {fileID: 8259577813798877177}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1590357666045894059}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a813352f60d8c0a4086adf8a99d69cea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

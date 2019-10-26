@@ -4,6 +4,7 @@ using UnityEngine;
 using RootMotion.FinalIK;
 using UnityEngine.AI;
 
+[RequireComponent(typeof(HumanoidMovingAgent))]
 public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 {
     #region parameters
@@ -590,6 +591,11 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         return m_target.transform.position;
     }
 
+    public Transform getTargetTransfrom()
+    {
+        return m_target.transform;
+    }
+
     public void setAnimationSpeed(float speed)
     {
         m_animationModule.setAnimationSpeed(speed);
@@ -598,6 +604,11 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     public Vector3 getCurrentVelocity()
     {
         return m_movmentModule.getCurrentVelocity();
+    }
+
+    public AgentData GetAgentData()
+    {
+        return AgentData;
     }
     #endregion
 

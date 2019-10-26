@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-
+[RequireComponent(typeof(DamagableFlyingObject))]
 public class FlyingAgent : MonoBehaviour ,ICyberAgent
 {
     // Start is called before the first frame update
@@ -17,7 +17,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     private AgentController.agentBasicEventDelegate m_onDestroyCallback;
     private AgentController.agentBasicEventDelegate m_onDisableCallback;
     private AgentController.agentBasicEventDelegate m_onEnableCallback;
-    private AgentBasicData.AgentFaction m_faction;
+    //private AgentBasicData.AgentFaction m_faction;
 
     private Vector3 m_beforeDisablePositionSnapShot;
     private Quaternion m_beforeDisableRotationSnapshot;
@@ -102,12 +102,12 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public AgentBasicData.AgentFaction getFaction()
     {
-        return m_faction;
+        return m_agentData.m_agentFaction;
     }
 
     public void setFaction(AgentBasicData.AgentFaction group)
     {
-        m_faction = group;
+        m_agentData.m_agentFaction = group;
     }
 
     public void setOnDestoryCallback(AgentController.agentBasicEventDelegate callback)
@@ -156,9 +156,9 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
 
         Tempprojectile.transform.forward = (m_target.transform.position - this.transform.position).normalized;
-        ProjectileBasic tempProjectile = Tempprojectile.GetComponent<ProjectileBasic>();
+        BasicProjectile tempProjectile = Tempprojectile.GetComponent<BasicProjectile>();
         tempProjectile.speed = 1f;
-        tempProjectile.setFiredFrom(m_faction);
+        tempProjectile.setFiredFrom(m_agentData.m_agentFaction);
         tempProjectile.resetToMicroBeam();
 
         m_audioSource.Play();
@@ -327,6 +327,11 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     public Vector3 getCurrentVelocity()
     {
         throw new System.NotImplementedException();
+    }
+
+    public AgentData GetAgentData()
+    {
+        return m_agentData;
     }
     #endregion
 }

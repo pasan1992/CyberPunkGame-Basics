@@ -38,4 +38,5 @@ public interface ICyberAgent
     bool isAimed();
     bool isHidden();
     GameObject getGameObject();
+    AgentData GetAgentData();
 }

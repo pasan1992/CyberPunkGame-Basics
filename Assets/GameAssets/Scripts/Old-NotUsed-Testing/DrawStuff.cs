@@ -10,6 +10,11 @@ public class DrawStuff : MonoBehaviour
     public float radius = 3.0f;
 
     static Material lineMaterial;
+
+    public Transform start;
+    public Transform end;
+
+
     static void CreateLineMaterial()
     {
         if (!lineMaterial)
@@ -61,7 +66,21 @@ public class DrawStuff : MonoBehaviour
         GL.Vertex3(0.75f, 0.75f, 0);
         GL.End();
 
+        LineBetweenObject();
+
+        
         GL.End();
         GL.PopMatrix();
+    }
+
+    private void LineBetweenObject()
+    {
+        GL.MultMatrix(start.transform.localToWorldMatrix);
+        GL.Begin(GL.LINES);
+        GL.Color(new Color(0, 0, 0, 1));
+        GL.Vertex3(0, 0, 0);
+        Vector3 pos = end.position - start.position;
+        GL.Vertex3(pos.x,pos.y,pos.z);
+        GL.End();
     }
 }

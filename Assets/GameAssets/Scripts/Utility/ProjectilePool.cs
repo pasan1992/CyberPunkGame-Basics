@@ -6,6 +6,8 @@ public class ProjectilePool : MonoBehaviour
 {
     public enum POOL_OBJECT_TYPE {
         FireEXplosionParticle,
+
+        RocketExplosionParticle,
         DroneExplosion,
         HitBasicParticle,
         BasicProjectile,
@@ -13,7 +15,8 @@ public class ProjectilePool : MonoBehaviour
         SmokeEffect,
         PistolAmmo,
         RifleAmmo,
-        Grenade
+        Grenade,
+        BasicRocket
     }
 
     // Basic Projectile 
@@ -25,9 +28,13 @@ public class ProjectilePool : MonoBehaviour
 
     // Particle effects
     private List<GameObject> basicFireExplosionParticlesList;
+
+    private List<GameObject> basicRocketExplosionParticleList;
     private List<GameObject> bulletHitBasicParticleList;
     private List<GameObject> electricParticleEffectList;
     private List<GameObject> smokeEffectList;
+
+    private List<GameObject> basicRocketList;
 
 
     public int maxExplosions = 10;
@@ -69,6 +76,12 @@ public class ProjectilePool : MonoBehaviour
                 count = maxExplosions;
                 basicFireExplosionParticlesList = new List<GameObject>();
                 effectList = basicFireExplosionParticlesList;
+                break;
+            case POOL_OBJECT_TYPE.RocketExplosionParticle:
+                resourcePath = "ParticleEffects/RocketExplosionParticle";
+                count = maxExplosions;
+                basicRocketExplosionParticleList = new List<GameObject>();
+                effectList = basicRocketExplosionParticleList;
                 break;
             case POOL_OBJECT_TYPE.DroneExplosion:
                 resourcePath = "Explosions/BasicDroneExplosion";
@@ -116,8 +129,14 @@ public class ProjectilePool : MonoBehaviour
                 count = ammoCount;
                 resourcePath = "Prefab/Grenede_throwObject";
                 grenadeList = new List<GameObject>();
-                effectList = grenadeList;          
-            break;
+                effectList = grenadeList;  
+                break;
+            case POOL_OBJECT_TYPE.BasicRocket:
+                count = ammoCount;
+                resourcePath = "Prefab/BasicRocket"; 
+                basicRocketList = new List<GameObject>();
+                effectList = basicRocketList;       
+                break;
         }
 
         GameObject bulletHitBasicParticlePrefab = Resources.Load<GameObject>(resourcePath);
@@ -204,6 +223,9 @@ public class ProjectilePool : MonoBehaviour
             case POOL_OBJECT_TYPE.FireEXplosionParticle:
                 effectList = basicFireExplosionParticlesList;
                 break;
+            case POOL_OBJECT_TYPE.RocketExplosionParticle:
+                effectList = basicRocketExplosionParticleList;
+                break;
             case POOL_OBJECT_TYPE.DroneExplosion:
                 effectList = basicDroneExplosionList;
                 break;
@@ -230,6 +252,9 @@ public class ProjectilePool : MonoBehaviour
                 break;
             case POOL_OBJECT_TYPE.Grenade:
                 effectList = grenadeList;
+                break;
+            case POOL_OBJECT_TYPE.BasicRocket:
+                effectList = basicRocketList;
                 break;
         }
 

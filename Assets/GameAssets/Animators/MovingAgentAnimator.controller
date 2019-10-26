@@ -332,7 +332,7 @@ BlendTree:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BlendTree
+  m_Name: Pistol
   m_Childs:
   - serializedVersion: 2
     m_Motion: {fileID: 7400012, guid: e87d4df99df50194abf7d54258d92b73, type: 3}
@@ -961,7 +961,7 @@ BlendTree:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BlendTree
+  m_Name: Grenade
   m_Childs:
   - serializedVersion: 2
     m_Motion: {fileID: 7400004, guid: 914b09da235eea34ebdc4e71d057e815, type: 3}
@@ -1423,7 +1423,7 @@ BlendTree:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BlendTree
+  m_Name: OtherWeapons
   m_Childs:
   - serializedVersion: 2
     m_Motion: {fileID: 7400016, guid: 914b09da235eea34ebdc4e71d057e815, type: 3}
@@ -1493,7 +1493,7 @@ BlendTree:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: BlendTree
+  m_Name: Rifle
   m_Childs:
   - serializedVersion: 2
     m_Motion: {fileID: 7400012, guid: 2a90df3d2eb2ef8419db707c276ca7db, type: 3}
@@ -6191,9 +6191,9 @@ AnimatorStateMachine:
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions:
-  - first: {fileID: 1107481110224196536}
-    second: []
   - first: {fileID: 1107349516263308116}
+    second: []
+  - first: {fileID: 1107481110224196536}
     second: []
   m_StateMachineBehaviours: []
   m_AnyStatePosition: {x: 36, y: -228, z: 0}
@@ -6370,7 +6370,7 @@ AnimatorStateMachine:
     m_Position: {x: 732, y: -360, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102674694692838590}
-    m_Position: {x: 732, y: -216, z: 0}
+    m_Position: {x: 540, y: -120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102305603317153828}
     m_Position: {x: 288, y: -120, z: 0}
@@ -6414,7 +6414,7 @@ AnimatorStateMachine:
     m_Position: {x: 492, y: -144, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102051711519658644}
-    m_Position: {x: 492, y: 24, z: 0}
+    m_Position: {x: 204, y: 24, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102978457292771096}
     m_Position: {x: 1032, y: -60, z: 0}
@@ -6473,7 +6473,7 @@ AnimatorStateMachine:
     m_Position: {x: 432, y: 144, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102292647454604658}
-    m_Position: {x: 444, y: 324, z: 0}
+    m_Position: {x: 432, y: 324, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

@@ -185,7 +185,7 @@ public abstract class RangedWeapon : Weapon
             Tempprojectile.transform.forward = (m_target.transform.position - m_gunFireingPoint).normalized;
 
             Tempprojectile.SetActive(true);
-            ProjectileBasic projetcileBasic = Tempprojectile.GetComponent<ProjectileBasic>();
+            BasicProjectile projetcileBasic = Tempprojectile.GetComponent<BasicProjectile>();
             projetcileBasic.speed = 1f;
             projetcileBasic.setFiredFrom(m_ownersFaction);
             projetcileBasic.setTargetTransfrom(m_target.transform);

@@ -22,6 +22,8 @@ public class PlayerController : AgentController
 
     private NavMeshAgent agent;
 
+    private Vector3 m_currentTargetPosition;
+
     #region Initialize
     private void Start()
     {
@@ -42,6 +44,7 @@ public class PlayerController : AgentController
         //agent.updateRotation = false;
 
         //m_movingAgent.enableTranslateMovment(false);
+        MouseCurserSystem.getInstance().setTargetLineTrasforms(m_movingAgent.AgentComponents.weaponAimTransform.transform,m_movingAgent.getTargetTransfrom());
     }
 
     private void createTargetPlane()
@@ -150,6 +153,11 @@ public class PlayerController : AgentController
             m_movingAgent.pickupItem();
         }
 
+        if(Input.GetKeyDown(KeyCode.Q))
+        {
+            summonRockets();
+        }
+
 
         UpdateShooting();
 
@@ -184,6 +192,7 @@ public class PlayerController : AgentController
             MouseCurserSystem.getInstance().setMouseCurserState(MouseCurserSystem.CURSOR_STATE.ONTARGET);
             targetPosition = hit.point;
             found = true;
+            MouseCurserSystem.getInstance().enableTargetLine(true);
         }
 
         if (!found && Physics.Raycast(castPoint, out hit, Mathf.Infinity, targetHitLayerMask))
@@ -195,10 +204,12 @@ public class PlayerController : AgentController
             if(m_movingAgent.isAimed())
             {
                 MouseCurserSystem.getInstance().setMouseCurserState(MouseCurserSystem.CURSOR_STATE.AIMED);
+                MouseCurserSystem.getInstance().enableTargetLine(true);
             }
             else
             {
                 MouseCurserSystem.getInstance().setMouseCurserState(MouseCurserSystem.CURSOR_STATE.IDLE);
+                MouseCurserSystem.getInstance().enableTargetLine(false);
             }
 
             targetPosition = hit.point;
@@ -207,6 +218,7 @@ public class PlayerController : AgentController
 
 
         m_movingAgent.setTargetPoint(targetPosition);
+        m_currentTargetPosition = targetPosition;
     }
 
     private void Update()
@@ -225,6 +237,36 @@ public class PlayerController : AgentController
       //  UpdateShooting();
       //  UpdateTargetPoint();
     }
+    #endregion
+
+    #region Commands
+
+    private void summonRockets()
+    {
+
+        var agents =  FindObjectsOfType<FlyingAgent>();
+
+       StartCoroutine(  waitAndFire(agents));
+
+
+    }
+
+    IEnumerator waitAndFire(FlyingAgent[] targets)
+    {
+
+        foreach(FlyingAgent agent in targets)
+        {
+            GameObject basicRocketObj =  ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.BasicRocket);
+            basicRocketObj.transform.position = this.transform.position + new Vector3(-50,10,0);
+            basicRocketObj.SetActive(true);
+            BasicRocket rocket = basicRocketObj.GetComponent<BasicRocket>();
+            rocket.fireRocket(agent.GetComponent<DamagableFlyingObject>());
+            rocket.rocketScale = 0.4f; 
+            yield return new WaitForSeconds(0.1f);
+        }
+        
+    }
+
     #endregion
 
     #region getters and setters
