@@ -40,7 +40,8 @@ public class BasicProjectile : MonoBehaviour
             }
             else
             {
-                this.transform.Translate(Vector3.forward * speed + Vector3.down *DistanceTravelled*6*Time.deltaTime);
+               // this.transform.Translate(Vector3.forward * speed + Vector3.down *DistanceTravelled*6*Time.deltaTime);
+               this.transform.Translate(Vector3.forward * speed);
             }
 
 
@@ -67,16 +68,16 @@ public class BasicProjectile : MonoBehaviour
             case "Player":
             case "Head":
             case "Chest":
-                hitOnEnemy(other);
+               // hitOnEnemy(other);
                 break;
             case "Wall":
-                hitOnWall(other);
+               // hitOnWall(other);
                 break;
             case "Cover":
-                hitOnCOver(other);
+              //  hitOnCOver(other);
                 break;
             case "Floor":
-                hitOnFloor(other);
+              //  hitOnFloor(other);
                 break;
         }
 

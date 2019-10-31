@@ -289,7 +289,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.01
+      scalar: 0.05
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -342,7 +342,7 @@ ParticleSystem:
     startSizeY:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.02
+      scalar: 0.05
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -395,7 +395,7 @@ ParticleSystem:
     startSizeZ:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0
+      scalar: 0.2
       minScalar: 1
       maxCurve:
         serializedVersion: 2
@@ -4854,8 +4854,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.39103633, y: 0.21604276, z: 0.31976342}
-  m_Center: {x: -0.032039016, y: -0.0026919842, z: -0.04247105}
+  m_Size: {x: 1.0925589, y: 0.3824215, z: 0.525213}
+  m_Center: {x: -0.0025742054, y: -0.011202455, z: -0.035423636}
 --- !u!54 &7471154538579816023
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -4871,7 +4871,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 2
+  m_CollisionDetection: 3
 --- !u!114 &7141373793027866193
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4884,7 +4884,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 935a8a93efae78f41b9325f5540a93bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 2
+  speed: 5
   DistanceTravelled: 0
   laserBeamTrailCurve:
     serializedVersion: 2
@@ -5011,9 +5011,9 @@ Light:
   m_Enabled: 1
   serializedVersion: 8
   m_Type: 2
-  m_Color: {r: 1, g: 0, b: 0, a: 1}
-  m_Intensity: 2
-  m_Range: 2.4780004
+  m_Color: {r: 1, g: 0.9102212, b: 0.6367924, a: 1}
+  m_Intensity: 0.5
+  m_Range: 0.5
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:

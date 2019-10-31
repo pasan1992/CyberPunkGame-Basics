@@ -33,7 +33,7 @@ public class GamePlayCam : MonoBehaviour
             this.transform.position = Vector3.Lerp(this.transform.position, calcualteCameraAimPositon(), Time.deltaTime * UtilityConstance.CAMERA_VIEW_FOLLOW_RATE);
             //this.transform.LookAt(target.transform);
 
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(target.transform.position - this.transform.position), Time.deltaTime * 1);
+           // transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.LookRotation(target.transform.position - this.transform.position), Time.deltaTime * 1);
         }
         else
         {

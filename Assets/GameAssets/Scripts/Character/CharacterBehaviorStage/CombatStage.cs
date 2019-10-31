@@ -55,16 +55,16 @@ public class CombatStage : BasicMovmentStage
             {
                 if(opponent.isAimed())
                 {
-                    m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 1.1f, 0) + randomOffset + opponent.getCurrentVelocity()*10f);
+                    m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 1.1f, 0) + randomOffset + opponent.getCurrentVelocity()*0);
                 }
                 else
                 {
-                    m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 0.4f, 0) + randomOffset + opponent.getCurrentVelocity()*10f);
+                    m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 0.4f, 0) + randomOffset + opponent.getCurrentVelocity()*0);
                 }
             }
             else
             {
-                m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 1.25f, 0) + randomOffset + opponent.getCurrentVelocity()*10f);
+                m_selfAgent.setTargetPoint(opponent.getTransfrom().position + new Vector3(0, 1.25f, 0) + randomOffset + opponent.getCurrentVelocity()*0);
             }
 
 

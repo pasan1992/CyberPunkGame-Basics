@@ -23,6 +23,10 @@ public class MouseCurserSystem : MonoBehaviour
 
     private bool m_targetLineEnable = false;
 
+    public float squreSize = 0.05f;
+
+    private bool onTarget = false;
+
     #endregion
 
     void Awake()
@@ -37,12 +41,18 @@ public class MouseCurserSystem : MonoBehaviour
         {
             case CURSOR_STATE.IDLE:
                 Cursor.SetCursor(idleTexture, hotSpot, cursorMode);
+                onTarget = false;
+                //Cursor.visible = true;
             break;
             case CURSOR_STATE.AIMED:
                 Cursor.SetCursor(aimedTexture, hotSpot, cursorMode);
+                onTarget = false;
+                //Cursor.visible = false;
             break;
             case CURSOR_STATE.ONTARGET:
                 Cursor.SetCursor(aimedOnTargetTexture, hotSpot, cursorMode);
+                onTarget = true;
+                //Cursor.visible = false;
             break;
         }
         
@@ -58,12 +68,83 @@ public class MouseCurserSystem : MonoBehaviour
             GL.PushMatrix();
             GL.Begin(GL.LINES);
 
-
-            GL.Color(new Color(1, 1, 1, 1f));
-            Vector3 pos = m_targetLineEnd.position - m_targetLineStart.position;
+            if(onTarget)
+            {
+                GL.Color(Color.red);
+            }
+            else
+            {
+                GL.Color(Color.white);
+            }
             GL.Vertex3(m_targetLineStart.position.x,m_targetLineStart.position.y,m_targetLineStart.position.z);
             GL.Vertex3(m_targetLineEnd.position.x,m_targetLineEnd.position.y,m_targetLineEnd.position.z);
             GL.End();
+
+
+//         GL.Begin(GL.QUADS);
+
+//         if(onTarget)
+//         {
+//             GL.Color(Color.red);
+//         }
+//         else
+//         {
+//             GL.Color(Color.white);
+//         }
+
+        
+//         GL.Vertex3(m_targetLineEnd.position.x+ squreSize, m_targetLineEnd.position.y,m_targetLineEnd.position.z+ squreSize);
+//         GL.Vertex3(m_targetLineEnd.position.x+squreSize,  m_targetLineEnd.position.y,m_targetLineEnd.position.z- squreSize);
+//         GL.Vertex3(m_targetLineEnd.position.x-squreSize,  m_targetLineEnd.position.y,m_targetLineEnd.position.z -squreSize);
+//         GL.Vertex3(m_targetLineEnd.position.x -squreSize, m_targetLineEnd.position.y, m_targetLineEnd.position.z + squreSize);
+// GL.End();
+
+
+
+            GL.Begin(GL.LINES);
+
+            if(onTarget)
+            {
+                GL.Color(Color.red);
+            }
+            else
+            {
+                GL.Color(Color.white);
+            }
+            GL.Vertex3(m_targetLineEnd.position.x,m_targetLineEnd.position.y,m_targetLineEnd.position.z);
+            GL.Vertex3(m_targetLineEnd.position.x,m_targetLineEnd.position.y-4,m_targetLineEnd.position.z);
+            GL.End();
+
+
+
+
+
+
+        GL.Begin(GL.QUADS);
+
+        if(onTarget)
+        {
+            GL.Color(Color.red);
+        }
+        else
+        {
+            GL.Color(Color.white);
+        }
+
+        
+        GL.Vertex3(m_targetLineEnd.position.x+ squreSize, m_targetLineEnd.position.y-1.2f,m_targetLineEnd.position.z+ squreSize);
+        GL.Vertex3(m_targetLineEnd.position.x+squreSize,  m_targetLineEnd.position.y-1.2f,m_targetLineEnd.position.z- squreSize);
+        GL.Vertex3(m_targetLineEnd.position.x-squreSize,  m_targetLineEnd.position.y-1.2f,m_targetLineEnd.position.z -squreSize);
+        GL.Vertex3(m_targetLineEnd.position.x -squreSize, m_targetLineEnd.position.y-1.2f, m_targetLineEnd.position.z + squreSize);
+        GL.End();
+
+
+
+
+
+
+
+
 
             GL.PopMatrix();
         }

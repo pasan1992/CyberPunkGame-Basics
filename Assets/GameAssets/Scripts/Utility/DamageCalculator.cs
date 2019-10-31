@@ -53,4 +53,59 @@ public class DamageCalculator
         }
         return false;
     }
+
+    public static void hitOnWall(Collider wall,Vector3 hitPositon)
+    {
+            GameObject basicHitParticle = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.HitBasicParticle);
+            basicHitParticle.SetActive(true);
+            basicHitParticle.transform.position = hitPositon;
+            basicHitParticle.transform.LookAt(Vector3.up);
+    }
+    public static void onHitEnemy(Collider other,AgentBasicData.AgentFaction m_fireFrom,Vector3 hitDirection)
+    {
+        AgentController agentController = other.transform.GetComponentInParent<AgentController>();
+        if (agentController != null)
+        {
+            ICyberAgent cyberAgent = agentController.getICyberAgent();
+            if (cyberAgent !=null && !m_fireFrom.Equals(cyberAgent.getFaction()))
+            {
+
+                cyberAgent.reactOnHit(other, (hitDirection) * 3f, other.transform.position);
+                cyberAgent.damageAgent(1);
+            
+                GameObject basicHitParticle = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.HitBasicParticle);
+                basicHitParticle.SetActive(true);
+                basicHitParticle.transform.position = other.transform.position;
+                basicHitParticle.transform.LookAt(Vector3.up);
+ 
+                if (!cyberAgent.IsFunctional())
+                {
+                    HumanoidMovingAgent movingAgent = cyberAgent as HumanoidMovingAgent;
+                    if(movingAgent !=null)
+                    {
+                        Rigidbody rb = other.transform.GetComponent<Rigidbody>();
+
+                        if (rb != null)
+                        {
+                            rb.isKinematic = false;
+                            rb.AddForce((hitDirection) * 150, ForceMode.Impulse);
+                        }
+
+                        Rigidbody hitRb =  movingAgent.getChestTransfrom().GetComponent<Rigidbody>();
+
+                        if(hitRb)
+                        {
+                            hitRb.AddForce((hitDirection) * 2 + Random.insideUnitSphere*2, ForceMode.Impulse);
+                        }
+
+                    }
+                    else
+                    {
+                       basicHitParticle.transform.position = cyberAgent.getTopPosition();
+                    }
+                }
+            }
+
+        }
+    }
 }

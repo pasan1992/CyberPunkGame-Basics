@@ -191,6 +191,7 @@ public class PlayerController : AgentController
             //targetPosition = setTargetHeight(hit.point, hit.transform.tag);
             MouseCurserSystem.getInstance().setMouseCurserState(MouseCurserSystem.CURSOR_STATE.ONTARGET);
             targetPosition = hit.point;
+          Debug.Log(hit.transform.name);
             found = true;
             MouseCurserSystem.getInstance().enableTargetLine(true);
         }

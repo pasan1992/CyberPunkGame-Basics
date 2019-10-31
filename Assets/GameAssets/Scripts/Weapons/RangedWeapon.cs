@@ -186,7 +186,7 @@ public abstract class RangedWeapon : Weapon
 
             Tempprojectile.SetActive(true);
             BasicProjectile projetcileBasic = Tempprojectile.GetComponent<BasicProjectile>();
-            projetcileBasic.speed = 1f;
+            projetcileBasic.speed = 5f;
             projetcileBasic.setFiredFrom(m_ownersFaction);
             projetcileBasic.setTargetTransfrom(m_target.transform);
 
@@ -194,6 +194,8 @@ public abstract class RangedWeapon : Weapon
             // {
             //     projetcileBasic.setFollowTarget(true);
             // }
+
+            checkFire(m_gunFireingPoint,m_target.transform.position);
 
 
             if (this.isActiveAndEnabled)
@@ -259,6 +261,30 @@ public abstract class RangedWeapon : Weapon
     {
         setAimed(true);
         m_rigidbody.isKinematic = true;
+    }
+
+    private void checkFire(Vector3 startPositon, Vector3 targetPositon)
+    {
+        RaycastHit hit;
+        string[] layerMaskNames = { "HalfCoverObsticles","FullCoverObsticles","Enemy" };
+        if (Physics.Raycast(startPositon, targetPositon - startPositon, out hit,100, LayerMask.GetMask(layerMaskNames)))
+        {
+            switch(hit.transform.tag)
+            {
+                case "Cover":
+                case "Wall":
+                //DamageCalculator.onHitEnemy(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
+                DamageCalculator.hitOnWall(hit.collider,hit.point);
+                break;
+                case "Enemy":
+                case "Player":
+                case "Head":
+                case "Chest":
+                DamageCalculator.onHitEnemy(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
+                break;       
+            }          
+
+        }
     }
 
     #endregion

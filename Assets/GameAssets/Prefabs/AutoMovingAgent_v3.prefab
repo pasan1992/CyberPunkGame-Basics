@@ -100,7 +100,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8851718178789919860}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: vfx_Muzzle_edited
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -199,7 +199,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -0.0074295327, y: 0.168194, z: -0.98572606}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.039930936, y: -0.000000036787238, z: -0.000000010244547}
+  m_ConnectedAnchor: {x: 0.039930932, y: -0.000000023748722, z: -0.000000010244547}
   serializedVersion: 2
   m_SwingAxis: {x: -0.043499496, y: 0.9847658, z: 0.16835797}
   m_TwistLimitSpring:
@@ -282,7 +282,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &8851718178812422946
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -308,7 +308,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -0.000018047169, y: -0.27017358, z: 0.012819714}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.033947434, y: -0.00014489071, z: -0.00014363941}
+  m_ConnectedAnchor: {x: -0.033947423, y: -0.00014489141, z: -0.0001436372}
   serializedVersion: 2
   m_SwingAxis: {x: 0.07153671, y: -0.04727993, z: -0.99631715}
   m_TwistLimitSpring:
@@ -491,7 +491,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8851718178877291371
 Transform:
   m_ObjectHideFlags: 0
@@ -1481,7 +1481,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!65 &8851718178925435860
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1493,8 +1493,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.029545043, y: 0.032666367, z: 0.034}
-  m_Center: {x: 0.07626301, y: -0.014293832, z: -3.8809792e-17}
+  m_Size: {x: 0.027652891, y: 0.03361405, z: 0.034000006}
+  m_Center: {x: -0.0068716747, y: 0.0019582633, z: 3.5289e-18}
 --- !u!144 &8851718178925435861
 CharacterJoint:
   m_ObjectHideFlags: 0
@@ -1707,7 +1707,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -0.031741098, y: 0.99949616, z: 0.00000011920929}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.009896708, y: 0.083155826, z: -0.002046895}
+  m_ConnectedAnchor: {x: 0.00989666, y: 0.083155826, z: -0.002046919}
   serializedVersion: 2
   m_SwingAxis: {x: -0.000000014901161, y: 0, z: -1.0000001}
   m_TwistLimitSpring:
@@ -2324,7 +2324,6 @@ GameObject:
   - component: {fileID: 8851718179415572752}
   - component: {fileID: 8851718179415572759}
   - component: {fileID: 6446295743155424896}
-  - component: {fileID: 1202464981}
   m_Layer: 0
   m_Name: Character_Robot_01
   m_TagString: Untagged
@@ -2458,25 +2457,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 0, g: 1, b: 0.25909448, a: 1}
-  outlineWidth: 1
-  precomputeOutline: 0
-  bakeKeys: []
-  bakeValues: []
---- !u!114 &1202464981
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8851718179415572753}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  outlineMode: 0
-  outlineColor: {r: 0.071160115, g: 1, b: 0.033018887, a: 1}
-  outlineWidth: 1
+  outlineWidth: 0.3
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -2583,7 +2564,7 @@ GameObject:
   - component: {fileID: 8851718179461838769}
   - component: {fileID: 8851718179461838775}
   - component: {fileID: 8851718179461838768}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: SM_Wep_Pistol_Slide_01 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2723,7 +2704,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0.00000009336509, y: -0.000000059604645, z: 1.0000002}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.037712365, y: 0.000000009313229, z: -7.5669976e-10}
+  m_ConnectedAnchor: {x: -0.03771236, y: 0.000000015133997, z: -0.000000035623096}
   serializedVersion: 2
   m_SwingAxis: {x: -0.85418296, y: 0.519973, z: -0.000000044703484}
   m_TwistLimitSpring:
@@ -3170,7 +3151,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &8851718179551419297
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -3196,7 +3177,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -0.031741098, y: 0.99949616, z: 0.00000011920929}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.009896713, y: 0.083155826, z: -0.002046919}
+  m_ConnectedAnchor: {x: -0.009896755, y: 0.083155826, z: -0.002046919}
   serializedVersion: 2
   m_SwingAxis: {x: 0, y: -0.00000011920929, z: 1.0000001}
   m_TwistLimitSpring:
@@ -3429,7 +3410,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8851718179624514390}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: LeftHandPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3688,7 +3669,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -0.017759213, y: 0.21701507, z: -0.010271923}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.027114509, y: -0.000000022281254, z: 0.000038136735}
+  m_ConnectedAnchor: {x: 0.027114496, y: -0.000000019963862, z: 0.000038162005}
   serializedVersion: 2
   m_SwingAxis: {x: 0.00000087171793, y: 0.047279954, z: 0.99888206}
   m_TwistLimitSpring:
@@ -4376,7 +4357,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &8851718179801523542
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -4402,7 +4383,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0.0013807677, y: -0.33905834, z: 0.01569834}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.023371836, y: -0.0007856791, z: 0.019098938}
+  m_ConnectedAnchor: {x: -0.023371836, y: -0.0007856791, z: 0.01909895}
   serializedVersion: 2
   m_SwingAxis: {x: -0.013768971, y: -0.046301812, z: -0.99883294}
   m_TwistLimitSpring:
@@ -4487,7 +4468,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!135 &8851718179818492373
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -4499,8 +4480,8 @@ SphereCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.028827876
-  m_Center: {x: 0.000000008126754, y: 0.03, z: 0}
+  m_Radius: 0.05
+  m_Center: {x: 0.000000008126754, y: 0.02, z: 0}
 --- !u!144 &8851718179818492374
 CharacterJoint:
   m_ObjectHideFlags: 0
@@ -4512,7 +4493,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 1.0000001, y: 9.329193e-16, z: 0.00000011920929}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.040415432, y: 0.006136576, z: 3.3501847e-17}
+  m_ConnectedAnchor: {x: -0.040415432, y: 0.006136597, z: 3.350185e-17}
   serializedVersion: 2
   m_SwingAxis: {x: -0.000000014901161, y: -0.00000011920929, z: 1.0000001}
   m_TwistLimitSpring:
@@ -4650,7 +4631,7 @@ GameObject:
   - component: {fileID: 8851718179862697722}
   - component: {fileID: 8851718179862697720}
   - component: {fileID: 8851718179862697721}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: SM_Wep_Rifle_Small_Mag_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4819,7 +4800,7 @@ GameObject:
   - component: {fileID: 8851718179980842688}
   - component: {fileID: 8851718179980842694}
   - component: {fileID: 8851718179980842695}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: SM_Wep_Pistol_Trigger_01 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4896,7 +4877,7 @@ GameObject:
   - component: {fileID: 8851718179990328929}
   - component: {fileID: 8851718179990328935}
   - component: {fileID: 8851718179990328928}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11157,7 +11138,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8851718180121389089}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: LeftHandPos
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -11251,7 +11232,7 @@ GameObject:
   - component: {fileID: 8851718180161570526}
   - component: {fileID: 8851718180161570524}
   - component: {fileID: 8851718180161570525}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16045,7 +16026,7 @@ GameObject:
   - component: {fileID: 8851718180189712950}
   - component: {fileID: 8851718180189712951}
   - component: {fileID: 8851718180189712944}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Rifle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -16189,7 +16170,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 0, g: 0.8367977, b: 1, a: 0.16862746}
-  outlineWidth: 2
+  outlineWidth: 0.2
   precomputeOutline: 1
   bakeKeys:
   - {fileID: 4300000, guid: d70c8b2902d25e04d8ecbafee23aeeaa, type: 3}
@@ -24992,7 +24973,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -0.0074295364, y: 0.168194, z: -0.98572606}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.039930936, y: -4.6566123e-10, z: -0.000000010710209}
+  m_ConnectedAnchor: {x: -0.03993094, y: 0.000000028870996, z: 0.000000015832482}
   serializedVersion: 2
   m_SwingAxis: {x: 0.043499477, y: -0.9847658, z: -0.16835785}
   m_TwistLimitSpring:
@@ -29823,7 +29804,7 @@ GameObject:
   - component: {fileID: 8851718180416385349}
   - component: {fileID: 8851718180416385355}
   - component: {fileID: 8851718180416385348}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: SM_Wep_Rifle_Small_Slide_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29898,7 +29879,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8851718180430029103}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: TargetPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30160,7 +30141,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!65 &8851718180583807708
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -30185,7 +30166,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0.017763738, y: -0.21701854, z: 0.010272129}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.027114544, y: 0.000000002308752, z: -0.000038131533}
+  m_ConnectedAnchor: {x: -0.02711454, y: 0.00000000509317, z: -0.0000381587}
   serializedVersion: 2
   m_SwingAxis: {x: 0.000001244247, y: -0.04727993, z: -0.99888206}
   m_TwistLimitSpring:
@@ -30293,7 +30274,7 @@ GameObject:
   - component: {fileID: 8851718180612276417}
   - component: {fileID: 8851718180612276423}
   - component: {fileID: 8851718180612276416}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: SM_Wep_Rifle_Small_ChargeHandle_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -30482,8 +30463,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.032, y: 0.031000001, z: 0.030000001}
-  m_Center: {x: 0, y: 0.006, z: -0.001}
+  m_Size: {x: 0.032, y: 0.020184064, z: 0.030000001}
+  m_Center: {x: 0, y: 0.095182, z: -0.0010000005}
 --- !u!1 &8851718180655751422
 GameObject:
   m_ObjectHideFlags: 0
@@ -30731,7 +30712,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &8851718180698098655
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -30757,7 +30738,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0.00001802668, y: 0.27017337, z: -0.012819709}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.033947486, y: 0.00014472174, z: 0.00014364174}
+  m_ConnectedAnchor: {x: 0.03394753, y: 0.00014471795, z: 0.00014363627}
   serializedVersion: 2
   m_SwingAxis: {x: -0.0715346, y: 0.047279954, z: 0.9963173}
   m_TwistLimitSpring:
@@ -30969,7 +30950,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!136 &8851718180798005025
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -30995,7 +30976,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: -0.0013793036, y: 0.3390587, z: -0.0156983}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: -0.023371555, y: -0.00078572286, z: -0.019098908}
+  m_ConnectedAnchor: {x: -0.023371555, y: -0.00078572286, z: -0.01909895}
   serializedVersion: 2
   m_SwingAxis: {x: 0.013771087, y: 0.04630166, z: 0.99883294}
   m_TwistLimitSpring:
@@ -31154,7 +31135,7 @@ CharacterJoint:
   m_Anchor: {x: 0, y: 0, z: 0}
   m_Axis: {x: 0.0000000661239, y: -0.000000044703484, z: 1.0000002}
   m_AutoConfigureConnectedAnchor: 1
-  m_ConnectedAnchor: {x: 0.03771233, y: 0.000000006984922, z: -0.00000008422651}
+  m_ConnectedAnchor: {x: 0.03771233, y: 0.000000010011721, z: -0.000000101688805}
   serializedVersion: 2
   m_SwingAxis: {x: 0.8541831, y: -0.51997304, z: -0.000000059604645}
   m_TwistLimitSpring:
@@ -31328,7 +31309,7 @@ GameObject:
   - component: {fileID: 8851718180847236654}
   - component: {fileID: 8851718180847236652}
   - component: {fileID: 8851718180847236653}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: SM_Wep_Rifle_Small_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31411,7 +31392,7 @@ GameObject:
   - component: {fileID: 8851718180856099041}
   - component: {fileID: 8851718180856099042}
   - component: {fileID: 8851718180856099043}
-  m_Layer: 9
+  m_Layer: 0
   m_Name: Pistol
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31552,7 +31533,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   outlineMode: 0
   outlineColor: {r: 0.0045834924, g: 0.51798916, b: 0.9716981, a: 0.29411766}
-  outlineWidth: 2
+  outlineWidth: 0.2
   precomputeOutline: 1
   bakeKeys:
   - {fileID: 4300000, guid: b95723a86e64ccc41b2c65d6ebf7b76f, type: 3}
@@ -33109,15 +33090,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0, type: 3}
---- !u!198 &5543271795979246664 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 3907495676557974478, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
-    type: 3}
-  m_PrefabInstance: {fileID: 8851718179925526406}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2925015351490432558 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5926775866237569448, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 8851718179925526406}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &5543271795979246664 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3907495676557974478, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
     type: 3}
   m_PrefabInstance: {fileID: 8851718179925526406}
   m_PrefabAsset: {fileID: 0}
