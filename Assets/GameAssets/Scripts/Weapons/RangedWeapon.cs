@@ -267,7 +267,9 @@ public abstract class RangedWeapon : Weapon
     {
         RaycastHit hit;
         string[] layerMaskNames = { "HalfCoverObsticles","FullCoverObsticles","Enemy" };
-        if (Physics.Raycast(startPositon, targetPositon - startPositon, out hit,100, LayerMask.GetMask(layerMaskNames)))
+        bool hitOnEnemy = false;
+        Vector3 offsetTargetPositon =  (targetPositon - startPositon).normalized + startPositon;
+        if (Physics.Raycast(offsetTargetPositon, targetPositon - startPositon, out hit,100, LayerMask.GetMask(layerMaskNames)))
         {
             switch(hit.transform.tag)
             {
@@ -281,9 +283,29 @@ public abstract class RangedWeapon : Weapon
                 case "Head":
                 case "Chest":
                 DamageCalculator.onHitEnemy(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
+                hitOnEnemy = true;
                 break;       
             }          
 
+        }
+        
+        if(!hitOnEnemy && Physics.Raycast(offsetTargetPositon, targetPositon + new Vector3(0,-1f,0) - startPositon, out hit,100, LayerMask.GetMask(layerMaskNames)))
+        {
+            Debug.Log("Second");
+            switch(hit.transform.tag)
+            {
+                case "Cover":
+                case "Wall":
+                //DamageCalculator.onHitEnemy(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
+                DamageCalculator.hitOnWall(hit.collider,hit.point);
+                break;
+                case "Enemy":
+                case "Player":
+                case "Head":
+                case "Chest":
+                DamageCalculator.onHitEnemy(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
+                break;       
+            }                
         }
     }
 

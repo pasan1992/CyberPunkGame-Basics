@@ -24,7 +24,7 @@ public class GamePlayCam : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void LateUpdate()
     {
         if(roataionEnabled)
         {
@@ -55,9 +55,9 @@ public class GamePlayCam : MonoBehaviour
             aimedPlayerPositon = target.transform.position;
             return newCameraPosition;
         }
-        else if(Vector3.Distance(aimedPlayerPositon,target.transform.position) <0.1f )
+        else if(Vector3.Distance(aimedPlayerPositon,target.transform.position) <0.1f || (target.hasWeaponInHand() && Vector3.Angle(m_cameraAimOffset,target.getMovmentDirection()) < 120 ))
         {
-            return  newCameraPosition;
+            return target.transform.position + m_cameraAimOffset - offset;
         }
         else
         {

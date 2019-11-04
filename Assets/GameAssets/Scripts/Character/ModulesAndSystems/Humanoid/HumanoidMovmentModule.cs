@@ -43,7 +43,7 @@ public class HumanoidMovmentModule : MovmentModule
 
         if (this.isCrouched())
         {
-            crouchSpeedMultiplayer = 0.3f;
+            crouchSpeedMultiplayer = 0;
             movmentDirection = movmentDirection.normalized;
         }
 
@@ -76,7 +76,7 @@ public class HumanoidMovmentModule : MovmentModule
                     // Move character transfrom
                     m_animationSystem.setRootMotionStatus(true);
                     Vector3 translateDirection = new Vector3(selfTransfrommoveDiection.x, 0, selfTransfrommoveDiection.z);
-                    this.m_characterTransform.Translate(translateDirection.normalized * crouchSpeedMultiplayer / 25);
+                    this.m_characterTransform.Translate(translateDirection.normalized * crouchSpeedMultiplayer / 30);
                 }
                 break;
 
@@ -100,11 +100,11 @@ public class HumanoidMovmentModule : MovmentModule
                     float divider = 1;
                     if (m_characterState.Equals(HumanoidMovingAgent.CharacterMainStates.Idle))
                     {
-                        divider = 35;
+                        divider = 100;
                     }
                     else
                     {
-                        divider = 30;
+                        divider = 100;
                     }
                     m_animationSystem.setRootMotionStatus(true);
                     this.m_characterTransform.Translate(Vector3.forward * movmentDirection.magnitude * crouchSpeedMultiplayer / divider);             
