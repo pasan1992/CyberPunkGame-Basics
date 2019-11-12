@@ -28,7 +28,6 @@ public abstract class RangedWeapon : Weapon
 
     protected LayerMask hitLayerMask;
     
-    protected LineRenderer m_line;
     protected Rigidbody m_rigidbody;
     protected BoxCollider m_collider;
     protected WeaponFireDeligaet m_onWeaponFire;
@@ -42,7 +41,6 @@ public abstract class RangedWeapon : Weapon
     
     public void Awake()
     {
-        m_line = this.GetComponent<LineRenderer>();
         m_rigidbody = this.GetComponent<Rigidbody>();
         m_collider = this.GetComponent<BoxCollider>();
         m_audioScource = this.GetComponent<AudioSource>();
@@ -54,38 +52,6 @@ public abstract class RangedWeapon : Weapon
     #region updates
     public override void updateWeapon()
     {
-        // Update line from gun to target.
-        if(m_line != null && m_enableLine)
-        {
-            if (m_isAimed)
-            {
-                Vector3 direction = m_target.transform.position - targetPointTransfrom.transform.position;
-                m_line.SetPosition(0, targetPointTransfrom.transform.position);
-
-
-                Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-                // Raycast to find a ragdoll collider
-                RaycastHit hit = new RaycastHit();
-
-                if (Physics.Raycast(targetPointTransfrom.transform.position, direction.normalized, out hit, 1000, hitLayerMask))
-                {
-                    m_line.SetPosition(1, hit.point);
-                }
-                else
-                {
-                    // m_line.SetPosition(1, targetPoint.transform.position + direction * 50);
-                    m_line.SetPosition(1, m_target.transform.position);
-                }
-
-                Debug.DrawRay(targetPointTransfrom.transform.position, direction.normalized, Color.red);
-            }
-            else
-            {
-                m_line.SetPosition(0, Vector3.zero);
-                m_line.SetPosition(1, Vector3.zero);
-            }
-        }
-
         if(targetPointTransfrom)
         {
             m_gunFireingPoint = targetPointTransfrom.transform.position - targetPointTransfrom.transform.forward * 0.1f;
@@ -109,16 +75,6 @@ public abstract class RangedWeapon : Weapon
     {
         return m_realoding;
     }
-
-    // public override void setGunTarget(GameObject target)
-    // {
-    //     this.m_target = target;
-    // }
-
-    // public override void setOwnerFaction(AgentBasicData.AgentFaction owner)
-    // {
-    //     m_ownersFaction = owner;
-    // }
 
     public void SetGunTargetLineStatus(bool status)
     {
@@ -190,11 +146,6 @@ public abstract class RangedWeapon : Weapon
             projetcileBasic.setFiredFrom(m_ownersFaction);
             projetcileBasic.setTargetTransfrom(m_target.transform);
 
-            // if (!playerWeapon)
-            // {
-            //     projetcileBasic.setFollowTarget(true);
-            // }
-
             checkFire(m_gunFireingPoint,m_target.transform.position);
 
 
@@ -215,11 +166,7 @@ public abstract class RangedWeapon : Weapon
         m_rigidbody.isKinematic = false;
         m_rigidbody.useGravity = true;
         m_collider.isTrigger = false;
-        if(m_line)
-        {
-            m_line.enabled = false;
-        }
-
+        properties.interactionEnabled = true;
     }
 
     public virtual void reloadWeapon()
@@ -291,7 +238,6 @@ public abstract class RangedWeapon : Weapon
         
         if(!hitOnEnemy && Physics.Raycast(offsetTargetPositon, targetPositon + new Vector3(0,-1f,0) - startPositon, out hit,100, LayerMask.GetMask(layerMaskNames)))
         {
-            Debug.Log("Second");
             switch(hit.transform.tag)
             {
                 case "Cover":

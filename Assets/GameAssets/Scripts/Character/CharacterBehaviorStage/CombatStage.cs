@@ -34,8 +34,16 @@ public class CombatStage : BasicMovmentStage
         coverPoints = GameObject.FindObjectsOfType<CoverPoint>();
         selfAgent.toggleHide();
         selfAgent.aimWeapon();
-        //((HumanoidMovingAgent)selfAgent).togglepSecondaryWeapon();
-        ((HumanoidMovingAgent)selfAgent).togglePrimaryWeapon();
+        //
+        if(Random.value > 0.5)
+        {
+            ((HumanoidMovingAgent)selfAgent).togglePrimaryWeapon();
+        }
+        else
+        {
+            ((HumanoidMovingAgent)selfAgent).togglepSecondaryWeapon();
+        }
+        
         targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
         findTargetLocationToFire();
     }

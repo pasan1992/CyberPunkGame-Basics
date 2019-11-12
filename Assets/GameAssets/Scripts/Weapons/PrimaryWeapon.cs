@@ -10,7 +10,7 @@ public class PrimaryWeapon : RangedWeapon
     public void Awake()
     {
         base.Awake();
-        properties.Type = InteractableProperties.InteractableType.PrimaryWeapon;
+        properties.Type = InteractableProperties.InteractableType.Pickup;
     }
 
     public override void pullTrigger()

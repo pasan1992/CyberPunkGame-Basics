@@ -10,11 +10,14 @@ public class Interactable : MonoBehaviour
     public class InteractableProperties
     {
 
-        public enum InteractableType {PrimaryWeapon,SecondaryWeapon,Grenade,Switch,Pickup}
-        public InteractableType Type = InteractableType.PrimaryWeapon;
+        public enum InteractableType {Switch,Pickup,TimedInteraction}
+        public InteractableType Type = InteractableType.Pickup;
         public bool interactionEnabled = false;
-
         public string itemName = "";
+
+        public bool isTimed = false;
+        public float interactionTime;
+        public int interactionID;
     }
 
    [SerializeField]

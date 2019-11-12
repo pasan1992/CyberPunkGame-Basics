@@ -39,4 +39,6 @@ public interface ICyberAgent
     bool isHidden();
     GameObject getGameObject();
     AgentData GetAgentData();
+    bool isInteracting();
+    void interactWith(Interactable interactableObj);
 }

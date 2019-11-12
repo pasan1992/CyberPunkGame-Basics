@@ -28,7 +28,6 @@ public class PlayerController : AgentController
     private void Start()
     {
         m_movingAgent = this.GetComponent<HumanoidMovingAgent>();
-        //m_movingAgent.setFaction(m_agentFaction);
         enemyHitLayerMask = LayerMask.GetMask("Enemy");
         targetHitLayerMask = LayerMask.GetMask("Target");
         floorHitLayerMask = LayerMask.GetMask("Floor");
@@ -37,13 +36,7 @@ public class PlayerController : AgentController
         createTargetPlane();
         m_movingAgent.enableTranslateMovment(true);
         intializeAgentCallbacks(m_movingAgent);
-
-        //m_movingAgent.setOnDestoryCallback(OnAgentDestroy);
-        //m_movingAgent.setOnDisableCallback(onAgentDisable);
         agent = this.GetComponent<NavMeshAgent>();
-        //agent.updateRotation = false;
-
-        //m_movingAgent.enableTranslateMovment(false);
         MouseCurserSystem.getInstance().setTargetLineTrasforms(m_movingAgent.AgentComponents.weaponAimTransform.transform,m_movingAgent.getTargetTransfrom());
     }
 
@@ -79,20 +72,8 @@ public class PlayerController : AgentController
 
     private void controllerUpdate()
     {
-        //updateNavMesgAgnet();
-
         verticleSpeed = Mathf.Lerp(verticleSpeed, Input.GetAxis("Vertical"),1f);
         horizontalSpeed = Mathf.Lerp(horizontalSpeed, Input.GetAxis("Horizontal"), 1f);
-        //Vector3 velocity = agent.desiredVelocity;
-       //velocity = velocity.normalized;
-
-        //verticleSpeed = agent.velocity.x;
-        //horizontalSpeed = agent.velocity.z;
-
-        // if(Input.GetMouseButtonDown(1) && !m_movingAgent.isEquipingWeapon() && !m_movingAgent.isEquiped())
-        // {
-        //     m_movingAgent.togglePrimaryWeapon();
-        // }
 
         // Setting Character Aiming.
         if (Input.GetMouseButton(1) && !m_movingAgent.isEquipingWeapon() && m_movingAgent.isReadyToAim())
@@ -132,15 +113,11 @@ public class PlayerController : AgentController
         {
             speedModifyVale = Mathf.Lerp(speedModifyVale, 1.5f, 0.1f);
             m_movingAgent.moveCharacter(getDirectionRelativeToCamera(new Vector3(verticleSpeed * speedModifyVale, 0, -horizontalSpeed * speedModifyVale)));
-            //velocity = new Vector3(velocity.x, 0, velocity.z);
-            //m_movingAgent.moveCharacter(velocity);
         }
         else
         {
             speedModifyVale = Mathf.Lerp(speedModifyVale, 1f, 0.1f);
             m_movingAgent.moveCharacter(getDirectionRelativeToCamera((new Vector3(verticleSpeed, 0, -horizontalSpeed)).normalized*speedModifyVale));
-            //velocity = new Vector3(velocity.x, 0, velocity.z);
-            //m_movingAgent.moveCharacter(velocity);
         }
 
         if(Input.GetKeyDown(KeyCode.R))
@@ -191,17 +168,12 @@ public class PlayerController : AgentController
             //targetPosition = setTargetHeight(hit.point, hit.transform.tag);
             MouseCurserSystem.getInstance().setMouseCurserState(MouseCurserSystem.CURSOR_STATE.ONTARGET);
             targetPosition = hit.point;
-          Debug.Log(hit.transform.name);
             found = true;
             MouseCurserSystem.getInstance().enableTargetLine(true);
         }
 
         if (!found && Physics.Raycast(castPoint, out hit, Mathf.Infinity, targetHitLayerMask))
         {
-            // targetPosition = setTargetHeight(hit.point, hit.transform.tag);
-            
-
-
             if(m_movingAgent.isAimed())
             {
                 MouseCurserSystem.getInstance().setMouseCurserState(MouseCurserSystem.CURSOR_STATE.AIMED);
@@ -216,8 +188,6 @@ public class PlayerController : AgentController
             targetPosition = hit.point;
         }
 
-
-
         m_movingAgent.setTargetPoint(targetPosition);
         m_currentTargetPosition = targetPosition;
     }
@@ -230,13 +200,10 @@ public class PlayerController : AgentController
         {
             m_healthBar.setHealthPercentage(m_movingAgent.AgentData.Health/m_movingAgent.AgentData.MaxHealth);
         }
-
     }
 
     private void FixedUpdate()
     {
-      //  UpdateShooting();
-      //  UpdateTargetPoint();
     }
     #endregion
 
@@ -244,17 +211,12 @@ public class PlayerController : AgentController
 
     private void summonRockets()
     {
-
-        var agents =  FindObjectsOfType<FlyingAgent>();
-
+       var agents =  FindObjectsOfType<FlyingAgent>();
        StartCoroutine(  waitAndFire(agents));
-
-
     }
 
     IEnumerator waitAndFire(FlyingAgent[] targets)
     {
-
         foreach(FlyingAgent agent in targets)
         {
             GameObject basicRocketObj =  ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.BasicRocket);
@@ -264,8 +226,7 @@ public class PlayerController : AgentController
             rocket.fireRocket(agent.GetComponent<DamagableFlyingObject>());
             rocket.rocketScale = 0.4f; 
             yield return new WaitForSeconds(0.1f);
-        }
-        
+        }       
     }
 
     #endregion

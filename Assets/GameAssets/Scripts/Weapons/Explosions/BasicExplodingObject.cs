@@ -57,7 +57,6 @@ public class BasicExplodingObject : MonoBehaviour
       ICyberAgent agent =  other.GetComponentInParent<ICyberAgent>();
       Vector3 direction;
       float damagePropotion = DamageCalculator.getExplosionDamgage(this.transform.position,other.transform.position,m_range,out direction);
-
       if(damagePropotion > 0 && agent !=null)
       {
         if(agent.IsFunctional())

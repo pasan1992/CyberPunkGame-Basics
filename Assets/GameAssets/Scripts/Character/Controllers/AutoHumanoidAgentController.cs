@@ -24,7 +24,8 @@ public class AutoHumanoidAgentController :  AgentController
     void Start()
     {
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
-        m_currentState = new CombatStage(m_movingAgent, target,m_navMeshAgent);
+        //m_currentState = new CombatStage(m_movingAgent, target,m_navMeshAgent);
+        m_currentState = new IteractionStage(m_movingAgent,m_navMeshAgent,basicWaypoints);
         m_movingAgent.setWeponFireCapability(true);
         intializeAgentCallbacks(m_movingAgent);
         m_movingAgent.enableTranslateMovment(false);

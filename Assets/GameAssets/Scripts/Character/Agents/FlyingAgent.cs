@@ -333,5 +333,15 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     {
         return m_agentData;
     }
+
+    public bool isInteracting()
+    {
+        return false;
+    }
+
+    public void interactWith(Interactable interactableObj)
+    {
+
+    }
     #endregion
 }

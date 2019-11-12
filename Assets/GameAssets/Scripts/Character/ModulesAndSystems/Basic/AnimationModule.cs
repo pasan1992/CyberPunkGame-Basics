@@ -40,4 +40,10 @@ public class AnimationModule
             m_animator.applyRootMotion =status;
         }
     }
+
+    public virtual void setTimedInteraction(bool enabled,int interactionId)
+    {
+        m_animator.SetInteger("interactionID",interactionId);
+        m_animator.SetBool("timedInteraction",enabled);
+    }
 }

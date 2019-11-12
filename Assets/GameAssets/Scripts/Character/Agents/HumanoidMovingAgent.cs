@@ -36,6 +36,8 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
     public AgentFunctionalComponents AgentComponents;
 
+    public Interactable tempInteractionObj; 
+
     #endregion
 
     #region Initalize
@@ -84,7 +86,40 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     }
     #endregion
 
+
     #region Commands
+
+    [ContextMenu("ActivateTempInteraction")]
+    public void TempFireInteraction()
+    {
+        interactWith(tempInteractionObj);
+    }
+
+    public void interactWith(Interactable interactableObj)
+    {
+        switch(interactableObj.properties.Type)
+        {
+            case Interactable.InteractableProperties.InteractableType.Pickup:
+            break;
+            case Interactable.InteractableProperties.InteractableType.Switch:
+            break;
+            case Interactable.InteractableProperties.InteractableType.TimedInteraction:
+            StartCoroutine(onTimedInteraction(interactableObj));
+            break;
+        }
+    }
+
+    private IEnumerator onTimedInteraction(Interactable interactableObj)
+    {
+        m_previousTempState = m_characterState;
+        m_characterState = CharacterMainStates.Interaction;
+        m_animationModule.setTimedInteraction(true,interactableObj.properties.interactionID);
+        yield return new WaitForSeconds(interactableObj.properties.interactionTime);
+        m_animationModule.setTimedInteraction(false,interactableObj.properties.interactionID);
+        m_characterState = m_previousTempState;
+    }
+
+    
 
     public void pickupItem()
     {
@@ -125,44 +160,79 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         yield return new WaitForSeconds(waitTime);
         m_animationModule.setUpperAnimationLayerWeight(1);
 
-        switch(obj.properties.Type)
+        if(obj.properties.Type.Equals(Interactable.InteractableProperties.InteractableType.Pickup))
         {
-            case Interactable.InteractableProperties.InteractableType.PrimaryWeapon:
-
-                if(!AgentData.primaryWeapon)
+            if(obj is RangedWeapon)
+            {
+                if(obj is PrimaryWeapon)
                 {
-                    AgentData.primaryWeapon = obj.GetComponent<PrimaryWeapon>();
-                    m_equipmentModule.equipWeapon(AgentData.primaryWeapon);
-                    obj.OnEquipAction();
+                    if(!AgentData.primaryWeapon)
+                    {
+                        AgentData.primaryWeapon = obj.GetComponent<PrimaryWeapon>();
+                        m_equipmentModule.equipWeapon(AgentData.primaryWeapon);
+                        obj.OnEquipAction();
+                    }
+                    else
+                    {
+                        AgentData.inventryItems.Add(obj);
+                        obj.OnPickUpAction();
+                    }
                 }
-                else
+                else if(obj is SecondaryWeapon)
                 {
-                    AgentData.inventryItems.Add(obj);
-                    obj.OnPickUpAction();
+                    if(!AgentData.secondaryWeapon)
+                    {
+                        AgentData.secondaryWeapon = obj.GetComponent<SecondaryWeapon>();
+                        m_equipmentModule.equipWeapon(AgentData.secondaryWeapon);
+                        obj.OnEquipAction();
+                    }
+                    else
+                    {
+                        AgentData.inventryItems.Add(obj);
+                        obj.OnPickUpAction();
+                    }
                 }
-
-            break;
-            case Interactable.InteractableProperties.InteractableType.SecondaryWeapon:
-
-                if(!AgentData.secondaryWeapon)
-                {
-                    AgentData.secondaryWeapon = obj.GetComponent<SecondaryWeapon>();
-                    m_equipmentModule.equipWeapon(AgentData.secondaryWeapon);
-                    obj.OnEquipAction();
-                }
-                else
-                {
-                    AgentData.inventryItems.Add(obj);
-                    obj.OnPickUpAction();
-                }
-            
-            break;
-
-            default:
-                    AgentData.inventryItems.Add(obj);
-                    obj.OnPickUpAction();
-            break;
+            }
         }
+
+        // switch(obj.properties.Type)
+        // {
+        //     case Interactable.InteractableProperties.InteractableType.PrimaryWeapon:
+
+        //         if(!AgentData.primaryWeapon)
+        //         {
+        //             AgentData.primaryWeapon = obj.GetComponent<PrimaryWeapon>();
+        //             m_equipmentModule.equipWeapon(AgentData.primaryWeapon);
+        //             obj.OnEquipAction();
+        //         }
+        //         else
+        //         {
+        //             AgentData.inventryItems.Add(obj);
+        //             obj.OnPickUpAction();
+        //         }
+
+        //     break;
+        //     case Interactable.InteractableProperties.InteractableType.SecondaryWeapon:
+
+        //         if(!AgentData.secondaryWeapon)
+        //         {
+        //             AgentData.secondaryWeapon = obj.GetComponent<SecondaryWeapon>();
+        //             m_equipmentModule.equipWeapon(AgentData.secondaryWeapon);
+        //             obj.OnEquipAction();
+        //         }
+        //         else
+        //         {
+        //             AgentData.inventryItems.Add(obj);
+        //             obj.OnPickUpAction();
+        //         }
+            
+        //     break;
+
+        //     default:
+        //             AgentData.inventryItems.Add(obj);
+        //             obj.OnPickUpAction();
+        //     break;
+        // }
 
          yield return new WaitForSeconds(waitTime);
         m_characterState = m_previousTempState;
@@ -344,6 +414,8 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     {
         m_onEnableCallback = callback;
     }
+
+
 
     public bool IsFunctional()
     {
@@ -596,6 +668,10 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         return m_target.transform;
     }
 
+    public bool isInteracting()
+    {
+        return m_characterState == CharacterMainStates.Interaction;
+    }
     public void setAnimationSpeed(float speed)
     {
         m_animationModule.setAnimationSpeed(speed);

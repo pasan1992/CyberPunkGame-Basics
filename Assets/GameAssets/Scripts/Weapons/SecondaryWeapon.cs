@@ -8,7 +8,7 @@ public class SecondaryWeapon : RangedWeapon
     public void Awake()
     {
         base.Awake();
-        properties.Type = InteractableProperties.InteractableType.SecondaryWeapon;
+        properties.Type = InteractableProperties.InteractableType.Pickup;
     }
 
 
