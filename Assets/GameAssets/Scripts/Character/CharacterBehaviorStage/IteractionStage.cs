@@ -40,12 +40,13 @@ public class IteractionStage : WaypontMovementStage
 
             break;
             case IterationState.InteractioOver:
-                m_currentIteractionState = IterationState.MovintToPoint;    
+                m_currentIteractionState = IterationState.MovintToPoint; 
+                 m_navMeshAgent.enabled = true;   
                 m_navMeshAgent.isStopped = false;  
                 MoveToWaypoint(getNextWaypoint());            
             break;
             case IterationState.MovintToPoint:
-                if(!m_navMeshAgent.pathPending && m_navMeshAgent.remainingDistance < 1.5f)
+                if(!m_navMeshAgent.pathPending && m_navMeshAgent.remainingDistance < 0.5f)
                 {
                     m_navMeshAgent.isStopped = true;
                     m_navMeshAgent.velocity = Vector3.zero;
@@ -58,6 +59,7 @@ public class IteractionStage : WaypontMovementStage
                 if(interactableObject)
                 {
                     m_currentIteractionState = IterationState.Interaction;
+                    m_navMeshAgent.enabled = false;
                     StartInteraction(interactableObject);
                 }
                 else

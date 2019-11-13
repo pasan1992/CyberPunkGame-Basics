@@ -111,6 +111,18 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
     private IEnumerator onTimedInteraction(Interactable interactableObj)
     {
+
+        Vector3 intendedPosition = interactableObj.transform.position + interactableObj.properties.offset;
+        Quaternion intentedRotation =  Quaternion.Euler(interactableObj.properties.rotation);
+        this.transform.position = interactableObj.transform.position + interactableObj.properties.offset;
+        this.transform.rotation = Quaternion.Euler(interactableObj.properties.rotation);
+        // while(Vector3.Distance(transform.position,intendedPosition) < 0.3f && intentedRotation == this.transform.rotation)
+        // {
+        //     this.transform.rotation = Quaternion.Lerp(this.transform.rotation,intentedRotation,0.1f);
+        //     this.transform.position = Vector3.Lerp(this.transform.position,intendedPosition,0.1f);
+        //     yield return null;
+        // }
+
         m_previousTempState = m_characterState;
         m_characterState = CharacterMainStates.Interaction;
         m_animationModule.setTimedInteraction(true,interactableObj.properties.interactionID);

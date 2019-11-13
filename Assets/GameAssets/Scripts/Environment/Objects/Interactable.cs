@@ -14,14 +14,15 @@ public class Interactable : MonoBehaviour
         public InteractableType Type = InteractableType.Pickup;
         public bool interactionEnabled = false;
         public string itemName = "";
-
-        public bool isTimed = false;
         public float interactionTime;
         public int interactionID;
+        public Vector3 offset = Vector3.zero;
+        public Vector3 rotation = Vector3.zero;
     }
 
    [SerializeField]
     public InteractableProperties properties;
+    
 
     public virtual void OnPickUpAction()
     {
