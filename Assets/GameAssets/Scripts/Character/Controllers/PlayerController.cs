@@ -169,7 +169,11 @@ public class PlayerController : AgentController
             MouseCurserSystem.getInstance().setMouseCurserState(MouseCurserSystem.CURSOR_STATE.ONTARGET);
             targetPosition = hit.point;
             found = true;
-            MouseCurserSystem.getInstance().enableTargetLine(true);
+
+            if(m_movingAgent.isAimed())
+            {
+                MouseCurserSystem.getInstance().enableTargetLine(true);
+            }
         }
 
         if (!found && Physics.Raycast(castPoint, out hit, Mathf.Infinity, targetHitLayerMask))

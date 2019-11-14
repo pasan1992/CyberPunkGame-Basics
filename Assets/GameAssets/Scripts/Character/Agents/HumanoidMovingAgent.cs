@@ -114,18 +114,23 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
         Vector3 intendedPosition = interactableObj.transform.position + interactableObj.properties.offset;
         Quaternion intentedRotation =  Quaternion.Euler(interactableObj.properties.rotation);
-        this.transform.position = interactableObj.transform.position + interactableObj.properties.offset;
-        this.transform.rotation = Quaternion.Euler(interactableObj.properties.rotation);
-        // while(Vector3.Distance(transform.position,intendedPosition) < 0.3f && intentedRotation == this.transform.rotation)
-        // {
-        //     this.transform.rotation = Quaternion.Lerp(this.transform.rotation,intentedRotation,0.1f);
-        //     this.transform.position = Vector3.Lerp(this.transform.position,intendedPosition,0.1f);
-        //     yield return null;
-        // }
+        
+        //this.transform.position = interactableObj.transform.position + interactableObj.properties.offset;
+        //this.transform.rotation = Quaternion.Euler(interactableObj.properties.rotation);
 
         m_previousTempState = m_characterState;
         m_characterState = CharacterMainStates.Interaction;
+        
+
+        while(Vector3.Distance(transform.position,intendedPosition) > 0.1f || Mathf.Abs(intentedRotation.y - this.transform.rotation.y) > 5f)
+        {
+            this.transform.rotation = Quaternion.Lerp(this.transform.rotation,intentedRotation,0.2f);
+            this.transform.position = Vector3.Lerp(this.transform.position,intendedPosition,0.1f);
+            yield return new WaitForSeconds(Time.deltaTime/2);
+        }
+
         m_animationModule.setTimedInteraction(true,interactableObj.properties.interactionID);
+        
         yield return new WaitForSeconds(interactableObj.properties.interactionTime);
         m_animationModule.setTimedInteraction(false,interactableObj.properties.interactionID);
         m_characterState = m_previousTempState;
