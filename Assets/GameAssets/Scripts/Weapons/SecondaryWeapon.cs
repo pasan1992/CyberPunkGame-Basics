@@ -5,10 +5,10 @@ public class SecondaryWeapon : RangedWeapon
     private float timeFromLastFire;
     private bool waitToFire = false;
 
-    public void Awake()
+    public override void Awake()
     {
         base.Awake();
-        properties.Type = InteractableProperties.InteractableType.Pickup;
+        properties.Type = InteractableProperties.InteractableType.PickupInteraction;
     }
 
 

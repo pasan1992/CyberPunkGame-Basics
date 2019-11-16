@@ -39,8 +39,9 @@ public abstract class RangedWeapon : Weapon
     protected bool m_realoding = false;
     protected int m_ammoCount = 0;
     
-    public void Awake()
+    public override void Awake()
     {
+        base.Awake();
         m_rigidbody = this.GetComponent<Rigidbody>();
         m_collider = this.GetComponent<BoxCollider>();
         m_audioScource = this.GetComponent<AudioSource>();

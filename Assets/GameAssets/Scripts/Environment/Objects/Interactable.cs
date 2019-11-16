@@ -10,8 +10,8 @@ public class Interactable : MonoBehaviour
     public class InteractableProperties
     {
 
-        public enum InteractableType {Switch,Pickup,TimedInteraction}
-        public InteractableType Type = InteractableType.Pickup;
+        public enum InteractableType {FastInteraction,PickupInteraction,TimedInteraction,ContinousInteraction}
+        public InteractableType Type = InteractableType.PickupInteraction;
         public bool interactionEnabled = false;
         public string itemName = "";
         public float interactionTime;
@@ -22,16 +22,49 @@ public class Interactable : MonoBehaviour
 
    [SerializeField]
     public InteractableProperties properties;
+
+    private bool interacting;
     
+    public Outline m_outLine;
+    public virtual void Awake()
+    {
+        m_outLine = this.GetComponent<Outline>();
+        setOutLineState(false);
+    }
 
     public virtual void OnPickUpAction()
     {
         properties.interactionEnabled = false;
         this.gameObject.SetActive(false);
+        setOutLineState(false);
     }
 
     public virtual void OnEquipAction()
     {
         properties.interactionEnabled = false;
+        setOutLineState(false);
+    }
+
+    public virtual void setOutLineState(bool state)
+    {
+        if(m_outLine)
+        {
+            m_outLine.enabled = state;
+        }
+    }
+
+    public virtual void interact()
+    {
+        interacting = true;
+    }
+
+    public virtual bool isInteracting()
+    {
+        return interacting;
+    }
+
+    public void stopInteraction()
+    {
+        interacting = false;
     }
 }

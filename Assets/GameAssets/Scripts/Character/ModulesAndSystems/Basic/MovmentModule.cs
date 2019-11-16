@@ -38,4 +38,9 @@ public class MovmentModule
     {
         m_target = target;
     }
+
+    public Transform getCharacterTransfrom()
+    {
+        return m_characterTransform;
+    }
 }

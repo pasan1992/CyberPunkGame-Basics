@@ -10,12 +10,13 @@ public class IteractionStage : WaypontMovementStage
 
     enum IterationState {MovintToPoint,OnPoint,Interaction,InteractioOver};
 
-    IterationState m_currentIteractionState = IterationState.MovintToPoint;
+    IterationState m_currentIteractionState = IterationState.InteractioOver;
 
 
     public IteractionStage(ICyberAgent selfAgent,NavMeshAgent navMeshAgent, BasicWaypoint[] wayPoints):base(selfAgent,navMeshAgent,wayPoints)
     {
         m_agent = selfAgent;
+        m_currentIteractionState = IterationState.InteractioOver;
     }
     void Start()
     {
@@ -40,9 +41,9 @@ public class IteractionStage : WaypontMovementStage
 
             break;
             case IterationState.InteractioOver:
-                m_currentIteractionState = IterationState.MovintToPoint; 
+                 m_currentIteractionState = IterationState.MovintToPoint; 
                  m_navMeshAgent.enabled = true;   
-                m_navMeshAgent.isStopped = false;  
+                 m_navMeshAgent.isStopped = false;  
                 MoveToWaypoint(getNextWaypoint());            
             break;
             case IterationState.MovintToPoint:
@@ -60,15 +61,11 @@ public class IteractionStage : WaypontMovementStage
             case IterationState.OnPoint:
                 Interactable interactableObject = m_wayPoints[m_currentWayPointID].GetComponent<Interactable>();
 
-                if(interactableObject)
+                if(interactableObject && !interactableObject.isInteracting())
                 {
                     m_currentIteractionState = IterationState.Interaction;
                     m_navMeshAgent.enabled = false;
-                    StartInteraction(interactableObject);
-
-                    // m_currentIteractionState = IterationState.MovintToPoint;
-                    // m_navMeshAgent.isStopped = false;
-                    // MoveToWaypoint(getNextWaypoint());   
+                    StartInteraction(interactableObject,Interactable.InteractableProperties.InteractableType.TimedInteraction);
                 }
                 else
                 {
@@ -80,9 +77,9 @@ public class IteractionStage : WaypontMovementStage
         }
     }
 
-    private void StartInteraction(Interactable interactableObj)
+    private void StartInteraction(Interactable interactableObj,Interactable.InteractableProperties.InteractableType type)
     {
-        m_agent.interactWith(interactableObj);
+        m_agent.interactWith(interactableObj,type);
     }
 
     protected override BasicWaypoint getNextWaypoint()

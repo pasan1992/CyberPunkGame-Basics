@@ -339,7 +339,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         return false;
     }
 
-    public void interactWith(Interactable interactableObj)
+    public void interactWith(Interactable interactableObj,Interactable.InteractableProperties.InteractableType type)
     {
 
     }

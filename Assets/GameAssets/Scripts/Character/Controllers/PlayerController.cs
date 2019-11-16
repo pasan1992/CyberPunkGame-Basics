@@ -72,8 +72,8 @@ public class PlayerController : AgentController
 
     private void controllerUpdate()
     {
-        verticleSpeed = Mathf.Lerp(verticleSpeed, Input.GetAxis("Vertical"),1f);
-        horizontalSpeed = Mathf.Lerp(horizontalSpeed, Input.GetAxis("Horizontal"), 1f);
+        verticleSpeed = Mathf.Lerp(verticleSpeed, Input.GetAxis("Vertical"),0.8f);
+        horizontalSpeed = Mathf.Lerp(horizontalSpeed, Input.GetAxis("Horizontal"), 0.8f);
 
         // Setting Character Aiming.
         if (Input.GetMouseButton(1) && !m_movingAgent.isEquipingWeapon() && m_movingAgent.isReadyToAim())
@@ -109,16 +109,15 @@ public class PlayerController : AgentController
             m_movingAgent.dodgeAttack(getDirectionRelativeToCamera( new Vector3(verticleSpeed, 0, -horizontalSpeed)));
         }
 
-        if(Input.GetKey(KeyCode.LeftShift))
+        if(Input.GetKey(KeyCode.LeftShift) && (Mathf.Abs(verticleSpeed) > 0 || Mathf.Abs(horizontalSpeed) > 0))
         {
             speedModifyVale = Mathf.Lerp(speedModifyVale, 1.5f, 0.1f);
-            m_movingAgent.moveCharacter(getDirectionRelativeToCamera(new Vector3(verticleSpeed * speedModifyVale, 0, -horizontalSpeed * speedModifyVale)));
         }
         else
         {
             speedModifyVale = Mathf.Lerp(speedModifyVale, 1f, 0.1f);
-            m_movingAgent.moveCharacter(getDirectionRelativeToCamera((new Vector3(verticleSpeed, 0, -horizontalSpeed)).normalized*speedModifyVale));
         }
+        m_movingAgent.moveCharacter(getDirectionRelativeToCamera((new Vector3(verticleSpeed, 0, -horizontalSpeed)).normalized*speedModifyVale));
 
         if(Input.GetKeyDown(KeyCode.R))
         {
@@ -127,7 +126,14 @@ public class PlayerController : AgentController
 
         if(Input.GetKeyDown(KeyCode.E))
         {
-            m_movingAgent.pickupItem();
+            if(m_movingAgent.isInteracting())
+            {
+                m_movingAgent.cancleInteraction();
+            }
+            else
+            {
+                m_movingAgent.Interact();
+            }
         }
 
         if(Input.GetKeyDown(KeyCode.Q))

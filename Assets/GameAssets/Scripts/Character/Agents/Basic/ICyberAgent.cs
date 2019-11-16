@@ -40,5 +40,5 @@ public interface ICyberAgent
     GameObject getGameObject();
     AgentData GetAgentData();
     bool isInteracting();
-    void interactWith(Interactable interactableObj);
+    void interactWith(Interactable interactableObj,Interactable.InteractableProperties.InteractableType type);
 }

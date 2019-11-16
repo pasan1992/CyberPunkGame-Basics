@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: fae067962e5934395be31c8aba4a3455
+guid: be24d3b4990d8ce47b7c6d6584602bd5
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -7,16 +7,16 @@ TrueTypeFontImporter:
   forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
-  includeFontData: 1
-  fontName: Roboto Condensed
+  includeFontData: 0
+  fontName: Agave-Regular
   fontNames:
-  - Roboto Condensed
+  - Agave-Regular
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
-  ascentCalculationMode: 1
+  ascentCalculationMode: 0
   useLegacyBoundsCalculation: 0
-  shouldRoundAdvanceValue: 1
+  shouldRoundAdvanceValue: 0
   userData: 
   assetBundleName: 
   assetBundleVariant: 

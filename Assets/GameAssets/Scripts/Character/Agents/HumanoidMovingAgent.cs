@@ -19,16 +19,16 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     protected HumanoidAnimationModule m_animationModule;
     protected HumanoidMovmentModule m_movmentModule;
     protected HumanoidDamageModule m_damageModule;
-
+    protected HumanoidInteractionModule m_interactionModule;
 
     // Attributes
     public enum CharacterMainStates { Aimed, Armed_not_Aimed, Dodge, Idle,Interaction }
-    private CharacterMainStates m_characterState = CharacterMainStates.Idle;
+    public CharacterMainStates m_characterState = CharacterMainStates.Idle;
     private CharacterMainStates m_previousTempState = CharacterMainStates.Idle;
     protected GameObject m_target;
     private bool m_characterEnabled = true;
     //private AgentBasicData.AgentFaction m_agentFaction;
-    private Vector3 m_movmentVector;
+    public Vector3 m_movmentVector;
     private bool m_isDisabled = false;
 
     // Public
@@ -68,6 +68,12 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         findChestTransfrom(), 
         destroyCharacter, 
         this.GetComponentInChildren<Outline>());
+
+        m_interactionModule = new HumanoidInteractionModule(m_animationModule,
+        m_movmentModule,
+        AgentData,
+        m_equipmentModule,
+        OnInteractionDone);
     }
     #endregion
 
@@ -88,173 +94,35 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
 
     #region Commands
-
-    [ContextMenu("ActivateTempInteraction")]
-    public void TempFireInteraction()
+    public void interactWith(Interactable obj,Interactable.InteractableProperties.InteractableType type)
     {
-        interactWith(tempInteractionObj);
-    }
-
-    public void interactWith(Interactable interactableObj)
-    {
-        switch(interactableObj.properties.Type)
-        {
-            case Interactable.InteractableProperties.InteractableType.Pickup:
-            break;
-            case Interactable.InteractableProperties.InteractableType.Switch:
-            break;
-            case Interactable.InteractableProperties.InteractableType.TimedInteraction:
-            StartCoroutine(onTimedInteraction(interactableObj));
-            break;
-        }
-    }
-
-    private IEnumerator onTimedInteraction(Interactable interactableObj)
-    {
-
-        Vector3 intendedPosition = interactableObj.transform.position + interactableObj.properties.offset;
-        Quaternion intentedRotation =  Quaternion.Euler(interactableObj.properties.rotation);
+        bool interactCondition = (m_characterState.Equals(CharacterMainStates.Idle) || m_characterState.Equals(CharacterMainStates.Armed_not_Aimed));
         
-        //this.transform.position = interactableObj.transform.position + interactableObj.properties.offset;
-        //this.transform.rotation = Quaternion.Euler(interactableObj.properties.rotation);
-
-        m_previousTempState = m_characterState;
-        m_characterState = CharacterMainStates.Interaction;
-        
-
-        while(Vector3.Distance(transform.position,intendedPosition) > 0.1f || Mathf.Abs(intentedRotation.y - this.transform.rotation.y) > 5f)
+        if(interactCondition)
         {
-            this.transform.rotation = Quaternion.Lerp(this.transform.rotation,intentedRotation,0.2f);
-            this.transform.position = Vector3.Lerp(this.transform.position,intendedPosition,0.1f);
-            yield return new WaitForSeconds(Time.deltaTime/2);
-        }
-
-        m_animationModule.setTimedInteraction(true,interactableObj.properties.interactionID);
-        
-        yield return new WaitForSeconds(interactableObj.properties.interactionTime);
-        m_animationModule.setTimedInteraction(false,interactableObj.properties.interactionID);
-        m_characterState = m_previousTempState;
-    }
-
-    
-
-    public void pickupItem()
-    {
-        bool pickupCondition = (m_characterState.Equals(CharacterMainStates.Idle) || m_characterState.Equals(CharacterMainStates.Armed_not_Aimed));
-        if(pickupCondition)
-        {
-            Interactable obj = AgentItemFinder.findNearItem(getCurrentPosition());
-
-            if(obj != null)
+            if(obj != null && !obj.isInteracting())
             {
-                float distance = Vector3.Distance(getCurrentPosition(),obj.transform.position);
-
-                if(distance>0.7f)
-                {
-                    m_movmentModule.LookAtObject(obj.transform.position);
-                }
-                
-                m_animationModule.triggerPickup();
+                m_movmentVector = Vector3.zero;
                 m_previousTempState = m_characterState;
                 m_characterState = CharacterMainStates.Interaction;
-
-                if(isCrouched())
-                {
-                    StartCoroutine(onPickup(obj,0));
-                }
-                else
-                {
-                    StartCoroutine(onPickup(obj,0.3f));
-                }
-
+                StartCoroutine(m_interactionModule.interactWith(obj,type));
             }
-        }
+        }      
     }
-
-    IEnumerator onPickup(Interactable obj,float waitTime)
+    public void cancleInteraction()
     {
-        m_animationModule.setUpperAnimationLayerWeight(0.2f);
-        yield return new WaitForSeconds(waitTime);
-        m_animationModule.setUpperAnimationLayerWeight(1);
-
-        if(obj.properties.Type.Equals(Interactable.InteractableProperties.InteractableType.Pickup))
-        {
-            if(obj is RangedWeapon)
-            {
-                if(obj is PrimaryWeapon)
-                {
-                    if(!AgentData.primaryWeapon)
-                    {
-                        AgentData.primaryWeapon = obj.GetComponent<PrimaryWeapon>();
-                        m_equipmentModule.equipWeapon(AgentData.primaryWeapon);
-                        obj.OnEquipAction();
-                    }
-                    else
-                    {
-                        AgentData.inventryItems.Add(obj);
-                        obj.OnPickUpAction();
-                    }
-                }
-                else if(obj is SecondaryWeapon)
-                {
-                    if(!AgentData.secondaryWeapon)
-                    {
-                        AgentData.secondaryWeapon = obj.GetComponent<SecondaryWeapon>();
-                        m_equipmentModule.equipWeapon(AgentData.secondaryWeapon);
-                        obj.OnEquipAction();
-                    }
-                    else
-                    {
-                        AgentData.inventryItems.Add(obj);
-                        obj.OnPickUpAction();
-                    }
-                }
-            }
-        }
-
-        // switch(obj.properties.Type)
-        // {
-        //     case Interactable.InteractableProperties.InteractableType.PrimaryWeapon:
-
-        //         if(!AgentData.primaryWeapon)
-        //         {
-        //             AgentData.primaryWeapon = obj.GetComponent<PrimaryWeapon>();
-        //             m_equipmentModule.equipWeapon(AgentData.primaryWeapon);
-        //             obj.OnEquipAction();
-        //         }
-        //         else
-        //         {
-        //             AgentData.inventryItems.Add(obj);
-        //             obj.OnPickUpAction();
-        //         }
-
-        //     break;
-        //     case Interactable.InteractableProperties.InteractableType.SecondaryWeapon:
-
-        //         if(!AgentData.secondaryWeapon)
-        //         {
-        //             AgentData.secondaryWeapon = obj.GetComponent<SecondaryWeapon>();
-        //             m_equipmentModule.equipWeapon(AgentData.secondaryWeapon);
-        //             obj.OnEquipAction();
-        //         }
-        //         else
-        //         {
-        //             AgentData.inventryItems.Add(obj);
-        //             obj.OnPickUpAction();
-        //         }
-            
-        //     break;
-
-        //     default:
-        //             AgentData.inventryItems.Add(obj);
-        //             obj.OnPickUpAction();
-        //     break;
-        // }
-
-         yield return new WaitForSeconds(waitTime);
-        m_characterState = m_previousTempState;
-        // Now do your thing here
+        m_interactionModule.cancleInteraction();
     }
+    public void Interact()
+    {
+        Interactable obj = AgentItemFinder.findNearItem(getCurrentPosition());
+        
+        if(obj)
+        {
+            interactWith(obj,obj.properties.Type);
+        }
+    }
+
     public void damageAgent(float amount)
     {
         m_damageModule.DamageByAmount(amount);
@@ -572,6 +440,11 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     #endregion
 
     #region Events Handlers
+
+    public void OnInteractionDone()
+    {
+        m_characterState = m_previousTempState;
+    }
 
     public void OnThrow()
     {

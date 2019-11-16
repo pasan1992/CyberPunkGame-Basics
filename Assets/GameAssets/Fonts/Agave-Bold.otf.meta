@@ -1,16 +1,16 @@
 fileFormatVersion: 2
-guid: fae067962e5934395be31c8aba4a3455
+guid: 094504d8ffe413945b02dc00787748e6
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
-  fontSize: 100
+  fontSize: 16
   forceTextureCase: -2
   characterSpacing: 0
   characterPadding: 1
   includeFontData: 1
-  fontName: Roboto Condensed
+  fontName: Agave-Bold
   fontNames:
-  - Roboto Condensed
+  - Agave-Bold
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0

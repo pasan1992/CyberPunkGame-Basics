@@ -41,7 +41,7 @@ public class AnimationModule
         }
     }
 
-    public virtual void setTimedInteraction(bool enabled,int interactionId)
+    public virtual void setInteraction(bool enabled,int interactionId)
     {
         m_animator.SetInteger("interactionID",interactionId);
         m_animator.SetBool("timedInteraction",enabled);

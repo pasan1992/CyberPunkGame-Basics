@@ -7,10 +7,10 @@ public class PrimaryWeapon : RangedWeapon
 
     #region command
 
-    public void Awake()
+    public override void Awake()
     {
         base.Awake();
-        properties.Type = InteractableProperties.InteractableType.Pickup;
+        properties.Type = InteractableProperties.InteractableType.PickupInteraction;
     }
 
     public override void pullTrigger()
