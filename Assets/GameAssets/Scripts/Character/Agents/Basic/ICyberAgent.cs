@@ -19,7 +19,6 @@ public interface ICyberAgent
     void toggleHide();
     bool isReadyToAim();
     void weaponFireForAI();
-    void weaponFireForAICover();
     void setWeponFireCapability(bool enadled);
     Transform getTransfrom();
     void dodgeAttack(Vector3 dodgeDirection);

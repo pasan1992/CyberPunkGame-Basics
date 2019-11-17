@@ -13,6 +13,11 @@ public class HumanoidInteractionModule
     private HumanoidMovmentModule m_movementModule;
     private AgentData m_agentData;
     private HumanoidRangedWeaponsModule m_equipmentModule;
+
+    /**
+     This bool variable make sure that when interaction cancled, 
+     all the Coroutines started by the Humanoid Agent realated to interaction will not continue the interaction.
+    */
     private bool m_interacting;
     private bool m_unCancleableInstruction;
     private Interactable m_currentInteractingObject;
@@ -27,6 +32,8 @@ public class HumanoidInteractionModule
         m_movementModule = movmenetModule;
         m_agentData = agentData;
         m_equipmentModule = equipmentModule;
+
+        // This is the callback of the HumanoidMovingAgent to return the character state into normal state
         m_onInteractionOver = onInteractionOver;
         m_unCancleableInstruction = false;
         m_interacting = false;
@@ -36,15 +43,18 @@ public class HumanoidInteractionModule
     {
         if(!m_interacting)
         {
+            // Set all required varialbes and conditions for the interaction
             m_interacting = true;
             m_currentInteractingObject = interactable;
             m_currentInteractingObject.interact();
+
             switch(type)
             {
                 case Interactable.InteractableProperties.InteractableType.PickupInteraction:
 
                     float distance = Vector3.Distance(m_movementModule.getCharacterTransfrom().position,interactable.transform.position);
                     
+                    // Make sure the character turns at the object - if the character is very close no need to turn.
                     if(distance>0.7f)
                     {
                         m_movementModule.LookAtObject(interactable.transform.position);
@@ -52,6 +62,7 @@ public class HumanoidInteractionModule
 
                     m_animationModule.triggerPickup();
                     
+                    // Is the agent is crouched no animation is played when picking up items, Thus no wait time
                     if(m_movementModule.isCrouched())
                     {
                         yield return onPickup(interactable,0);
@@ -71,15 +82,11 @@ public class HumanoidInteractionModule
                     yield return onContinousInteraction(interactable);
                 break;
             }
+
+            // Make sure the character state return to previous state.
             m_interacting = false;
             m_onInteractionOver();
         }
-        else
-        {
-            cancleInteraction();
-        }
-
-
         yield return null;
     }
 
@@ -96,7 +103,9 @@ public class HumanoidInteractionModule
 
     private IEnumerator onPickup(Interactable obj,float waitTime)
     {
+        // fast interactions are uncancellable - once started need to wait until they are ended.
         m_unCancleableInstruction = true;
+
         m_animationModule.setUpperAnimationLayerWeight(0.2f);
         yield return new WaitForSeconds(waitTime);
         m_animationModule.setUpperAnimationLayerWeight(1);
@@ -136,15 +145,21 @@ public class HumanoidInteractionModule
             }
         }
          yield return new WaitForSeconds(waitTime);
+
          m_unCancleableInstruction = false;
     }
 
+    /**
+     Continous interactions will continue unless they are cancled
+    */
     private IEnumerator onContinousInteraction(Interactable interactableObj)
     {
         Vector3 intendedPosition = interactableObj.transform.position + interactableObj.properties.offset;
         Quaternion intentedRotation =  Quaternion.Euler(interactableObj.properties.rotation);
         
         Transform transform = m_movementModule.getCharacterTransfrom();
+
+        // Place agent in the intaraction position.
         while((Vector3.Distance(transform.position,intendedPosition) > 0.3f ||
          Mathf.Abs(intentedRotation.eulerAngles.y - transform.rotation.eulerAngles.y) > 5f) &&
          m_interacting)
@@ -153,13 +168,18 @@ public class HumanoidInteractionModule
             transform.position = Vector3.Lerp(transform.position,intendedPosition,0.1f);
             m_animationModule.setMovment(0,0);
 
+            // To enable smooth transistion from staring positon and rotation to end position and rotation.
             yield return new WaitForSeconds(Time.deltaTime/2);
         }     
 
+        /** Make sure that agent is still in interaction mode before continuing the interaction 
+            If interaction is cancled in mid process this condition will fail
+         */
         if(m_interacting)
         {
             m_animationModule.setInteraction(true,interactableObj.properties.interactionID);
 
+            // Wait until intereaction is cancled.
             while(m_interacting)
             {
                 yield return new WaitForSeconds(Time.deltaTime);
@@ -167,13 +187,17 @@ public class HumanoidInteractionModule
         }  
     }
 
+    /**
+       Interaction will end after a certain time.
+    */
     private IEnumerator onTimedInteraction(Interactable interactableObj)
     {
 
         Vector3 intendedPosition = interactableObj.transform.position + interactableObj.properties.offset;
         Quaternion intentedRotation =  Quaternion.Euler(interactableObj.properties.rotation);
-        
         Transform transform = m_movementModule.getCharacterTransfrom();
+
+        // Place agent in the interaction position
         while((Vector3.Distance(transform.position,intendedPosition) > 0.3f || 
         Mathf.Abs(intentedRotation.eulerAngles.y - transform.rotation.eulerAngles.y) > 5f) &&
         m_interacting)
@@ -182,9 +206,13 @@ public class HumanoidInteractionModule
             transform.position = Vector3.Lerp(transform.position,intendedPosition,0.1f);
             m_animationModule.setMovment(0,0);
 
+            // To enable smooth transistion from staring positon and rotation to end position and rotation.
             yield return new WaitForSeconds(Time.deltaTime/2);
         }
 
+        /** Make sure that agent is still in interaction mode before continuing the interaction 
+            If interaction is cancled in mid process this condition will fail
+         */
         if(m_interacting)
         {
             m_animationModule.setInteraction(true,interactableObj.properties.interactionID);
@@ -197,6 +225,7 @@ public class HumanoidInteractionModule
                 currentWaitedTime += Time.deltaTime;
             }
 
+            // After every wait, need to check the if the interaction is still in progress before continuing.
             if(m_interacting)
             {
                 cancleInteraction();

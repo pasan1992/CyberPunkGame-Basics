@@ -230,11 +230,6 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     #region un-implemented functions 
 
-    public void weaponFireForAICover()
-    {
-        throw new System.NotImplementedException();
-    }
-
     public void setWeponFireCapability(bool enadled)
     {
         throw new System.NotImplementedException();

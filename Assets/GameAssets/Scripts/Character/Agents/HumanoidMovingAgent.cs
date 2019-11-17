@@ -27,17 +27,15 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     private CharacterMainStates m_previousTempState = CharacterMainStates.Idle;
     protected GameObject m_target;
     private bool m_characterEnabled = true;
-    //private AgentBasicData.AgentFaction m_agentFaction;
     public Vector3 m_movmentVector;
     private bool m_isDisabled = false;
 
     // Public
+    // Main Agent data component
     public AgentData AgentData;
 
+    // These components required for the function of the agent
     public AgentFunctionalComponents AgentComponents;
-
-    public Interactable tempInteractionObj; 
-
     #endregion
 
     #region Initalize
@@ -69,10 +67,12 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         destroyCharacter, 
         this.GetComponentInChildren<Outline>());
 
+        // Create intearction system.
         m_interactionModule = new HumanoidInteractionModule(m_animationModule,
         m_movmentModule,
         AgentData,
         m_equipmentModule,
+        // This is the callback for interaction done.
         OnInteractionDone);
     }
     #endregion
@@ -92,14 +92,21 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     }
     #endregion
 
-
     #region Commands
+
+    /**
+     Interact with given interatable object
+     - Interaction type can be different from the interaction type of the interatable object given.
+    */
     public void interactWith(Interactable obj,Interactable.InteractableProperties.InteractableType type)
     {
-        bool interactCondition = (m_characterState.Equals(CharacterMainStates.Idle) || m_characterState.Equals(CharacterMainStates.Armed_not_Aimed));
+        bool interactCondition =( (m_characterState.Equals(CharacterMainStates.Idle) || 
+        m_characterState.Equals(CharacterMainStates.Armed_not_Aimed)) && !m_characterState.Equals(CharacterMainStates.Interaction));
         
+        // Check if character is ready to interact - Do not interact if the character is already interacting.
         if(interactCondition)
         {
+            // Check if the object in interaction is already in interacting state by other agent.
             if(obj != null && !obj.isInteracting())
             {
                 m_movmentVector = Vector3.zero;
@@ -109,6 +116,10 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
             }
         }      
     }
+
+    /**
+     Cancle the current interaction
+    */
     public void cancleInteraction()
     {
         m_interactionModule.cancleInteraction();
@@ -127,6 +138,8 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     {
         m_damageModule.DamageByAmount(amount);
     }
+
+    // This fire wepon is called by the AI Agent controlers to fire weapon.
     public virtual void weaponFireForAI()
     {
         if(m_equipmentModule.getCurrentWeaponAmmoCount() > 0)
@@ -142,15 +155,10 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         m_equipmentModule.reloadCurretnWeapon();
     }
 
-    public virtual void weaponFireForAICover()
-    {
-        StartCoroutine(fireWeaponCover());
-    }
-
-    // Aim Current Weapon -
+    // Aim Current Weapon 
     public virtual void aimWeapon()
     {
-        if (m_characterState.Equals(CharacterMainStates.Armed_not_Aimed) && !isEquipingWeapon() /*&& !m_characterState.Equals(CharacterMainStates.Dodge)*/)
+        if (m_characterState.Equals(CharacterMainStates.Armed_not_Aimed) && !isEquipingWeapon())
         {
             
             m_characterState = CharacterMainStates.Aimed;
@@ -300,8 +308,6 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         m_onEnableCallback = callback;
     }
 
-
-
     public bool IsFunctional()
     {
         return m_damageModule.HealthAvailable();
@@ -325,11 +331,6 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     public bool isEquipingWeapon()
     {
         return m_equipmentModule.isInEquipingAction();
-    }
-
-    public void setHealth(float health)
-    {
-        //m_damageModule.setHealth(m_agentStats.Health);
     }
 
     public void enableTranslateMovment(bool enable)
@@ -404,7 +405,6 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     {
         return m_equipmentModule.isProperlyAimed();
     }
-
 
     public bool isDisabled()
     {
@@ -496,19 +496,6 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         m_equipmentModule.pullTrigger();
         yield return new WaitForSeconds(0.5f);
         m_equipmentModule.releaseTrigger();
-    }
-
-    private IEnumerator fireWeaponCover()
-    {
-        aimWeapon();
-        yield return new WaitForSeconds(2f);
-        aimWeapon();
-        //pullTrigger();
-        m_equipmentModule.pullTrigger();
-        yield return new WaitForSeconds(1f);
-        m_equipmentModule.releaseTrigger();
-        yield return new WaitForSeconds(1f);
-        stopAiming();
     }
 
     private Transform findHeadTransfrom()
