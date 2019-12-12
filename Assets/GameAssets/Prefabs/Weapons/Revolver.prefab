@@ -12,18 +12,17 @@ GameObject:
   - component: {fileID: 8582277439047616426}
   - component: {fileID: 8590821982301302284}
   - component: {fileID: 8605381333843198424}
-  - component: {fileID: 8605381333843198245}
   - component: {fileID: 8605381333843198246}
   - component: {fileID: 8605381333843198247}
   - component: {fileID: 8605381333843198243}
   - component: {fileID: 8605381333843198244}
-  m_Layer: 9
-  m_Name: Revolver (1)
+  m_Layer: 18
+  m_Name: Revolver
   m_TagString: Item
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8609882997150727864
 Transform:
   m_ObjectHideFlags: 0
@@ -31,7 +30,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8604335550961066124}
-  m_LocalRotation: {x: -0, y: -0, z: 0.47529367, w: 0.87982726}
+  m_LocalRotation: {x: 0, y: 0, z: 0.4752941, w: 0.879827}
   m_LocalPosition: {x: 0.22, y: 1.85, z: 2.23}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -104,101 +103,6 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!120 &8605381333843198245
-LineRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8604335550961066124}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 0
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 901fac0d5a1aa17409a6a5005e686e64, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
-  m_Parameters:
-    serializedVersion: 3
-    widthMultiplier: 0.01
-    widthCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    colorGradient:
-      serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 1}
-      key3: {r: 0, g: 0, b: 0, a: 0}
-      key4: {r: 0, g: 0, b: 0, a: 0}
-      key5: {r: 0, g: 0, b: 0, a: 0}
-      key6: {r: 0, g: 0, b: 0, a: 0}
-      key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
-      ctime1: 65535
-      ctime2: 0
-      ctime3: 0
-      ctime4: 0
-      ctime5: 0
-      ctime6: 0
-      ctime7: 0
-      atime0: 0
-      atime1: 964
-      atime2: 65535
-      atime3: 0
-      atime4: 0
-      atime5: 0
-      atime6: 0
-      atime7: 0
-      m_Mode: 0
-      m_NumColorKeys: 2
-      m_NumAlphaKeys: 3
-    numCornerVertices: 0
-    numCapVertices: 0
-    alignment: 0
-    textureMode: 0
-    shadowBias: 0.5
-    generateLightingData: 0
-  m_UseWorldSpace: 1
-  m_Loop: 0
 --- !u!65 &8605381333843198246
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -321,8 +225,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 0.062158585, g: 0, b: 1, a: 1}
-  outlineWidth: 2
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 0.2
   precomputeOutline: 0
   bakeKeys: []
   bakeValues: []
@@ -342,22 +246,21 @@ MonoBehaviour:
     Type: 0
     interactionEnabled: 1
     itemName: Revolver
+    interactionTime: 0
+    interactionID: 0
+    offset: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  visualProperties:
+    nameTagOffset: {x: 20, y: 20, z: 20}
   nonFunctionalProperties:
     magazinePositionOffset: {x: 0, y: 0.1, z: 0}
     magazineObjProp: {fileID: 8605108304499874844}
     handPlacementOffset: {x: 0.04, y: 0.054, z: 0.073}
     weaponRecoilOffset: {x: 0, y: 40, z: 0}
-  magazinePositionOffset: {x: 0, y: 0.1, z: 0}
-  magazineObjProp: {fileID: 8605108304499874844}
-  handPlacementOffset: {x: 0.04, y: 0.054, z: 0.073}
-  weaponRecoilOffset: {x: 0, y: 40, z: 0}
   gunMuzzle: {fileID: 8605381333434267618}
   gunFireLight: {fileID: 4708023197885438203}
-  targetPoint: {fileID: 8605381333653223865}
-  hitLayerMask:
-    serializedVersion: 2
-    m_Bits: 512
-  fireRate: 1
+  targetPointTransfrom: {fileID: 0}
+  fireRate: 4
   weaponRecoil: 4
   m_enableLine: 1
   m_magazineSize: 6
@@ -372,7 +275,7 @@ GameObject:
   - component: {fileID: 8602610489565658270}
   - component: {fileID: 8582102217272798554}
   - component: {fileID: 8590618049659509866}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: SM_Wep_Revolver_Trigger_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -449,7 +352,7 @@ GameObject:
   - component: {fileID: 8602822005902710528}
   - component: {fileID: 8582496661428239584}
   - component: {fileID: 8590699251571553158}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: SM_Wep_Revolver_Cylinder_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -526,7 +429,7 @@ GameObject:
   - component: {fileID: 8605381333364279195}
   - component: {fileID: 8605381333364279197}
   - component: {fileID: 8605381333364279196}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: muzzle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -5282,7 +5185,7 @@ GameObject:
   - component: {fileID: 8605381333434267616}
   - component: {fileID: 8605381333434267618}
   - component: {fileID: 8605381333434267617}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: beam
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10036,7 +9939,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8605381333653223866}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: GameObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10066,7 +9969,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8605381333666692634}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: vfx_Muzzle_edited (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10101,7 +10004,7 @@ GameObject:
   - component: {fileID: 8610260597783841744}
   - component: {fileID: 8582439565589151404}
   - component: {fileID: 8590645292481500150}
-  m_Layer: 9
+  m_Layer: 18
   m_Name: SM_Wep_Revolver_Hammer_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10182,7 +10085,7 @@ PrefabInstance:
     - target: {fileID: 2081248893930762509, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
         type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 18
       objectReference: {fileID: 0}
     - target: {fileID: 3907495676557974478, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
         type: 3}
@@ -10384,11 +10287,6 @@ PrefabInstance:
       propertyPath: EmissionModule.m_Bursts.Array.data[0].probability
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2384189232307893626, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
-        type: 3}
-      propertyPath: m_RenderAlignment
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5926775866237569448, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -10443,6 +10341,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 57.947002
+      objectReference: {fileID: 0}
+    - target: {fileID: 2384189232307893626, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
+        type: 3}
+      propertyPath: m_RenderAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0, type: 3}

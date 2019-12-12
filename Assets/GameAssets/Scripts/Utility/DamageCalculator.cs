@@ -70,8 +70,9 @@ public class DamageCalculator
             if (cyberAgent !=null && !m_fireFrom.Equals(cyberAgent.getFaction()))
             {
 
-                cyberAgent.reactOnHit(other, (hitDirection) * 3f, other.transform.position);
-                cyberAgent.damageAgent(1);
+                //cyberAgent.reactOnHit(other, (hitDirection) * 3f, other.transform.position);
+                //cyberAgent.damageAgent(1);
+                agentController.GetComponent<HumanoidDamagableObject>().damage(1,other,(hitDirection) * 3f,other.transform.position);
             
                 GameObject basicHitParticle = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.HitBasicParticle);
                 basicHitParticle.SetActive(true);
@@ -102,6 +103,39 @@ public class DamageCalculator
                     else
                     {
                        basicHitParticle.transform.position = cyberAgent.getTopPosition();
+                    }
+                }
+            }
+
+        }
+    }
+
+    public static void onHitEnemy2(Collider other,AgentBasicData.AgentFaction m_fireFrom,Vector3 hitDirection)
+    {
+        DamagableObject damagableObject = other.transform.GetComponentInParent<DamagableObject>();
+        if (damagableObject != null)
+        {
+            MovingAgentDamagableObject movingDamagableObject = (MovingAgentDamagableObject)damagableObject;
+            if (movingDamagableObject !=null && movingDamagableObject.isDamagable(m_fireFrom))
+            {
+
+               // cyberAgent.reactOnHit(other, (hitDirection) * 3f, other.transform.position);
+                //cyberAgent.damageAgent(1);
+               movingDamagableObject.damage(1,other,(hitDirection) * 3f,other.transform.position);
+            
+                GameObject basicHitParticle = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.HitBasicParticle);
+                basicHitParticle.SetActive(true);
+                basicHitParticle.transform.position = other.transform.position;
+                basicHitParticle.transform.LookAt(Vector3.up);
+ 
+                if (movingDamagableObject.isDestroyed())
+                {
+                    Rigidbody rb = other.transform.GetComponent<Rigidbody>();
+
+                    if (rb != null)
+                    {
+                        rb.isKinematic = false;
+                        rb.AddForce((hitDirection) * 150, ForceMode.Impulse);
                     }
                 }
             }

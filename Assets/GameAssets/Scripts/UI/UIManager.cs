@@ -26,14 +26,13 @@ public class UIManager : MonoBehaviour
 
         if(m_currentInteractable)
         {
-            lootText.target = m_currentInteractable.gameObject.transform;
+            lootText.setInteratableObject(m_currentInteractable);
             m_currentInteractable.setOutLineState(true);
-            lootText.setText(m_currentInteractable.properties.itemName);
         }
         else
         {
-            lootText.target = null;
-            lootText.transform.position = Vector3.zero;
+            
+            lootText.resetText();
         }
     }
 }

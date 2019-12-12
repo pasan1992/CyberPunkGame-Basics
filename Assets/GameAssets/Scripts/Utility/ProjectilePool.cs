@@ -16,7 +16,8 @@ public class ProjectilePool : MonoBehaviour
         PistolAmmo,
         RifleAmmo,
         Grenade,
-        BasicRocket
+        BasicRocket,
+        DroidExplosionParticleEffect
     }
 
     // Basic Projectile 
@@ -35,6 +36,8 @@ public class ProjectilePool : MonoBehaviour
     private List<GameObject> smokeEffectList;
 
     private List<GameObject> basicRocketList;
+
+    private List<GameObject> droidExplosionsList;
 
 
     public int maxExplosions = 10;
@@ -137,6 +140,12 @@ public class ProjectilePool : MonoBehaviour
                 basicRocketList = new List<GameObject>();
                 effectList = basicRocketList;       
                 break;
+            case POOL_OBJECT_TYPE.DroidExplosionParticleEffect:
+                resourcePath = "Explosions/BasicDroidExplosion";
+                count = donreExplosions;
+                droidExplosionsList = new List<GameObject>();
+                effectList = droidExplosionsList;
+                break;
         }
 
         GameObject bulletHitBasicParticlePrefab = Resources.Load<GameObject>(resourcePath);
@@ -151,62 +160,62 @@ public class ProjectilePool : MonoBehaviour
     }
 
     #region Not Using
-    private void initalizeBulletHitBasicParticleList()
-    {
-        GameObject bulletHitBasicParticlePrefab = Resources.Load<GameObject>("ParticleEffects/BulletHitBasicParticle");
-        bulletHitBasicParticleList = new List<GameObject>();
+    // private void initalizeBulletHitBasicParticleList()
+    // {
+    //     GameObject bulletHitBasicParticlePrefab = Resources.Load<GameObject>("ParticleEffects/BulletHitBasicParticle");
+    //     bulletHitBasicParticleList = new List<GameObject>();
 
-        for (int i = 0; i < maxBulletCount; i++)
-        {
-            GameObject bulletHitParticle = GameObject.Instantiate(bulletHitBasicParticlePrefab);
-            bulletHitParticle.transform.parent = this.transform;
-            bulletHitParticle.SetActive(false);
-            bulletHitBasicParticleList.Add(bulletHitParticle);
-        }
-    }
+    //     for (int i = 0; i < maxBulletCount; i++)
+    //     {
+    //         GameObject bulletHitParticle = GameObject.Instantiate(bulletHitBasicParticlePrefab);
+    //         bulletHitParticle.transform.parent = this.transform;
+    //         bulletHitParticle.SetActive(false);
+    //         bulletHitBasicParticleList.Add(bulletHitParticle);
+    //     }
+    // }
 
-    private void initalizeDroneExplosions()
-    {
-        GameObject basicDroneExplosionPrefab = Resources.Load<GameObject>("Explosions/BasicDroneExplosion");
-        basicDroneExplosionList = new List<GameObject>();
+    // private void initalizeDroneExplosions()
+    // {
+    //     GameObject basicDroneExplosionPrefab = Resources.Load<GameObject>("Explosions/BasicDroneExplosion");
+    //     basicDroneExplosionList = new List<GameObject>();
 
-        for (int i = 0; i < donreExplosions; i++)
-        {
-            GameObject explosion = GameObject.Instantiate(basicDroneExplosionPrefab);
-            explosion.transform.parent = this.transform;
-            explosion.SetActive(false);
-            basicDroneExplosionList.Add(explosion);
-        }
-    }
+    //     for (int i = 0; i < donreExplosions; i++)
+    //     {
+    //         GameObject explosion = GameObject.Instantiate(basicDroneExplosionPrefab);
+    //         explosion.transform.parent = this.transform;
+    //         explosion.SetActive(false);
+    //         basicDroneExplosionList.Add(explosion);
+    //     }
+    // }
 
-    private void initalizeBasicExplosionParticle()
-    {
-        GameObject basicExplosionParticlePrefab = Resources.Load<GameObject>("ParticleEffects/Explosion_fire");
+    // private void initalizeBasicExplosionParticle()
+    // {
+    //     GameObject basicExplosionParticlePrefab = Resources.Load<GameObject>("ParticleEffects/Explosion_fire");
 
-        basicFireExplosionParticlesList = new List<GameObject>();
+    //     basicFireExplosionParticlesList = new List<GameObject>();
 
-        for (int i = 0; i < maxExplosions; i++)
-        {
-            GameObject explosion = GameObject.Instantiate(basicExplosionParticlePrefab);
-            explosion.transform.parent = this.transform;
-            explosion.SetActive(false);
-            basicFireExplosionParticlesList.Add(explosion);
-        }
-    }
+    //     for (int i = 0; i < maxExplosions; i++)
+    //     {
+    //         GameObject explosion = GameObject.Instantiate(basicExplosionParticlePrefab);
+    //         explosion.transform.parent = this.transform;
+    //         explosion.SetActive(false);
+    //         basicFireExplosionParticlesList.Add(explosion);
+    //     }
+    // }
 
-    private void initalizeBasicProjectile()
-    {
-        GameObject basicProjectilePrefab = Resources.Load<GameObject>("Prefab/LaserBeamProjectile");
-        basicProjectilesList = new List<GameObject>();
+    // private void initalizeBasicProjectile()
+    // {
+    //     GameObject basicProjectilePrefab = Resources.Load<GameObject>("Prefab/LaserBeamProjectile");
+    //     basicProjectilesList = new List<GameObject>();
 
-        for (int i = 0; i < maxBulletCount; i++)
-        {
-            GameObject projectile = GameObject.Instantiate(basicProjectilePrefab);
-            projectile.transform.parent = this.transform;
-            projectile.SetActive(false);
-            basicProjectilesList.Add(projectile);
-        }
-    }
+    //     for (int i = 0; i < maxBulletCount; i++)
+    //     {
+    //         GameObject projectile = GameObject.Instantiate(basicProjectilePrefab);
+    //         projectile.transform.parent = this.transform;
+    //         projectile.SetActive(false);
+    //         basicProjectilesList.Add(projectile);
+    //     }
+    // }
     #endregion
 
     #endregion
@@ -255,6 +264,9 @@ public class ProjectilePool : MonoBehaviour
                 break;
             case POOL_OBJECT_TYPE.BasicRocket:
                 effectList = basicRocketList;
+                break;
+            case POOL_OBJECT_TYPE.DroidExplosionParticleEffect:
+                effectList = droidExplosionsList;
                 break;
         }
 

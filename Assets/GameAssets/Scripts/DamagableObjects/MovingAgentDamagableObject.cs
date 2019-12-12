@@ -4,40 +4,45 @@ using UnityEngine;
 
 public class MovingAgentDamagableObject : MonoBehaviour,DamagableObject
 {
-    private ICyberAgent m_movingAgent;
+    protected ICyberAgent m_movingAgent;
 
     public void Awake()
     {
         m_movingAgent = this.GetComponent<ICyberAgent>();
     }
-    public bool damage(float damageValue)
+    public virtual bool damage(float damageValue,Collider collider, Vector3 force, Vector3 point)
     {
         m_movingAgent.damageAgent(damageValue);
         return !m_movingAgent.IsFunctional();
     }
 
-    public float getArmor()
+    public virtual float getArmor()
     {
         return 0;
     }
 
-    public float getRemaningHealth()
+    public virtual float getRemaningHealth()
     {
        return m_movingAgent.GetAgentData().Health;
     }
 
-    public float getTotalHealth()
+    public virtual float getTotalHealth()
     {
         return m_movingAgent.GetAgentData().MaxHealth;
     }
 
-    public Transform getTransfrom()
+    public virtual Transform getTransfrom()
     {
         return m_movingAgent.getTransfrom();
     }
 
-    public bool isDestroyed()
+    public virtual bool isDestroyed()
     {
        return !m_movingAgent.IsFunctional();
+    }
+
+    public virtual bool isDamagable(AgentBasicData.AgentFaction faction)
+    {
+        return m_movingAgent.getFaction() != faction;
     }
 }

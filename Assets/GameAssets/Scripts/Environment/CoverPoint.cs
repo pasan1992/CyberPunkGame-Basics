@@ -13,6 +13,11 @@ public class CoverPoint : MonoBehaviour, IPoints
 
     public bool canFireToTarget(float maximumFiringDistance)
     {
+      return   canFireToTarget(maximumFiringDistance,false);
+    }
+
+    public bool canFireToTarget(float maximumFiringDistance,bool useCover)
+    {
         bool canFire = maximumFiringDistance > distanceTo(target.getCurrentPosition());
         if (!canFire)
         {
@@ -22,8 +27,17 @@ public class CoverPoint : MonoBehaviour, IPoints
         else
         {
             RaycastHit hit;
-            string[] layerMaskNames = { "FullCOverObsticles"};
+            string[] layerMaskNames = null;
 
+            if(useCover)
+            {
+                layerMaskNames = new string[]{"FullCOverObsticles","HalfCoverObsticles"};
+            }
+            else
+            {
+                layerMaskNames =new string[] { "FullCOverObsticles"};
+            }
+            
             if (Physics.Raycast(transform.position + new Vector3(0, 2f, 0), target.getTopPosition() - this.transform.position - new Vector3(0, 2f, 0), out hit, maximumFiringDistance, LayerMask.GetMask(layerMaskNames)))
             {
                 return false;
@@ -33,14 +47,14 @@ public class CoverPoint : MonoBehaviour, IPoints
                 //Debug.Log("Nothing to hit");
                 return true;
             }
-        }
+        }      
     }
 
     public bool isSafeFromTarget()
     {
         RaycastHit hit;
         string[] layerMaskNames = { "HalfCoverObsticles" };
-        if (Physics.Raycast(transform.position, target.getCurrentPosition() - this.transform.position, out hit,1, LayerMask.GetMask(layerMaskNames)))
+        if (Physics.Raycast(transform.position + new Vector3(0,0.5f,0), target.getCurrentPosition() - this.transform.position -new Vector3(0,0.5f,0), out hit,5, LayerMask.GetMask(layerMaskNames)))
         {
             if(hit.transform.tag =="Cover" || hit.transform.tag == "Wall")
             {
@@ -94,7 +108,7 @@ public class CoverPoint : MonoBehaviour, IPoints
     {
         if(isOccupied())
         {
-            Gizmos.color = Color.black;
+            Gizmos.color = Color.red;
             Gizmos.DrawLine(this.transform.position, occupent.getCurrentPosition());
         }
         else

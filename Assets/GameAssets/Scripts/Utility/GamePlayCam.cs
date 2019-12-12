@@ -16,6 +16,8 @@ public class GamePlayCam : MonoBehaviour
     private Vector3 aimedPlayerPositon;
     Vector3 newCameraPosition;
 
+    public bool maintainAimedOffset = false;
+
     //public float speedMultiplayer;
     void Start()
     {
@@ -55,7 +57,7 @@ public class GamePlayCam : MonoBehaviour
             aimedPlayerPositon = target.transform.position;
             return newCameraPosition;
         }
-        else if(Vector3.Distance(aimedPlayerPositon,target.transform.position) <0.1f || (target.hasWeaponInHand() && Vector3.Angle(m_cameraAimOffset,target.getMovmentDirection()) < 120 ))
+        else if(maintainAimedOffset && (Vector3.Distance(aimedPlayerPositon,target.transform.position) <0.1f || (target.hasWeaponInHand() && Vector3.Angle(m_cameraAimOffset,target.getMovmentDirection()) < 120 )))
         {
             return target.transform.position + m_cameraAimOffset - offset;
         }

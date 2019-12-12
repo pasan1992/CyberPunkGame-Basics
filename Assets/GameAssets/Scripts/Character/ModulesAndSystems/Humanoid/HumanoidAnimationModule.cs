@@ -165,11 +165,12 @@ public partial class HumanoidAnimationModule : AnimationModule
         //m_animator.SetTrigger("throw");
     }
 
-    public void triggerPickup()
+    public void triggerPickup(int id)
     {
         // TODO
         if(!isCrouched())
         {
+            m_animator.SetInteger("interactionID",id);
             m_animator.SetTrigger("pickup");
         }
         

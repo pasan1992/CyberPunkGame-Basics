@@ -41,7 +41,7 @@ public abstract class BasicMovmentStage : ICharacterBehaviorState
             }
             else
             {
-                velocity = velocity * 1.5f;
+                velocity = velocity * 2.2f;
             }
 
             velocity = new Vector3(velocity.x, 0, velocity.z);
@@ -76,6 +76,17 @@ public abstract class BasicMovmentStage : ICharacterBehaviorState
 
     #region Getters and Setters
 
+    protected bool checkDestniationReached()
+    {
+        if(!m_navMeshAgent.pathPending && 
+          m_navMeshAgent.remainingDistance <= m_navMeshAgent.stoppingDistance && 
+          (m_navMeshAgent.hasPath || m_navMeshAgent.velocity.sqrMagnitude == 0f))
+        {
+            return true;
+        }
+        return false;
+    }
+
     public abstract void setTargets(ICyberAgent target);
 
     public virtual void setWeaponFireCapability(bool enabled)
@@ -91,6 +102,10 @@ public abstract class BasicMovmentStage : ICharacterBehaviorState
     public virtual void setStepIntervalSize(float timeInSeconds)
     {
         m_stepIntervalInSeconds = timeInSeconds;
+    }
+
+    public virtual void initalizeStage()
+    {
     }
     #endregion
 }

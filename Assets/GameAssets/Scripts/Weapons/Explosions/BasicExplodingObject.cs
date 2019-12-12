@@ -38,7 +38,7 @@ public class BasicExplodingObject : MonoBehaviour
                     case "Player":
                     case "Head":
                     case "Chest":
-                        hitOnEnemy(hitCollider);
+                        hitOnEnemy2(hitCollider);
                         break;
                     case "Wall":
                         break;
@@ -79,6 +79,38 @@ public class BasicExplodingObject : MonoBehaviour
             {
                 rb.AddForce(direction*damagePropotion*BaseDamage*10,ForceMode.Impulse);
             }
+        }
+      }
+    }
+
+    private void hitOnEnemy2(Collider other)
+    {
+        
+      DamagableObject damagableObject =  other.GetComponentInParent<DamagableObject>();
+      Vector3 direction;
+      float damagePropotion = DamageCalculator.getExplosionDamgage(this.transform.position,other.transform.position,m_range,out direction);
+      if(damagePropotion > 0 && damagableObject !=null)
+      {
+        if(damagableObject.isDestroyed())
+        { 
+
+
+            Rigidbody rb = other.GetComponent<Rigidbody>();
+            
+            float chance = Random.value;
+
+            if(rb && chance >0.5f)
+            {
+                rb.AddForce(direction*damagePropotion*BaseDamage*10,ForceMode.Impulse);
+            }
+        }
+
+        if(other.tag =="Chest")
+        {   
+            if(!DamageCalculator.isSafeFromTarget(this.transform.position,other.transform.position,m_range))
+            {
+                damagableObject.damage(m_baseDamage*damagePropotion,other,direction,other.transform.position);
+            }           
         }
       }
     }

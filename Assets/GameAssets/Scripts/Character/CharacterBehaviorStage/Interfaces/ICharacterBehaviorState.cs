@@ -14,4 +14,6 @@ public interface ICharacterBehaviorState
     void setWeaponFireCapability(bool enabled);
 
     void stopStageBehavior();
+
+    void initalizeStage();
 }

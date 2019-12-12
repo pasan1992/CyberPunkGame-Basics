@@ -6,7 +6,7 @@ public class AgentItemFinder
 {
     public static Interactable findNearItem(Vector3 currentPosition)
     {
-        Collider[] nearObjects = Physics.OverlapSphere(currentPosition, 0.7f);
+        Collider[] nearObjects = Physics.OverlapSphere(currentPosition, 1.4f);
         List<Interactable> pickableObjects = new List<Interactable>();
 
         foreach(Collider nearObject in nearObjects)

@@ -28,6 +28,13 @@ public class IteractionStage : WaypontMovementStage
         m_agent = target;
     }
 
+    public override void initalizeStage()
+    {
+        m_currentIteractionState = IterationState.MovintToPoint;
+        m_navMeshAgent.isStopped = false;
+        MoveToWaypoint(getNextWaypoint());         
+    }
+
     protected override void stepUpdate()
     {
         switch (m_currentIteractionState)

@@ -9,10 +9,18 @@ public class AutoHumanoidAgentController :  AgentController
     public HumanoidMovingAgent target;
     protected HumanoidMovingAgent m_movingAgent;
     protected ICharacterBehaviorState m_currentState;
+    protected ICharacterBehaviorState m_combatStage;
+
+    protected ICharacterBehaviorState m_iteractionStage;
+
+    protected HumanoidAgentBasicVisualSensor m_visualSensor;
+
     protected NavMeshAgent m_navMeshAgent;
     //public float health;
 
     public BasicWaypoint[] basicWaypoints;
+
+    public WaypointRutine rutine;
 
     #region initaialize
 
@@ -24,20 +32,38 @@ public class AutoHumanoidAgentController :  AgentController
     void Start()
     {
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
-        //m_currentState = new CombatStage(m_movingAgent, target,m_navMeshAgent);
-        m_currentState = new IteractionStage(m_movingAgent,m_navMeshAgent,basicWaypoints);
+        m_combatStage = new CombatStage(m_movingAgent, target,m_navMeshAgent);
+
+        if(rutine == null)
+        {
+            m_iteractionStage = new IteractionStage(m_movingAgent,m_navMeshAgent,basicWaypoints);
+        }
+        else
+        {
+            m_iteractionStage = new IteractionStage(m_movingAgent,m_navMeshAgent,rutine.m_wayPoints.ToArray());
+        }
+        
+
+        m_visualSensor = new HumanoidAgentBasicVisualSensor(m_movingAgent);
+        m_visualSensor.setOnEnemyDetectionEvent(onEnemyDetection);
+        m_visualSensor.setOnAllClear(onAllClear);
         m_movingAgent.setWeponFireCapability(true);
         intializeAgentCallbacks(m_movingAgent);
         m_movingAgent.enableTranslateMovment(false);
+        m_movingAgent.setOnDamagedCallback(onDamaged);
+       // m_currentState = m_combatStage;
+        m_currentState = m_iteractionStage;
+       //switchToCombatStage();
     }
     #endregion
 
     #region update
-    void Update()
+    void FixedUpdate()
     {
-        if(m_movingAgent.IsFunctional() && !m_movingAgent.isDisabled() & isInUse())
+        if(m_currentState != null && m_movingAgent.IsFunctional() && !m_movingAgent.isDisabled() & isInUse())
         {
             m_currentState.updateStage();
+            m_visualSensor.UpdateSensor();
         }
     }
     #endregion
@@ -52,6 +78,14 @@ public class AutoHumanoidAgentController :  AgentController
     void OnBecameInvisible()
     {
         //m_currentState.setWeaponFireCapability(false);
+    }
+
+    public void onDamaged()
+    {
+        if(m_currentState != m_combatStage)
+        {
+            switchToCombatStage();
+        }
     }
 
     public override void OnAgentDestroy()
@@ -112,6 +146,48 @@ public class AutoHumanoidAgentController :  AgentController
     public override void setPosition(Vector3 postion)
     {
         m_navMeshAgent.Warp(postion);
+    }
+
+    private void switchToCombatStage()
+    {
+        ((CombatStage)m_combatStage).initalizeStage();
+        m_currentState = m_combatStage;
+    }
+
+    private void swithtoIteractionStage()
+    {
+        m_currentState = m_iteractionStage;
+    }
+
+    public void onEnemyDetection(ICyberAgent opponent)
+    {
+        m_combatStage.setTargets(opponent);
+        if(m_currentState != m_combatStage)
+        {
+            switchToCombatStage();
+        }
+    }
+
+    public void onAllClear()
+    {
+        if(m_currentState != m_iteractionStage)
+        {
+            m_currentState = m_iteractionStage;
+            m_iteractionStage.initalizeStage();
+            Debug.Log(m_movingAgent.name);
+
+            if(m_movingAgent.isHidden())
+            {
+                m_movingAgent.toggleHide();
+            }
+
+            if(m_movingAgent.isAimed())
+            {
+                m_movingAgent.stopAiming();
+            }
+
+            m_movingAgent.hosterWeapon();
+        }
     }
     #endregion
 }

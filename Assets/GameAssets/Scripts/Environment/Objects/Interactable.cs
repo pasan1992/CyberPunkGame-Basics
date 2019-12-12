@@ -18,14 +18,24 @@ public class Interactable : MonoBehaviour
         public int interactionID;
         public Vector3 offset = Vector3.zero;
         public Vector3 rotation = Vector3.zero;
+        public bool enablePositionRequirment = true;
+    }
+
+    [System.Serializable]
+    public class VisualProperites
+    {
+        public Vector3 nameTagOffset;
     }
 
    [SerializeField]
     public InteractableProperties properties;
 
+    [SerializeField]
+    public VisualProperites visualProperties;
+
     private bool interacting;
     
-    public Outline m_outLine;
+    private Outline m_outLine;
     public virtual void Awake()
     {
         m_outLine = this.GetComponent<Outline>();
@@ -49,7 +59,15 @@ public class Interactable : MonoBehaviour
     {
         if(m_outLine)
         {
-            m_outLine.enabled = state;
+            if(state)
+            {
+                m_outLine.OutlineWidth = 0.7F;
+            }
+            else
+            {
+                m_outLine.OutlineWidth = 0;
+            }
+            
         }
     }
 

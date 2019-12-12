@@ -27,9 +27,9 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     private CharacterMainStates m_previousTempState = CharacterMainStates.Idle;
     protected GameObject m_target;
     private bool m_characterEnabled = true;
-    public Vector3 m_movmentVector;
+    private Vector3 m_movmentVector;
     private bool m_isDisabled = false;
-
+    private GameEvents.BasicNotifactionEvent onDamagedCallback;
     // Public
     // Main Agent data component
     public AgentData AgentData;
@@ -56,7 +56,9 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         m_equipmentModule = new HumanoidRangedWeaponsModule(currentWeaponProps, m_characterState, m_target, GetComponent<Recoil>(), m_animationModule,AgentData,AgentComponents);
 
         // Create movment system.
-        m_movmentModule = new HumanoidMovmentModule(this.transform, m_characterState, m_target, m_animationModule,this.GetComponent<NavMeshAgent>());
+        NavMeshAgent navMeshAgent = this.GetComponent<NavMeshAgent>();
+
+        m_movmentModule = new HumanoidMovmentModule(this.transform, m_characterState, m_target, m_animationModule,navMeshAgent);
 
         // Create Damage module
         m_damageModule = new HumanoidDamageModule(AgentData, 
@@ -72,6 +74,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         m_movmentModule,
         AgentData,
         m_equipmentModule,
+        navMeshAgent,
         // This is the callback for interaction done.
         OnInteractionDone);
     }
@@ -137,6 +140,12 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     public void damageAgent(float amount)
     {
         m_damageModule.DamageByAmount(amount);
+
+        if(onDamagedCallback != null)
+        {
+            onDamagedCallback();
+        }
+        
     }
 
     // This fire wepon is called by the AI Agent controlers to fire weapon.
@@ -189,7 +198,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         m_equipmentModule.DropCurrentWeapon();
         m_characterEnabled = false;
         m_animationModule.disableAnimationSystem();
-        Invoke("postDestoryEffect", 1);
+        //Invoke("postDestoryEffect", 1);
 
         if (m_onDestoryCallback != null)
         {
@@ -273,6 +282,11 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     #endregion
 
     #region Getters and Setters
+
+    public void setOnDamagedCallback(GameEvents.BasicNotifactionEvent callback)
+    {
+        onDamagedCallback = callback;
+    }
 
     public Transform getChestTransfrom()
     {
@@ -437,13 +451,36 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         return m_equipmentModule.getCurrentWeapon().getWeaponType();
     }
 
+    public void hosterWeapon()
+    {
+        if(m_characterState.Equals(CharacterMainStates.Armed_not_Aimed))
+        {
+            switch (m_equipmentModule.getCurrentWeapon().getWeaponType())
+            {
+                case RangedWeapon.WEAPONTYPE.grenede:
+                    toggleGrenede();
+                break;
+                case Weapon.WEAPONTYPE.primary:
+                    togglePrimaryWeapon();
+                break;
+                case Weapon.WEAPONTYPE.secondary:
+                    togglepSecondaryWeapon();
+                break;
+            }
+        }
+
+    }
+
     #endregion
 
     #region Events Handlers
 
     public void OnInteractionDone()
     {
-        m_characterState = m_previousTempState;
+        if(m_characterState == CharacterMainStates.Interaction)
+        {
+            m_characterState = m_previousTempState;
+        }      
     }
 
     public void OnThrow()

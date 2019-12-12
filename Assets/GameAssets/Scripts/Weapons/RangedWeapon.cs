@@ -4,8 +4,6 @@ using UnityEngine;
 
 [RequireComponent(typeof(AudioSource))]
 [RequireComponent(typeof(AudioSource))]
-//[RequireComponent(typeof(LineRenderer))]
-[RequireComponent(typeof(Outline))]
 [RequireComponent(typeof(Rigidbody))]
 [RequireComponent(typeof(BoxCollider))]
 public abstract class RangedWeapon : Weapon
@@ -48,6 +46,7 @@ public abstract class RangedWeapon : Weapon
         m_soundManager = GameObject.FindObjectOfType<SoundManager>();
         m_projectilePool = GameObject.FindObjectOfType<ProjectilePool>();
         hitLayerMask = LayerMask.NameToLayer("Enemy");
+        m_ammoCount = m_magazineSize;
     }
 
     #region updates
@@ -216,6 +215,8 @@ public abstract class RangedWeapon : Weapon
         RaycastHit hit;
         string[] layerMaskNames = { "HalfCoverObsticles","FullCoverObsticles","Enemy" };
         bool hitOnEnemy = false;
+
+        // Give offset to starting postion to avoid bullets colliding in own covers
         Vector3 offsetTargetPositon =  (targetPositon - startPositon).normalized + startPositon;
         if (Physics.Raycast(offsetTargetPositon, targetPositon - startPositon, out hit,100, LayerMask.GetMask(layerMaskNames)))
         {
@@ -223,20 +224,20 @@ public abstract class RangedWeapon : Weapon
             {
                 case "Cover":
                 case "Wall":
-                //DamageCalculator.onHitEnemy(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
                 DamageCalculator.hitOnWall(hit.collider,hit.point);
                 break;
                 case "Enemy":
                 case "Player":
                 case "Head":
                 case "Chest":
-                DamageCalculator.onHitEnemy(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
+                DamageCalculator.onHitEnemy2(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
                 hitOnEnemy = true;
                 break;       
             }          
 
         }
         
+        // Check fire for the second time for find crouched enemies.
         if(!hitOnEnemy && Physics.Raycast(offsetTargetPositon, targetPositon + new Vector3(0,-1f,0) - startPositon, out hit,100, LayerMask.GetMask(layerMaskNames)))
         {
             switch(hit.transform.tag)
@@ -250,7 +251,7 @@ public abstract class RangedWeapon : Weapon
                 case "Player":
                 case "Head":
                 case "Chest":
-                DamageCalculator.onHitEnemy(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
+                DamageCalculator.onHitEnemy2(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
                 break;       
             }                
         }

@@ -48,7 +48,7 @@ public class BasicProjectile : MonoBehaviour
 
             DistanceTravelled += Time.deltaTime * speed;
 
-            if (DistanceTravelled > 1f)
+            if (DistanceTravelled > 0.5f)
             {
                 this.gameObject.SetActive(false);
             }

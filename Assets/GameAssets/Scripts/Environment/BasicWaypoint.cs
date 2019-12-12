@@ -5,7 +5,7 @@ using UnityEngine;
 public class BasicWaypoint : MonoBehaviour,IPoints
 {
     ICyberAgent m_currentOccupent = null;
-
+    private List<BasicWaypoint> m_connectedWayPoints;
 
     #region Getters and Setters
 
@@ -39,5 +39,6 @@ public class BasicWaypoint : MonoBehaviour,IPoints
         }
 
         Gizmos.DrawCube(transform.position + new Vector3(0, 0.8f, 0),new Vector3(0.4f,0.4f,0.4f));
+        Gizmos.DrawLine(this.transform.position,this.transform.position + Vector3.up*0.8f);
     }
 }

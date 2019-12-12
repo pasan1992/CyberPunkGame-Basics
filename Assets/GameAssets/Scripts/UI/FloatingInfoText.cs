@@ -6,10 +6,11 @@ using UnityEngine.UI;
 public class FloatingInfoText : MonoBehaviour
 {
 
-    public Transform target;
-    public int BUTTON_OFFSET;
+    private Transform target;
 
     private Text m_text;
+
+    private Vector3 m_offset;
 
     void Awake()
     {
@@ -21,12 +22,25 @@ public class FloatingInfoText : MonoBehaviour
     {
         if(target)
         {
-            transform.position =  Camera.main.WorldToScreenPoint(target.position) + Vector3.up * BUTTON_OFFSET;
+            transform.position =  Camera.main.WorldToScreenPoint(target.position) + m_offset;
         } 
     }
 
     public void setText(string name)
     {
         m_text.text = name;
+    }
+
+    public void setInteratableObject(Interactable interactable)
+    {
+        m_text.text = interactable.properties.itemName;
+        m_offset = interactable.visualProperties.nameTagOffset;  
+        target = interactable.transform; 
+    }
+
+    public void resetText()
+    {
+        target = null;
+        this.transform.position = Vector3.zero;
     }
 }

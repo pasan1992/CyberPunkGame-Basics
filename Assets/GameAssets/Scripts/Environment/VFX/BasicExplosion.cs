@@ -8,14 +8,14 @@ public class BasicExplosion : MonoBehaviour
 
     #region Initialize
 
-    Rigidbody[] explosionParticles;
+    protected Rigidbody[] explosionParticles;
     //ParticleSystem m_particleSystem;
     void Awake()
     {
        explosionParticles =  this.GetComponentsInChildren<Rigidbody>();
     }
 
-    private void resetAll()
+    protected virtual void resetAll()
     {
         foreach(Rigidbody rb in explosionParticles)
         {
@@ -37,7 +37,7 @@ public class BasicExplosion : MonoBehaviour
 
     #region Commands
 
-    public void exploade()
+    public virtual void exploade()
     {
         foreach (Rigidbody rb in explosionParticles)
         {

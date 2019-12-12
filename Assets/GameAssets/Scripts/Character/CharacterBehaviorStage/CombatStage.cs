@@ -11,7 +11,7 @@ public class CombatStage : BasicMovmentStage
     private CoverPoint[] coverPoints;
     private CoverPoint currentCoverPoint;
     private Vector3 randomOffset = Vector3.zero;
-    private static int COVER_POINT_MIN_DISTANCE = 6;
+    private static int COVER_POINT_MIN_DISTANCE = 15;
 
     public enum CombatSubStages { LookingForCover,MovingToCover, InCover }
     private CombatSubStages currentCombatSubStage = CombatSubStages.LookingForCover;
@@ -20,32 +20,68 @@ public class CombatStage : BasicMovmentStage
     private CoverShootingSubStages currentCoverShootingSubStage;
 
     // Parameters
-    float fireRangeDistance = 25;
+    float fireRangeDistance = 15;
     int shotsFromCover = 3;
     int currentShotsFromCover = 0;
 
     int coverIteractions = 0;
     int maxCoverIteractions = 20;
 
+    private CombatSubStages loggerStage = CombatSubStages.InCover;
+    private CoverShootingSubStages logShootingStage;
+
+    private bool playitSafe;
+
     #region initalize
     public CombatStage(ICyberAgent selfAgent,ICyberAgent target,NavMeshAgent navMeshAgent) :base(selfAgent,navMeshAgent)
     {
         this.opponent = target;
         coverPoints = GameObject.FindObjectsOfType<CoverPoint>();
-        selfAgent.toggleHide();
-        selfAgent.aimWeapon();
-        //
-        if(Random.value > 0.5)
-        {
-            ((HumanoidMovingAgent)selfAgent).togglePrimaryWeapon();
-        }
-        else
-        {
-            ((HumanoidMovingAgent)selfAgent).togglepSecondaryWeapon();
-        }
+        playitSafe = false;
+
+
+        // selfAgent.toggleHide();
+        // selfAgent.aimWeapon();
+        // //
+        // if(Random.value > 0.5)
+        // {
+        //     ((HumanoidMovingAgent)selfAgent).togglePrimaryWeapon();
+        // }
+        // else
+        // {
+        //     ((HumanoidMovingAgent)selfAgent).togglepSecondaryWeapon();
+        // }
         
         targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
         findTargetLocationToFire();
+    }
+
+    public override void initalizeStage()
+    {
+        HumanoidMovingAgent humnaoidAgent = ((HumanoidMovingAgent)m_selfAgent);
+
+        if(humnaoidAgent.isInteracting())
+        {
+            ((HumanoidMovingAgent)m_selfAgent).cancleInteraction();
+        }
+
+        
+      // m_selfAgent.toggleHide();
+       m_selfAgent.aimWeapon();
+        
+        if(Random.value > 0.5)
+        {
+            humnaoidAgent.togglePrimaryWeapon();
+        }
+        else
+        {
+            humnaoidAgent.togglepSecondaryWeapon();
+        }      
+        
+        m_navMeshAgent.enabled = true;   
+        m_navMeshAgent.isStopped = false; 
+
+        findTargetLocationToFire(); 
     }
     #endregion
 
@@ -80,7 +116,7 @@ public class CombatStage : BasicMovmentStage
         }
         else
         {
-            m_selfAgent.setTargetPoint(targetLocation.position + randomOffset + opponent.getCurrentVelocity()*10f);
+            m_selfAgent.setTargetPoint(targetLocation.position + randomOffset + opponent.getCurrentVelocity()*0);
         }
 
     }
@@ -89,23 +125,36 @@ public class CombatStage : BasicMovmentStage
     protected override void stepUpdate()
     {
         updateSubStages();
-        updateTarget();
+        //updateTarget();
     }
 
     private void updateSubStages()
     {
         findTargetLocationToFire();
+        //logStage();
+        //logSubStage();
 
         switch (currentCombatSubStage)
         {
             case CombatSubStages.InCover:
-
+                m_navMeshAgent.isStopped = true;
+                
                 //Debug.Log("In Cover");
 
                 //m_selfAgent.lookAtTarget();
 
-                if ( (coverIteractions < maxCoverIteractions && currentCoverPoint.isSafeFromTarget() ) || (currentCoverPoint.canFireToTarget(fireRangeDistance)) )
+                if ( (coverIteractions < maxCoverIteractions) && (currentCoverPoint.isSafeFromTarget() || (currentCoverPoint.canFireToTarget(fireRangeDistance,true)) ) )
                 {
+                    // if(coverIteractions < maxCoverIteractions && currentCoverPoint.isSafeFromTarget())
+                    // {
+                    //        // Debug.Log("Is safe and max iteractions");
+                    // }
+
+                    // if(currentCoverPoint.canFireToTarget(fireRangeDistance))
+                    // {
+                    //    // Debug.Log("Can fire from target");
+                    // }
+                    
                     switch(currentCoverShootingSubStage)
                     {
                         case CoverShootingSubStages.Cover:
@@ -114,7 +163,7 @@ public class CombatStage : BasicMovmentStage
                             m_selfAgent.stopAiming();
                             currentCoverShootingSubStage = CoverShootingSubStages.Peek;
 
-                            shotsFromCover = (int)(Random.value * 5);
+                            shotsFromCover = (int)(Random.value * 5 + 1);
                             //Debug.Log(shotsFromCover);
 
                             break;
@@ -122,7 +171,7 @@ public class CombatStage : BasicMovmentStage
                             m_selfAgent.aimWeapon();
                             m_selfAgent.weaponFireForAI();
                             currentCoverShootingSubStage = CoverShootingSubStages.Shoot;
-                            setStepIntervalSize(0.3f);
+                            setStepIntervalSize(0.1f);
 
                             break;
                         case CoverShootingSubStages.Shoot:
@@ -132,30 +181,39 @@ public class CombatStage : BasicMovmentStage
                             
                             if(currentShotsFromCover > shotsFromCover)
                             {
-                                currentCoverShootingSubStage = CoverShootingSubStages.Cover;
-                                currentShotsFromCover = 0;
-                                m_selfAgent.stopAiming();
-                                setStepIntervalSize(0.8f);
+                                if(currentCoverPoint.isSafeFromTarget() && isTargetFar())
+                                {
+                                    currentCoverShootingSubStage = CoverShootingSubStages.Cover;
+                                    currentShotsFromCover = 0;
+                                    m_selfAgent.stopAiming();
+                                    setStepIntervalSize(Random.value*1.2f);
+                                }
+                                else
+                                {
+                                    currentShotsFromCover = 0;
+                                    currentCoverShootingSubStage = CoverShootingSubStages.Peek;
+                                }
+
                             }
                             else
                             {
                                 currentCoverShootingSubStage = CoverShootingSubStages.Peek;
                             }
-                            
-
-
                             break;
                     }
                 }
                 else
                 {
+                    //Debug.Log("looking for cover");
                     //Debug.Log("Cover is not safe or cannot fire to target");
                     currentCombatSubStage = CombatSubStages.LookingForCover;
+                    m_navMeshAgent.isStopped = false;
                     setStepIntervalSize(1);
                     coverIteractions = 0;
                 }
                 break;
             case CombatSubStages.LookingForCover:
+                //logStage(CombatSubStages.LookingForCover);
                 //Debug.Log("Looking for cover");
 
 
@@ -176,21 +234,27 @@ public class CombatStage : BasicMovmentStage
                     currentCoverPoint.setOccupent(m_selfAgent);
 
                     // Get up and move
-                    m_selfAgent.toggleHide();
+                    if(m_selfAgent.isHidden())
+                    {
+                         m_selfAgent.toggleHide();
+                    }
                     m_selfAgent.aimWeapon();
                 }
 
                 break;
 
             case CombatSubStages.MovingToCover:
+                //logStage(CombatSubStages.MovingToCover);
                 //Debug.Log("Moving to cover");
-                if (!m_navMeshAgent.pathPending && m_navMeshAgent.remainingDistance >1)
+                //if (!m_navMeshAgent.pathPending && m_navMeshAgent.remainingDistance >1)
+                if(!checkDestniationReached())
                 {
 
                     if(m_navMeshAgent.remainingDistance > 3 && Vector3.Distance(m_selfAgent.getCurrentPosition(),opponent.getCurrentPosition()) > fireRangeDistance*0.55f)
                     {
                         m_enableRun = true;
                         m_selfAgent.stopAiming();
+                        setStepIntervalSize(1f);
                     }
                     else
                     {
@@ -199,6 +263,7 @@ public class CombatStage : BasicMovmentStage
                             m_selfAgent.aimWeapon();
                             m_enableRun = false;
                             m_selfAgent.weaponFireForAI();
+                            setStepIntervalSize(0.3f);
                         }
                     }
 
@@ -211,11 +276,15 @@ public class CombatStage : BasicMovmentStage
                     currentCombatSubStage = CombatSubStages.InCover;
 
                     // Get down on cover
-                    m_selfAgent.toggleHide();
+                    if(currentCoverPoint.isSafeFromTarget() && !m_selfAgent.isHidden())
+                    {
+                        m_selfAgent.toggleHide();
+                    }
+                    
 
                     //m_selfAgent.stopAiming();
                     maxCoverIteractions = Random.Range(10,30);
-                    setStepIntervalSize(0.8f);
+                    setStepIntervalSize(0.1f);
                     m_navMeshAgent.velocity = Vector3.zero;
 
                 }
@@ -261,6 +330,7 @@ public class CombatStage : BasicMovmentStage
         float minimumDistanceToIdealCoverPoint = 999;
         float minimumDistanceToSafeCoverPoint = 999;
         float maximumDistanceToRiskyCoverPoint = 0;
+        float distanceToClosestCoverPoint = 99999;
 
         CoverPoint tempIDealCoverPoint = null;
         CoverPoint tempSafeCoverPoint = null;
@@ -272,6 +342,7 @@ public class CombatStage : BasicMovmentStage
             if (!point.isOccupied())
             {
                 point.setTargetToCover(opponent);
+
                 if(point.isSafeFromTarget())
                 {
 
@@ -293,13 +364,23 @@ public class CombatStage : BasicMovmentStage
                     }
 
                 }
-                else
+                
+                if(playitSafe)
                 {
                     // Find the safe cover point.
                     float distanceFromRiskyPoint = point.distanceTo(opponent.getCurrentPosition());
                     if (maximumDistanceToRiskyCoverPoint < distanceFromRiskyPoint && distanceFromRiskyPoint < COVER_POINT_MIN_DISTANCE)
                     {
                         maximumDistanceToRiskyCoverPoint = point.distanceTo(opponent.getCurrentPosition());
+                        tempRiskyCoverPoint = point;
+                    }
+                }
+                else
+                {
+                    float distanceFromPoint = point.distanceTo(opponent.getCurrentPosition());
+                    if(distanceToClosestCoverPoint > distanceFromPoint && point.canFireToTarget(fireRangeDistance) && distanceFromPoint > 5)
+                    {
+                        distanceToClosestCoverPoint = distanceFromPoint;
                         tempRiskyCoverPoint = point;
                     }
                 }
@@ -363,7 +444,7 @@ public class CombatStage : BasicMovmentStage
     private void findTargetLocationToFire()
     {
 
-        findNearOpponent();
+        //findNearOpponent();
         HumanoidMovingAgent humanoidOpponent = opponent as HumanoidMovingAgent;
 
         if(humanoidOpponent != null && humanoidOpponent.isCrouched() && humanoidOpponent.isAimed())
@@ -382,15 +463,16 @@ public class CombatStage : BasicMovmentStage
         {
             randomOffset = Random.insideUnitSphere * 2;
         }
-        else if(m_navMeshAgent.remainingDistance > 9)
-        {
-            randomOffset = Random.insideUnitSphere * 0.7f;
-        }
         else
         {
             randomOffset = Vector3.zero;
         }
 
+    }
+
+    private bool isTargetFar()
+    {
+        return (Vector3.Distance(targetLocation.position,this.m_selfAgent.getCurrentPosition()) > 5);
     }
     #endregion
 
@@ -403,12 +485,36 @@ public class CombatStage : BasicMovmentStage
 
     public override void setTargets(ICyberAgent target)
     {
-        this.opponent = target;
+        if(target != this.opponent)
+        {
+            targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
+        }
+         targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
+        this.opponent = target;  
+        findTargetLocationToFire();
     }
 
     private bool isCoverPointUsable(CoverPoint point)
     {
         return point.isSafeFromTarget() && point.canFireToTarget(fireRangeDistance);
+    }
+
+    private void logStage()
+    {
+        if(loggerStage != currentCombatSubStage)
+        {
+            loggerStage = currentCombatSubStage;
+            Debug.Log("Stage" + m_selfAgent.getGameObject().name + currentCombatSubStage);
+        }
+    }
+
+    private void logSubStage()
+    {
+        if(logShootingStage != currentCoverShootingSubStage)
+        {
+            logShootingStage = currentCoverShootingSubStage;
+            Debug.Log("Sub Stage " + m_selfAgent.getGameObject().name + currentCoverShootingSubStage);
+        }
     }
 
     #endregion

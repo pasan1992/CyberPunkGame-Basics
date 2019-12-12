@@ -9714,7 +9714,6 @@ GameObject:
   - component: {fileID: 4607338897494861177}
   - component: {fileID: 5529574128588196048}
   - component: {fileID: 3577471673431825080}
-  - component: {fileID: 2238785578572259967}
   - component: {fileID: 2238785578572259966}
   m_Layer: 18
   m_Name: Pistol
@@ -9732,7 +9731,7 @@ Transform:
   m_GameObject: {fileID: 4607338897494861178}
   m_LocalRotation: {x: -0.4441803, y: -0.555616, z: -0.4868477, w: -0.5069261}
   m_LocalPosition: {x: 0.76, y: 1.65, z: -1.26}
-  m_LocalScale: {x: 0.9658279, y: 0.9658282, z: 0.9658278}
+  m_LocalScale: {x: 0.96582776, y: 0.9658283, z: 0.9658277}
   m_Children:
   - {fileID: 5116564441138654051}
   - {fileID: 4534308501123557110}
@@ -9831,21 +9830,20 @@ MonoBehaviour:
     Type: 0
     interactionEnabled: 1
     itemName: Pistol
+    interactionTime: 0
+    interactionID: 0
+    offset: {x: 0, y: 0, z: 0}
+    rotation: {x: 0, y: 0, z: 0}
+  visualProperties:
+    nameTagOffset: {x: 20, y: 20, z: 20}
   nonFunctionalProperties:
     magazinePositionOffset: {x: 0, y: 0, z: 0}
     magazineObjProp: {fileID: 2238785577851312623}
     handPlacementOffset: {x: 0, y: 0, z: 0}
     weaponRecoilOffset: {x: 0, y: 7, z: 0}
-  magazinePositionOffset: {x: 0, y: 0, z: 0}
-  magazineObjProp: {fileID: 2238785577851312623}
-  handPlacementOffset: {x: 0, y: 0, z: 0}
-  weaponRecoilOffset: {x: 0, y: 7, z: 0}
   gunMuzzle: {fileID: 4534308500784636087}
   gunFireLight: {fileID: 2966734170253026564}
-  targetPoint: {fileID: 0}
-  hitLayerMask:
-    serializedVersion: 2
-    m_Bits: 512
+  targetPointTransfrom: {fileID: 0}
   fireRate: 4
   weaponRecoil: 2
   m_enableLine: 1
@@ -9863,8 +9861,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   outlineMode: 0
-  outlineColor: {r: 0.0045834924, g: 0.51798916, b: 0.9716981, a: 0.29411766}
-  outlineWidth: 2
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 0
   precomputeOutline: 1
   bakeKeys:
   - {fileID: 4300000, guid: b95723a86e64ccc41b2c65d6ebf7b76f, type: 3}
@@ -10762,101 +10760,6 @@ MonoBehaviour:
     - {x: 0.85725856, y: -0.34988552, z: -0.37774068}
     - {x: 0.36732045, y: -0.70626354, z: -0.60520035}
     - {x: 0.3782583, y: -0.47358248, z: -0.7953869}
---- !u!120 &2238785578572259967
-LineRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4607338897494861178}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 0
-  m_LightProbeUsage: 0
-  m_ReflectionProbeUsage: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 901fac0d5a1aa17409a6a5005e686e64, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_Positions:
-  - {x: 0, y: 0, z: 0}
-  - {x: 0, y: 0, z: 1}
-  m_Parameters:
-    serializedVersion: 3
-    widthMultiplier: 0.01
-    widthCurve:
-      serializedVersion: 2
-      m_Curve:
-      - serializedVersion: 3
-        time: 0
-        value: 1
-        inSlope: 0
-        outSlope: 0
-        tangentMode: 0
-        weightedMode: 0
-        inWeight: 0.33333334
-        outWeight: 0.33333334
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-    colorGradient:
-      serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 1, g: 1, b: 1, a: 1}
-      key2: {r: 0, g: 0, b: 0, a: 1}
-      key3: {r: 0, g: 0, b: 0, a: 0}
-      key4: {r: 0, g: 0, b: 0, a: 0}
-      key5: {r: 0, g: 0, b: 0, a: 0}
-      key6: {r: 0, g: 0, b: 0, a: 0}
-      key7: {r: 0, g: 0, b: 0, a: 0}
-      ctime0: 0
-      ctime1: 65535
-      ctime2: 0
-      ctime3: 0
-      ctime4: 0
-      ctime5: 0
-      ctime6: 0
-      ctime7: 0
-      atime0: 0
-      atime1: 964
-      atime2: 65535
-      atime3: 0
-      atime4: 0
-      atime5: 0
-      atime6: 0
-      atime7: 0
-      m_Mode: 0
-      m_NumColorKeys: 2
-      m_NumAlphaKeys: 3
-    numCornerVertices: 0
-    numCapVertices: 0
-    alignment: 0
-    textureMode: 0
-    shadowBias: 0.5
-    generateLightingData: 0
-  m_UseWorldSpace: 1
-  m_Loop: 0
 --- !u!82 &2238785578572259966
 AudioSource:
   m_ObjectHideFlags: 0
@@ -11200,11 +11103,6 @@ PrefabInstance:
       propertyPath: EmissionModule.m_Bursts.Array.data[0].probability
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2384189232307893626, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
-        type: 3}
-      propertyPath: m_RenderAlignment
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 5926775866237569448, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -11260,17 +11158,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 57.947002
       objectReference: {fileID: 0}
+    - target: {fileID: 2384189232307893626, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
+        type: 3}
+      propertyPath: m_RenderAlignment
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0, type: 3}
---- !u!198 &2966734170253026564 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 3907495676557974478, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
-    type: 3}
-  m_PrefabInstance: {fileID: 2238785577890430666}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &5571481194519852898 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5926775866237569448, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
+    type: 3}
+  m_PrefabInstance: {fileID: 2238785577890430666}
+  m_PrefabAsset: {fileID: 0}
+--- !u!198 &2966734170253026564 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3907495676557974478, guid: 7dcd651cdf4ed9a4db1b2f5b041bd2b0,
     type: 3}
   m_PrefabInstance: {fileID: 2238785577890430666}
   m_PrefabAsset: {fileID: 0}

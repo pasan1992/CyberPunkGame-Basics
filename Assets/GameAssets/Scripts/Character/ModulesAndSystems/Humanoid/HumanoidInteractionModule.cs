@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class HumanoidInteractionModule
 {
@@ -14,6 +15,8 @@ public class HumanoidInteractionModule
     private AgentData m_agentData;
     private HumanoidRangedWeaponsModule m_equipmentModule;
 
+    private NavMeshAgent m_navMesAgent;
+
     /**
      This bool variable make sure that when interaction cancled, 
      all the Coroutines started by the Humanoid Agent realated to interaction will not continue the interaction.
@@ -26,6 +29,7 @@ public class HumanoidInteractionModule
     HumanoidMovmentModule movmenetModule,
     AgentData agentData,
     HumanoidRangedWeaponsModule equipmentModule,
+    NavMeshAgent agent,
     OnInteractionOver onInteractionOver)
     {
         m_animationModule = animationModule;
@@ -37,6 +41,7 @@ public class HumanoidInteractionModule
         m_onInteractionOver = onInteractionOver;
         m_unCancleableInstruction = false;
         m_interacting = false;
+        m_navMesAgent = agent;
     }
 
     public IEnumerator interactWith(Interactable interactable,Interactable.InteractableProperties.InteractableType type)
@@ -45,6 +50,7 @@ public class HumanoidInteractionModule
         {
             // Set all required varialbes and conditions for the interaction
             m_interacting = true;
+            m_navMesAgent.enabled = false;
             m_currentInteractingObject = interactable;
             m_currentInteractingObject.interact();
 
@@ -55,12 +61,19 @@ public class HumanoidInteractionModule
                     float distance = Vector3.Distance(m_movementModule.getCharacterTransfrom().position,interactable.transform.position);
                     
                     // Make sure the character turns at the object - if the character is very close no need to turn.
-                    if(distance>0.7f)
+                    if(distance>1f)
                     {
-                        m_movementModule.LookAtObject(interactable.transform.position);
+                        Vector3 lookPoistion = new Vector3(interactable.transform.position.x,m_movementModule.getCharacterTransfrom().position.y,interactable.transform.position.z);
+                        m_movementModule.LookAtObject(lookPoistion);
                     }
 
-                    m_animationModule.triggerPickup();
+                    // Check if need to bend
+                    int interactionID = -1;
+                    if(Mathf.Abs(interactable.transform.position.y - m_movementModule.getCharacterTransfrom().position.y) > 0.5f)
+                    {
+                        interactionID = -2;
+                    }
+                    m_animationModule.triggerPickup(interactionID);
                     
                     // Is the agent is crouched no animation is played when picking up items, Thus no wait time
                     if(m_movementModule.isCrouched())
@@ -84,8 +97,14 @@ public class HumanoidInteractionModule
             }
 
             // Make sure the character state return to previous state.
-            m_interacting = false;
-            m_onInteractionOver();
+            if(m_interacting)
+            {
+                // Only reach this with uncancalalbe instructions -on pick up automaticaly return to animation, no need to cancle
+                m_interacting = false;
+                m_onInteractionOver();
+                m_navMesAgent.enabled = true;
+            }
+
         }
         yield return null;
     }
@@ -98,6 +117,7 @@ public class HumanoidInteractionModule
             m_animationModule.setInteraction(false,0);
             m_onInteractionOver();
             m_currentInteractingObject.stopInteraction();
+            m_navMesAgent.enabled = true;
         }
     }
 
@@ -164,6 +184,19 @@ public class HumanoidInteractionModule
          Mathf.Abs(intentedRotation.eulerAngles.y - transform.rotation.eulerAngles.y) > 5f) &&
          m_interacting)
         {
+
+            if(Vector3.Distance(transform.position,intendedPosition) > 0.3f)
+            {
+                Debug.Log("position mission");
+            }
+            
+
+
+            if(Mathf.Abs(intentedRotation.eulerAngles.y - transform.rotation.eulerAngles.y) > 5f)
+            {
+                Debug.Log("angle missing");
+            }
+
             transform.rotation = Quaternion.Lerp(transform.rotation,intentedRotation,0.2f);
             transform.position = Vector3.Lerp(transform.position,intendedPosition,0.1f);
             m_animationModule.setMovment(0,0);
@@ -200,7 +233,7 @@ public class HumanoidInteractionModule
         // Place agent in the interaction position
         while((Vector3.Distance(transform.position,intendedPosition) > 0.3f || 
         Mathf.Abs(intentedRotation.eulerAngles.y - transform.rotation.eulerAngles.y) > 5f) &&
-        m_interacting)
+        m_interacting && interactableObj.properties.enablePositionRequirment)
         {
             transform.rotation = Quaternion.Lerp(transform.rotation,intentedRotation,0.2f);
             transform.position = Vector3.Lerp(transform.position,intendedPosition,0.1f);
