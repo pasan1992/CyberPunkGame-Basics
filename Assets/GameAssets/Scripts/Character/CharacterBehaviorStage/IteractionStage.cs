@@ -8,15 +8,15 @@ public class IteractionStage : WaypontMovementStage
     // Start is called before the first frame update
     ICyberAgent  m_agent;
 
-    enum IterationState {MovintToPoint,OnPoint,Interaction,InteractioOver};
+    enum IterationState {MovintToPoint,OnPoint,Interaction,InteractionOver};
 
-    IterationState m_currentIteractionState = IterationState.InteractioOver;
+    IterationState m_currentIteractionState = IterationState.InteractionOver;
 
 
     public IteractionStage(ICyberAgent selfAgent,NavMeshAgent navMeshAgent, BasicWaypoint[] wayPoints):base(selfAgent,navMeshAgent,wayPoints)
     {
         m_agent = selfAgent;
-        m_currentIteractionState = IterationState.InteractioOver;
+        m_currentIteractionState = IterationState.InteractionOver;
     }
     void Start()
     {
@@ -43,11 +43,11 @@ public class IteractionStage : WaypontMovementStage
 
                 if(!m_agent.isInteracting())
                 {
-                    m_currentIteractionState = IterationState.InteractioOver;
+                    m_currentIteractionState = IterationState.InteractionOver;
                 }
 
             break;
-            case IterationState.InteractioOver:
+            case IterationState.InteractionOver:
                  m_currentIteractionState = IterationState.MovintToPoint; 
                  m_navMeshAgent.enabled = true;   
                  m_navMeshAgent.isStopped = false;  

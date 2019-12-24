@@ -1,9 +1,13 @@
 ﻿using UnityEngine;
+using System.Collections.Generic;  
+using System.Collections;
+
+
 [RequireComponent(typeof(DamagableFlyingObject))]
 public class FlyingAgent : MonoBehaviour ,ICyberAgent
 {
     // Start is called before the first frame update
-    private MovmentModule.BASIC_MOVMENT_STATE m_currentFlyingState = MovmentModule.BASIC_MOVMENT_STATE.DIRECTIONAL_MOVMENT;
+    private MovmentModule.BASIC_MOVMENT_STATE m_currentMovementState = MovmentModule.BASIC_MOVMENT_STATE.DIRECTIONAL_MOVMENT;
 
     private Vector3 m_movmentDirection;
     private GameObject m_target;
@@ -64,7 +68,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     {
         if(m_damageModule.HealthAvailable())
         {
-            m_movmentModule.UpdateMovment((int)m_currentFlyingState, m_movmentDirection,m_currentDroneState,out m_currentDroneState);
+            m_movmentModule.UpdateMovment((int)m_currentMovementState, m_movmentDirection,m_currentDroneState,out m_currentDroneState);
         }
 
         updateDisabledMovment();
@@ -195,12 +199,12 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public void aimWeapon()
     {
-        m_currentFlyingState = MovmentModule.BASIC_MOVMENT_STATE.AIMED_MOVMENT;
+        m_currentMovementState = MovmentModule.BASIC_MOVMENT_STATE.AIMED_MOVMENT;
     }
 
     public void stopAiming()
     {
-        m_currentFlyingState = MovmentModule.BASIC_MOVMENT_STATE.DIRECTIONAL_MOVMENT;
+        m_currentMovementState = MovmentModule.BASIC_MOVMENT_STATE.DIRECTIONAL_MOVMENT;
     }
 
     public void disableDrone()
@@ -370,12 +374,23 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public bool isInteracting()
     {
-        return false;
+        return m_currentDroneState == GameEnums.DroneState.Flying || m_currentDroneState == GameEnums.DroneState.Landing || m_currentDroneState == GameEnums.DroneState.Landed ;  
     }
 
     public void interactWith(Interactable interactableObj,Interactable.InteractableProperties.InteractableType type)
     {
+        if(type == Interactable.InteractableProperties.InteractableType.TimedInteraction && interactableObj.properties.interactionID == (int)GameEnums.Interaction.LAND ){
+            landDrone(interactableObj.transform.position);
+            float interactionTime= interactableObj.properties.interactionTime;
+            StartCoroutine(waitCoroutine(interactionTime));
+        }
 
     }
+
+    IEnumerator waitCoroutine(float interactionTime){
+        yield return new WaitForSeconds(interactionTime);
+        takeOff();
+    }
+
     #endregion
 }
