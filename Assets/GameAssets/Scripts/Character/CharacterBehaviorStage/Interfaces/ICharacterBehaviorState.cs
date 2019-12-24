@@ -16,4 +16,6 @@ public interface ICharacterBehaviorState
     void stopStageBehavior();
 
     void initalizeStage();
+
+    void endStage();
 }

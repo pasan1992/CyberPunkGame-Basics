@@ -10,9 +10,9 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     #region parameters
 
     // Callback
-    private AgentController.agentBasicEventDelegate m_onDestoryCallback;
-    private AgentController.agentBasicEventDelegate m_onDisableCallback;
-    private AgentController.agentBasicEventDelegate m_onEnableCallback;
+    private GameEvents.BasicNotifactionEvent m_onDestoryCallback;
+    private GameEvents.BasicNotifactionEvent m_onDisableCallback;
+    private GameEvents.BasicNotifactionEvent m_onEnableCallback;
 
     // Main Modules
     protected HumanoidRangedWeaponsModule m_equipmentModule;
@@ -29,13 +29,22 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     private bool m_characterEnabled = true;
     private Vector3 m_movmentVector;
     private bool m_isDisabled = false;
-    private GameEvents.BasicNotifactionEvent onDamagedCallback;
+    private GameEvents.BasicNotifactionEvent m_onDamagedCallback;
     // Public
     // Main Agent data component
     public AgentData AgentData;
 
     // These components required for the function of the agent
     public AgentFunctionalComponents AgentComponents;
+
+
+    //Event Callbacks
+    private GameEvents.BasicNotifactionEvent m_onReloadEndCallback;
+    private GameEvents.BasicNotifactionEvent m_onInteractionEndCallback;
+
+    private GameEvents.BasicNotifactionEvent m_onWeaponEquipCallback;
+    private GameEvents.BasicNotifactionEvent m_onWeaponUnEquipCallback;
+    private GameEvents.BasicNotifactionEvent m_onThrowCallback;
     #endregion
 
     #region Initalize
@@ -141,9 +150,9 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     {
         m_damageModule.DamageByAmount(amount);
 
-        if(onDamagedCallback != null)
+        if(m_onDamagedCallback != null)
         {
-            onDamagedCallback();
+            m_onDamagedCallback();
         }
         
     }
@@ -202,6 +211,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
         if (m_onDestoryCallback != null)
         {
+            Debug.Log("Destroy Get called");
             m_onDestoryCallback();
         }
     }
@@ -285,7 +295,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
     public void setOnDamagedCallback(GameEvents.BasicNotifactionEvent callback)
     {
-        onDamagedCallback = callback;
+        m_onDamagedCallback += callback;
     }
 
     public Transform getChestTransfrom()
@@ -307,19 +317,19 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         this.GetComponent<FullBodyBipedIK>().enabled = true;
     }
 
-    public void setOnDestoryCallback(AgentController.agentBasicEventDelegate onDestoryCallback)
+    public void setOnDestoryCallback(GameEvents.BasicNotifactionEvent onDestoryCallback)
     {
-        m_onDestoryCallback = onDestoryCallback;
+        m_onDestoryCallback += onDestoryCallback;
     }
 
-    public void setOnDisableCallback(AgentController.agentBasicEventDelegate callback)
+    public void setOnDisableCallback(GameEvents.BasicNotifactionEvent callback)
     {
-        m_onDisableCallback = callback;
+        m_onDisableCallback += callback;
     }
 
-    public void setOnEnableCallback(AgentController.agentBasicEventDelegate callback)
+    public void setOnEnableCallback(GameEvents.BasicNotifactionEvent callback)
     {
-        m_onEnableCallback = callback;
+        m_onEnableCallback += callback;
     }
 
     public bool IsFunctional()
@@ -346,6 +356,11 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     {
         return m_equipmentModule.isInEquipingAction();
     }
+
+    // public bool isEquiped()
+    // {
+    //     return (m_animationModule.isEquiped() || m_equipmentModule.isInEquipingAction());
+    // }
 
     public void enableTranslateMovment(bool enable)
     {
@@ -451,9 +466,10 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         return m_equipmentModule.getCurrentWeapon().getWeaponType();
     }
 
-    public void hosterWeapon()
+    // Return ttue if actualy weapon is hosted
+    public bool hosterWeapon()
     {
-        if(m_characterState.Equals(CharacterMainStates.Armed_not_Aimed))
+        if((m_characterState.Equals(CharacterMainStates.Armed_not_Aimed) || m_characterState.Equals(CharacterMainStates.Aimed)) && !m_equipmentModule.isInEquipingAction() && !m_equipmentModule.isReloading())
         {
             switch (m_equipmentModule.getCurrentWeapon().getWeaponType())
             {
@@ -467,8 +483,13 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
                     togglepSecondaryWeapon();
                 break;
             }
+            return true;
         }
-
+        else if(m_characterState.Equals(CharacterMainStates.Idle))
+        {
+            return true;
+        }
+        return false;
     }
 
     #endregion
@@ -480,6 +501,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         if(m_characterState == CharacterMainStates.Interaction)
         {
             m_characterState = m_previousTempState;
+            OnInteractionDone();
         }      
     }
 
@@ -490,16 +512,33 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     public void ReloadEnd()
     {
         m_equipmentModule.ReloadEnd();
+
+        if(m_onReloadEndCallback != null)
+        {
+            m_onReloadEndCallback();
+        }
+        
     }
 
     public void EquipAnimationEvent()
     {
         m_equipmentModule.EquipAnimationEvent();
+
+        if(m_onWeaponEquipCallback != null)
+        {
+            m_onWeaponEquipCallback();
+        }
+        
     }
 
     public void UnEquipAnimationEvent()
     {
         m_equipmentModule.UnEquipAnimationEvent();
+
+        if(m_onWeaponUnEquipCallback != null)
+        {
+            m_onWeaponUnEquipCallback();
+        }
     }
 
     public bool isCharacterEnabled()
@@ -599,6 +638,52 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     public AgentData GetAgentData()
     {
         return AgentData;
+    }
+
+    public void setBasicCallbacks(
+        GameEvents.BasicNotifactionEvent onEquip,
+        GameEvents.BasicNotifactionEvent onUnequip,
+        GameEvents.BasicNotifactionEvent onReloadEnd,
+        GameEvents.BasicNotifactionEvent onDamaged,
+        GameEvents.BasicNotifactionEvent onDestoryCallback,
+        GameEvents.BasicNotifactionEvent onInteractionDone,
+        GameEvents.BasicNotifactionEvent onThrowItem
+    )
+    {
+        m_onWeaponEquipCallback +=onEquip;
+        m_onWeaponUnEquipCallback += onUnequip;
+        m_onDestoryCallback +=onDestoryCallback;
+        m_onDamagedCallback +=onDamaged;
+        this.m_onInteractionEndCallback += onInteractionDone;
+        this.m_onThrowCallback += onThrowItem;
+        // if(onDestoryCallback !=null)
+        // {
+        //     m_onDestoryCallback +=onDestoryCallback;
+        // }
+
+        // if(onEquip != null)
+        // {
+            
+        // }
+
+        // if(onUnequip != null)
+        // {
+
+        // }
+
+        // if(onReloadEnd != null)
+        // {
+
+        // }
+
+        // if(onDamaged != null)
+        // {
+
+        // }        
+        // if(onDestoryCallback != null)
+        // {
+
+        // }
     }
     #endregion
 

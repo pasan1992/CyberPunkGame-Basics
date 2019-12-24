@@ -6,8 +6,9 @@ using UnityEngine.AI;
 public class DroneCombatStage : BasicMovmentStage
 {
     ICyberAgent m_opponent;
-    public enum DRONE_COMBAT_STAGES { Moving,Fire,DecidingToMove}
+    public enum DRONE_COMBAT_STAGES { Moving,Fire,DecidingToMove,NONE}
     private DRONE_COMBAT_STAGES m_currentCombatStage = DRONE_COMBAT_STAGES.DecidingToMove;
+    private DRONE_COMBAT_STAGES m_loggingState = DRONE_COMBAT_STAGES.NONE;
     private Vector3 m_movePoint;
     private Vector3 m_randomTargetOffset;
 
@@ -37,6 +38,7 @@ public class DroneCombatStage : BasicMovmentStage
 
     protected override void stepUpdate()
     {
+        logState();
         findTargetLocationToFire();
 
         switch (m_currentCombatStage)
@@ -73,7 +75,7 @@ public class DroneCombatStage : BasicMovmentStage
 
                 if (m_navMeshAgent.remainingDistance < 5 + Random.value*2)
                 {
-                    m_navMeshAgent.isStopped = true;
+                    //m_navMeshAgent.isStopped = true;
                     m_currentCombatStage = DRONE_COMBAT_STAGES.Fire;
                 }
 
@@ -83,6 +85,14 @@ public class DroneCombatStage : BasicMovmentStage
                 }
 
                 break;
+        }
+    }
+
+    private void logState()
+    {
+        if(!m_loggingState.Equals(m_currentCombatStage))
+        {
+            m_loggingState = m_currentCombatStage;
         }
     }
 
@@ -109,8 +119,8 @@ public class DroneCombatStage : BasicMovmentStage
         NavMeshHit hit;
         NavMesh.SamplePosition(m_movePoint, out hit, 10, 1);
 
-        Vector3 finalPosition = hit.position;
-
+        Vector3 finalPosition = m_movePoint;
+        Debug.Log("Position Set");
         m_navMeshAgent.SetDestination(finalPosition);
         m_navMeshAgent.isStopped = false;
     }

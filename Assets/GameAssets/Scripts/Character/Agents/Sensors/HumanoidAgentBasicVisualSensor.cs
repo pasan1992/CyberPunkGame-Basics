@@ -11,7 +11,7 @@ public class HumanoidAgentBasicVisualSensor : AgentBasicSensor
     private bool noAgentsNearby = true;
 
     private int allClearCount = 0;
-    private int maximummAllClearCount = 5;
+    private int maximummAllClearCount = 20;
 
     public HumanoidAgentBasicVisualSensor(ICyberAgent agent) : base(agent)
     {

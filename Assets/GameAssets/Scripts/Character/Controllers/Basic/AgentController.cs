@@ -15,7 +15,7 @@ public abstract class AgentController : MonoBehaviour
         cyberAgent.setOnEnableCallback(onAgentEnable);
     }
 
-    public delegate void agentBasicEventDelegate();
+    //public delegate void agentBasicEventDelegate();
     public delegate void agentOnDestoryEventDelegate(AgentController controller);
 
     // public enum AgentFaction { Player,Enemy,Neutral};

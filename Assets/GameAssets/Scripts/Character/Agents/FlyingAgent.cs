@@ -10,13 +10,17 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     // Modules
     private AnimationModule m_animationModule;
-    private MovmentModule m_movmentModule;
+    private DroneMovmentModule m_movmentModule;
     public DroneDamageModule m_damageModule;
 
     private Rigidbody m_droneRigitBody;
-    private AgentController.agentBasicEventDelegate m_onDestroyCallback;
-    private AgentController.agentBasicEventDelegate m_onDisableCallback;
-    private AgentController.agentBasicEventDelegate m_onEnableCallback;
+    private GameEvents.BasicNotifactionEvent m_onDestroyCallback;
+    private GameEvents.BasicNotifactionEvent m_onDisableCallback;
+    private GameEvents.BasicNotifactionEvent m_onEnableCallback;
+
+    public GameEnums.DroneState m_currentDroneState = GameEnums.DroneState.Flying;
+    private Vector3 landPosition;
+    private float flyingHeight;
     //private AgentBasicData.AgentFaction m_faction;
 
     private Vector3 m_beforeDisablePositionSnapShot;
@@ -26,6 +30,8 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     private AudioSource m_audioSource;
 
     public AgentData m_agentData;
+
+    public Transform landingPad;
 
     #region initalize
 
@@ -40,7 +46,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         m_droneRigitBody.Sleep();
 
         m_animationModule = new AnimationModule(this.GetComponentInChildren<Animator>());
-        m_movmentModule = new MovmentModule(m_target, this.gameObject.transform);
+        m_movmentModule = new DroneMovmentModule(m_target, this.gameObject.transform,m_currentDroneState,m_droneRigitBody.transform,m_animationModule);
 
     }
     #endregion
@@ -48,6 +54,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     public void Start()
     {
         m_damageModule= new DroneDamageModule(m_agentData, this.GetComponentInChildren<Outline>(), DestroyCharacter);
+        //disableDrone();
     }
 
     #region update
@@ -57,7 +64,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     {
         if(m_damageModule.HealthAvailable())
         {
-            m_movmentModule.UpdateMovment((int)m_currentFlyingState, m_movmentDirection);
+            m_movmentModule.UpdateMovment((int)m_currentFlyingState, m_movmentDirection,m_currentDroneState,out m_currentDroneState);
         }
 
         updateDisabledMovment();
@@ -110,17 +117,17 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         m_agentData.m_agentFaction = group;
     }
 
-    public void setOnDestoryCallback(AgentController.agentBasicEventDelegate callback)
+    public void setOnDestoryCallback(GameEvents.BasicNotifactionEvent callback)
     {
         m_onDestroyCallback = callback;
     }
 
-    public void setOnDisableCallback(AgentController.agentBasicEventDelegate callback)
+    public void setOnDisableCallback(GameEvents.BasicNotifactionEvent callback)
     {
         m_onDisableCallback = callback;
     }
 
-    public void setOnEnableCallback(AgentController.agentBasicEventDelegate callback)
+    public void setOnEnableCallback(GameEvents.BasicNotifactionEvent callback)
     {
         m_onEnableCallback = callback;
     }
@@ -225,6 +232,38 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         m_droneRigitBody.isKinematic = true;
         m_droneRigitBody.useGravity = false;
         m_animationModule.enableAnimationSystem();
+    }
+
+    public void landDrone(Vector3 landPosition)
+    {
+         Debug.Log("here");
+        if(m_currentDroneState.Equals(GameEnums.DroneState.Flying))
+        {
+            m_droneRigitBody.Sleep();
+            m_droneRigitBody.isKinematic = true;
+            m_droneRigitBody.useGravity = false;
+            m_animationModule.enableAnimationSystem();
+            m_currentDroneState = GameEnums.DroneState.Landing;
+            m_movmentModule.setLandPosition(landPosition);
+        }
+    }
+
+    [ContextMenu("Land")]
+    public void landDrone()
+    {
+        landDrone(landingPad.transform.position);
+    }
+
+    [ContextMenu("TakeOff")]
+    public void takeOff()
+    {
+        if(m_currentDroneState.Equals(GameEnums.DroneState.Landed))
+        {
+            m_currentDroneState = GameEnums.DroneState.TakeOff;
+            m_droneRigitBody.Sleep();
+            m_droneRigitBody.isKinematic = true;
+            m_droneRigitBody.useGravity = false;
+        }
     }
     #endregion
 

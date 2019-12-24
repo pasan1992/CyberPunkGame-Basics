@@ -27,9 +27,9 @@ public interface ICyberAgent
     AgentBasicData.AgentFaction getFaction();
     void setFaction(AgentBasicData.AgentFaction group);
     float getSkill();
-    void setOnDestoryCallback(AgentController.agentBasicEventDelegate callback);
-    void setOnDisableCallback(AgentController.agentBasicEventDelegate callback);
-    void setOnEnableCallback(AgentController.agentBasicEventDelegate callback);
+    void setOnDestoryCallback(GameEvents.BasicNotifactionEvent callback);
+    void setOnDisableCallback(GameEvents.BasicNotifactionEvent callback);
+    void setOnEnableCallback(GameEvents.BasicNotifactionEvent callback);
     bool isDisabled();
     void resetAgent();
     Vector3 getMovmentDirection();

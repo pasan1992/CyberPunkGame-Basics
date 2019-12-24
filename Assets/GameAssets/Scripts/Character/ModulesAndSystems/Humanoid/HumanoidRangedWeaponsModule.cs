@@ -35,6 +35,7 @@ public class HumanoidRangedWeaponsModule
         ,UnEquiping
         ,Reloading
         ,WeaponAction
+        ,UnArmed
         }
     private WeaponSystemSubStages m_currentWeaponSubStage;
     
@@ -79,6 +80,10 @@ public class HumanoidRangedWeaponsModule
         else if(m_animationSystem.checkCurrentAnimationTag("WeaponAction"))
         {
             m_currentWeaponSubStage = WeaponSystemSubStages.WeaponAction;
+        }
+        else
+        {
+           m_currentWeaponSubStage = WeaponSystemSubStages.UnArmed;
         }
 
         switch (m_currentWeaponSubStage)
@@ -352,7 +357,7 @@ public class HumanoidRangedWeaponsModule
     }
     public HumanoidMovingAgent.CharacterMainStates togglePrimary()
     {
-        if (!m_inEquipingAction && !isReloading() && m_rifle && !m_inWeaponAction)
+        if (!isInEquipingAction() && !isReloading() && m_rifle && !m_inWeaponAction)
         {
             m_animationSystem.setCurretnWeapon(1);
 
@@ -398,13 +403,14 @@ public class HumanoidRangedWeaponsModule
             {
                 m_animationSystem.triggerShrug();
             }
+            logWeaponIssue();
             return m_currentState;
         }
 
     }
     public HumanoidMovingAgent.CharacterMainStates toggleSecondary()
     {
-        if (!m_inEquipingAction && !isReloading() && m_pistol && !m_inWeaponAction)
+        if (!isInEquipingAction() && !isReloading() && m_pistol && !m_inWeaponAction)
         {
             m_animationSystem.setCurretnWeapon(0);
 
@@ -453,13 +459,45 @@ public class HumanoidRangedWeaponsModule
             {
                 m_animationSystem.triggerShrug();
             }
+            logWeaponIssue();
             return m_currentState;
+        }
+    }
+
+    private void logWeaponIssue()
+    {
+        if(isInEquipingAction())
+        {
+            if(m_inEquipingAction)
+            {
+                Debug.Log("m_inEqupingAction is on");
+            }
+
+            if(m_currentWeaponSubStage.Equals(WeaponSystemSubStages.Equiping))
+            {
+                Debug.Log("in Equiping animation state");
+            }
+
+            if(m_currentWeaponSubStage.Equals(WeaponSystemSubStages.UnEquiping))
+            {
+                Debug.Log("in Unequiping animation state");
+            }
+        }
+
+        if(m_inWeaponAction)
+        {
+            Debug.Log("m_inWeaponAction flag is on");
+        }
+
+        if(isReloading())
+        {
+            Debug.Log("Was reloading");
         }
     }
 
     public HumanoidMovingAgent.CharacterMainStates toggleGrenede()
     {
-       if(!m_inEquipingAction && !isReloading() && m_grenede && !m_inWeaponAction)
+       if(!isInEquipingAction() && !isReloading() && m_grenede && !m_inWeaponAction)
        {
            // Current Weapon avaialble
            if(m_currentWeapon != null)
@@ -620,7 +658,7 @@ public class HumanoidRangedWeaponsModule
 
     public bool isInEquipingAction()
     {
-        return m_inEquipingAction;
+        return m_inEquipingAction || m_currentWeaponSubStage.Equals(WeaponSystemSubStages.Equiping) || m_currentWeaponSubStage.Equals(WeaponSystemSubStages.UnEquiping);
     }
 
     public void setOwnerFaction(AgentBasicData.AgentFaction agentGroup)

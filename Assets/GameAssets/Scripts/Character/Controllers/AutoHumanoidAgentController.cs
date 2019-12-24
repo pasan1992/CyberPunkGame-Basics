@@ -22,6 +22,10 @@ public class AutoHumanoidAgentController :  AgentController
 
     public WaypointRutine rutine;
 
+    private float timeFromLastSwitch;
+
+    private float MaxomumWaitTimeToSwitch  = 2;
+
     #region initaialize
 
     private void Awake()
@@ -58,6 +62,11 @@ public class AutoHumanoidAgentController :  AgentController
     #endregion
 
     #region update
+    public void Update()
+    {
+        timeFromLastSwitch += Time.deltaTime;
+    }
+
     void FixedUpdate()
     {
         if(m_currentState != null && m_movingAgent.IsFunctional() && !m_movingAgent.isDisabled() & isInUse())
@@ -85,6 +94,7 @@ public class AutoHumanoidAgentController :  AgentController
         if(m_currentState != m_combatStage)
         {
             switchToCombatStage();
+
         }
     }
 
@@ -93,6 +103,11 @@ public class AutoHumanoidAgentController :  AgentController
         base.OnAgentDestroy();
         m_navMeshAgent.enabled = false;
 
+        if(m_currentState == m_combatStage)
+        {
+            m_combatStage.endStage();
+        }
+        
         // reset character
         Invoke("reUseCharacter", m_timeToReset);
     }
@@ -150,8 +165,15 @@ public class AutoHumanoidAgentController :  AgentController
 
     private void switchToCombatStage()
     {
-        ((CombatStage)m_combatStage).initalizeStage();
-        m_currentState = m_combatStage;
+        if(timeFromLastSwitch > MaxomumWaitTimeToSwitch)
+        {
+            if(m_currentState != m_combatStage)
+            {
+                timeFromLastSwitch = 0;
+                ((CombatStage)m_combatStage).initalizeStage();
+                m_currentState = m_combatStage;
+            }
+        }
     }
 
     private void swithtoIteractionStage()
@@ -170,23 +192,29 @@ public class AutoHumanoidAgentController :  AgentController
 
     public void onAllClear()
     {
-        if(m_currentState != m_iteractionStage)
+        if(timeFromLastSwitch > MaxomumWaitTimeToSwitch)
         {
-            m_currentState = m_iteractionStage;
-            m_iteractionStage.initalizeStage();
-            Debug.Log(m_movingAgent.name);
-
-            if(m_movingAgent.isHidden())
+            
+            if(m_currentState != m_iteractionStage)
             {
-                m_movingAgent.toggleHide();
-            }
+                m_combatStage.endStage();
+                timeFromLastSwitch = 0;
+                m_currentState = m_iteractionStage;
+                m_iteractionStage.initalizeStage();
+               // Debug.Log(m_movingAgent.name);
 
-            if(m_movingAgent.isAimed())
-            {
-                m_movingAgent.stopAiming();
-            }
+                if(m_movingAgent.isHidden())
+                {
+                    m_movingAgent.toggleHide();
+                }
 
-            m_movingAgent.hosterWeapon();
+                if(m_movingAgent.isAimed())
+                {
+                    m_movingAgent.stopAiming();
+                }
+
+                m_movingAgent.hosterWeapon();
+            }
         }
     }
     #endregion

@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class CombatStage : BasicMovmentStage
+public class CombatStage : BasicCombatStage
 {
-    private ICyberAgent opponent;
+    //private ICyberAgent opponent;
     private Collider[] targetLocations;
     private Transform targetLocation;
     private CoverPoint[] coverPoints;
@@ -33,27 +33,17 @@ public class CombatStage : BasicMovmentStage
     private bool playitSafe;
 
     #region initalize
-    public CombatStage(ICyberAgent selfAgent,ICyberAgent target,NavMeshAgent navMeshAgent) :base(selfAgent,navMeshAgent)
+    public CombatStage(ICyberAgent selfAgent,ICyberAgent target,NavMeshAgent navMeshAgent) :base(selfAgent,target,navMeshAgent)
     {
         this.opponent = target;
         coverPoints = GameObject.FindObjectsOfType<CoverPoint>();
         playitSafe = false;
 
-
-        // selfAgent.toggleHide();
-        // selfAgent.aimWeapon();
-        // //
-        // if(Random.value > 0.5)
-        // {
-        //     ((HumanoidMovingAgent)selfAgent).togglePrimaryWeapon();
-        // }
-        // else
-        // {
-        //     ((HumanoidMovingAgent)selfAgent).togglepSecondaryWeapon();
-        // }
-        
-        targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
-        findTargetLocationToFire();
+        if(target !=null)
+        {
+            targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
+            findTargetLocationToFire();
+        }
     }
 
     public override void initalizeStage()
@@ -485,12 +475,13 @@ public class CombatStage : BasicMovmentStage
 
     public override void setTargets(ICyberAgent target)
     {
-        if(target != this.opponent)
+        if(opponent == null || target != this.opponent)
         {
+            this.opponent = target; 
             targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
         }
-         targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
-        this.opponent = target;  
+         //targetLocations = opponent.getTransfrom().gameObject.GetComponentsInChildren<Collider>();
+         
         findTargetLocationToFire();
     }
 
@@ -514,6 +505,14 @@ public class CombatStage : BasicMovmentStage
         {
             logShootingStage = currentCoverShootingSubStage;
             Debug.Log("Sub Stage " + m_selfAgent.getGameObject().name + currentCoverShootingSubStage);
+        }
+    }
+
+    public override void endStage()
+    {
+        if(currentCoverPoint != null)
+        {
+            currentCoverPoint.setOccupent(null);
         }
     }
 
