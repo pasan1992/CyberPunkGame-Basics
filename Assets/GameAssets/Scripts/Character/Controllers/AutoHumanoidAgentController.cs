@@ -10,20 +10,14 @@ public class AutoHumanoidAgentController :  AgentController
     protected HumanoidMovingAgent m_movingAgent;
     protected ICharacterBehaviorState m_currentState;
     protected ICharacterBehaviorState m_combatStage;
-
     protected ICharacterBehaviorState m_iteractionStage;
-
     protected HumanoidAgentBasicVisualSensor m_visualSensor;
-
     protected NavMeshAgent m_navMeshAgent;
     //public float health;
-
-    public BasicWaypoint[] basicWaypoints;
-
     public WaypointRutine rutine;
 
-    private float timeFromLastSwitch;
 
+    private float timeFromLastSwitch;
     private float MaxomumWaitTimeToSwitch  = 2;
 
     #region initaialize
@@ -38,15 +32,7 @@ public class AutoHumanoidAgentController :  AgentController
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
         m_combatStage = new CombatStage(m_movingAgent, target,m_navMeshAgent);
 
-        if(rutine == null)
-        {
-            m_iteractionStage = new IteractionStage(m_movingAgent,m_navMeshAgent,basicWaypoints);
-        }
-        else
-        {
-            m_iteractionStage = new IteractionStage(m_movingAgent,m_navMeshAgent,rutine.m_wayPoints.ToArray());
-        }
-        
+        m_iteractionStage = new IteractionStage(m_movingAgent,m_navMeshAgent,rutine.m_wayPoints.ToArray());
 
         m_visualSensor = new HumanoidAgentBasicVisualSensor(m_movingAgent);
         m_visualSensor.setOnEnemyDetectionEvent(onEnemyDetection);
@@ -55,9 +41,7 @@ public class AutoHumanoidAgentController :  AgentController
         intializeAgentCallbacks(m_movingAgent);
         m_movingAgent.enableTranslateMovment(false);
         m_movingAgent.setOnDamagedCallback(onDamaged);
-       // m_currentState = m_combatStage;
         m_currentState = m_iteractionStage;
-       //switchToCombatStage();
     }
     #endregion
 
@@ -65,6 +49,12 @@ public class AutoHumanoidAgentController :  AgentController
     public void Update()
     {
         timeFromLastSwitch += Time.deltaTime;
+        
+        if(m_currentState != null && m_movingAgent.IsFunctional() && !m_movingAgent.isDisabled() & isInUse())
+        {
+            //m_currentState.updateStage();
+            m_visualSensor.UpdateSensor();
+        }
     }
 
     void FixedUpdate()
@@ -72,22 +62,12 @@ public class AutoHumanoidAgentController :  AgentController
         if(m_currentState != null && m_movingAgent.IsFunctional() && !m_movingAgent.isDisabled() & isInUse())
         {
             m_currentState.updateStage();
-            m_visualSensor.UpdateSensor();
+            //m_visualSensor.UpdateSensor();
         }
     }
     #endregion
 
     #region events
-
-    void OnBecameVisible()
-    {
-        //m_currentState.setWeaponFireCapability(true);
-    }
-
-    void OnBecameInvisible()
-    {
-        //m_currentState.setWeaponFireCapability(false);
-    }
 
     public void onDamaged()
     {
@@ -162,6 +142,7 @@ public class AutoHumanoidAgentController :  AgentController
     {
         m_navMeshAgent.Warp(postion);
     }
+    #endregion
 
     private void switchToCombatStage()
     {
@@ -176,11 +157,40 @@ public class AutoHumanoidAgentController :  AgentController
         }
     }
 
+    private IEnumerator switchFromCombatStageToIteractionStage()
+    {
+        yield return StartCoroutine(endCombatStage());
+        swithtoIteractionStage();
+    }
+
+    private IEnumerator endCombatStage()
+    {
+        if(m_currentState.Equals(m_combatStage))
+        {
+            m_combatStage.endStage();
+
+            if(m_movingAgent.isHidden())
+            {
+                m_movingAgent.toggleHide();
+            }
+
+            if(m_movingAgent.isAimed())
+            {
+                m_movingAgent.stopAiming();
+            }
+           // This corutine will run until weapon is hosted
+            yield return StartCoroutine(m_movingAgent.waitTillWeaponHosted());
+        }
+    }
+
     private void swithtoIteractionStage()
     {
         m_currentState = m_iteractionStage;
+        m_iteractionStage.initalizeStage();
     }
+    
 
+    #region Events
     public void onEnemyDetection(ICyberAgent opponent)
     {
         m_combatStage.setTargets(opponent);
@@ -194,28 +204,15 @@ public class AutoHumanoidAgentController :  AgentController
     {
         if(timeFromLastSwitch > MaxomumWaitTimeToSwitch)
         {
-            
-            if(m_currentState != m_iteractionStage)
+            timeFromLastSwitch = 0;
+
+            if(!m_currentState.Equals(m_iteractionStage))
             {
-                m_combatStage.endStage();
-                timeFromLastSwitch = 0;
-                m_currentState = m_iteractionStage;
-                m_iteractionStage.initalizeStage();
-               // Debug.Log(m_movingAgent.name);
-
-                if(m_movingAgent.isHidden())
-                {
-                    m_movingAgent.toggleHide();
-                }
-
-                if(m_movingAgent.isAimed())
-                {
-                    m_movingAgent.stopAiming();
-                }
-
-                m_movingAgent.hosterWeapon();
+                StartCoroutine(switchFromCombatStageToIteractionStage());
             }
         }
     }
     #endregion
+
+    
 }

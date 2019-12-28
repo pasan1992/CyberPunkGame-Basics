@@ -8,7 +8,6 @@ public class BasicWaypoint : MonoBehaviour,IPoints
     private List<BasicWaypoint> m_connectedWayPoints;
 
     #region Getters and Setters
-
     public Vector3 getPosition()
     {
         return this.transform.position;

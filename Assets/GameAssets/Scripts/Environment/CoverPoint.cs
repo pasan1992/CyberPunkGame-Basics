@@ -6,6 +6,10 @@ public class CoverPoint : MonoBehaviour, IPoints
     ICyberAgent occupent;
 
     #region Getters and Setters
+    public void Awake()
+    {
+        this.gameObject.AddComponent<SphereCollider>().isTrigger = true;
+    }
     public void setTargetToCover(ICyberAgent target )
     {
         this.target = target;

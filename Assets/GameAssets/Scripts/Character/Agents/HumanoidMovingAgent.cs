@@ -466,7 +466,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         return m_equipmentModule.getCurrentWeapon().getWeaponType();
     }
 
-    // Return ttue if actualy weapon is hosted
+    // Return true if weapon is already hosted or actualy wepon is husted from this command
     public bool hosterWeapon()
     {
         if((m_characterState.Equals(CharacterMainStates.Armed_not_Aimed) || m_characterState.Equals(CharacterMainStates.Aimed)) && !m_equipmentModule.isInEquipingAction() && !m_equipmentModule.isReloading())
@@ -490,6 +490,14 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
             return true;
         }
         return false;
+    }
+
+    public IEnumerator waitTillWeaponHosted()
+    {
+        while(!this.hosterWeapon())
+        {
+            yield return null;
+        }
     }
 
     #endregion

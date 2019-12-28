@@ -2807,7 +2807,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 385073060}
-  - component: {fileID: 385073059}
   - component: {fileID: 385073058}
   m_Layer: 0
   m_Name: DroneBasic_waypoint_0
@@ -2828,29 +2827,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9530d051ff89a084e8f1f9ca69eace6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &385073059
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 385073057}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4486f39dd5fd6ef4d8e10a78be989456, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  properties:
-    Type: 2
-    interactionEnabled: 1
-    itemName: 
-    interactionTime: 5
-    interactionID: 1
-    offset: {x: 0, y: 0, z: 0}
-    rotation: {x: 0, y: 0, z: 0}
-    enablePositionRequirment: 1
-  visualProperties:
-    nameTagOffset: {x: 0, y: 0, z: 0}
 --- !u!4 &385073060
 Transform:
   m_ObjectHideFlags: 0
@@ -3293,17 +3269,22 @@ PrefabInstance:
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.maxHealth
-      value: 2
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.health
-      value: 2
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.Skill
-      value: 0.5
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
+        type: 3}
+      propertyPath: AgentData.m_agentFaction
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291367, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
@@ -4698,17 +4679,22 @@ PrefabInstance:
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.maxHealth
-      value: 2
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.health
-      value: 2
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.Skill
-      value: 0.5
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
+        type: 3}
+      propertyPath: AgentData.m_agentFaction
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291367, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
@@ -5646,17 +5632,22 @@ PrefabInstance:
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.maxHealth
-      value: 2
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.health
-      value: 2
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.Skill
-      value: 0.5
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
+        type: 3}
+      propertyPath: AgentData.m_agentFaction
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291367, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
@@ -6277,17 +6268,17 @@ PrefabInstance:
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.maxHealth
-      value: 5
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.health
-      value: 5
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.m_agentFaction
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
@@ -6792,17 +6783,22 @@ PrefabInstance:
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.maxHealth
-      value: 2
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.health
-      value: 2
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.Skill
-      value: 0.5
+      value: 0.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
+        type: 3}
+      propertyPath: AgentData.m_agentFaction
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291367, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
@@ -8757,22 +8753,22 @@ PrefabInstance:
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.maxHealth
-      value: 5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.health
-      value: 5
+      value: 50
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.m_agentFaction
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.Skill
-      value: 0.5
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
@@ -11110,17 +11106,22 @@ PrefabInstance:
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.maxHealth
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.health
-      value: 5
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
       propertyPath: AgentData.Skill
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 8851718178877291366, guid: a7f972425dddb5e43a2f28a3ecfa04de,
+        type: 3}
+      propertyPath: AgentData.m_agentFaction
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8851718178877291367, guid: a7f972425dddb5e43a2f28a3ecfa04de,
         type: 3}
@@ -11851,7 +11852,7 @@ MonoBehaviour:
     interactionEnabled: 1
     itemName: 
     interactionTime: 5
-    interactionID: 1
+    interactionID: 3
     offset: {x: 0, y: 0, z: 0}
     rotation: {x: 0, y: 0, z: 0}
     enablePositionRequirment: 1
@@ -11865,7 +11866,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1787097547}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 11.9, y: -0.02, z: 14.05}
+  m_LocalPosition: {x: 11.9, y: 0.54, z: 14.05}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -14776,7 +14777,7 @@ PrefabInstance:
     - target: {fileID: 7245728428309211729, guid: e353e025b0912474287c24977a5250c8,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 14.32
+      value: 2.7
       objectReference: {fileID: 0}
     - target: {fileID: 7245728428309211729, guid: e353e025b0912474287c24977a5250c8,
         type: 3}
@@ -14786,7 +14787,7 @@ PrefabInstance:
     - target: {fileID: 7245728428309211729, guid: e353e025b0912474287c24977a5250c8,
         type: 3}
       propertyPath: m_LocalPosition.z
-      value: -54.51
+      value: 14.1
       objectReference: {fileID: 0}
     - target: {fileID: 7245728428309211729, guid: e353e025b0912474287c24977a5250c8,
         type: 3}
