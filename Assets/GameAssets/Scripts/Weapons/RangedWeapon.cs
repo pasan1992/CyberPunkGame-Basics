@@ -147,6 +147,7 @@ public abstract class RangedWeapon : Weapon
             projetcileBasic.setTargetTransfrom(m_target.transform);
 
             checkFire(m_gunFireingPoint,m_target.transform.position);
+            EnvironmentSound.Instance.broadcastSound(this.transform.position);
 
 
             if (this.isActiveAndEnabled)
@@ -245,13 +246,13 @@ public abstract class RangedWeapon : Weapon
                 case "Cover":
                 case "Wall":
                 //DamageCalculator.onHitEnemy(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
-                DamageCalculator.hitOnWall(hit.collider,hit.point);
+                    DamageCalculator.hitOnWall(hit.collider,hit.point);
                 break;
                 case "Enemy":
                 case "Player":
                 case "Head":
                 case "Chest":
-                DamageCalculator.onHitEnemy2(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
+                    DamageCalculator.onHitEnemy2(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
                 break;       
             }                
         }

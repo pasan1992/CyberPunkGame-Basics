@@ -37,7 +37,11 @@ public abstract class BasicMovmentStage : ICharacterBehaviorState
 
             if (!m_enableRun)
             {
-                velocity = velocity.normalized;
+                if(velocity.magnitude > 1 )
+                {
+                    velocity = velocity.normalized;
+                }
+                
             }
             else
             {

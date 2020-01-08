@@ -240,7 +240,6 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public void landDrone(Vector3 landPosition)
     {
-         Debug.Log("here");
         if(m_currentDroneState.Equals(GameEnums.DroneState.Flying))
         {
             m_droneRigitBody.Sleep();

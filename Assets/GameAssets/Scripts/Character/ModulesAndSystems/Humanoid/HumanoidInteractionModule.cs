@@ -116,7 +116,12 @@ public class HumanoidInteractionModule
             m_interacting = false;
             m_animationModule.setInteraction(false,0);
             m_onInteractionOver();
-            m_currentInteractingObject.stopInteraction();
+            
+            if(m_currentInteractingObject != null)
+            {
+                m_currentInteractingObject.stopInteraction();
+            }
+            
             m_navMesAgent.enabled = true;
         }
     }

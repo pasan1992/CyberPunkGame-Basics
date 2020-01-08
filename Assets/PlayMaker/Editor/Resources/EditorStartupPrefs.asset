@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   welcomeScreenVersion: '1.9.0 '
   playmakerVersion: 
-  showWelcomeScreen: 1
+  showWelcomeScreen: 0
   showUpgradeGuide: 0
   lastAutoUpdateSignature: 2018.4.2f1__D:/Game Development/Main GitProjects/CyberPunkGame3_playmaker/Assets__0.0.0.0
   useLegacyNetworking: 0

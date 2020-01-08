@@ -6,4 +6,5 @@ public class GameEvents
 {
     public delegate void BasicNotifactionEvent();
     public delegate void BasicAgentCallback(ICyberAgent agent);
+    public delegate void BasicPositionEvent(Vector3 position);
 }

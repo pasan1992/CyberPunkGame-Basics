@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class AgentBasicSensor
 {
-    private float m_updateStepInterval = 0.5f;
+    private float m_updateStepInterval = 1f;
     private float m_timeFromLastStep = 0;
 
     public float StepInterval
@@ -36,4 +36,9 @@ public class AgentBasicSensor
     {
 
     } 
+
+    public virtual void forceUpdateSneosr()
+    {
+        onSensorUpdate();
+    }
 }

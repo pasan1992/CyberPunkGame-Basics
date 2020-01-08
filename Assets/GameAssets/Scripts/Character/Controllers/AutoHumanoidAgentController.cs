@@ -30,7 +30,12 @@ public class AutoHumanoidAgentController :  AgentController
     void Start()
     {
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
-        m_combatStage = new CombatStage(m_movingAgent, target,m_navMeshAgent);
+        //m_combatStage = new CombatStage(m_movingAgent, target,m_navMeshAgent);
+        m_combatStage = new CoverPointBasedCombatStage(m_movingAgent,m_navMeshAgent,GameEnums.MovmentBehaviorType.FREE);
+        CoverPointBasedCombatStage combatStage = (CoverPointBasedCombatStage)m_combatStage;
+        //combatStage.CenteredPosition = this.transform.position;
+        //combatStage.MaxDistnaceFromCenteredPoint = 15;
+        //combatStage.CurrentMovmentState = GameEnums.MovmentBehaviorType.NEAR_POINT;
 
         m_iteractionStage = new IteractionStage(m_movingAgent,m_navMeshAgent,rutine.m_wayPoints.ToArray());
 
@@ -42,6 +47,7 @@ public class AutoHumanoidAgentController :  AgentController
         m_movingAgent.enableTranslateMovment(false);
         m_movingAgent.setOnDamagedCallback(onDamaged);
         m_currentState = m_iteractionStage;
+        EnvironmentSound.Instance.listenToSound(onSoundAlert);
     }
     #endregion
 
@@ -74,7 +80,6 @@ public class AutoHumanoidAgentController :  AgentController
         if(m_currentState != m_combatStage)
         {
             switchToCombatStage();
-
         }
     }
 
@@ -112,6 +117,7 @@ public class AutoHumanoidAgentController :  AgentController
     public override void onAgentDisable()
     {
         m_navMeshAgent.enabled = false;
+        EnvironmentSound.Instance.removeListen(onSoundAlert);
     }
 
     public override void onAgentEnable()
@@ -150,8 +156,9 @@ public class AutoHumanoidAgentController :  AgentController
         {
             if(m_currentState != m_combatStage)
             {
+                m_movingAgent.cancleInteraction();
                 timeFromLastSwitch = 0;
-                ((CombatStage)m_combatStage).initalizeStage();
+                m_combatStage.initalizeStage();
                 m_currentState = m_combatStage;
             }
         }
@@ -211,6 +218,15 @@ public class AutoHumanoidAgentController :  AgentController
                 StartCoroutine(switchFromCombatStageToIteractionStage());
             }
         }
+    }
+
+    public void onSoundAlert(Vector3 position)
+    {
+        if(m_currentState != m_combatStage)
+        {
+            switchToCombatStage();
+        }   
+        m_visualSensor.forceUpdateSneosr();   
     }
     #endregion
 

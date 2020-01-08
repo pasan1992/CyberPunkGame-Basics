@@ -56,6 +56,11 @@ public class CoverPoint : MonoBehaviour, IPoints
 
     public bool isSafeFromTarget()
     {
+        if(target == null)
+        {
+            return false;
+        }
+        
         RaycastHit hit;
         string[] layerMaskNames = { "HalfCoverObsticles" };
         if (Physics.Raycast(transform.position + new Vector3(0,0.5f,0), target.getCurrentPosition() - this.transform.position -new Vector3(0,0.5f,0), out hit,5, LayerMask.GetMask(layerMaskNames)))
