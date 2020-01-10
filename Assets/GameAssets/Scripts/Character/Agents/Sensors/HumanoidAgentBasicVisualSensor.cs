@@ -9,7 +9,7 @@ public class HumanoidAgentBasicVisualSensor : AgentBasicSensor
     GameEvents.BasicNotifactionEvent onAllClear;
 
     private int allClearCount = 0;
-    private int maximummAllClearCount = 500;
+    private int maximummAllClearCount = 120;
 
     private  List<ICyberAgent> agentList;
 
@@ -23,9 +23,11 @@ public class HumanoidAgentBasicVisualSensor : AgentBasicSensor
 
     FakeMovingAgent m_fakeAgent;
 
-    private float visualConeAngle = 85;
+    private float VISUAL_CONE_ANGLE = 150;
 
-    private float visualDistnace = 12;
+    private float VISUAL_DISTANCE = 20;
+
+    private float MINIMUM_CLOSE_SENSTIVITY_DISTANCE = 2;
 
     private bool normalUpdate = false;
 
@@ -40,8 +42,7 @@ public class HumanoidAgentBasicVisualSensor : AgentBasicSensor
     
     protected override void onSensorUpdate()
     {
-        Collider[] hitColliders = Physics.OverlapSphere(m_agent.getCurrentPosition(), visualDistnace);
-        agentList.Clear();
+        Collider[] hitColliders = Physics.OverlapSphere(m_agent.getCurrentPosition(), VISUAL_DISTANCE);
         closestDistance = float.MaxValue;
         ICyberAgent previousAgent = targetAgent;
         targetAgent = null;
@@ -51,6 +52,7 @@ public class HumanoidAgentBasicVisualSensor : AgentBasicSensor
                 switch (hitCollider.tag)
                 {
                     case "Chest":
+                        // Set Target Agent
                         onHumanAgentDetected(hitCollider);
                         break;
                     case "Wall":
@@ -65,20 +67,20 @@ public class HumanoidAgentBasicVisualSensor : AgentBasicSensor
         // Check for all clear
         if(targetAgent == null)
         {
-            if(normalUpdate)
-            {
-                allClearCount++;
-            }
-            
+
+            allClearCount++;   
+                   
             if(allClearCount > maximummAllClearCount || (agentList.Count == 0 && allClearCount > maximummAllClearCount/20))
             {
-                Debug.Log(allClearCount);
+                Debug.Log("wait countdown " +allClearCount);
+                Debug.Log("Agent Count " + agentList.Count);
                 allClearCount = 0;
                 onAllClear();
             }
             else if(previousAgent != null)
             {
                 m_fakeAgent.moveCharacter(previousAgent.getTopPosition());
+                m_fakeAgent.setActualAgent(previousAgent);
                 onEnemyDetection(m_fakeAgent);
             }
         }
@@ -86,7 +88,9 @@ public class HumanoidAgentBasicVisualSensor : AgentBasicSensor
         {
             if(!agentList.Contains(targetAgent))
             {
+                Debug.Log("Added " + targetAgent.getTransfrom().name);
                 agentList.Add(targetAgent);
+                Debug.Log("Agent List cound when added " + agentList.Count);
                 targetAgent.setOnDestoryCallback(onEnemeyDestoryed);
             }
             
@@ -96,13 +100,23 @@ public class HumanoidAgentBasicVisualSensor : AgentBasicSensor
 
     public override void forceUpdateSneosr()
     {
-        visualConeAngle = 360;
-        visualDistnace = 20;
+        VISUAL_CONE_ANGLE = 360;
+        VISUAL_DISTANCE = 20;
         normalUpdate = false;
         onSensorUpdate();
-        visualConeAngle = 85;
-        visualDistnace = 12;
+        VISUAL_CONE_ANGLE = 85;
+        VISUAL_DISTANCE = 12;
         normalUpdate = true;
+    }
+    
+    public void forceGussedTargetLocation(Vector3 position)
+    {
+        // If there is no current target, set the given location as the new target location.
+        if(targetAgent == null)
+        {
+            m_fakeAgent.moveCharacter(position);
+            onEnemyDetection(m_fakeAgent);
+        }
     }
 
     private void onHumanAgentDetected(Collider collider)
@@ -115,7 +129,7 @@ public class HumanoidAgentBasicVisualSensor : AgentBasicSensor
             float distance = direction.magnitude;
             direction = direction.normalized;
 
-            if( Vector3.Angle(direction,m_agent.getGameObject().transform.forward)< visualConeAngle && distance < closestDistance && detectedAgent.IsFunctional() && isVisible(detectedAgent) )
+            if( Vector3.Angle(direction,m_agent.getGameObject().transform.forward)< VISUAL_CONE_ANGLE && distance < closestDistance && detectedAgent.IsFunctional() && isVisible(detectedAgent) )
             { 
                 closestDistance = distance;
                 targetAgent = detectedAgent;  
@@ -125,10 +139,13 @@ public class HumanoidAgentBasicVisualSensor : AgentBasicSensor
 
     private bool isVisible(HumanoidMovingAgent detectedAgent)
     {
-        Vector3 direction =  (m_agent.getCurrentPosition() - detectedAgent.getCurrentPosition()).normalized;
-        if(detectedAgent.isCrouched() && !detectedAgent.isAimed())
+        Vector3 direction =  (m_agent.getCurrentPosition() - detectedAgent.getCurrentPosition());
+        float distance = direction.magnitude;
+        
+        if(distance > MINIMUM_CLOSE_SENSTIVITY_DISTANCE && detectedAgent.isCrouched() && !detectedAgent.isAimed())
         {
-            if (Physics.Raycast(detectedAgent.getCurrentPosition() + Vector3.up*0.5f,direction, out hit, 10, LayerMask.GetMask(layerMaskNames)))
+            direction = direction.normalized;
+            if (Physics.Raycast(detectedAgent.getCurrentPosition() + Vector3.up*0.5f,direction, out hit, 3, LayerMask.GetMask(layerMaskNames)))
             {
                 return false;
             }
@@ -148,8 +165,10 @@ public class HumanoidAgentBasicVisualSensor : AgentBasicSensor
 
     public void onEnemeyDestoryed()
     {
+        
         if(agentList.Count > 0)
         {
+            Debug.Log( "Removed "+ agentList[agentList.Count-1].getTransfrom().name);
             agentList.RemoveAt(agentList.Count-1);
         }
     }

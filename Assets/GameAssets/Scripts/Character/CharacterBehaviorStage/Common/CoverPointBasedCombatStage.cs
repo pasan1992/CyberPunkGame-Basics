@@ -10,7 +10,7 @@ public class CoverPointBasedCombatStage : BasicMovmentCombatStage
 
     private GameEnums.Cover_based_combat_stages m_coverBasedStages;
 
-    float fireRangeDistance = 15;
+    float fireRangeDistance = 10;
     int m_maxTimeLimitAtCover = 20;
     int m_currentTimeAtCover;
     int m_noOfIteractions =4;
@@ -20,6 +20,8 @@ public class CoverPointBasedCombatStage : BasicMovmentCombatStage
     private Transform targetLocation;
     private Vector3 randomOffset;
     private float suppriceFactor = 0;
+
+    private bool damageAlert = false;
 
     public CoverPointBasedCombatStage(ICyberAgent selfAgent, NavMeshAgent agent,GameEnums.MovmentBehaviorType behaviorType) : base(selfAgent, agent)
     {
@@ -100,11 +102,17 @@ public class CoverPointBasedCombatStage : BasicMovmentCombatStage
                     m_selfAgent.stopAiming();
                     m_enableRun = true;
                 }
+
+                if(damageAlert)
+                {
+                    m_selfAgent.dodgeAttack(m_navMeshAgent.desiredVelocity);
+                }
             break;
             case GameEnums.MovmentBehaviorStage.CALULATING_NEXT_POINT:
                 getUpFromCover();
             break;
         }
+        damageAlert = false;
     }
 
     private void coverBasedCombat()
@@ -128,9 +136,21 @@ public class CoverPointBasedCombatStage : BasicMovmentCombatStage
                 // After staying at cover, peek and shoot
                 if(m_noOfIteractions == 0)
                  {
-                    m_selfAgent.aimWeapon();
-                    m_noOfIteractions = (int)Random.Range(4,10);
-                    m_coverBasedStages = GameEnums.Cover_based_combat_stages.SHOOT;
+                    if(Vector3.Distance(m_selfAgent.getCurrentPosition(), m_target.getCurrentPosition()) < fireRangeDistance)
+                    {
+                        m_selfAgent.aimWeapon();
+                        m_noOfIteractions = (int)Random.Range(4,10);
+                        m_coverBasedStages = GameEnums.Cover_based_combat_stages.SHOOT;
+                    }
+                    else
+                    {
+                        m_noOfIteractions = 0;
+                        if(Random.value > 0.9f)
+                        {
+                            m_selfAgent.dodgeAttack(Random.insideUnitSphere);
+                        }
+                    }
+
                     break;
                  }
 
@@ -258,6 +278,12 @@ public class CoverPointBasedCombatStage : BasicMovmentCombatStage
         }
     }
 
+    public void alrtDamage()
+    {
+        if(Random.value > 0.5f)
+        damageAlert = true;
+    }
+
     private void findTargetLocationToFire()
     {
         if(m_target !=null)
@@ -280,7 +306,7 @@ public class CoverPointBasedCombatStage : BasicMovmentCombatStage
 
             if(Random.value + suppriceFactor > m_selfAgent.getSkill())
             {
-                randomOffset = Random.insideUnitSphere * 2;
+                randomOffset = Random.insideUnitSphere * 0.8f;
             }
             else
             {

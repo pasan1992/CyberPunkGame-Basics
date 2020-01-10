@@ -8,6 +8,7 @@ using UnityEngine.AI;
 public class FakeMovingAgent : ICyberAgent
 {
     GameObject fakeObject;
+    ICyberAgent m_atualAgent;
 
     public FakeMovingAgent(Vector3 position)
     {
@@ -178,6 +179,19 @@ public class FakeMovingAgent : ICyberAgent
     public void weaponFireForAI()
     {
         throw new System.NotImplementedException();
+    }
+
+    public void setActualAgent(ICyberAgent actualAgent)
+    {
+        m_atualAgent = actualAgent;
+    }
+
+    public void updatePosition()
+    {
+        // if(m_atualAgent != null)
+        // {
+        //     fakeObject.transform.position = m_atualAgent.getCurrentPosition() + new Vector3(Random.value*0.5f,0,Random.value*0.5f);
+        // }
     }
 }
 

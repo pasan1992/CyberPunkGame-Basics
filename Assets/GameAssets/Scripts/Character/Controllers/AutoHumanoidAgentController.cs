@@ -30,13 +30,8 @@ public class AutoHumanoidAgentController :  AgentController
     void Start()
     {
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
-        //m_combatStage = new CombatStage(m_movingAgent, target,m_navMeshAgent);
         m_combatStage = new CoverPointBasedCombatStage(m_movingAgent,m_navMeshAgent,GameEnums.MovmentBehaviorType.FREE);
         CoverPointBasedCombatStage combatStage = (CoverPointBasedCombatStage)m_combatStage;
-        //combatStage.CenteredPosition = this.transform.position;
-        //combatStage.MaxDistnaceFromCenteredPoint = 15;
-        //combatStage.CurrentMovmentState = GameEnums.MovmentBehaviorType.NEAR_POINT;
-
         m_iteractionStage = new IteractionStage(m_movingAgent,m_navMeshAgent,rutine.m_wayPoints.ToArray());
 
         m_visualSensor = new HumanoidAgentBasicVisualSensor(m_movingAgent);
@@ -68,7 +63,6 @@ public class AutoHumanoidAgentController :  AgentController
         if(m_currentState != null && m_movingAgent.IsFunctional() && !m_movingAgent.isDisabled() & isInUse())
         {
             m_currentState.updateStage();
-            //m_visualSensor.UpdateSensor();
         }
     }
     #endregion
@@ -80,6 +74,10 @@ public class AutoHumanoidAgentController :  AgentController
         if(m_currentState != m_combatStage)
         {
             switchToCombatStage();
+        }
+        else
+        {
+            ((CoverPointBasedCombatStage)m_combatStage).alrtDamage();
         }
     }
 
@@ -174,7 +172,9 @@ public class AutoHumanoidAgentController :  AgentController
     {
         if(m_currentState.Equals(m_combatStage))
         {
-            m_combatStage.endStage();
+            
+            m_currentState.endStage();
+            m_currentState = null;
 
             if(m_movingAgent.isHidden())
             {
@@ -187,6 +187,7 @@ public class AutoHumanoidAgentController :  AgentController
             }
            // This corutine will run until weapon is hosted
             yield return StartCoroutine(m_movingAgent.waitTillWeaponHosted());
+            Debug.Log("All clear4");
         }
     }
 
@@ -209,8 +210,10 @@ public class AutoHumanoidAgentController :  AgentController
 
     public void onAllClear()
     {
+        Debug.Log("All clear");
         if(timeFromLastSwitch > MaxomumWaitTimeToSwitch)
         {
+            Debug.Log("All clear2");
             timeFromLastSwitch = 0;
 
             if(!m_currentState.Equals(m_iteractionStage))
@@ -220,13 +223,19 @@ public class AutoHumanoidAgentController :  AgentController
         }
     }
 
-    public void onSoundAlert(Vector3 position)
+    public void onSoundAlert(Vector3 position, AgentBasicData.AgentFaction faction)
     {
-        if(m_currentState != m_combatStage)
+        if( m_currentState != m_combatStage)
         {
             switchToCombatStage();
-        }   
-        m_visualSensor.forceUpdateSneosr();   
+            m_visualSensor.forceUpdateSneosr();
+        }     
+
+        // If sound is comming from a enemy agent, force guess the location of the agent
+        if(!faction.Equals(m_movingAgent.AgentData.m_agentFaction))
+        {
+            m_visualSensor.forceGussedTargetLocation(position);
+        }
     }
     #endregion
 

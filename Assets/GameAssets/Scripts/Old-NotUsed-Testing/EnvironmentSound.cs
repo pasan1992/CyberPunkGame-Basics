@@ -6,7 +6,7 @@ public class EnvironmentSound : MonoBehaviour
 {
     // Start is called before the first frame update
     private static EnvironmentSound _environmentSound;
-    private GameEvents.BasicPositionEvent m_positionCallback;
+    private GameEvents.BasicSoundEvent m_positionCallback;
 
     public static EnvironmentSound Instance
     {
@@ -20,27 +20,25 @@ public class EnvironmentSound : MonoBehaviour
         }
     }
 
-
-
     void Awake()
     {
         _environmentSound = this;
     }
 
-    public void broadcastSound(Vector3 position)
+    public void broadcastSound(Vector3 position, AgentBasicData.AgentFaction faction)
     {
         if(m_positionCallback != null)
         {
-            m_positionCallback(position);
+            m_positionCallback(position,faction);
         }
     }
 
-    public void listenToSound(GameEvents.BasicPositionEvent callback)
+    public void listenToSound(GameEvents.BasicSoundEvent callback)
     {
         m_positionCallback += callback;
     }
 
-    public void removeListen(GameEvents.BasicPositionEvent callback)
+    public void removeListen(GameEvents.BasicSoundEvent callback)
     {
         m_positionCallback -= callback;
     }

@@ -147,7 +147,7 @@ public abstract class RangedWeapon : Weapon
             projetcileBasic.setTargetTransfrom(m_target.transform);
 
             checkFire(m_gunFireingPoint,m_target.transform.position);
-            EnvironmentSound.Instance.broadcastSound(this.transform.position);
+            EnvironmentSound.Instance.broadcastSound(this.transform.position,m_ownersFaction);
 
 
             if (this.isActiveAndEnabled)
