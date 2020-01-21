@@ -193,5 +193,20 @@ public class FakeMovingAgent : ICyberAgent
         //     fakeObject.transform.position = m_atualAgent.getCurrentPosition() + new Vector3(Random.value*0.5f,0,Random.value*0.5f);
         // }
     }
+
+    public void setOnDamagedCallback(GameEvents.BasicNotifactionEvent callback)
+    {
+        Debug.LogError("Not implemented yet");
+    }
+
+    public IEnumerator waitTillUnarmed()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void cancleInteraction()
+    {
+        throw new System.NotImplementedException();
+    }
 }
 

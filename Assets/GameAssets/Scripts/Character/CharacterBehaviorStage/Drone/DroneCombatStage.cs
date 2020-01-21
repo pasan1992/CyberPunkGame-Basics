@@ -120,7 +120,6 @@ public class DroneCombatStage : BasicMovmentStage
         NavMesh.SamplePosition(m_movePoint, out hit, 10, 1);
 
         Vector3 finalPosition = m_movePoint;
-        Debug.Log("Position Set");
         m_navMeshAgent.SetDestination(finalPosition);
         m_navMeshAgent.isStopped = false;
     }

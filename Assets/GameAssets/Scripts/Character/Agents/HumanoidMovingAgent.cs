@@ -211,7 +211,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
 
         if (m_onDestoryCallback != null)
         {
-            Debug.Log("Destroy Get called");
+           // Debug.Log("Destroy Get called");
             m_onDestoryCallback();
         }
     }
@@ -492,7 +492,7 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         return false;
     }
 
-    public IEnumerator waitTillWeaponHosted()
+    public IEnumerator waitTillUnarmed()
     {
         while(!this.hosterWeapon())
         {

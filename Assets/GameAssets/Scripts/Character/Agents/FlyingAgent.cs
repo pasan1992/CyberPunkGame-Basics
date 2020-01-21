@@ -363,7 +363,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public Vector3 getCurrentVelocity()
     {
-        throw new System.NotImplementedException();
+        return Vector3.zero;
     }
 
     public AgentData GetAgentData()
@@ -391,5 +391,19 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         takeOff();
     }
 
+    public void setOnDamagedCallback(GameEvents.BasicNotifactionEvent callback)
+    {
+        Debug.LogError("Not implemented yet");
+    }
+
+    public IEnumerator waitTillUnarmed()
+    {
+        throw new System.NotImplementedException();
+    }
+
+    public void cancleInteraction()
+    {
+
+    }
     #endregion
 }

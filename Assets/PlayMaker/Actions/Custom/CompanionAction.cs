@@ -21,7 +21,7 @@ namespace HutongGames.PlayMaker.Actions
 			{
 				companionAgent = go.GetComponent<CompanionController>();
 			}
-			companionAgent.MoveToPosition(moveVector.Value);
+			//companionAgent.MoveToPosition(moveVector.Value);
 			Finish();
 		}
 		// Perform custom error checking here.

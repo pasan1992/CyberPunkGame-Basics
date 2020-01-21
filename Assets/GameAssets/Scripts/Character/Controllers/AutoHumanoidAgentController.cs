@@ -7,33 +7,38 @@ using UnityEngine.AI;
 public class AutoHumanoidAgentController :  AgentController
 {
     public HumanoidMovingAgent target;
+
+    // public HumanoidMovingAgent followingTarget;    
     protected HumanoidMovingAgent m_movingAgent;
     protected ICharacterBehaviorState m_currentState;
     protected ICharacterBehaviorState m_combatStage;
-    protected ICharacterBehaviorState m_iteractionStage;
+    protected ICharacterBehaviorState m_idleStage;
     protected HumanoidAgentBasicVisualSensor m_visualSensor;
     protected NavMeshAgent m_navMeshAgent;
+
+    // private GameObject selfCoverPoint;
     //public float health;
     public WaypointRutine rutine;
 
 
     private float timeFromLastSwitch;
-    private float MaxomumWaitTimeToSwitch  = 2;
+    private float MaxomumWaitTimeToSwitch  = 5;
 
     #region initaialize
 
     private void Awake()
     {
         m_movingAgent = this.GetComponent<HumanoidMovingAgent>();
+        m_navMeshAgent = this.GetComponent<NavMeshAgent>();
+        // GameObject coverpointprefab = Resources.Load<GameObject>("Prefab/CoverPoint");
+        // selfCoverPoint = GameObject.Instantiate(coverpointprefab);
     }
 
     void Start()
     {
-        m_navMeshAgent = this.GetComponent<NavMeshAgent>();
-        m_combatStage = new CoverPointBasedCombatStage(m_movingAgent,m_navMeshAgent,GameEnums.MovmentBehaviorType.FREE);
-        CoverPointBasedCombatStage combatStage = (CoverPointBasedCombatStage)m_combatStage;
-        m_iteractionStage = new IteractionStage(m_movingAgent,m_navMeshAgent,rutine.m_wayPoints.ToArray());
+        inializeGuard();
 
+        // Initalize Agent and sensors
         m_visualSensor = new HumanoidAgentBasicVisualSensor(m_movingAgent);
         m_visualSensor.setOnEnemyDetectionEvent(onEnemyDetection);
         m_visualSensor.setOnAllClear(onAllClear);
@@ -41,15 +46,30 @@ public class AutoHumanoidAgentController :  AgentController
         intializeAgentCallbacks(m_movingAgent);
         m_movingAgent.enableTranslateMovment(false);
         m_movingAgent.setOnDamagedCallback(onDamaged);
-        m_currentState = m_iteractionStage;
+        m_currentState = m_idleStage;
         EnvironmentSound.Instance.listenToSound(onSoundAlert);
+    }
+
+    private void inializeGuard()
+    {
+        m_combatStage = new CoverPointBasedCombatStage(m_movingAgent,m_navMeshAgent,GameEnums.MovmentBehaviorType.FREE);
+        m_idleStage = new IteractionStage(m_movingAgent,m_navMeshAgent,rutine.m_wayPoints.ToArray());
+    }
+
+    private void inializeCompanion()
+    {
+        // m_combatStage = new CoverPointBasedCombatStage(m_movingAgent,m_navMeshAgent,GameEnums.MovmentBehaviorType.FIXED_POSITION, selfCoverPoint.GetComponent<CoverPoint>());
+        // ((CoverPointBasedCombatStage)m_combatStage).CenteredPosition = followingTarget.getCurrentPosition();
+        // m_idleStage = new BasicMovmentCombatStage(m_movingAgent,m_navMeshAgent);
+        // ((BasicMovmentCombatStage)m_combatStage).CurrentMovmentType =GameEnums.MovmentBehaviorType.FIXED_POSITION;
+        // ((BasicMovmentCombatStage)m_combatStage).CenteredPosition = followingTarget.getCurrentPosition();
     }
     #endregion
 
     #region update
     public void Update()
     {
-        timeFromLastSwitch += Time.deltaTime;
+        //timeFromLastSwitch += Time.deltaTime;
         
         if(m_currentState != null && m_movingAgent.IsFunctional() && !m_movingAgent.isDisabled() & isInUse())
         {
@@ -150,6 +170,7 @@ public class AutoHumanoidAgentController :  AgentController
 
     private void switchToCombatStage()
     {
+        timeFromLastSwitch +=2;
         if(timeFromLastSwitch > MaxomumWaitTimeToSwitch)
         {
             if(m_currentState != m_combatStage)
@@ -186,15 +207,14 @@ public class AutoHumanoidAgentController :  AgentController
                 m_movingAgent.stopAiming();
             }
            // This corutine will run until weapon is hosted
-            yield return StartCoroutine(m_movingAgent.waitTillWeaponHosted());
-            Debug.Log("All clear4");
+            yield return StartCoroutine(m_movingAgent.waitTillUnarmed());
         }
     }
 
     private void swithtoIteractionStage()
     {
-        m_currentState = m_iteractionStage;
-        m_iteractionStage.initalizeStage();
+        m_currentState = m_idleStage;
+        m_idleStage.initalizeStage();
     }
     
 
@@ -210,13 +230,12 @@ public class AutoHumanoidAgentController :  AgentController
 
     public void onAllClear()
     {
-        Debug.Log("All clear");
+        timeFromLastSwitch++;
         if(timeFromLastSwitch > MaxomumWaitTimeToSwitch)
         {
-            Debug.Log("All clear2");
             timeFromLastSwitch = 0;
 
-            if(!m_currentState.Equals(m_iteractionStage))
+            if(!m_currentState.Equals(m_idleStage))
             {
                 StartCoroutine(switchFromCombatStageToIteractionStage());
             }
@@ -227,7 +246,7 @@ public class AutoHumanoidAgentController :  AgentController
     {
         if( m_currentState != m_combatStage)
         {
-            switchToCombatStage();
+            //switchToCombatStage();
             m_visualSensor.forceUpdateSneosr();
         }     
 

@@ -22,9 +22,8 @@ public class AutoDroneController :  AgentController
         initalizeNavMeshAgent();      
         initalizeTarget();
         m_selfAgent = this.GetComponent<FlyingAgent>();
-       // m_behaviorState = new DroneCombatStage(m_selfAgent, m_navMeshAgent, m_enemy);
-       // m_behaviorState = new WaypontMovementStage(m_selfAgent,m_navMeshAgent,m_selfAgent.getGameObject().GetComponent<WaypointRutine>().m_wayPoints.ToArray());
-        m_behaviorState = new IteractionStage(m_selfAgent,m_navMeshAgent,m_selfAgent.getGameObject().GetComponent<WaypointRutine>().m_wayPoints.ToArray());
+        //m_behaviorState = new IteractionStage(m_selfAgent,m_navMeshAgent,m_selfAgent.getGameObject().GetComponent<WaypointRutine>().m_wayPoints.ToArray());
+        m_behaviorState = new DroneCombatStage(m_selfAgent,m_navMeshAgent,FindObjectOfType<PlayerController>().GetComponent<HumanoidMovingAgent>());
         tempFloat = Random.value * 10;
     }
 
