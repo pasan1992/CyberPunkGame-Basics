@@ -11,57 +11,35 @@ public class AutoDroneController :  AgentController
 
     private FlyingAgent m_selfAgent;
     private NavMeshAgent m_navMeshAgent;
-    private ICyberAgent m_enemy;
-    private ICharacterBehaviorState m_behaviorState;
-
-    private float tempFloat;
+    private ICharacterBehaviorState m_currentBehaviorState;
+    private ICharacterBehaviorState m_combatState;
+    private ICharacterBehaviorState m_itearationState;
+    private HumanoidAgentBasicVisualSensor m_visualSensor;
+    private bool inStateTransaction = false;
 
     #region initalize
     void Awake()
     {
-        initalizeNavMeshAgent();      
-        initalizeTarget();
+        m_navMeshAgent = this.GetComponent<NavMeshAgent>();
+        m_navMeshAgent.updateRotation = false;    
         m_selfAgent = this.GetComponent<FlyingAgent>();
-        //m_behaviorState = new IteractionStage(m_selfAgent,m_navMeshAgent,m_selfAgent.getGameObject().GetComponent<WaypointRutine>().m_wayPoints.ToArray());
-        m_behaviorState = new DroneCombatStage(m_selfAgent,m_navMeshAgent,FindObjectOfType<PlayerController>().GetComponent<HumanoidMovingAgent>());
-        tempFloat = Random.value * 10;
+
+        m_itearationState = new IteractionStage(m_selfAgent,m_navMeshAgent,m_selfAgent.getGameObject().GetComponent<WaypointRutine>().m_wayPoints.ToArray());
+        m_combatState = new DroneCombatStage(m_selfAgent,m_navMeshAgent,FindObjectOfType<PlayerController>().GetComponent<HumanoidMovingAgent>());
+        m_currentBehaviorState  = m_itearationState;
+
+        m_visualSensor = new HumanoidAgentBasicVisualSensor(m_selfAgent);
     }
 
     private void Start()
     {
-        initalizeICyberAgent();
-    }
-
-    private void initalizeTarget()
-    {
-        GameObject[] playerTaggedObjects = GameObject.FindGameObjectsWithTag(enemyTag);
-
-        foreach (GameObject obj in playerTaggedObjects)
-        {
-            if (obj != this.gameObject)
-            {
-                m_enemy = obj.GetComponent<HumanoidMovingAgent>();
-
-                if (m_enemy != null)
-                {
-                    break;
-                }
-            }
-
-        }
-    }
-
-    private void initalizeNavMeshAgent()
-    {
-        m_navMeshAgent = this.GetComponent<NavMeshAgent>();
-        m_navMeshAgent.updateRotation = false;
-    }
-
-    private void initalizeICyberAgent()
-    {
-        //m_selfAgent.setFaction(m_agentFaction);
         intializeAgentCallbacks(m_selfAgent);
-        m_selfAgent.aimWeapon();
+        m_selfAgent.setOnDamagedCallback(onDamaged);
+
+        m_visualSensor.setOnEnemyDetectionEvent(onEnemyDetection);
+        m_visualSensor.setOnAllClear(onAllClear);
+        
+        EnvironmentSound.Instance.listenToSound(onSoundAlert);  
     }
 
     #endregion
@@ -73,23 +51,18 @@ public class AutoDroneController :  AgentController
     {
         if(m_selfAgent.IsFunctional() && !m_selfAgent.isDisabled() && isInUse())
         {
-            m_behaviorState.updateStage();
+            m_currentBehaviorState.updateStage();
+
+            if(!m_selfAgent.isInteracting())
+            {
+                m_visualSensor.UpdateSensor();
+            }
+            
         }
     }
 
     private void droneUpdate()
     {
-        //m_navMeshAgent.SetDestination(m_enemy.getTransfrom().transform.position + new Vector3(tempFloat, 0, tempFloat));
-        //m_navMeshAgent.updateRotation = true;
-
-        //if (!m_navMeshAgent.pathPending)
-        //{
-        //    Vector3 velocity = m_navMeshAgent.desiredVelocity;
-        //    velocity = new Vector3(velocity.x, 0, velocity.z);
-        //    m_selfAgent.moveCharacter(velocity);
-        //}
-
-        //m_selfAgent.setTargetPoint(m_enemy.getTransfrom().position);
     }
 
     #endregion
@@ -101,11 +74,12 @@ public class AutoDroneController :  AgentController
 
     public override void setMovableAgent(ICyberAgent agent)
     {
+        m_selfAgent = (FlyingAgent)agent;
     }
 
     public override float getSkill()
     {
-        throw new System.NotImplementedException();
+        return m_selfAgent.GetAgentData().Skill;
     }
 
     public override ICyberAgent getICyberAgent()
@@ -113,9 +87,59 @@ public class AutoDroneController :  AgentController
         return m_selfAgent;
     }
 
+    private void switchToCombatStage()
+    {
+        if(m_currentBehaviorState !=m_combatState && !inStateTransaction)
+        {
+            m_selfAgent.cancleInteraction();
+            inStateTransaction = true;
+            StartCoroutine(waitTillInteractionStopAndSwitchToCombat());
+        }  
+    }
+
     #endregion
 
     #region events
+
+    public void onDamaged()
+    {
+        switchToCombatStage();
+    }
+    public void onSoundAlert(Vector3 position, AgentBasicData.AgentFaction faction)
+    {
+        if( m_currentBehaviorState != m_combatState)
+        {
+            m_visualSensor.forceUpdateSneosr();
+        }     
+
+        // If sound is comming from a enemy agent, force guess the location of the agent
+        if(!faction.Equals(m_selfAgent.GetAgentData().m_agentFaction))
+        {
+            m_visualSensor.forceGussedTargetLocation(position);
+        }
+     }
+
+    public void onEnemyDetection(ICyberAgent opponent)
+    {
+         m_combatState.setTargets(opponent);
+        switchToCombatStage();
+    }
+
+    IEnumerator waitTillInteractionStopAndSwitchToCombat()
+    {
+        yield return m_selfAgent.waitTilInteractionOver();
+        m_currentBehaviorState = m_combatState;
+        inStateTransaction = false;
+        m_navMeshAgent.enabled =true;
+    }
+
+    public void onAllClear()
+    {
+        if(m_currentBehaviorState != m_itearationState)
+        {
+            m_currentBehaviorState =m_itearationState;
+        }
+    }
     public override void OnAgentDestroy()
     {
         //TEst
@@ -129,9 +153,6 @@ public class AutoDroneController :  AgentController
 
         this.transform.position = new Vector3(3.18f, 3.27f, 52.93f);
         setInUse(false);
-        //this.gameObject.SetActive(false);
-
-        //Invoke("resetCharacher", Random.value*5 + 5);
     }
 
 
@@ -156,10 +177,6 @@ public class AutoDroneController :  AgentController
 
     public override void resetCharacher()
     {
-        //TEMP CODE
-        //this.transform.position = FindObjectOfType<SpawnPoint>().transform.position + new Vector3(0,20,0);
-
-
         m_selfAgent.resetAgent();
 
         if(m_navMeshAgent.isOnNavMesh && m_navMeshAgent.isStopped)

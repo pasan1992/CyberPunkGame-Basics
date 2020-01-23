@@ -30,8 +30,6 @@ public class AutoHumanoidAgentController :  AgentController
     {
         m_movingAgent = this.GetComponent<HumanoidMovingAgent>();
         m_navMeshAgent = this.GetComponent<NavMeshAgent>();
-        // GameObject coverpointprefab = Resources.Load<GameObject>("Prefab/CoverPoint");
-        // selfCoverPoint = GameObject.Instantiate(coverpointprefab);
     }
 
     void Start()
@@ -54,15 +52,6 @@ public class AutoHumanoidAgentController :  AgentController
     {
         m_combatStage = new CoverPointBasedCombatStage(m_movingAgent,m_navMeshAgent,GameEnums.MovmentBehaviorType.FREE);
         m_idleStage = new IteractionStage(m_movingAgent,m_navMeshAgent,rutine.m_wayPoints.ToArray());
-    }
-
-    private void inializeCompanion()
-    {
-        // m_combatStage = new CoverPointBasedCombatStage(m_movingAgent,m_navMeshAgent,GameEnums.MovmentBehaviorType.FIXED_POSITION, selfCoverPoint.GetComponent<CoverPoint>());
-        // ((CoverPointBasedCombatStage)m_combatStage).CenteredPosition = followingTarget.getCurrentPosition();
-        // m_idleStage = new BasicMovmentCombatStage(m_movingAgent,m_navMeshAgent);
-        // ((BasicMovmentCombatStage)m_combatStage).CurrentMovmentType =GameEnums.MovmentBehaviorType.FIXED_POSITION;
-        // ((BasicMovmentCombatStage)m_combatStage).CenteredPosition = followingTarget.getCurrentPosition();
     }
     #endregion
 

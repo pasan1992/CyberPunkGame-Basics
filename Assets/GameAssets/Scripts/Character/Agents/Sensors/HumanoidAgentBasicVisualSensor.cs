@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HumanoidAgentBasicVisualSensor : AgentBasicSensor
 {
-    HumanoidMovingAgent m_agent;
+    ICyberAgent m_agent;
     GameEvents.BasicAgentCallback onEnemyDetection;
     GameEvents.BasicNotifactionEvent onAllClear;
 
@@ -34,7 +34,7 @@ public class HumanoidAgentBasicVisualSensor : AgentBasicSensor
 
     public HumanoidAgentBasicVisualSensor(ICyberAgent agent) : base(agent)
     {
-        m_agent = (HumanoidMovingAgent)agent;
+        m_agent = agent;
         agentList = new List<ICyberAgent>();
         m_fakeAgent = new FakeMovingAgent(Vector3.zero);
     }
@@ -192,5 +192,10 @@ public class HumanoidAgentBasicVisualSensor : AgentBasicSensor
             //Debug.Log( "Removed "+ agentList[agentList.Count-1].getTransfrom().name);
             agentList.RemoveAt(agentList.Count-1);
         }
+    }
+
+    public void setVisualDistance(float distance)
+    {
+        VISUAL_DISTANCE = distance;
     }
 }

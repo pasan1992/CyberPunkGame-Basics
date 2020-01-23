@@ -37,6 +37,8 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public Transform landingPad;
 
+    private GameEvents.BasicNotifactionEvent m_onDamaged;
+
     #region initalize
 
     public void Awake()
@@ -172,6 +174,8 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         tempProjectile.setFiredFrom(m_agentData.m_agentFaction);
         tempProjectile.resetToMicroBeam();
 
+        DamageCalculator.checkFire(m_droneRigitBody.transform.position + Tempprojectile.transform.forward *0.5f,m_target.transform.position,m_agentData.m_agentFaction);
+
         m_audioSource.Play();
     }
 
@@ -189,6 +193,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     public void damageAgent(float amount)
     {
         m_damageModule.DamageByAmount(amount);
+        m_onDamaged();
     }
 
     public void moveCharacter(Vector3 movmentDirection)
@@ -373,7 +378,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public bool isInteracting()
     {
-        return m_currentDroneState == GameEnums.DroneState.Flying || m_currentDroneState == GameEnums.DroneState.Landing || m_currentDroneState == GameEnums.DroneState.Landed ;  
+        return m_currentDroneState == GameEnums.DroneState.TakeOff || m_currentDroneState == GameEnums.DroneState.Landing || m_currentDroneState == GameEnums.DroneState.Landed ;  
     }
 
     public void interactWith(Interactable interactableObj,Interactable.InteractableProperties.InteractableType type)
@@ -391,9 +396,17 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         takeOff();
     }
 
+    public IEnumerable waitTilInteractionOver()
+    {
+        while(isInteracting())
+        {
+            yield return null;
+        }
+    }
+
     public void setOnDamagedCallback(GameEvents.BasicNotifactionEvent callback)
     {
-        Debug.LogError("Not implemented yet");
+        m_onDamaged = callback;
     }
 
     public IEnumerator waitTillUnarmed()
@@ -403,7 +416,10 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public void cancleInteraction()
     {
-
+        if(isInteracting())
+        {
+            takeOff();
+        }
     }
     #endregion
 }
