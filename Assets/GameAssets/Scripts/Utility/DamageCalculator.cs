@@ -61,56 +61,56 @@ public class DamageCalculator
             basicHitParticle.transform.position = hitPositon;
             basicHitParticle.transform.LookAt(Vector3.up);
     }
-    public static void onHitEnemy(Collider other,AgentBasicData.AgentFaction m_fireFrom,Vector3 hitDirection)
-    {
-        AgentController agentController = other.transform.GetComponentInParent<AgentController>();
-        if (agentController != null)
-        {
-            ICyberAgent cyberAgent = agentController.getICyberAgent();
-            if (cyberAgent !=null && !m_fireFrom.Equals(cyberAgent.getFaction()))
-            {
+    // public static void onHitEnemy(Collider other,AgentBasicData.AgentFaction m_fireFrom,Vector3 hitDirection)
+    // {
+    //     AgentController agentController = other.transform.GetComponentInParent<AgentController>();
+    //     if (agentController != null)
+    //     {
+    //         ICyberAgent cyberAgent = agentController.getICyberAgent();
+    //         if (cyberAgent !=null && !m_fireFrom.Equals(cyberAgent.getFaction()))
+    //         {
 
-                //cyberAgent.reactOnHit(other, (hitDirection) * 3f, other.transform.position);
-                //cyberAgent.damageAgent(1);
-                agentController.GetComponent<HumanoidDamagableObject>().damage(1,other,(hitDirection) * 3f,other.transform.position);
+    //             //cyberAgent.reactOnHit(other, (hitDirection) * 3f, other.transform.position);
+    //             //cyberAgent.damageAgent(1);
+    //             agentController.GetComponent<HumanoidDamagableObject>().damage(1,other,(hitDirection) * 3f,other.transform.position);
             
-                GameObject basicHitParticle = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.HitBasicParticle);
-                basicHitParticle.SetActive(true);
-                basicHitParticle.transform.position = other.transform.position;
-                basicHitParticle.transform.LookAt(Vector3.up);
+    //             GameObject basicHitParticle = ProjectilePool.getInstance().getPoolObject(ProjectilePool.POOL_OBJECT_TYPE.HitBasicParticle);
+    //             basicHitParticle.SetActive(true);
+    //             basicHitParticle.transform.position = other.transform.position;
+    //             basicHitParticle.transform.LookAt(Vector3.up);
  
-                if (!cyberAgent.IsFunctional())
-                {
-                    HumanoidMovingAgent movingAgent = cyberAgent as HumanoidMovingAgent;
-                    if(movingAgent !=null)
-                    {
-                        Rigidbody rb = other.transform.GetComponent<Rigidbody>();
+    //             if (!cyberAgent.IsFunctional())
+    //             {
+    //                 HumanoidMovingAgent movingAgent = cyberAgent as HumanoidMovingAgent;
+    //                 if(movingAgent !=null)
+    //                 {
+    //                     Rigidbody rb = other.transform.GetComponent<Rigidbody>();
 
-                        if (rb != null)
-                        {
-                            rb.isKinematic = false;
-                            rb.AddForce((hitDirection) * 150, ForceMode.Impulse);
-                        }
+    //                     if (rb != null)
+    //                     {
+    //                         rb.isKinematic = false;
+    //                         rb.AddForce((hitDirection) * 150, ForceMode.Impulse);
+    //                     }
 
-                        Rigidbody hitRb =  movingAgent.getChestTransfrom().GetComponent<Rigidbody>();
+    //                     Rigidbody hitRb =  movingAgent.getChestTransfrom().GetComponent<Rigidbody>();
 
-                        if(hitRb)
-                        {
-                            hitRb.AddForce((hitDirection) * 2 + Random.insideUnitSphere*2, ForceMode.Impulse);
-                        }
+    //                     if(hitRb)
+    //                     {
+    //                         hitRb.AddForce((hitDirection) * 2 + Random.insideUnitSphere*2, ForceMode.Impulse);
+    //                     }
 
-                    }
-                    else
-                    {
-                       basicHitParticle.transform.position = cyberAgent.getTopPosition();
-                    }
-                }
-            }
+    //                 }
+    //                 else
+    //                 {
+    //                    basicHitParticle.transform.position = cyberAgent.getTopPosition();
+    //                 }
+    //             }
+    //         }
 
-        }
-    }
+    //     }
+    // }
 
-    public static void onHitEnemy2(Collider other,AgentBasicData.AgentFaction m_fireFrom,Vector3 hitDirection)
+    public static void onHitEnemy(Collider other,AgentBasicData.AgentFaction m_fireFrom,Vector3 hitDirection)
     {
         DamagableObject damagableObject = other.transform.GetComponentInParent<DamagableObject>();
         if (damagableObject != null)
@@ -164,7 +164,7 @@ public class DamageCalculator
                 case "Player":
                 case "Head":
                 case "Chest":
-                DamageCalculator.onHitEnemy2(hit.collider,ownersFaction,(targetPositon-startPositon).normalized);
+                DamageCalculator.onHitEnemy(hit.collider,ownersFaction,(targetPositon-startPositon).normalized);
                 hitOnEnemy = true;
                 break;       
             }          
@@ -185,7 +185,7 @@ public class DamageCalculator
                 case "Player":
                 case "Head":
                 case "Chest":
-                    DamageCalculator.onHitEnemy2(hit.collider,ownersFaction,(targetPositon-startPositon).normalized);
+                    DamageCalculator.onHitEnemy(hit.collider,ownersFaction,(targetPositon-startPositon).normalized);
                 break;       
             }                
         }

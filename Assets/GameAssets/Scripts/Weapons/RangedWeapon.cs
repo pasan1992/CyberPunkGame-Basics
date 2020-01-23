@@ -146,7 +146,7 @@ public abstract class RangedWeapon : Weapon
             projetcileBasic.setFiredFrom(m_ownersFaction);
             projetcileBasic.setTargetTransfrom(m_target.transform);
 
-            checkFire(m_gunFireingPoint,m_target.transform.position);
+            DamageCalculator.checkFire(m_gunFireingPoint,m_target.transform.position,m_ownersFaction);
             EnvironmentSound.Instance.broadcastSound(this.transform.position,m_ownersFaction);
 
 
@@ -211,52 +211,52 @@ public abstract class RangedWeapon : Weapon
         m_rigidbody.isKinematic = true;
     }
 
-    private void checkFire(Vector3 startPositon, Vector3 targetPositon)
-    {
-        RaycastHit hit;
-        string[] layerMaskNames = { "HalfCoverObsticles","FullCoverObsticles","Enemy" };
-        bool hitOnEnemy = false;
+    // private void checkFire(Vector3 startPositon, Vector3 targetPositon)
+    // {
+    //     RaycastHit hit;
+    //     string[] layerMaskNames = { "HalfCoverObsticles","FullCoverObsticles","Enemy" };
+    //     bool hitOnEnemy = false;
 
-        // Give offset to starting postion to avoid bullets colliding in own covers
-        Vector3 offsetTargetPositon =  (targetPositon - startPositon).normalized + startPositon;
-        if (Physics.Raycast(offsetTargetPositon, targetPositon - startPositon, out hit,100, LayerMask.GetMask(layerMaskNames)))
-        {
-            switch(hit.transform.tag)
-            {
-                case "Cover":
-                case "Wall":
-                DamageCalculator.hitOnWall(hit.collider,hit.point);
-                break;
-                case "Enemy":
-                case "Player":
-                case "Head":
-                case "Chest":
-                DamageCalculator.onHitEnemy2(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
-                hitOnEnemy = true;
-                break;       
-            }          
+    //     // Give offset to starting postion to avoid bullets colliding in own covers
+    //     Vector3 offsetTargetPositon =  (targetPositon - startPositon).normalized + startPositon;
+    //     if (Physics.Raycast(offsetTargetPositon, targetPositon - startPositon, out hit,100, LayerMask.GetMask(layerMaskNames)))
+    //     {
+    //         switch(hit.transform.tag)
+    //         {
+    //             case "Cover":
+    //             case "Wall":
+    //             DamageCalculator.hitOnWall(hit.collider,hit.point);
+    //             break;
+    //             case "Enemy":
+    //             case "Player":
+    //             case "Head":
+    //             case "Chest":
+    //             DamageCalculator.onHitEnemy(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
+    //             hitOnEnemy = true;
+    //             break;       
+    //         }          
 
-        }
+    //     }
         
-        // Check fire for the second time for find crouched enemies.
-        if(!hitOnEnemy && Physics.Raycast(offsetTargetPositon, targetPositon + new Vector3(0,-1f,0) - startPositon, out hit,100, LayerMask.GetMask(layerMaskNames)))
-        {
-            switch(hit.transform.tag)
-            {
-                case "Cover":
-                case "Wall":
-                //DamageCalculator.onHitEnemy(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
-                    DamageCalculator.hitOnWall(hit.collider,hit.point);
-                break;
-                case "Enemy":
-                case "Player":
-                case "Head":
-                case "Chest":
-                    DamageCalculator.onHitEnemy2(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
-                break;       
-            }                
-        }
-    }
+    //     // Check fire for the second time for find crouched enemies.
+    //     if(!hitOnEnemy && Physics.Raycast(offsetTargetPositon, targetPositon + new Vector3(0,-1f,0) - startPositon, out hit,100, LayerMask.GetMask(layerMaskNames)))
+    //     {
+    //         switch(hit.transform.tag)
+    //         {
+    //             case "Cover":
+    //             case "Wall":
+    //             //DamageCalculator.onHitEnemy(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
+    //                 DamageCalculator.hitOnWall(hit.collider,hit.point);
+    //             break;
+    //             case "Enemy":
+    //             case "Player":
+    //             case "Head":
+    //             case "Chest":
+    //                 DamageCalculator.onHitEnemy(hit.collider,m_ownersFaction,(targetPositon-startPositon).normalized);
+    //             break;       
+    //         }                
+    //     }
+    // }
 
     #endregion
 }
