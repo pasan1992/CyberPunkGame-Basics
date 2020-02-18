@@ -12,7 +12,7 @@ public class CoverPointBasedCombatStage : BasicMovmentCombatStage
     private GameEnums.Cover_based_combat_stages m_coverBasedStages;
 
     float fireRangeDistance = 15;
-    int m_maxTimeLimitAtCover = 20;
+    int m_maxTimeLimitAtCover = 2;
     int m_currentTimeAtCover;
     int m_noOfIteractions =4;
 
@@ -273,7 +273,8 @@ public class CoverPointBasedCombatStage : BasicMovmentCombatStage
         case GameEnums.MovmentBehaviorStage.CALULATING_NEXT_POINT:
             
             CoverPoint tempCurrentCoverPoint =  CoverPointsManager.getNearCoverObject(m_selfAgent,m_target,fireRangeDistance,true,CenteredPosition,MaxDistnaceFromCenteredPoint);
-            
+            //CoverPoint tempCurrentCoverPoint = CoverPointsManager.getNextCoverPoint(m_currentCoverPoint,m_target,m_selfAgent.getCurrentPosition());
+
             //Stop the moving agent in case status change from moving - calculate next point
             m_navMeshAgent.velocity = Vector3.zero;
             m_navMeshAgent.isStopped = true;
@@ -357,7 +358,7 @@ public class CoverPointBasedCombatStage : BasicMovmentCombatStage
         }
     }
 
-    public void alrtDamage()
+    public override void alrtDamage()
     {
         damageAlert = true;
     }

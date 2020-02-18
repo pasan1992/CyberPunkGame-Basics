@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class DroneCombatStage : BasicMovmentStage
+public class DroneCombatStage : BasicMovmentCombatStage
 {
     ICyberAgent m_opponent;
     public enum DRONE_COMBAT_STAGES { Moving,Fire,DecidingToMove,NONE}
@@ -22,6 +22,7 @@ public class DroneCombatStage : BasicMovmentStage
         setStepIntervalSize(0.5f);
         navMeshAgent.updateRotation = false;
         m_enableRun = true;
+        m_currentMovmentType = GameEnums.MovmentBehaviorType.NEAR_POINT;
     }
 
     #endregion
@@ -36,7 +37,7 @@ public class DroneCombatStage : BasicMovmentStage
         m_selfAgent.setTargetPoint(m_opponent.getTopPosition()+ m_randomTargetOffset);
     }
 
-    protected override void stepUpdate()
+    protected override void updateNearPointPositonMovment()
     {
         logState();
         findTargetLocationToFire();

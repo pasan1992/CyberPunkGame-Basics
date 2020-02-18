@@ -137,4 +137,9 @@ public class BasicMovmentCombatStage : BasicMovmentStage
            break;     
         }
     }
+
+    public virtual void alrtDamage()
+    {
+        
+    }
 }

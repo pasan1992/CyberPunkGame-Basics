@@ -8,7 +8,7 @@ public class CompanionController : AgentController
     private ICyberAgent m_companionAgent;
     private Vector3 m_currentMovmentVector = Vector3.zero;
     private NavMeshAgent m_navMeshAgent;
-    protected CoverPointBasedCombatStage m_combatStage;
+    protected BasicMovmentCombatStage m_combatStage;
     protected BasicMovmentCombatStage m_followStage;
     protected HumanoidAgentBasicVisualSensor m_visualSensor;
     private RaycastHit m_raycastHit;
@@ -30,8 +30,9 @@ public class CompanionController : AgentController
         m_navMeshAgent.updateRotation = false;
 
         // Intalize Stages
-        m_combatStage = new CoverPointBasedCombatStage(m_companionAgent,m_navMeshAgent,GameEnums.MovmentBehaviorType.FIXED_POSITION, m_selfCoverPoint.GetComponent<CoverPoint>());
+        initializeCombatStage();
         m_followStage = new BasicMovmentCombatStage(m_companionAgent,m_navMeshAgent);
+        
         m_followStage.CurrentMovmentType = GameEnums.MovmentBehaviorType.FIXED_POSITION;
         m_currentState = m_followStage;
         m_combatStage.CenteredPosition = m_followingTarget.getCurrentPosition();
@@ -43,6 +44,18 @@ public class CompanionController : AgentController
         m_visualSensor.setOnAllClear(onAllClear);
         m_companionAgent.setOnDamagedCallback(onDamaged);
         
+    }
+
+    private void initializeCombatStage()
+    {
+        if (m_companionAgent is FlyingAgent)
+        {
+            m_combatStage = new DroneCombatStage(((FlyingAgent)m_companionAgent),m_navMeshAgent,null);
+        }
+        else if (m_companionAgent is HumanoidMovingAgent)
+        {
+            m_combatStage = new CoverPointBasedCombatStage(m_companionAgent,m_navMeshAgent,GameEnums.MovmentBehaviorType.FIXED_POSITION, m_selfCoverPoint.GetComponent<CoverPoint>());
+        }
     }
 
     // Update is called once per frame
@@ -141,7 +154,7 @@ public class CompanionController : AgentController
 
     public void onAllClear()
     {
-        if(!m_currentState.Equals(m_followStage))
+        if(m_currentState!= null && !m_currentState.Equals(m_followStage))
         {
             StartCoroutine(switchFromCombatStageToFollowStage());
         }

@@ -17,7 +17,8 @@ public class ProjectilePool : MonoBehaviour
         RifleAmmo,
         Grenade,
         BasicRocket,
-        DroidExplosionParticleEffect
+        DroidExplosionParticleEffect,
+        GlassParticleEffect
     }
 
     // Basic Projectile 
@@ -50,6 +51,10 @@ public class ProjectilePool : MonoBehaviour
     private List<GameObject> rifleAmmoList;
 
     public List<GameObject> grenadeList;
+
+    public int minorPartilceCount = 5;
+
+    private List<GameObject> glassParticles;
 
     #region initialize
 
@@ -146,6 +151,12 @@ public class ProjectilePool : MonoBehaviour
                 droidExplosionsList = new List<GameObject>();
                 effectList = droidExplosionsList;
                 break;
+            case POOL_OBJECT_TYPE.GlassParticleEffect:
+                resourcePath = "ParticleEffects/GlassBreak";
+                count = minorPartilceCount;
+                glassParticles = new List<GameObject>();
+                effectList = glassParticles;         
+                break;      
         }
 
         GameObject bulletHitBasicParticlePrefab = Resources.Load<GameObject>(resourcePath);
@@ -267,6 +278,9 @@ public class ProjectilePool : MonoBehaviour
                 break;
             case POOL_OBJECT_TYPE.DroidExplosionParticleEffect:
                 effectList = droidExplosionsList;
+                break;
+            case POOL_OBJECT_TYPE.GlassParticleEffect:
+                effectList = glassParticles;
                 break;
         }
 

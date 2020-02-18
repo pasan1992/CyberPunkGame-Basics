@@ -50,7 +50,16 @@ EditorBuildSettings:
   - enabled: 0
     path: Assets/Scenes/PC/DevelopmentScenes/DevScene4.unity
     guid: 16a579ee68bc97743902e428cc081d28
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/PC/DevelopmentScenes/DevScene5.unity
     guid: 2a557c5eea0a712459b9e426188136c9
+  - enabled: 0
+    path: Assets/Scenes/PC/DevelopmentScenes/DevScene7.unity
+    guid: 33ae945f94da1c643996799f8b87392e
+  - enabled: 1
+    path: Assets/Scenes/PC/DevelopmentScenes/DevSecne-spaceyard.unity
+    guid: 41bc2194cd06f264c9508dc802408a7f
+  - enabled: 1
+    path: Assets/Scenes/PC/GameScenes/Room.unity
+    guid: fc0c97471fdbd3144ac4b71d3ce25469
   m_configObjects: {}

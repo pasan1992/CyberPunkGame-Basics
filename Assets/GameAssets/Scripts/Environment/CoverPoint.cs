@@ -1,15 +1,25 @@
 ﻿using UnityEngine;
-
+using System.Collections.Generic;
 public class CoverPoint : MonoBehaviour, IPoints
 {
     ICyberAgent target;
     ICyberAgent occupent;
+
+     SortedDictionary<float, CoverPoint> cp_map;
+
+    public SortedDictionary<float, CoverPoint> Cp_map { get => cp_map; set => cp_map = value; }
 
     #region Getters and Setters
     public void Awake()
     {
         this.gameObject.AddComponent<SphereCollider>().isTrigger = true;
     }
+
+    public void Start()
+    {
+        Cp_map = CoverPointsManager.getDistanceMap(this);
+    }
+
     public void setTargetToCover(ICyberAgent target )
     {
         this.target = target;
@@ -122,7 +132,7 @@ public class CoverPoint : MonoBehaviour, IPoints
         }
         else
         {
-            Gizmos.color = Color.gray;
+            Gizmos.color = Color.black;
         }
 
         Gizmos.DrawSphere(transform.position+ new Vector3(0,0.3f,0), 0.3f);

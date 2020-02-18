@@ -24,13 +24,15 @@ public class HumanoidInteractionModule
     private bool m_interacting;
     private bool m_unCancleableInstruction;
     private Interactable m_currentInteractingObject;
+    private Transform m_handTransfrom;
 
     public HumanoidInteractionModule(HumanoidAnimationModule animationModule, 
     HumanoidMovmentModule movmenetModule,
     AgentData agentData,
     HumanoidRangedWeaponsModule equipmentModule,
     NavMeshAgent agent,
-    OnInteractionOver onInteractionOver)
+    OnInteractionOver onInteractionOver,
+    Transform handTransfrom)
     {
         m_animationModule = animationModule;
         m_movementModule = movmenetModule;
@@ -42,6 +44,7 @@ public class HumanoidInteractionModule
         m_unCancleableInstruction = false;
         m_interacting = false;
         m_navMesAgent = agent;
+        m_handTransfrom = handTransfrom;
     }
 
     public IEnumerator interactWith(Interactable interactable,Interactable.InteractableProperties.InteractableType type)
@@ -190,17 +193,17 @@ public class HumanoidInteractionModule
          m_interacting)
         {
 
-            if(Vector3.Distance(transform.position,intendedPosition) > 0.3f)
-            {
-                Debug.Log("position mission");
-            }
+            // if(Vector3.Distance(transform.position,intendedPosition) > 0.3f)
+            // {
+            //     Debug.Log("position mission");
+            // }
             
 
 
-            if(Mathf.Abs(intentedRotation.eulerAngles.y - transform.rotation.eulerAngles.y) > 5f)
-            {
-                Debug.Log("angle missing");
-            }
+            // if(Mathf.Abs(intentedRotation.eulerAngles.y - transform.rotation.eulerAngles.y) > 5f)
+            // {
+            //     Debug.Log("angle missing");
+            // }
 
             transform.rotation = Quaternion.Lerp(transform.rotation,intentedRotation,0.2f);
             transform.position = Vector3.Lerp(transform.position,intendedPosition,0.1f);
@@ -257,6 +260,9 @@ public class HumanoidInteractionModule
             float waitTime = interactableObj.properties.interactionTime;
             float currentWaitedTime = 0;
 
+            
+
+
             while(waitTime > currentWaitedTime && m_interacting)
             {
                 yield return new WaitForSeconds(Time.deltaTime);
@@ -268,6 +274,20 @@ public class HumanoidInteractionModule
             {
                 cancleInteraction();
             }        
+        }
+    }
+
+    // If Object need to be placed on the hand, handle that
+    public void HandInPosition()
+    {
+        if(m_interacting)
+        {
+            if(m_currentInteractingObject.properties.placeObjectInHand)
+            {
+                m_currentInteractingObject.properties.actualObject.transform.parent = m_handTransfrom;
+                m_currentInteractingObject.properties.actualObject.transform.localPosition = m_currentInteractingObject.visualProperties.holdingPositionOffset;
+                m_currentInteractingObject.properties.actualObject.transform.localRotation = Quaternion.Euler(m_currentInteractingObject.visualProperties.holdingRotationOffset);
+            }
         }
     }
 }

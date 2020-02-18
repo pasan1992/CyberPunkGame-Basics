@@ -6,35 +6,37 @@ public class WaypointRutine : MonoBehaviour
 {
     public List<BasicWaypoint> m_wayPoints ;
 
-    public GameObject prefab;
+    public static GameObject prefab;
 
     private static Vector3 lineOffset = new Vector3(0,0.5f,0);
 
-    public void Start()
-    {
-        prefab = Resources.Load<GameObject>("Prefab/BasicWaypoint");
+    public void Awake()
+    {     
         List<BasicWaypoint> m_wayPoints = new List<BasicWaypoint>();
     }
     public void createWaypoint()
     {
-        if(prefab)
+        if(prefab == null)
         {
-            GameObject temp = GameObject.Instantiate(prefab,Vector3.zero,Quaternion.identity);
-            temp.name = this.name + "_waypoint_"+ m_wayPoints.Count.ToString();
-
-            int count = m_wayPoints.Count;
-            if(count == 0)
-            {
-                temp.transform.position = this.transform.position + Vector3.one;
-            }
-            else
-            {
-                temp.transform.position = m_wayPoints[count -1].transform.position + Vector3.left;
-            }
-
-            m_wayPoints.Add(temp.GetComponent<BasicWaypoint>());
-           // temp.transform.parent = this.transform;
+            prefab = Resources.Load<GameObject>("Prefab/BasicWaypoint");
         }
+
+        GameObject temp = GameObject.Instantiate(prefab,Vector3.zero,Quaternion.identity);
+        temp.name = this.name + "_waypoint_"+ m_wayPoints.Count.ToString();
+
+        int count = m_wayPoints.Count;
+        if(count == 0)
+        {
+            temp.transform.position = this.transform.position + Vector3.one;
+        }
+        else
+        {
+            temp.transform.position = m_wayPoints[count -1].transform.position + Vector3.left;
+        }
+
+        m_wayPoints.Add(temp.GetComponent<BasicWaypoint>());
+           // temp.transform.parent = this.transform;
+        
     }
 
     public void removeWaypoint()

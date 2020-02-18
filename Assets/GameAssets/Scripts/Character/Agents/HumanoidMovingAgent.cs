@@ -85,7 +85,9 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         m_equipmentModule,
         navMeshAgent,
         // This is the callback for interaction done.
-        OnInteractionDone);
+        OnInteractionDone,
+        m_equipmentModule.getWeaponHoldTransfrom()
+        );
     }
     #endregion
 
@@ -342,7 +344,12 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
         return m_animationModule.isEquiped() && (m_characterState.Equals(CharacterMainStates.Armed_not_Aimed) || m_characterState.Equals(CharacterMainStates.Aimed));
     }
 
-    public bool hasWeaponInHand()
+    // public bool hasWeaponInHand()
+    // {
+    //     return m_animationModule.isEquiped();
+    // }
+
+    public bool isArmed()
     {
         return m_animationModule.isEquiped();
     }
@@ -503,6 +510,11 @@ public class HumanoidMovingAgent : MonoBehaviour, ICyberAgent
     #endregion
 
     #region Events Handlers
+
+    public void HandInPosition()
+    {
+        m_interactionModule.HandInPosition();
+    }
 
     public void OnInteractionDone()
     {

@@ -753,6 +753,11 @@ public class HumanoidRangedWeaponsModule
         weapon.transform.localScale = Vector3.one;     
     }
 
+    public Transform getWeaponHoldTransfrom()
+    {
+        return weaponHoldLocation.transform;
+    }
+
     public void equipWeapon(Weapon weapon)
     {
         switch(weapon.getWeaponType())

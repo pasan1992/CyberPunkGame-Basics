@@ -110,6 +110,16 @@ public class DamageCalculator
     //     }
     // }
 
+    public static void onHitDamagableItem(Collider other,AgentBasicData.AgentFaction m_fireFrom,Vector3 hitDirection)
+    {
+        DamagableObject damagableObject = other.transform.GetComponentInParent<DamagableObject>();
+        
+        if(damagableObject != null)
+        {
+            damagableObject.damage(1,other,hitDirection,other.transform.position);
+        }
+    }
+
     public static void onHitEnemy(Collider other,AgentBasicData.AgentFaction m_fireFrom,Vector3 hitDirection)
     {
         DamagableObject damagableObject = other.transform.GetComponentInParent<DamagableObject>();
@@ -166,6 +176,9 @@ public class DamageCalculator
                 case "Chest":
                 DamageCalculator.onHitEnemy(hit.collider,ownersFaction,(targetPositon-startPositon).normalized);
                 hitOnEnemy = true;
+                break;
+                case "Item":
+                DamageCalculator.onHitDamagableItem(hit.collider,ownersFaction,(targetPositon-startPositon).normalized);
                 break;       
             }          
 

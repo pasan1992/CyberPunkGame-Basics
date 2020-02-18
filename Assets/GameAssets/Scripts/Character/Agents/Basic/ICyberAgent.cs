@@ -35,6 +35,7 @@ public interface ICyberAgent
     Vector3 getMovmentDirection();
     Vector3 getCurrentVelocity();
     bool isAimed();
+    bool isArmed();
     bool isHidden();
     GameObject getGameObject();
     AgentData GetAgentData();

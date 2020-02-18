@@ -49,7 +49,7 @@ public class GamePlayCam : MonoBehaviour
     {
         if(target.isAimed() 
         // To Avoid unplesent behavior of the camera when dodging + aimed 
-        || (HumanoidMovingAgent.CharacterMainStates.Dodge.Equals(target.getCharacterMainStates()) && target.hasWeaponInHand() && Input.GetMouseButton(1) ) )
+        || (HumanoidMovingAgent.CharacterMainStates.Dodge.Equals(target.getCharacterMainStates()) && target.isArmed() && Input.GetMouseButton(1) ) )
         {
             // Smooth the motion of the camera aim offset
             m_cameraAimOffset = Vector3.Lerp(m_cameraAimOffset,Vector3.ClampMagnitude((target.getTargetPosition() - target.transform.position)/2,UtilityConstance.CAMERA_AIM_OFFSET_MAX_DISTANCE ),UtilityConstance.CAMERA_AIM_OFFSET_CHANGE_RATE);
@@ -57,7 +57,7 @@ public class GamePlayCam : MonoBehaviour
             aimedPlayerPositon = target.transform.position;
             return newCameraPosition;
         }
-        else if(maintainAimedOffset && (Vector3.Distance(aimedPlayerPositon,target.transform.position) <0.1f || (target.hasWeaponInHand() && Vector3.Angle(m_cameraAimOffset,target.getMovmentDirection()) < 120 )))
+        else if(maintainAimedOffset && (Vector3.Distance(aimedPlayerPositon,target.transform.position) <0.1f || (target.isArmed() && Vector3.Angle(m_cameraAimOffset,target.getMovmentDirection()) < 120 )))
         {
             return target.transform.position + m_cameraAimOffset - offset;
         }

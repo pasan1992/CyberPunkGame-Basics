@@ -6,11 +6,11 @@ using UnityEngine.UI;
 public class FloatingInfoText : MonoBehaviour
 {
 
-    private Transform target;
+    public Transform target;
 
-    private Text m_text;
+    public Text m_text;
 
-    private Vector3 m_offset;
+    public Vector3 m_offset;
 
     void Awake()
     {
@@ -33,14 +33,23 @@ public class FloatingInfoText : MonoBehaviour
 
     public void setInteratableObject(Interactable interactable)
     {
-        m_text.text = interactable.properties.itemName;
-        m_offset = interactable.visualProperties.nameTagOffset;  
-        target = interactable.transform; 
+        if(m_text !=null)
+        {
+            m_text.text = interactable.properties.itemName;
+            m_offset = interactable.visualProperties.nameTagOffset;  
+            target = interactable.transform; 
+        }
     }
 
     public void resetText()
     {
         target = null;
         this.transform.position = Vector3.zero;
+    }
+
+    public void setTarget(Transform target,Vector3 offset)
+    {
+        this.target = target;
+        this.m_offset = offset;
     }
 }

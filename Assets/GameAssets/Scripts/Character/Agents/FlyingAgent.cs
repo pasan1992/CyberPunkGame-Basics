@@ -182,7 +182,10 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
     private void DestroyCharacter()
     {    
         m_damageModule.ExplosionEffect(m_droneRigitBody.transform.position);
-        m_onDestroyCallback();
+        if(m_onDestroyCallback != null)
+        {
+            m_onDestroyCallback();
+        }
         CancelInvoke();       
     }
 
@@ -411,7 +414,7 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
 
     public IEnumerator waitTillUnarmed()
     {
-        throw new System.NotImplementedException();
+        yield return null;
     }
 
     public void cancleInteraction()
@@ -420,6 +423,11 @@ public class FlyingAgent : MonoBehaviour ,ICyberAgent
         {
             takeOff();
         }
+    }
+
+    public bool isArmed()
+    {
+        return true;
     }
     #endregion
 }

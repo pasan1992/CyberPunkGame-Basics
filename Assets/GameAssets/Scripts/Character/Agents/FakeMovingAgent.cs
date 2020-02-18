@@ -208,5 +208,10 @@ public class FakeMovingAgent : ICyberAgent
     {
         throw new System.NotImplementedException();
     }
+
+    public bool isArmed()
+    {
+        return false;
+    }
 }
 
